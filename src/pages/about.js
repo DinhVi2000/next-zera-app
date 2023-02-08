@@ -1,7 +1,12 @@
-import { getTodos } from "@/services/user.service";
-import Head from "next/head";
+/* eslint-disable no-console */
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+
+import Head from "next/head";
+
+import { IconBack } from "@/resources/icons";
+
+import { getTodos } from "@/services/user.service";
 
 const About = () => {
   const user = useSelector((store) => store.user);
@@ -21,7 +26,10 @@ const About = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="min-h-[100vh]">About page</main>
+      <main className="main">
+        <p>About page</p>
+        <IconBack height="300" width="200" />
+      </main>
     </>
   );
 };
