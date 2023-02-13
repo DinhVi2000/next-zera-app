@@ -1,8 +1,17 @@
-import React from "react"
+import React, { useRef, useState } from "react"
 import { IconSendMes } from "@/resources/icons"
 import { ImgAva1, ImgAva2, ImgAva3 } from "@/resources/avatar"
 
 function BoxChat() {
+  const [messages, setMessages] = useState([])
+  const inputRef = useRef()
+
+  const sendMessage = (e) => {
+    e.preventDefault()
+    setMessages([...messages, inputRef.current.value])
+    e.target.reset()
+  }
+
   return (
     <div className="w-[204px] h-[314px] mx-auto flex flex-col justify-between rounded-[10px] bg-[#55555580] backdrop-blur-{22px}">
       <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e]">
@@ -30,34 +39,35 @@ function BoxChat() {
             </div>
           </div>
 
-          {/* My mess */}
-          <div className="mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px] self-end">
-            Lorem ipsum dolor
-          </div>
-
           {/* Event */}
-          <div className="text-[#ffffff80] text-center">
+          {/* <div className="text-[#ffffff80] text-center">
             Player X earn 10 Zera coin
-          </div>
+          </div> */}
 
-          {/* My mess */}
-          <div className="mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px] self-end">
-            Lorem ipsum dolor
-          </div>
+          {messages?.map((msg) => (
+            <div className="mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px] self-end">
+              {msg}
+            </div>
+          ))}
         </div>
       </div>
-      <div className="flex items-center justify-between px-[20px] rounded-[10px] h-[37px] bg-[#52495e]">
-        <input
-          placeholder="Say something..."
-          className="bg-transparent text-[10px] w-[126px] border-b-[1px] border-b-[#00000033] focus:border-b-white"
-        />
-        <div className="relative group">
-          <IconSendMes className="cursor-pointer" />
-          <div className="hidden group-hover:block absolute bottom-[-10px] right-[-15px] bg-zinc-800 text-[7px] p-[2px] rounded-[2px]">
-            Send
+      <form onSubmit={sendMessage}>
+        <div className="flex items-center justify-between px-[20px] rounded-[10px] h-[37px] bg-[#52495e]">
+          <input
+            ref={inputRef}
+            placeholder="Say something..."
+            className="bg-transparent text-[10px] w-[126px] border-b-[1px] border-b-[#00000033] focus:border-b-white"
+          />
+          <div className="relative group">
+            <button type="submit">
+              <IconSendMes className="cursor-pointer" />
+              <div className="hidden group-hover:block absolute bottom-[-10px] right-[-15px] bg-zinc-800 text-[7px] p-[2px] rounded-[2px]">
+                Send
+              </div>
+            </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   )
 }
