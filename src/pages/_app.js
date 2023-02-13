@@ -1,6 +1,7 @@
 import store from "@/store";
+
 import "@/styles/global.scss";
-import "@/styles/custom_tailwind.scss";
+import "@/styles/custom.scss";
 
 import { Provider } from "react-redux";
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { config } from "./../configs";
-// import config from "../configs/local.json";
+
+import { config } from "../envs";
 
 // const StatusCode = {
 //   Unauthorized: 401,

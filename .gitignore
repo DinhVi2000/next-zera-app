@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/src/configs/lcl.json
+/src/envs/lcl.json
 package-lock.json
 
 # testing

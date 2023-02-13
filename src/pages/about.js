@@ -1,22 +1,11 @@
 /* eslint-disable no-console */
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import Head from "next/head";
 
 import { IconBack } from "@/resources/icons";
 
-import { getTodos } from "@/services/user.service";
-
 const About = () => {
-  const user = useSelector((store) => store.user);
-  console.log("user :", user);
-
-  useEffect(() => {
-    getTodos().then((res) => console.log("res", res));
-    return () => {};
-  }, []);
-
   return (
     <>
       <Head>
