@@ -32,7 +32,7 @@ const verifySSOToken = async (params) => {
 
 const registerEmail = async (params) => {
   try {
-    const { data } = await http.post("/auth/register-email", params)
+    const { data } = await http.post("/auth/register-email", params);
     return data.data;
   } catch (e) {
     throw e;

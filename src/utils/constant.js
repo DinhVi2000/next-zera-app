@@ -1,5 +1,5 @@
 const IMAGE_URL =
-  "https://img.poki.com/cdn-cgi/image/quality=78,width=94,height=94,fit=cover,f=auto/584bae3da91feb104678e9c2a78d47c3.jpeg";
+  "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
 
 const FACEBOOK_SIGN_IN_ERROR = {
   accountExistWithDifferentCredential:
@@ -12,4 +12,9 @@ const SSO_METHOD = {
   FACEBOOK: "FACEBOOK",
 };
 
-export { IMAGE_URL, FACEBOOK_SIGN_IN_ERROR, SSO_METHOD };
+const MODAL_NAME = {
+  MENUBAR: "MENUBAR",
+  NONE: "NONE",
+};
+
+export { IMAGE_URL, FACEBOOK_SIGN_IN_ERROR, SSO_METHOD, MODAL_NAME };
