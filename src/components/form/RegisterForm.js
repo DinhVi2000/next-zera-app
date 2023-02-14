@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import InputHook from "../custom/InputHook";
@@ -8,20 +8,38 @@ import InputHook from "../custom/InputHook";
 import { registerFormSchema } from "@/validators/register.validator";
 import CheckBoxHook from "../custom/CheckBoxHook";
 import Link from "next/link";
+import { registerEmail } from '@/services/auth.service';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 const RegisterForm = () => {
+  const router = useRouter()
   const {
     handleSubmit,
     formState: { errors, isValid },
     control,
   } = useForm({
-    resolver: yupResolver(registerFormSchema),
-    // mode: "onChange",
+    resolver: yupResolver(registerFormSchema)
   });
 
-  const onSubmit = () => {
-    if (!isValid) return;
-  };
+  const term = useWatch({
+    control,
+    name: "term",
+  })
+
+  const onSubmit = async (dataUser) => {
+    if (!isValid) return
+    try {
+      const data = await registerEmail({
+        email: dataUser.email,
+        password: dataUser.password,
+      })
+      if (!data) return
+      router.push("/")
+    } catch (e) {
+      toast.error(e)
+    }
+  }
 
   return (
     <form
@@ -92,6 +110,7 @@ const RegisterForm = () => {
       </div>
 
       <button
+        disabled={!term}
         type="submit"
         className="bg-blue-600 text-base rounded-[20px] bg-linear-violet-300 w-full py-3"
       >

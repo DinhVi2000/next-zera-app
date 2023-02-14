@@ -30,5 +30,14 @@ const verifySSOToken = async (params) => {
   }
 };
 
-export { verifySSOToken };
+const registerEmail = async (params) => {
+  try {
+    const { data } = await http.post("/auth/register-email", params)
+    return data.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export { verifySSOToken, registerEmail };
 export default reducer;
