@@ -25,7 +25,7 @@ function BoxChat() {
         <p className="text-[12px]">+100 more</p>
       </div>
       <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
-        <div className="overflow-y-auto h-full flex flex-col">
+        <div className="overflow-y-auto h-full flex flex-col box-chat">
           {/* Other mess */}
           <div className="flex flex-col my-[3px]">
             <div className="flex items-center text-[#ffffff80] mb-[5px]">
