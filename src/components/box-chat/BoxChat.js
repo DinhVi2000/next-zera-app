@@ -1,18 +1,18 @@
-import React, { useRef, useState } from "react"
-import { IconSendMes } from "@/resources/icons"
-import { ImgAva2 } from "@/resources/avatar/index"
-import ava from "../../../public/images/ava1.png"
-import Image from "next/image"
+import React, { useRef, useState } from "react";
+import { IconSendMes } from "@/resources/icons";
+import { ImgAva2 } from "@/resources/avatar/index";
+import ava from "../../../public/images/ava1.png";
+import Image from "next/image";
 
 function BoxChat() {
-  const [messages, setMessages] = useState([])
-  const inputRef = useRef()
+  const [messages, setMessages] = useState([]);
+  const inputRef = useRef();
 
   const sendMessage = (e) => {
-    e.preventDefault()
-    setMessages([...messages, inputRef.current.value])
-    e.target.reset()
-  }
+    e.preventDefault();
+    setMessages([...messages, inputRef.current.value]);
+    e.target.reset();
+  };
 
   return (
     <div className="w-[204px] h-[314px] mx-auto flex flex-col justify-between rounded-[10px] bg-[#55555580] backdrop-blur-{22px}">
@@ -44,8 +44,11 @@ function BoxChat() {
             Player X earn 10 Zera coin
           </div>
 
-          {messages?.map((msg) => (
-            <div className="mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px] self-end">
+          {messages?.map((msg, i) => (
+            <div
+              key={i}
+              className="mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px] self-end"
+            >
               {msg}
             </div>
           ))}
@@ -69,7 +72,7 @@ function BoxChat() {
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-export default BoxChat
+export default BoxChat;
