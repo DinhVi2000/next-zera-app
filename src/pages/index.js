@@ -1,6 +1,14 @@
 import Head from "next/head";
 
+import { useToast } from "@chakra-ui/react";
+
 import Games from "@/api/games.json";
+import Categories from "@/api/categories.json";
+
+import MainLayout from "@/layouts/MainLayout";
+import TopBar from "@/components/ui/TopBar";
+import GameCategory from "@/components/game/GameCategory";
+import GameTile from "@/components/game/GameTile";
 
 export default function Home() {
   return (
@@ -12,25 +20,44 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="game-grid">
-        {Array(150)
-          .fill(0)
-          .map((e, i) => (
-            <div
-              key={i}
-              className="bg-blue-400 w-[94px] h-[94px] rounded-2xl"
-            ></div>
-          ))}
-        {Games.map((e, i) => (
-          <div
-            key={i}
-            className={`bg-blue-500 game-size-${e?.size} rounded-2xl`}
-            style={{
-              gridArea: `ip${e?.ip} / ip${e?.ip} / ip${e?.ip} / ip${e?.ip}`,
-            }}
-          ></div>
-        ))}
-      </div>
+      <MainLayout>
+        <div className="flex gap-4 p-4 w-fit mx-auto relative">
+          <TopBar />
+          <div className="ml-[222px] w-min">
+            {/* games */}
+            <div className="game-grid">
+              {Array(30)
+                .fill(0)
+                .map((e, i) => (
+                  <GameTile key={i} size={1}></GameTile>
+                ))}
+              {Games.map((e, i) => (
+                <GameTile
+                  size={e?.size}
+                  key={i}
+                  style={{
+                    gridArea: `ip${e?.ip} / ip${e?.ip} / ip${e?.ip} / ip${e?.ip}`,
+                  }}
+                  ip={e?.ip}
+                ></GameTile>
+              ))}
+            </div>
+
+            {/* categories */}
+            <div className="category-grid py-4">
+              {Categories.map((e, i) => (
+                <GameCategory
+                  key={i}
+                  style={{
+                    gridArea: `c${e?.ip} / c${e?.ip} / c${e?.ip} / c${e?.ip}`,
+                  }}
+                  size={e?.size}
+                ></GameCategory>
+              ))}
+            </div>
+          </div>
+        </div>
+      </MainLayout>
     </>
   );
 }

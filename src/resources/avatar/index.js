@@ -1,3 +1,3 @@
-import ImgAva2 from "./ava2.svg"
+import ImgAva2 from "./ava2.svg";
 
-export { ImgAva2 }
+export { ImgAva2 };
