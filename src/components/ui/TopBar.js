@@ -8,6 +8,7 @@ import {
   IconCasual,
   IconCoin,
   IconConsole,
+  IconCup,
   IconDressUp,
   IconEscape,
   IconFbs,
@@ -87,11 +88,12 @@ const TopBar = () => {
   return (
     <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit fixed z-10">
       {/* head */}
-      <div className="px-5 pb-3 border-violet-300 border-b-[1px]">
+      <div className="px-3 pb-3 border-violet-300 border-b-[1px]">
         <Image src={logo} alt="" width={134} height={72} className="mb-1" />
 
-        <div className="flex gap-2.5 justify-center">
+        <div className="flex gap-2.5 justify-between items-center">
           <IconMenu onClick={handleToggleContent}></IconMenu>
+          <IconCup></IconCup>
           <div
             onClick={() => {
               openModal(MODAL_NAME.MENUBAR);
