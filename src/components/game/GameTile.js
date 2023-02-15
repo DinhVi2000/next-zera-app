@@ -13,7 +13,7 @@ const TileSize = {
 const GameTile = ({ size, isRecently, ...props }) => {
   return (
     <div
-      className={`relative rounded-2xl cursor-pointer group ${TileSize[size]} 
+      className={`relative rounded-2xl cursor-pointer select-none group ${TileSize[size]} 
                   hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl`}
       {...props}
     >
