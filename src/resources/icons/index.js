@@ -22,6 +22,9 @@ import IconCoin from "./coin.svg";
 import IconHorror from "./horror.svg";
 import IconX from "./x.svg";
 import IconRecently from "./recently.svg";
+import IconPlus from "./plus.svg";
+import IconCopy from "./copy.svg";
+import IconArrowRight from "./arr-right.svg";
 
 export {
   IconBack,
@@ -48,4 +51,7 @@ export {
   IconX,
   IconRecently,
   IconSendMes,
-};
+  IconPlus,
+  IconCopy,
+  IconArrowRight,
+}

@@ -163,6 +163,13 @@
   width: 10px;
 }
 
+.responsive-grid {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: repeat(auto-fill, 94px);
+  grid-template-rows: repeat(1, 94px);
+}
+
 .category-grid {
   @apply tile-grid;
   justify-content: flex-start;
