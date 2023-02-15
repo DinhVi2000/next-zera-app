@@ -6,7 +6,6 @@ import Games from "@/api/games.json";
 import Categories from "@/api/categories.json";
 
 import MainLayout from "@/layouts/MainLayout";
-import TopBar from "@/components/ui/TopBar";
 import GameCategory from "@/components/game/GameCategory";
 import GameTile from "@/components/game/GameTile";
 
@@ -21,40 +20,37 @@ export default function Home() {
       </Head>
 
       <MainLayout>
-        <div className="flex gap-4 p-4 w-fit mx-auto relative">
-          <TopBar />
-          <div className="ml-[222px] w-min">
-            {/* games */}
-            <div className="game-grid">
-              {Array(30)
-                .fill(0)
-                .map((e, i) => (
-                  <GameTile key={i} size={1}></GameTile>
-                ))}
-              {Games.map((e, i) => (
-                <GameTile
-                  size={e?.size}
-                  key={i}
-                  style={{
-                    gridArea: `ip${e?.ip} / ip${e?.ip} / ip${e?.ip} / ip${e?.ip}`,
-                  }}
-                  ip={e?.ip}
-                ></GameTile>
+        <div className="w-min">
+          {/* games */}
+          <div className="game-grid">
+            {Array(30)
+              .fill(0)
+              .map((e, i) => (
+                <GameTile key={i} size={1}></GameTile>
               ))}
-            </div>
+            {Games.map((e, i) => (
+              <GameTile
+                size={e?.size}
+                key={i}
+                style={{
+                  gridArea: `ip${e?.ip} / ip${e?.ip} / ip${e?.ip} / ip${e?.ip}`,
+                }}
+                ip={e?.ip}
+              ></GameTile>
+            ))}
+          </div>
 
-            {/* categories */}
-            <div className="category-grid py-4">
-              {Categories.map((e, i) => (
-                <GameCategory
-                  key={i}
-                  style={{
-                    gridArea: `c${e?.ip} / c${e?.ip} / c${e?.ip} / c${e?.ip}`,
-                  }}
-                  size={e?.size}
-                ></GameCategory>
-              ))}
-            </div>
+          {/* categories */}
+          <div className="category-grid py-4">
+            {Categories.map((e, i) => (
+              <GameCategory
+                key={i}
+                style={{
+                  gridArea: `c${e?.ip} / c${e?.ip} / c${e?.ip} / c${e?.ip}`,
+                }}
+                size={e?.size}
+              ></GameCategory>
+            ))}
           </div>
         </div>
       </MainLayout>

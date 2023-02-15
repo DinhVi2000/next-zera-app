@@ -10,10 +10,12 @@ import CheckBoxHook from "../custom/CheckBoxHook";
 import Link from "next/link";
 import { registerEmail } from '@/services/auth.service';
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
+import { useToast } from "@chakra-ui/react"
 
 const RegisterForm = () => {
   const router = useRouter();
+  const toast = useToast();
+
   const {
     handleSubmit,
     formState: { errors, isValid },
@@ -37,7 +39,12 @@ const RegisterForm = () => {
       if (!data) return;
       router.push("/");
     } catch (e) {
-      toast.error(e);
+      toast({
+        title: e,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      })
     }
   };
 
