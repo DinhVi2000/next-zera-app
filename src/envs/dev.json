@@ -1,3 +1,14 @@
 {
-  "API_URL": ""
+  "API_URL": "https://user-api.test.rivennft.io/api/v1",
+  "FIREBASE": {
+    "apiKey": "AIzaSyDBvwBi8JlkNn5l91oRjTe8q8xevcTQoN0",
+    "authDomain": "singlesignon-auth.firebaseapp.com",
+    "projectId": "singlesignon-auth",
+    "storageBucket": "singlesignon-auth.appspot.com",
+    "messagingSenderId": "359044473943",
+    "appId": "1:359044473943:web:8b48312341e7fcf7c12f12"
+  },
+  "FACEBOOK": {
+    "appId": "923260135774238"
+  }
 }

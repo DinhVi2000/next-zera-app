@@ -14,4 +14,5 @@ ARG NODE_ENV
 
 RUN npm run build:$NODE_ENV
 
-CMD ["npm", "run", "start:$NODE_ENV"]
+#CMD ["npm", "run", "start:$NODE_ENV"]
+CMD ["sh", "-c", "npm run start:dev"]
