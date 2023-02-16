@@ -1,0 +1,58 @@
+DeployDev:
+  stage: deploy
+  variables:
+    NODE_ENV: "dev"
+  script:
+    - docker system prune -f
+    - chmod 775 ops/assume.sh
+    - make assume
+    - chmod 775 ops/push.sh
+  #  - bash push
+    - make push
+    - chmod 775 ops/source.sh
+    - make source
+    - chmod 775 ops/deploy.sh
+    - make deploy
+  tags:
+    - sti-runner
+  only:
+    - develop
+
+DeployStg:
+  stage: deploy
+  variables:
+    NODE_ENV: "stg"
+  script:
+    - chmod 775 ops/assume.sh
+    - bash ops/assume.sh
+    - chmod 775 ops/push.sh
+    - bash ops/push.sh
+    - chmod 775 ops/source.sh
+    - bash ops/source.sh
+    - chmod 775 ops/deploy.sh
+    - bash ops/deploy.sh
+    # - make assume
+    # - make push
+    # - make source && make deploy
+  tags:
+    - sti-runner
+  only:
+    - staging
+
+DeployProd:
+  stage: deploy
+  variables:
+    NODE_ENV: "prod"
+  script:
+    - chmod 775 ops/assume.sh
+    - bash ops/assume.sh
+    - chmod 775 ops/push.sh
+    - bash ops/push.sh
+    - chmod 775 ops/source.sh
+    - bash ops/source.sh
+    - chmod 775 ops/deploy.sh
+    - bash ops/deploy.sh
+  tags:
+    - sti-runner
+  only:
+    - main
