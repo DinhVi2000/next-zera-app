@@ -2,8 +2,11 @@ DeployDev:
   stage: deploy
   variables:
     NODE_ENV: "dev"
-  script:
+  before_script:
     - docker system prune -f
+#    - docker rmi $(docker images -a -q)
+#    - docker rm $(docker ps -a -q)
+  script:
     - chmod 775 ops/assume.sh
     - make assume
     - chmod 775 ops/push.sh
