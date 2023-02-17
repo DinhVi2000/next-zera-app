@@ -43,6 +43,8 @@ DeployProd:
   stage: deploy
   variables:
     NODE_ENV: "prod"
+  before_script:
+    - docker system prune -f
   script:
     - chmod 775 ops/assume.sh
     - bash ops/assume.sh
