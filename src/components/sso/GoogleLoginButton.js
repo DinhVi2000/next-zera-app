@@ -10,9 +10,11 @@ import { signInWithPopup } from "firebase/auth";
 
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useToast } from "@chakra-ui/react";
 
 const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
   const router = useRouter();
+  const toast = useToast();
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -31,7 +33,16 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
 
       if (!res) return;
       router.push("/");
-    } catch (e) {
+    } catch (error) {
+      toast({
+        title: "ERROR",
+        variant: "left-accent",
+        description: error?.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
       onSetIsSSOLogging(false);
     }
   };

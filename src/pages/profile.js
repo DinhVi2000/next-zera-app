@@ -1,16 +1,18 @@
-import React from "react"
-import MainLayout from "@/layouts/MainLayout"
-import Head from 'next/head';
+import React from "react";
+import MainLayout from "@/layouts/MainLayout";
+import Head from "next/head";
 
-import Image from "next/image"
-import coverImg from "../../public/images/cover-user.png"
-import avaImg from "../../public/images/ava-user.png"
-import { IconCoin, IconPlus, IconCopy } from "@/resources/icons"
+import Image from "next/image";
+import coverImg from "../../public/images/cover-user.png";
+import avaImg from "../../public/images/ava-user.png";
+import { IconCoin, IconPlus, IconCopy } from "@/resources/icons";
 
-import Activities from "@/components/profile/activities"
-import Rewards from "@/components/profile/rewards"
+import Activities from "@/components/profile/activities";
+import Rewards from "@/components/profile/rewards";
+import { useModalContext } from "@/context/modal-context";
 
 function Profile() {
+  const { openModal } = useModalContext();
   return (
     <>
       <Head>
@@ -27,11 +29,12 @@ function Profile() {
               <Image
                 className="w-full object-cover rounded-[20px]"
                 src={coverImg}
+                alt="cover-page"
               />
             </div>
             <div className="flex items-end pl-[43px] mt-[-100px]">
               <div className="mr-[16px]">
-                <Image src={avaImg} />
+                <Image src={avaImg} alt="avatar" />
               </div>
 
               <div className="w-full flex justify-between">
@@ -88,7 +91,7 @@ function Profile() {
         </div>
       </MainLayout>
     </>
-  )
+  );
 }
 
-export default Profile
+export default Profile;
