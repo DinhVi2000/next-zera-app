@@ -2,6 +2,7 @@ import store from "@/store";
 
 import "@/styles/global.scss";
 import "@/styles/custom.scss";
+import "@/styles/responsive.scss";
 
 import { Provider } from "react-redux";
 import { ModalContextProvider } from "@/context/modal-context";
