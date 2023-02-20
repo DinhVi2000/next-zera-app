@@ -1,6 +1,8 @@
 import React, { memo } from "react";
 
 import GameTile from "@/components/game/GameTile";
+import Ads from "@/components/game/Ads";
+import BoxChat from "@/components/box-chat/BoxChat";
 
 const GameDetailGrid = () => {
   return (
@@ -9,15 +11,31 @@ const GameDetailGrid = () => {
       {Array(6)
         .fill(0)
         .map((e, i) => (
-          <GameTile
-            key={i}
-            style={{
-              gridArea: `ads${i + 1} / ads${i + 1} / ads${i + 1} / ads${i + 1}`,
-            }}
-            ip={e?.ip}
-          ></GameTile>
+          <Ads key={i} area={`ads${i + 1}`} ip={e?.ip}></Ads>
         ))}
-      {Array(4)
+
+      {/* game screen */}
+      <iframe
+        style={{
+          gridArea: "gs / gs / gs / gs",
+        }}
+        width="100%"
+        height="100%"
+        frameBorder="0"
+        marginWidth="0"
+        marginHeight="0"
+        vspace="0"
+        hspace="0"
+        scrolling="no"
+        allowFullScreen={true}
+        src="https://h5.4j.com/Amaze/index.php?pubid=yourlogo"
+      ></iframe>
+
+      {/* box chat  */}
+      <BoxChat area={"bc"}></BoxChat>
+
+      {/* games */}
+      {Array(2)
         .fill(0)
         .map((e, i) => (
           <GameTile
