@@ -1,6 +1,8 @@
 import { createContext, useContext, useMemo, useState } from "react";
 
 import Menubar from "@/components/ui/Menubar";
+import ModalEditProfile from '@/components/modal/ModalEditProfile';
+import ModalViewAllGames from '@/components/modal/ModalViewAllGames';
 
 import { MODAL_NAME } from "@/utils/constant";
 
@@ -8,7 +10,9 @@ const ModalContext = createContext(null);
 
 const Modal = {
   MENUBAR: <Menubar />,
-};
+  EDIT_PROFILE: <ModalEditProfile />,
+  VIEW_ALL_GAMES: <ModalViewAllGames />,
+}
 
 export const useModalContext = () => {
   const modalContext = useContext(ModalContext);
@@ -23,6 +27,7 @@ export const useModalContext = () => {
 };
 
 export const ModalContextProvider = ({ children }) => {
+  const [payload, setPayload] = useState()
   const [modal, setModal] = useState(MODAL_NAME.NONE);
 
   const closeModal = () => {
@@ -38,6 +43,8 @@ export const ModalContextProvider = ({ children }) => {
       modal,
       openModal,
       closeModal,
+      payload, 
+      setPayload
     }),
     [modal]
   );

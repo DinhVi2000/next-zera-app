@@ -102,3 +102,50 @@
   );
   box-shadow: inset -2px -2px 1px rgba(0, 0, 0, 0.25);
 }
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-save-gradient {
+  background: linear-gradient(
+    149.29deg,
+    #f265e4 0.79%,
+    #6664ed 51.24%,
+    #5200ff 98.64%
+  );
+  box-shadow: 0px 2px 4px #f579f8;
+  border-radius: 40px;
+  &:hover {
+    background: linear-gradient(
+      149.29deg,
+      #f265e4 0.79%,
+      #6664ed 51.24%,
+      #5200ff 98.64%
+    );
+    box-shadow: inset 0px 2px 4px #4a054b;
+  }
+}
+.edit-input {
+  background-image: url(../resources/icons/edit-input.svg);
+  background-size: 20px;
+  background-repeat: no-repeat;
+}
+
+.animation-open-modal {
+  transform: scale(1);
+  transition: 0.2s;
+  opacity: 1;
+}
+
+.filter-svg {
+  filter: invert(0%) sepia(93%) saturate(0%) hue-rotate(284deg) brightness(107%)
+    contrast(107%);
+}
