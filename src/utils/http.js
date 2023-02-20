@@ -20,11 +20,11 @@ const headers = {
 // We get the `accessToken` from the localStorage that we set when we authenticate
 const injectToken = (config) => {
   try {
-    // const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken");
 
-    // if (token != null) {
-    //   config.headers!.Authorization = `Bearer ${token}`;
-    // }
+    if (token !== null) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   } catch (error) {
     throw new Error(error);

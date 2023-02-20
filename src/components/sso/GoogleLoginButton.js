@@ -11,10 +11,13 @@ import { signInWithPopup } from "firebase/auth";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
+import { useAuthContext } from "@/context/auth-context";
 
 const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
   const router = useRouter();
   const toast = useToast();
+
+  const { setToken } = useAuthContext();
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -30,8 +33,13 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
         method: SSO_METHOD.GOOGLE,
         token: oauthIdToken,
       });
-
       if (!res) return;
+
+      const { token } = res;
+
+      setToken(token);
+      localStorage.setItem("accessToken", token);
+
       router.push("/");
     } catch (error) {
       toast({

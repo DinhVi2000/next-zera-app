@@ -1,4 +1,4 @@
-import React, { memo, useRef } from "react";
+import React, { Fragment, memo, useEffect, useRef } from "react";
 
 import Image from "next/image";
 
@@ -26,6 +26,7 @@ import { useModalContext } from "@/context/modal-context";
 
 import { MODAL_NAME } from "@/utils/constant";
 import Link from "next/link";
+import { useAuthContext } from "@/context/auth-context";
 
 const topBarItems = [
   {
@@ -44,42 +45,43 @@ const topBarItems = [
     icon: <IconBasketball />,
     text: "Basketball",
   },
-  {
-    icon: <IconDressUp />,
-    text: "Dress up",
-  },
-  {
-    icon: <IconEscape />,
-    text: "Escape",
-  },
-  {
-    icon: <IconFbs />,
-    text: "FBS",
-  },
-  {
-    icon: <IconHorror />,
-    text: "Horror",
-  },
-  {
-    icon: <IconIo />,
-    text: ".io",
-  },
-  {
-    icon: <IconConsole />,
-    text: "Console",
-  },
-  {
-    icon: <IconCasual />,
-    text: "Casual",
-  },
-  {
-    icon: <IconHorror />,
-    text: "Horror",
-  },
+  // {
+  //   icon: <IconDressUp />,
+  //   text: "Dress up",
+  // },
+  // {
+  //   icon: <IconEscape />,
+  //   text: "Escape",
+  // },
+  // {
+  //   icon: <IconFbs />,
+  //   text: "FBS",
+  // },
+  // {
+  //   icon: <IconHorror />,
+  //   text: "Horror",
+  // },
+  // {
+  //   icon: <IconIo />,
+  //   text: ".io",
+  // },
+  // {
+  //   icon: <IconConsole />,
+  //   text: "Console",
+  // },
+  // {
+  //   icon: <IconCasual />,
+  //   text: "Casual",
+  // },
+  // {
+  //   icon: <IconHorror />,
+  //   text: "Horror",
+  // },
 ];
 
 const TopBar = () => {
   const { openModal } = useModalContext();
+  const { userInfo, handleLogout } = useAuthContext();
 
   const content_ref = useRef();
 
@@ -112,7 +114,7 @@ const TopBar = () => {
       {/* content */}
       <div
         ref={content_ref}
-        className="h-[705px] text-white  pl-6 flex flex-col overflow-hidden gap-4 border-violet-300 border-b-[1px] transition-all "
+        className="h-[242px] text-white  pl-6 flex flex-col overflow-hidden gap-4 border-violet-300 border-b-[1px] transition-all "
       >
         {topBarItems?.map((e, i) => (
           <div
@@ -127,26 +129,52 @@ const TopBar = () => {
 
       {/* user info */}
       <div className="text-white text-base pt-4">
-        {/* avatar */}
-        <div className="flex items-center gap-2.5 pl-5 mb-4">
-          <Image
-            src={avatar}
-            alt=""
-            className="object-cover w-[50px] h-[50px] rounded-full"
-          ></Image>
-          <span>avatar 2</span>
-        </div>
+        {userInfo ? (
+          <Fragment>
+            {/* avatar */}
+            <div className="flex items-center gap-2.5 pl-5 mb-4">
+              <Image
+                src={avatar}
+                alt=""
+                className="object-cover w-[50px] h-[50px] rounded-full"
+              ></Image>
+              <span>username</span>
+            </div>
 
-        {/* coin */}
-        <div className="flex items-center justify-between gap-2.5 text-base font-black px-2.5 mb-4">
-          <button className="bg-pink-800 py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500">
-            Shop
-          </button>
-          <div className="flex items-center gap-2">
-            <span>70</span>
-            <IconCoin />
-          </div>
-        </div>
+            {/* coin */}
+            <div className="flex items-center justify-between gap-2.5 text-base font-black px-2.5 mb-4">
+              <button className="bg-pink-800 py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500">
+                Shop
+              </button>
+              <div className="flex items-center gap-2">
+                <span>70</span>
+                <IconCoin />
+              </div>
+            </div>
+            <div className="w-full text-center mb-4">
+              <button
+                className="bg-pink-800 mx-auto py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </div>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <div className="flex flex-col items-center gap-2 mb-8 pt-0.5">
+              <Link
+                href={"/login"}
+                className="btn-login text-base text-white font-semibold rounded-[10px] py-[5px] px-[30px] mx-auto"
+              >
+                Login
+              </Link>
+              <Link href={"/register"} className="text-violet-400">
+                Register
+              </Link>
+            </div>
+          </Fragment>
+        )}
 
         {/* countdown */}
         <div className="bg-violet-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
