@@ -103,7 +103,7 @@ const TopBar = () => {
           <IconCup fill="red"></IconCup>
           <div
             onClick={() => {
-              openModal(MODAL_NAME.MENUBAR);
+              openModal(MODAL_NAME.MENUBAR)
             }}
           >
             <IconSearchViolet300></IconSearchViolet300>
@@ -132,14 +132,16 @@ const TopBar = () => {
         {userInfo ? (
           <Fragment>
             {/* avatar */}
-            <div className="flex items-center gap-2.5 pl-5 mb-4">
-              <Image
-                src={avatar}
-                alt=""
-                className="object-cover w-[50px] h-[50px] rounded-full"
-              ></Image>
-              <span>username</span>
-            </div>
+            <Link href={'/profile'}>
+              <div className="flex items-center gap-2.5 pl-5 mb-4">
+                <Image
+                  src={avatar}
+                  alt=""
+                  className="object-cover w-[50px] h-[50px] rounded-full"
+                ></Image>
+                <span>username</span>
+              </div>
+            </Link>
 
             {/* coin */}
             <div className="flex items-center justify-between gap-2.5 text-base font-black px-2.5 mb-4">
@@ -182,7 +184,7 @@ const TopBar = () => {
         </div>
       </div>
     </div>
-  );
+  )
 };
 
 export default memo(TopBar);

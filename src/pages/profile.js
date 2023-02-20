@@ -1,18 +1,15 @@
-import React from "react";
-import MainLayout from "@/layouts/MainLayout";
-import Head from "next/head";
+import React from "react"
+import MainLayout from "@/layouts/MainLayout"
+import Head from "next/head"
 
-import Image from "next/image";
-import coverImg from "../../public/images/cover-user.png";
-import avaImg from "../../public/images/ava-user.png";
-import { IconCoin, IconPlus, IconCopy } from "@/resources/icons";
+import { IconPlus, IconCopy } from "@/resources/icons"
 
-import Activities from "@/components/profile/activities";
-import Rewards from "@/components/profile/rewards";
-import { useModalContext } from "@/context/modal-context";
+import Activities from "@/components/profile/activities"
+import Rewards from "@/components/profile/rewards"
+import InfoUser from "@/components/profile/InfoUser"
+import { Tooltip } from "@chakra-ui/react"
 
 function Profile() {
-  const { openModal } = useModalContext();
   return (
     <>
       <Head>
@@ -24,37 +21,9 @@ function Profile() {
 
       <MainLayout>
         <div className="text-white">
-          <div className="flex flex-col">
-            <div>
-              <Image
-                className="w-full object-cover rounded-[20px]"
-                src={coverImg}
-                alt="cover-page"
-              />
-            </div>
-            <div className="flex items-end pl-[43px] mt-[-100px]">
-              <div className="mr-[16px]">
-                <Image src={avaImg} alt="avatar" />
-              </div>
+          <InfoUser />
 
-              <div className="w-full flex justify-between">
-                <div>
-                  <p className="font-semibold text-[28px]">Username</p>
-                  <p className="font-medium">
-                    User’s quote:Lorem ipsum dolor sit amet consectetur
-                    adipiscing elit Ut et.
-                  </p>
-                </div>
-                <div className="h-fit px-[10px] py-[6px] flex items-center content-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
-                  <p className=" font-black text-[24px] mr-[5px]">70</p>
-                  <IconCoin className="mr-[10px]" />
-                  <IconPlus />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex mt-[26px] gap-x-[18px]">
+          <div className="flex mt-[50px] gap-x-[18px]">
             <div className="w-[30%]">
               <div className="rounded-[20px] bg-[#00000080]">
                 <h4 className="rounded-t-[20px] bg-[#EC4899] py-[22px] pl-[16px] text-[28px] font-bold">
@@ -72,17 +41,20 @@ function Profile() {
                   <p className="mt-[34px]">6 games loved</p>
                   <p className="mt-[34px] mb-[100px]">Joined 6 years ago</p>
                 </div>
-                <h5
+                <div
                   className="rounded-b-[20px] bg-[#8B5CF6] py-[18px] flex items-center justify-center cursor-pointer"
-                  onClick={() =>
-                    navigator.clipboard.writeText(
-                      "https://zeraverse.io?src=@zeraverse"
-                    )
-                  }
+                  onClick={() => navigator.clipboard.writeText("@Zeraverse")}
                 >
-                  https://zeraverse.io?src=@zeraverse
-                  <IconCopy className="ml-[10px]" />
-                </h5>
+                  <Tooltip label="Copy" placement="bottom">
+                    <div className="flex items-center">
+                      Referral link:{" "}
+                      <span className="text-[#FBCFE8] ml-2 flex items-center">
+                        @Zeraverse
+                        <IconCopy viewBox="0 0 30 30" className="ml-2" />
+                      </span>
+                    </div>
+                  </Tooltip>
+                </div>
               </div>
               <Rewards />
             </div>
@@ -91,7 +63,7 @@ function Profile() {
         </div>
       </MainLayout>
     </>
-  );
+  )
 }
 
-export default Profile;
+export default Profile

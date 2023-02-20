@@ -50,9 +50,9 @@ function BoxChat() {
     <div className="w-[204px] h-[314px] mx-auto flex flex-col justify-between rounded-[10px] bg-[#55555580] backdrop-blur-{22px} text-white">
       <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e]">
         <div className="flex">
-          <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
-          <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
-          <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+          <Image alt='user' src={ava} className="w-[22px] mr-[-10px]" />
+          <Image alt='user' src={ava} className="w-[22px] mr-[-10px]" />
+          <Image alt='user' src={ava} className="w-[22px] mr-[-10px]" />
         </div>
         <p className="text-[12px]">+100 more</p>
       </div>
