@@ -25,7 +25,6 @@ import avatar from "../../../public/images/avatar.jpg";
 import { useModalContext } from "@/context/modal-context";
 
 import { MODAL_NAME } from "@/utils/constant";
-
 import Link from "next/link";
 
 const topBarItems = [
@@ -97,9 +96,9 @@ const TopBar = () => {
           <Image src={logo} alt="" width={134} height={72} className="mb-1" />
         </Link>
 
-        <div className="flex gap-2.5 justify-between items-center">
+        <div className="flex gap-2.5 justify-between items-center cursor-pointer">
           <IconMenu onClick={handleToggleContent}></IconMenu>
-          <IconCup></IconCup>
+          <IconCup fill="red"></IconCup>
           <div
             onClick={() => {
               openModal(MODAL_NAME.MENUBAR);
