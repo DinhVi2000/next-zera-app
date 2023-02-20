@@ -7,15 +7,18 @@ import "@/styles/responsive.scss";
 import { Provider } from "react-redux";
 import { ModalContextProvider } from "@/context/modal-context";
 import { ChakraProvider } from "@chakra-ui/react";
+import { AuthContextProvider } from "@/context/auth-context";
 
 export default function App({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <ModalContextProvider>
-        <Provider store={store}>
-          <Component {...pageProps} />
-        </Provider>
-      </ModalContextProvider>
+      <AuthContextProvider>
+        <ModalContextProvider>
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
+        </ModalContextProvider>
+      </AuthContextProvider>
     </ChakraProvider>
   );
 }

@@ -11,24 +11,44 @@ import { SSO_METHOD } from "@/utils/constant";
 import ReactFacebookLogin from "react-facebook-login";
 
 import { config } from "@/envs";
+import { useToast } from "@chakra-ui/react";
+import { useAuthContext } from "@/context/auth-context";
 
 const FacebookLoginButton = ({ onSetIsSSOLogging }) => {
   const { appId } = config["FACEBOOK"];
+
+  const { setToken } = useAuthContext();
+
   const router = useRouter();
+  const toast = useToast();
 
   const responseFacebook = async (response) => {
     if (!response) return;
     const { accessToken } = response;
 
     try {
-      const data = await verifySSOToken({
+      const res = await verifySSOToken({
         method: SSO_METHOD.FACEBOOK,
         token: accessToken,
       });
-      if (!data) return;
+      if (!res) return;
+
+      const { token } = res;
+
+      setToken(token);
+      localStorage.setItem("accessToken", token);
 
       router.push("/");
     } catch (error) {
+      toast({
+        title: "ERROR",
+        variant: "left-accent",
+        description: error?.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        position: "top-right",
+      });
       onSetIsSSOLogging(false);
     }
   };
