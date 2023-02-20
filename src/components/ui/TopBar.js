@@ -21,7 +21,9 @@ import {
 
 import logo from "../../../public/images/logo.png";
 import avatar from "../../../public/images/avatar.jpg";
+
 import { useModalContext } from "@/context/modal-context";
+
 import { MODAL_NAME } from "@/utils/constant";
 import Link from "next/link";
 
@@ -89,7 +91,7 @@ const TopBar = () => {
   return (
     <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit fixed z-10">
       {/* head */}
-      <div className="px-3 pb-4 border-violet-300 border-b-[1px]">
+      <div className="px-3 pb-3 border-violet-300 border-b-[1px]">
         <Link href={"/"}>
           <Image src={logo} alt="" width={134} height={72} className="mb-1" />
         </Link>

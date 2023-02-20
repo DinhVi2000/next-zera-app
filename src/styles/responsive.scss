@@ -1,0 +1,203 @@
+.tile-grid {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, 94px);
+  grid-gap: 16px;
+  grid-auto-flow: dense;
+  justify-content: flex-start;
+  list-style-type: none;
+  width: 100%;
+}
+
+.game-grid {
+  @apply tile-grid;
+}
+
+.category-grid {
+  @apply tile-grid;
+  justify-content: flex-start;
+}
+
+.game-detail-grid {
+  @apply tile-grid;
+}
+
+@media (min-width: 1871px) {
+  .game-grid {
+    grid-template-areas:
+      "ip0 ip0 ip0 . . . . . . . . ip7 ip7 ip8 ip8"
+      "ip0 ip0 ip0 ip4 ip4 ip5 ip5 ip2 ip2 ip2 . ip7 ip7 ip8 ip8"
+      "ip0 ip0 ip0 ip4 ip4 ip5 ip5 ip2 ip2 ip2 ip6 ip6 ip3 ip3 ip3"
+      "ip10 ip10 ip11 ip11 ip1 ip1 ip1 ip2 ip2 ip2 ip6 ip6 ip3 ip3 ip3"
+      "ip10 ip10 ip11 ip11 ip1 ip1 ip1 ip12 ip12 ip13 ip13 . ip3 ip3 ip3"
+      " ip15 ip16 ip16 . ip1 ip1 ip1 ip12 ip12 ip13 ip13 ip17 ip17 ip18 ip18"
+      " . ip16 ip16 . ip20 ip20 ip21 ip21 ip22 ip22 . ip17 ip17 ip18 ip18"
+      " . . . . ip20 ip20 ip21 ip21 ip22 ip22 . . . . ."
+      " . . . . . . . . . . . . . . ."
+      " . . . . . . . . ip23 ip23 ip23 . . . ."
+      " . . . . ip26 ip26 . . ip23 ip23 ip23 . . . ."
+      " ip25 ip25 . . ip26 ip26 . . ip23 ip23 ip23 . . . ."
+      " ip25 ip25 . . . . . . . . . . . ip27 ip27"
+      " . . . . . . . . . . . . . ip27 ip27";
+    grid-template-columns: repeat(15, 94px);
+    grid-template-rows: repeat(8, 94px);
+  }
+
+  .category-grid {
+    grid-template-areas:
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 c7 c7 ."
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 c8 c8 ."
+      "c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 c14 c14 c15 c15 ."
+      "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 c21 c21 c22 c22 .";
+  }
+
+  .game-detail-grid {
+    grid-template-areas:
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . . . . . "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . . . . . "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . . . . . "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . . . . . "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . . . . . "
+      "ads1 ads2 ads2 ads2 ads2 ads3 ads3 ads4 ads6 ads6 . . . . . "
+      "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  .  . . . . . "
+      ".  .  .  .  .  .  .   .   .   .   . . . . . "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . ";
+    grid-template-columns: repeat(15, 94px);
+    grid-template-rows: repeat(14, 94px);
+  }
+}
+
+@media (min-width: 1541px) and (max-width: 1870.9px) {
+  .game-grid {
+    grid-template-areas:
+      " ip0 ip0 ip0 ip2 ip2 . . . . . ip4 ip4"
+      " ip0 ip0 ip0 ip2 ip2 . ip3 ip3 ip3 . ip4 ip4"
+      " ip0 ip0 ip0 .   .   . ip3 ip3 ip3 . ip5 ip5"
+      " . . . ip1 ip1 ip1 ip3 ip3 ip3 . ip5 ip5"
+      " . ip7 ip7 ip1 ip1 ip1 ip8 ip8 ip9 ip9 . ."
+      " . ip7 ip7 ip1 ip1 ip1 ip8 ip8 ip9 ip9 . ."
+      " . . . . . . . . . . . ."
+      " . . ip6 ip6 . . ip11 ip11 ip11 . . ."
+      " . . ip6 ip6 . . ip11 ip11 ip11 . . ."
+      " . . . . . . ip11 ip11 ip11 . . ."
+      " ip13 ip13 . ip10 ip10 . . . . . . ."
+      " ip13 ip13 . ip10 ip10 . ip12 ip12 . . . ."
+      " . . . . ip14 ip14 ip12 ip12 . ip15 ip15 ip15"
+      " ip16 ip16 . . ip14 ip14 . . . ip15 ip15 ip15"
+      " ip16 ip16 . . . . . . . ip15 ip15 ip15";
+    grid-template-columns: repeat(12, 94px);
+    grid-template-rows: repeat(15, 94px);
+  }
+
+  .category-grid {
+    grid-template-areas:
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 "
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 "
+      "c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 c14 c14 "
+      "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 c21 c21 ";
+    grid-template-columns: repeat(12, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
+  }
+
+  .game-detail-grid {
+    grid-template-areas:
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . ."
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . ."
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . ."
+      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . ."
+      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . ."
+      "ads1 ads2 ads2 ads2 ads2 ads3 ads3 ads4 ads6 ads6 . ."
+      "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  .  . . "
+      ".  .  .  .  .  .  .   .   .   .   . ."
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . .";
+    grid-template-columns: repeat(12, 94px);
+    grid-template-rows: repeat(14, 94px);
+  }
+}
+
+@media (min-width: 1321px) and (max-width: 1540.9px) {
+  .game-grid {
+    grid-template-areas:
+      "ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
+      " ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
+      " ip0 ip0 ip0 ip1 ip1 ip1 . ip5 ip5 ."
+      " . . . ip1 ip1 ip1 . ip5 ip5 ."
+      " ip6 ip7 ip7 ip1 ip1 ip1 . ip8 ip8 ."
+      " ip6 ip7 ip7 . . . . ip8 ip8 ."
+      " . . . . . . . . . ."
+      " . . . . . ip9 ip9 . . ."
+      " . . . . . ip9 ip9 . . ."
+      " ip11 ip11 . . . ip15 ip15 . . ."
+      " ip11 ip11 . . . ip15 ip15 . . ."
+      " . . . . ip12 ip12 . . . ."
+      " . . . . ip12 ip12 . . . ."
+      " ip13 ip13 . ip16 ip16 . . . . ."
+      " ip13 ip13 . ip16 ip16 . . ip14 ip14 ."
+      " . ip10 . . . . . ip14 ip14 .";
+    grid-template-columns: repeat(10, 94px);
+    grid-template-rows: repeat(17, 94px);
+  }
+
+  .category-grid {
+    grid-template-areas:
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 "
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 "
+      "c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 "
+      "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 ";
+    grid-template-columns: repeat(10, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
+  }
+
+  .game-detail-grid {
+    grid-template-areas:
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 "
+      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 "
+      "ads1 ads2 ads2 ads2 ads2 ads3 ads3 ads4 ads6 ads6 "
+      "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  . "
+      ".  .  .  .  .  .  .   .   .   .   "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
+      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 ";
+    grid-template-columns: repeat(10, 94px);
+    grid-template-rows: repeat(14, 94px);
+  }
+}
+
+@media (min-width: 1211px) and (max-width: 1320.9px) {
+  .game-grid {
+    grid-template-areas:
+      "ip0 ip0 ip0 imp imp ip2 ip2 ip3 ip3"
+      " ip0 ip0 ip0 imp imp ip2 ip2 ip3 ip3"
+      " ip0 ip0 ip0 ip1 ip1 ip1 . ip5 ip5"
+      " . . . ip1 ip1 ip1 . ip5 ip5"
+      " ip6 ip7 ip7 ip1 ip1 ip1 . ip8 ip8"
+      " ip6 ip7 ip7 . . . . ip8 ip8"
+      " . . . . . . . . ."
+      " . . . . ip9 ip9 ip9 . ."
+      " . . . . ip9 ip9 ip9 . ."
+      " ip11 ip11 . . ip9 ip9 ip9 . ."
+      " ip11 ip11 . . . . . . ."
+      " . . . . . . . . ."
+      " . ip12 ip12 ip12 . . . . ."
+      " . ip12 ip12 ip12 . ip13 ip13 . ."
+      " . ip12 ip12 ip12 . ip13 ip13 . ."
+      " . . . . . . . . ."
+      " ip14 . . . . . . ip15 ip15"
+      " ip14 ip16 ip16 . . . . ip15 ip15"
+      " . ip16 ip16 . . . . . .";
+    grid-template-columns: repeat(9, 94px);
+    grid-template-rows: repeat(15, 94px);
+  }
+}

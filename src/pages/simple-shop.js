@@ -89,7 +89,7 @@ const SimpleShop = () => {
                     ))}
                 </div>
               ) : tab === SIMPLE_SHOP_TAB.COVER_PAGE ? (
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
                   {Array(4)
                     .fill(0)
                     .map((e, i) => (
