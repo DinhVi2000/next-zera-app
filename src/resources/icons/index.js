@@ -29,6 +29,8 @@ import IconArrowRight from "./arr-right.svg"
 import IconCup from "./cup.svg"
 import IconEdit from "./edit.svg"
 import IconClose from "./close.svg"
+import IconShowEye from "./eye-pw.svg"
+import IconHiddenEye from "./hide-eye.svg"
 
 export {
   IconBack,
@@ -62,4 +64,6 @@ export {
   IconCup,
   IconEdit,
   IconClose,
+  IconShowEye,
+  IconHiddenEye,
 }
