@@ -52,19 +52,19 @@
 
   .game-detail-grid {
     grid-template-areas:
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . . . . . "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . . . . . "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . . . . . "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . . . . . "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . . . . . "
+      "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
+      "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
+      "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
+      "ads1 gs gs gs gs gs gs gs ads6 ads6 . . . . . "
+      "ads1 gs gs gs gs gs gs gs ads6 ads6 . . . . . "
       "ads1 ads2 ads2 ads2 ads2 ads3 ads3 ads4 ads6 ads6 . . . . . "
       "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  .  . . . . . "
       ".  .  .  .  .  .  .   .   .   .   . . . . . "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . . . . . ";
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . . . . . "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . . . . . "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . . . . . "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . . . . . "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . . . . . ";
     grid-template-columns: repeat(15, 94px);
     grid-template-rows: repeat(14, 94px);
   }
@@ -104,19 +104,19 @@
 
   .game-detail-grid {
     grid-template-areas:
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . ."
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . ."
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 . ."
-      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . ."
-      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 . ."
+      "ads1 gs gs gs gs gs gs gs bc bc . ."
+      "ads1 gs gs gs gs gs gs gs bc bc . ."
+      "ads1 gs gs gs gs gs gs gs bc bc . ."
+      "ads1 gs gs gs gs gs gs gs ads6 ads6 . ."
+      "ads1 gs gs gs gs gs gs gs ads6 ads6 . ."
       "ads1 ads2 ads2 ads2 ads2 ads3 ads3 ads4 ads6 ads6 . ."
       "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  .  . . "
       ".  .  .  .  .  .  .   .   .   .   . ."
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . ."
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 . .";
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . ."
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . ."
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . ."
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . ."
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 . .";
     grid-template-columns: repeat(12, 94px);
     grid-template-rows: repeat(14, 94px);
   }
@@ -157,19 +157,19 @@
 
   .game-detail-grid {
     grid-template-areas:
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 d2 d2 "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 "
-      "ads1 d1 d1 d1 d1 d1 d1 d1 ads6 ads6 "
+      "ads1 gs gs gs gs gs gs gs bc bc "
+      "ads1 gs gs gs gs gs gs gs bc bc "
+      "ads1 gs gs gs gs gs gs gs bc bc "
+      "ads1 gs gs gs gs gs gs gs ads6 ads6 "
+      "ads1 gs gs gs gs gs gs gs ads6 ads6 "
       "ads1 ads2 ads2 ads2 ads2 ads3 ads3 ads4 ads6 ads6 "
       "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  . "
       ".  .  .  .  .  .  .   .   .   .   "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 "
-      ".  .  d3 d3 d3 d3 d4 d4 d4 d4 ";
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 "
+      ".  .  d1 d1 d1 d1 d2 d2 d2 d2 ";
     grid-template-columns: repeat(10, 94px);
     grid-template-rows: repeat(14, 94px);
   }

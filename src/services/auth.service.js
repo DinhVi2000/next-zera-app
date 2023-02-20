@@ -30,6 +30,16 @@ const verifySSOToken = async (params) => {
   }
 };
 
+// Authentication with email
+const loginWithEmail = async (params) => {
+  try {
+    const { data } = await http.post("/auth/login-email", params);
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 const registerEmail = async (params) => {
   try {
     const { data } = await http.post("/auth/register-email", params);
@@ -39,5 +49,5 @@ const registerEmail = async (params) => {
   }
 };
 
-export { verifySSOToken, registerEmail };
+export { verifySSOToken, loginWithEmail, registerEmail };
 export default reducer;

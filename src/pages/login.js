@@ -19,7 +19,7 @@ const Login = () => {
         <div>
           <Image src={logo} alt="logo" className="mx-auto"></Image>
         </div>
-        <LoginForm />
+        <LoginForm onSetIsSSOLogging={setIsSSOLogging} />
 
         <p className="text-center my-[10px] text-white">or sign in with</p>
         <div className="grid grid-cols-2 gap-5">

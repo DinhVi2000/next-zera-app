@@ -8,8 +8,11 @@ import InputHook from "../custom/InputHook";
 import { registerFormSchema } from "@/validators/register.validator";
 
 import Link from "next/link";
+import { useAuthContext } from "@/context/auth-context";
 
-const LoginForm = () => {
+const LoginForm = ({ onSetIsSSOLogging }) => {
+  const { handleLogin } = useAuthContext();
+
   const {
     handleSubmit,
     formState: { errors, isValid },
@@ -20,8 +23,11 @@ const LoginForm = () => {
     // mode: "onChange",
   });
 
-  const onSubmit = () => {
+  const onSubmit = async (formData) => {
     if (!isValid) return;
+    onSetIsSSOLogging(true);
+    await handleLogin(formData);
+    onSetIsSSOLogging(false);
   };
 
   return (
