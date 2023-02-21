@@ -30,5 +30,39 @@ const getGamesByKeySearch = async (keySearch) => {
     throw e;
   }
 };
-export { getGamesByKeySearch };
+
+const getAllCategories = async () => {
+  try {
+    const { data } = await http.get("/game/categories");
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getGameDetailBySlug = async (params) => {
+  try {
+    const { super_slug, game_slug } = params || {};
+    const { data } = await http.get(`/game/detail/${super_slug}/${game_slug}`);
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getGameByCategoryId = async (categoryId) => {
+  try {
+    const { data } = await http.get(`/game/category/${categoryId}`);
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export {
+  getGamesByKeySearch,
+  getAllCategories,
+  getGameDetailBySlug,
+  getGameByCategoryId,
+};
 export default reducer;

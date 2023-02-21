@@ -35,6 +35,10 @@ import IconEarn from "./earn.svg";
 import IconGamePad from "./game-pad.svg";
 import IconLeftWing from "./left-wing.svg";
 import IconRightWing from "./right-wing.svg";
+import IconHeart from "./heart.svg";
+import IconPlusNoRounded from "./plus-no-rounded.svg";
+import IconFullScreen from "./full-screen.svg";
+import IconInfo from "./info.svg";
 
 export {
   IconBack,
@@ -74,4 +78,8 @@ export {
   IconGamePad,
   IconLeftWing,
   IconRightWing,
+  IconHeart,
+  IconPlusNoRounded,
+  IconFullScreen,
+  IconInfo,
 };
