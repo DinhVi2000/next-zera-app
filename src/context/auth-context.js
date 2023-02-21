@@ -26,17 +26,19 @@ export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const toast = useToast();
 
-  const [userInfo, setUserInfo] = useState("user");
+  const [userInfo, setUserInfo] = useState();
   const [token, setToken] = useState();
+  const [usernameAuth, setUsernameAuth] = useState();
 
   const verifyAccessToken = async () => {
     try {
-      const response = await getUserInfo();
+      const response = await getUserInfo(usernameAuth);
       if (!response.success) {
         throw new Error(response?.message);
       }
 
       const { data } = response;
+
       setUserInfo(data);
     } catch (error) {
       notifyErrorMessage(toast, error);
@@ -46,15 +48,24 @@ export const AuthContextProvider = ({ children }) => {
   const login = async (formData) => {
     try {
       const response = await loginWithEmail(formData);
+      console.log("response :", response);
       if (!response.success) {
         throw new Error(response?.message);
       }
 
       const {
-        data: { token },
+        data: {
+          token,
+          info: { username },
+        },
       } = response;
+
       localStorage.setItem("accessToken", token);
+      localStorage.setItem("username", username);
+
       setToken(token);
+      setUsernameAuth(username);
+
       router.push("/");
     } catch (error) {
       notifyErrorMessage(toast, error);
@@ -63,18 +74,23 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     setToken(localStorage.getItem("accessToken") || "");
+    setUsernameAuth(localStorage.getItem("username") || "");
   }, []);
 
   useEffect(() => {
-    if (token) {
+    if (token && usernameAuth) {
       console.log("authenticate with token", token);
+      console.log("authenticate with username", usernameAuth);
       verifyAccessToken();
     }
-  }, [token]);
+  }, [token, usernameAuth]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("username");
+
     setToken("");
+
     router.push("/login");
   };
 

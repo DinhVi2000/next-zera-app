@@ -21,9 +21,9 @@ const { actions, reducer } = user;
 export const { setInfo } = actions;
 
 // Login with email
-const getUserInfo = async () => {
+const getUserInfo = async (username) => {
   try {
-    const { data } = await http.get("/users/my-profile");
+    const { data } = await http.get(`/users/profile/${username}`);
     return data;
   } catch (e) {
     throw e;
