@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { Fragment, memo, useEffect, useRef } from "react";
 
 import Image from "next/image";
@@ -20,7 +21,6 @@ import {
 } from "@/resources/icons";
 
 import logo from "../../../public/images/logo.png";
-import avatar from "../../../public/images/avatar.jpg";
 
 import { useModalContext } from "@/context/modal-context";
 
@@ -81,7 +81,9 @@ const topBarItems = [
 
 const TopBar = () => {
   const { openModal } = useModalContext();
-  const { userInfo, handleLogout } = useAuthContext();
+  const { userInfo, logout } = useAuthContext();
+
+  const { username, avatar, zera } = userInfo || {};
 
   const content_ref = useRef();
 
@@ -91,7 +93,7 @@ const TopBar = () => {
   };
 
   return (
-    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit fixed z-10">
+    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit fixed z-10 max-w-[204px]">
       {/* head */}
       <div className="px-3 pb-3 border-violet-300 border-b-[1px]">
         <Link href={"/"}>
@@ -103,7 +105,7 @@ const TopBar = () => {
           <IconCup fill="red"></IconCup>
           <div
             onClick={() => {
-              openModal(MODAL_NAME.MENUBAR)
+              openModal(MODAL_NAME.MENUBAR);
             }}
           >
             <IconSearchViolet300></IconSearchViolet300>
@@ -132,14 +134,14 @@ const TopBar = () => {
         {userInfo ? (
           <Fragment>
             {/* avatar */}
-            <Link href={'/profile'}>
+            <Link href={"/profile"}>
               <div className="flex items-center gap-2.5 pl-5 mb-4">
-                <Image
+                <img
                   src={avatar}
                   alt=""
                   className="object-cover w-[50px] h-[50px] rounded-full"
-                ></Image>
-                <span>username</span>
+                />
+                <span>{username}</span>
               </div>
             </Link>
 
@@ -149,14 +151,14 @@ const TopBar = () => {
                 Shop
               </button>
               <div className="flex items-center gap-2">
-                <span>70</span>
+                <span>{zera}</span>
                 <IconCoin />
               </div>
             </div>
             <div className="w-full text-center mb-4">
               <button
                 className="bg-pink-800 mx-auto py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500"
-                onClick={handleLogout}
+                onClick={logout}
               >
                 Logout
               </button>
@@ -184,7 +186,7 @@ const TopBar = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default memo(TopBar);

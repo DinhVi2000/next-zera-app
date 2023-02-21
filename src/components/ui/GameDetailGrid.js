@@ -19,6 +19,7 @@ const GameDetailGrid = () => {
         style={{
           gridArea: "gs / gs / gs / gs",
         }}
+        className="rounded-2xl"
         width="100%"
         height="100%"
         frameBorder="0"

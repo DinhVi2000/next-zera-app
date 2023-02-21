@@ -149,3 +149,18 @@
   filter: invert(0%) sepia(93%) saturate(0%) hue-rotate(284deg) brightness(107%)
     contrast(107%);
 }
+
+.hall-of-fame__item {
+  background: linear-gradient(180deg, #d34880 0%, #2f0652 100%);
+}
+
+.text-gradient-hof {
+  background: linear-gradient(180deg, #c4b5fd 0%, #979bff 0.01%, #ef36c6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient-tgp {
+  background: linear-gradient(180deg, #8b5cf6 0%, #503098 100%);
+}
