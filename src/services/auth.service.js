@@ -30,7 +30,7 @@ const verifySSOToken = async (params) => {
   }
 };
 
-// Authentication with email
+// Login with email
 const loginWithEmail = async (params) => {
   try {
     const { data } = await http.post("/auth/login-email", params);

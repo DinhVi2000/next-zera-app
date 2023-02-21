@@ -1,8 +1,12 @@
 /* eslint-disable no-console */
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+
 import { loginWithEmail } from "@/services/auth.service";
+import { getUserInfo } from "@/services/user.service";
+import { notifyErrorMessage } from "@/utils/helper";
+
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 const AuthContext = createContext(null);
 
@@ -25,6 +29,38 @@ export const AuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState("user");
   const [token, setToken] = useState();
 
+  const verifyAccessToken = async () => {
+    try {
+      const response = await getUserInfo();
+      if (!response.success) {
+        throw new Error(response?.message);
+      }
+
+      const { data } = response;
+      setUserInfo(data);
+    } catch (error) {
+      notifyErrorMessage(toast, error);
+    }
+  };
+
+  const login = async (formData) => {
+    try {
+      const response = await loginWithEmail(formData);
+      if (!response.success) {
+        throw new Error(response?.message);
+      }
+
+      const {
+        data: { token },
+      } = response;
+      localStorage.setItem("accessToken", token);
+      setToken(token);
+      router.push("/");
+    } catch (error) {
+      notifyErrorMessage(toast, error);
+    }
+  };
+
   useEffect(() => {
     setToken(localStorage.getItem("accessToken") || "");
   }, []);
@@ -32,37 +68,14 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       console.log("authenticate with token", token);
+      verifyAccessToken();
     }
   }, [token]);
 
-  const handleLogout = () => {
+  const logout = () => {
     localStorage.removeItem("accessToken");
     setToken("");
     router.push("/login");
-  };
-
-  const handleLogin = async (formData) => {
-    try {
-      const data = await loginWithEmail(formData);
-      if (!data.success) {
-        throw new Error(data?.message);
-      }
-
-      const { token } = data;
-      localStorage.setItem("accessToken", token);
-      setToken(token);
-      router.push("/");
-    } catch (error) {
-      toast({
-        title: "ERROR",
-        variant: "left-accent",
-        description: error?.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
-      });
-    }
   };
 
   const authProvider = useMemo(
@@ -71,8 +84,8 @@ export const AuthContextProvider = ({ children }) => {
       setUserInfo,
       token,
       setToken,
-      handleLogin,
-      handleLogout,
+      login,
+      logout,
     }),
     [userInfo, setUserInfo, token, setToken]
   );

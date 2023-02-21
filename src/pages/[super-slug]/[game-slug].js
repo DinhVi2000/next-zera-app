@@ -27,3 +27,21 @@ const GameDetail = () => {
 };
 
 export default GameDetail;
+
+// export async function getStaticProps(context) {
+//   const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+//   const data = await response.json();
+
+//   return {
+//     props: {
+//       posts: data,
+//     },
+//   };
+// }
+
+// export async function getStaticPaths() {
+//   return {
+//     paths: [],
+//     fallback: true, // can also be true or 'blocking'
+//   };
+// }

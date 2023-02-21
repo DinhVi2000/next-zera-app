@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
 
 const LoginForm = ({ onSetIsSSOLogging }) => {
-  const { handleLogin } = useAuthContext();
+  const { login } = useAuthContext();
 
   const {
     handleSubmit,
@@ -26,7 +26,7 @@ const LoginForm = ({ onSetIsSSOLogging }) => {
   const onSubmit = async (formData) => {
     if (!isValid) return;
     onSetIsSSOLogging(true);
-    await handleLogin(formData);
+    await login(formData);
     onSetIsSSOLogging(false);
   };
 
