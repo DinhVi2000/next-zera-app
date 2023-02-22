@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 
-const GameCategory = ({ size, ...rest }) => {
+const GameCategory = ({ size, description, thumbnail, ...rest }) => {
   return (
     <>
       {size === 4 ? (
@@ -12,13 +12,11 @@ const GameCategory = ({ size, ...rest }) => {
         >
           <img
             alt=""
-            src={
-              "https://img.poki.com/cdn-cgi/image/quality=78,width=204,height=204,fit=cover,f=auto/CAGA3.jpg"
-            }
-            className="rounded-2xl w-full h-full"
+            src={thumbnail}
+            className="rounded-2xl w-full h-full object-cover"
           ></img>
           <span className="bg-white text-violet-900 uppercase absolute w-full bottom-0 px-4 font-bold text-[13px] h-9 flex items-center">
-            Action games
+            {description}
           </span>
         </div>
       ) : (
@@ -29,13 +27,11 @@ const GameCategory = ({ size, ...rest }) => {
         >
           <img
             alt=""
-            src={
-              "https://img.poki.com/cdn-cgi/image/quality=78,width=204,height=204,fit=cover,f=auto/CAGA3.jpg"
-            }
-            className=" w-[94px] h-[94px]"
+            src={thumbnail}
+            className=" w-[94px] h-[94px] object-cover"
           ></img>
           <div className="text-violet-900 uppercase w-full px-2 font-bold text-sm h-9 flex items-center leading-5 cursor-pointer">
-            Action games
+            {description}
           </div>
         </div>
       )}

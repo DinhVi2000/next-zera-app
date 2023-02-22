@@ -8,16 +8,15 @@ import InputHook from "../custom/InputHook";
 import { registerFormSchema } from "@/validators/register.validator";
 import CheckBoxHook from "../custom/CheckBoxHook";
 import Link from "next/link";
-import { registerEmail } from '@/services/auth.service';
-import { useRouter } from 'next/router';
-import { useToast } from "@chakra-ui/react"
+import { registerEmail } from "@/services/auth.service";
+import { useToast } from "@chakra-ui/react";
 
-import { IconHiddenEye, IconShowEye } from '@/resources/icons';
+import { IconHiddenEye, IconShowEye } from "@/resources/icons";
 
 const RegisterForm = () => {
   const toast = useToast();
 
-  const [passwordShown, setPasswordShown] = useState(false)
+  const [passwordShown, setPasswordShown] = useState(false);
 
   const {
     handleSubmit,
@@ -41,18 +40,18 @@ const RegisterForm = () => {
       });
       if (!data) return;
       toast({
-        title: 'Please check your email!',
+        title: "Please check your email!",
         status: "success",
         duration: 20000,
         isClosable: true,
-      })
+      });
     } catch (e) {
       toast({
         title: e,
         status: "error",
         duration: 9000,
         isClosable: true,
-      })
+      });
     }
   };
 
@@ -140,7 +139,7 @@ const RegisterForm = () => {
         Register
       </button>
     </form>
-  )
+  );
 };
 
 export default memo(RegisterForm);

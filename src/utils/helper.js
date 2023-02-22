@@ -14,4 +14,8 @@ const notifyErrorMessage = (toast, error) => {
   });
 };
 
-export { sleep, notifyErrorMessage };
+const isEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
+};
+
+export { sleep, notifyErrorMessage, isEmpty };
