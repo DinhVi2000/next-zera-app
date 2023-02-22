@@ -10,5 +10,6 @@
   },
   "FACEBOOK": {
     "appId": "923260135774238"
-  }
+  },
+  "SERVER_CHAT": "https://chat-server.test.rivennft.io/"
 }
