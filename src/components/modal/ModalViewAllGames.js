@@ -1,34 +1,34 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react";
 
-import { useModalContext } from "@/context/modal-context"
-import { VIEW_ALL_GAMES_TABS, MODAL_NAME } from "@/utils/constant"
-import { sleep } from "@/utils/helper"
-import BoxModal from "./BoxModal"
+import { useModalContext } from "@/context/modal-context";
+import { VIEW_ALL_GAMES_TABS, MODAL_NAME } from "@/utils/constant";
+import { sleep } from "@/utils/helper";
+import BoxModal from "./BoxModal";
 
-import { IconClose } from "@/resources/icons"
-import Image from "next/image"
-import avaImg from "../../../public/images/ava-user.png"
-import lineImg from "../../../public/images/Line.png"
+import { IconClose } from "@/resources/icons";
+import Image from "next/image";
+import avaImg from "../../../public/images/ava-user.png";
+import lineImg from "../../../public/images/Line.png";
 
-import { useOnClickOutside } from "@/hooks/useOnClickOutside"
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 const ModalViewAllGames = () => {
-  const { openModal, payload } = useModalContext()
-  const modal_ref = useRef(null)
-  const DURATION = 0
-  const [tab, setTab] = useState(payload)
+  const { openModal, payload } = useModalContext();
+  const modal_ref = useRef(null);
+  const DURATION = 0;
+  const [tab, setTab] = useState(payload);
 
   const handleCloseModal = () => {
-    sleep(DURATION).then(() => openModal(MODAL_NAME.NONE))
-  }
+    sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
+  };
 
-  useOnClickOutside(modal_ref, handleCloseModal)
+  useOnClickOutside(modal_ref, handleCloseModal);
 
   useEffect(() => {
     sleep(1).then(() => {
-      modal_ref.current.classList?.add("animation-open-modal")
-    })
-  }, [])
+      modal_ref.current.classList?.add("animation-open-modal");
+    });
+  }, []);
 
   const tabs = [
     {
@@ -47,10 +47,10 @@ const ModalViewAllGames = () => {
       title: "Purchase history ",
       tabName: VIEW_ALL_GAMES_TABS.PURCHASE_HISTORY,
     },
-  ]
+  ];
 
   return (
-    <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] flex-center">
+    <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modal_ref}
         className="opacity-5 scale-90 w-fit h-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-black px-[30px] pb-[20px]"
@@ -90,7 +90,7 @@ const ModalViewAllGames = () => {
         ))}
       </div>
     </BoxModal>
-  )
-}
+  );
+};
 
-export default ModalViewAllGames
+export default ModalViewAllGames;
