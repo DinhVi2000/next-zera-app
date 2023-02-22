@@ -7,9 +7,13 @@ import coverImg from "../../../public/images/cover-user.png"
 import avaImg from "../../../public/images/ava-user.png"
 import { useModalContext } from "@/context/modal-context"
 import { MODAL_NAME } from "@/utils/constant"
+import { useAuthContext } from "@/context/auth-context"
 
 function InfoUser() {
   const { openModal, setPayload } = useModalContext()
+
+  const { userInfo } = useAuthContext()
+  const { username, quote, avatar, cover, zera } = userInfo || {}
 
   return (
     <>
@@ -21,10 +25,10 @@ function InfoUser() {
               setPayload("COVER_PAGE"), openModal(MODAL_NAME.EDIT_PROFILE)
             }}
           >
-            <Image
+            <img
               alt=""
               className="w-full h-[350px] object-cover rounded-[20px]"
-              src={coverImg}
+              src={cover}
             />
             <div className="hidden group-hover:block rounded-[20px] absolute top-0 z-10 bg-[#00000099] box-border w-full h-full">
               <IconEdit className="absolute-center" />
@@ -39,9 +43,9 @@ function InfoUser() {
                 setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE)
               }}
             >
-              <Image
+              <img
                 alt=""
-                src={avaImg}
+                src={avatar}
                 className="w-full h-[204px] object-cover rounded-[20px]"
               />
               <div className="hidden group-hover:block rounded-[20px] absolute top-0 z-10 bg-[#00000099] box-border w-full h-full">
@@ -58,7 +62,7 @@ function InfoUser() {
                   setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE)
                 }}
               >
-                <p className="font-semibold text-[28px]">Username</p>
+                <p className="font-semibold text-[28px]">{username}</p>
                 <IconEdit
                   viewBox="0 0 42 42"
                   className="absolute top-[23%] right-[-35px] group-hover:block hidden"
@@ -70,18 +74,15 @@ function InfoUser() {
                   setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE)
                 }}
               >
-                <p className="font-medium">
-                  User’s quote:Lorem ipsum dolor sit amet consectetur adipiscing
-                  elit Ut et.
-                </p>
+                <p className="font-medium">{quote}</p>
                 <IconEdit
                   viewBox="0 0 42 42"
                   className="absolute top-[-10%] right-[-35px] group-hover:block hidden"
                 />
               </div>
             </div>
-            <div className="h-fit px-[10px] py-[6px] flex items-center content-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)]">
-              <p className=" font-black text-[24px] mr-[5px]">70</p>
+            <div className="h-fit px-[10px] py-[6px] flex items-center content-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] cursor-pointer">
+              <p className=" font-black text-[24px] mr-[5px]">{zera}</p>
               <IconCoin className="mr-[10px]" />
               <IconPlus />
             </div>

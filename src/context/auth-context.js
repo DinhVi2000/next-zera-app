@@ -78,8 +78,6 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (token && usernameAuth) {
-      console.log("authenticate with token", token);
-      console.log("authenticate with username", usernameAuth);
       verifyAccessToken();
     }
   }, [token, usernameAuth]);

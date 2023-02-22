@@ -8,7 +8,9 @@ import Image from "next/image";
 import { io } from "socket.io-client";
 import { useRouter } from "next/router";
 
-const socket = io("http://192.168.1.69:2023");
+import { config } from "../../envs"
+const socket = io(config.SERVER_CHAT)
+
 function BoxChat({ area }) {
   const { asPath } = useRouter();
   const userId = "TEST";
