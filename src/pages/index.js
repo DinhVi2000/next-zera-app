@@ -4,7 +4,17 @@ import MainLayout from "@/layouts/MainLayout";
 import GameGrid from "@/components/ui/GameGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 
+import { useModalContext } from "@/context/modal-context";
+import { MODAL_NAME } from "@/utils/constant";
+import { useEffect } from "react";
+
 export default function Home() {
+  const { openModal } = useModalContext();
+
+  useEffect(() => {
+    openModal(MODAL_NAME.DAILY_BONUS);
+  }, []);
+
   return (
     <>
       <Head>

@@ -39,6 +39,8 @@ import IconHeart from "./heart.svg";
 import IconPlusNoRounded from "./plus-no-rounded.svg";
 import IconFullScreen from "./full-screen.svg";
 import IconInfo from "./info.svg";
+import IconCoinDaily from "./coin-daily.svg";
+import IconCheckDaily from "./check-daily.svg";
 
 export {
   IconBack,
@@ -82,4 +84,6 @@ export {
   IconPlusNoRounded,
   IconFullScreen,
   IconInfo,
+  IconCoinDaily,
+  IconCheckDaily,
 };

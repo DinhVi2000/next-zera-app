@@ -3,6 +3,7 @@ import { createContext, useContext, useMemo, useState } from "react";
 import Menubar from "@/components/ui/Menubar";
 import ModalEditProfile from '@/components/modal/ModalEditProfile';
 import ModalViewAllGames from '@/components/modal/ModalViewAllGames';
+import ModalDailyBonus from '@/components/modal/ModalDailyBonus';
 
 import { MODAL_NAME } from "@/utils/constant";
 
@@ -12,7 +13,8 @@ const Modal = {
   MENUBAR: <Menubar />,
   EDIT_PROFILE: <ModalEditProfile />,
   VIEW_ALL_GAMES: <ModalViewAllGames />,
-}
+  DAILY_BONUS: <ModalDailyBonus />,
+};
 
 export const useModalContext = () => {
   const modalContext = useContext(ModalContext);
