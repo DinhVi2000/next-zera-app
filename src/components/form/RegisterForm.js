@@ -9,11 +9,15 @@ import { registerFormSchema } from "@/validators/register.validator";
 import CheckBoxHook from "../custom/CheckBoxHook";
 import Link from "next/link";
 import { registerEmail } from "@/services/auth.service";
+import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
+import ButtonLoading from "../loading/ButtonLoading";
 
 import { IconHiddenEye, IconShowEye } from "@/resources/icons";
 
 const RegisterForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const toast = useToast();
 
   const [passwordShown, setPasswordShown] = useState(false);
@@ -32,6 +36,7 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (dataUser) => {
+    setIsLoading(true)
     if (!isValid) return;
     try {
       const data = await registerEmail({
@@ -44,10 +49,12 @@ const RegisterForm = () => {
         status: "success",
         duration: 20000,
         isClosable: true,
-      });
+      })
+      setIsLoading(false)
     } catch (e) {
+      setIsLoading(false)
       toast({
-        title: e,
+        title: e.response.data.error.message,
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -132,10 +139,11 @@ const RegisterForm = () => {
       </div>
 
       <button
-        disabled={!term}
+        disabled={!term || isLoading}
         type="submit"
-        className="text-base rounded-[20px] bg-linear-violet-300 w-full py-3"
+        className="text-base rounded-[20px] bg-linear-violet-300 w-full py-3 flex items-center justify-center"
       >
+        <ButtonLoading isLoading={isLoading} />
         Register
       </button>
     </form>

@@ -30,5 +30,15 @@ const getUserInfo = async (username) => {
   }
 };
 
-export { getUserInfo };
+const updateUser = async (params) => {
+  try {
+    const { data } = await http.put("/users", params)
+    localStorage.setItem("username", data.data.username)
+    return data.data
+  } catch (e) {
+    throw e
+  }
+}  
+
+export { getUserInfo, updateUser }
 export default reducer;

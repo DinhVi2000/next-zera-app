@@ -18,4 +18,16 @@ const isEmpty = (obj) => {
   return Object.keys(obj).length === 0;
 };
 
-export { sleep, notifyErrorMessage, isEmpty };
+const notifySuccessMessage = (toast, data) => {
+  toast({
+    title: "SUCCESS",
+    variant: "left-accent",
+    description: data,
+    status: "success",
+    duration: 6000,
+    isClosable: true,
+    position: "top-right",
+  });
+};
+
+export { sleep, isEmpty, notifyErrorMessage, notifySuccessMessage }

@@ -48,7 +48,6 @@ export const AuthContextProvider = ({ children }) => {
   const login = async (formData) => {
     try {
       const response = await loginWithEmail(formData);
-      console.log("response :", response);
       if (!response.success) {
         throw new Error(response?.message);
       }
@@ -79,8 +78,6 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (token && usernameAuth) {
-      console.log("authenticate with token", token);
-      console.log("authenticate with username", usernameAuth);
       verifyAccessToken();
     }
   }, [token, usernameAuth]);
