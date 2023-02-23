@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 import { sleep } from "@/utils/helper";
 
-import GameTile from "../game/GameTile";
+import GameItem from "../game/GameItem";
 
 const SearchResult = ({ games }) => {
   const no_result_ref = useRef();
@@ -30,7 +30,7 @@ const SearchResult = ({ games }) => {
   return (
     <div className="grid grid-cols-6 gap-4 mt-10">
       {games?.map(({ thumbnail, title }, i) => (
-        <GameTile key={i} thumbnail={thumbnail} title={title} />
+        <GameItem key={i} thumbnail={thumbnail} title={title} />
       ))}
     </div>
   );

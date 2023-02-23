@@ -1,18 +1,43 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import Head from "next/head";
 
 import MainLayout from "@/layouts/MainLayout";
+
 import GameGrid from "@/components/ui/GameGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 
-import { useModalContext } from "@/context/modal-context";
 import { MODAL_NAME } from "@/utils/constant";
-import { useEffect } from "react";
+
+import { getAllCategories, getAllGame } from "@/services/game.service";
+
+import { useModalContext } from "@/context/modal-context";
+import { useAuthContext } from "@/context/auth-context";
+import { useApi } from "@/hooks/useApi";
 
 export default function Home() {
+  const dispatch = useDispatch();
+
   const { openModal } = useModalContext();
+  const { userInfo } = useAuthContext();
+  const { call } = useApi();
+
+  const { gameIndex } = useSelector(({ game }) => game) ?? {};
+  const { games, categories } = gameIndex ?? {};
+
+  const params = { page: 1, limit: 50 };
 
   useEffect(() => {
-    openModal(MODAL_NAME.DAILY_BONUS);
+    // if (userInfo) openModal(MODAL_NAME.DAILY_BONUS);
+  }, [userInfo]);
+
+  useEffect(() => {
+    Promise.all([
+      call(getAllGame(dispatch, params)),
+      call(getAllCategories(dispatch, params)),
+    ]);
   }, []);
 
   return (
@@ -26,8 +51,8 @@ export default function Home() {
 
       <MainLayout>
         <div className="w-min">
-          <GameGrid />
-          <GameCategoryGrid />
+          <GameGrid games={games} />
+          <GameCategoryGrid categories={categories} />
         </div>
       </MainLayout>
     </>

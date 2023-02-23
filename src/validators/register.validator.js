@@ -10,5 +10,5 @@ export const registerFormSchema = yup.object({
     .string()
     .required("*Please enter your password")
     .min(6, "*At least 6 characters")
-    .max(15, "*At most 15 characters"),
+    .max(15, "*Must be less than 30 characters long"),
 });

@@ -55,10 +55,10 @@
       "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
       "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
       "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
-      "ads1 gs gs gs gs gs gs gs ads6 ads6 . . . . . "
-      "ads1 gs gs gs gs gs gs gs ads6 ads6 . . . . . "
-      "ads1 ste ste ste ste raf raf ads4 ads6 ads6 . . . . . "
-      "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  .  . . . . . "
+      "ads1 gs gs gs gs gs gs gs ads2 ads2 . . . . . "
+      "ads1 gs gs gs gs gs gs gs ads2 ads2 . . . . . "
+      "ads1 ste ste ste ste raf raf ads3 ads2 ads2 . . . . . "
+      "ads1 ads4 ads4 ads4 ads4 ads4 ads4 ads4 .  .  . . . . . "
       ".  .  .  .  .  .  .   .   .   .   . . . . . "
       ".  .  gi gi gi gi hof hof hof hof . . . . . "
       ".  .  gi gi gi gi hof hof hof hof . . . . . "
@@ -99,7 +99,7 @@
       "c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 c14 c14 "
       "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 c21 c21 ";
     grid-template-columns: repeat(12, 94px);
-    grid-template-rows: repeat(auto-fill, 94px);
+    grid-template-rows: repeat(3, 94px);
   }
 
   .game-detail-grid {
@@ -107,10 +107,10 @@
       "ads1 gs gs gs gs gs gs gs bc bc . ."
       "ads1 gs gs gs gs gs gs gs bc bc . ."
       "ads1 gs gs gs gs gs gs gs bc bc . ."
-      "ads1 gs gs gs gs gs gs gs ads6 ads6 . ."
-      "ads1 gs gs gs gs gs gs gs ads6 ads6 . ."
-      "ads1 ste ste ste ste raf raf ads4 ads6 ads6 . ."
-      "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  .  . . "
+      "ads1 gs gs gs gs gs gs gs ads2 ads2 . ."
+      "ads1 gs gs gs gs gs gs gs ads2 ads2 . ."
+      "ads1 ste ste ste ste raf raf ads3 ads2 ads2 . ."
+      "ads1 ads4 ads4 ads4 ads4 ads4 ads4 ads4 .  .  . . "
       ".  .  .  .  .  .  .   .   .   .   . ."
       ".  .  gi gi gi gi hof hof hof hof . ."
       ".  .  gi gi gi gi hof hof hof hof . ."
@@ -160,10 +160,10 @@
       "ads1 gs gs gs gs gs gs gs bc bc "
       "ads1 gs gs gs gs gs gs gs bc bc "
       "ads1 gs gs gs gs gs gs gs bc bc "
-      "ads1 gs gs gs gs gs gs gs ads6 ads6 "
-      "ads1 gs gs gs gs gs gs gs ads6 ads6 "
-      "ads1 ste ste ste ste raf raf ads4 ads6 ads6 "
-      "ads1 ads5 ads5 ads5 ads5 ads5 ads5 ads5 .  . "
+      "ads1 gs gs gs gs gs gs gs ads2 ads2 "
+      "ads1 gs gs gs gs gs gs gs ads2 ads2 "
+      "ads1 ste ste ste ste raf raf ads3 ads2 ads2 "
+      "ads1 ads4 ads4 ads4 ads4 ads4 ads4 ads4 .  . "
       ".  .  .  .  .  .  .   .   .   .   "
       ".  .  gi gi gi gi hof hof hof hof "
       ".  .  gi gi gi gi hof hof hof hof "

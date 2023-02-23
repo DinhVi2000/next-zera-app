@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 function ButtonLoading({ isLoading }) {
   return (
@@ -28,7 +28,7 @@ function ButtonLoading({ isLoading }) {
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default ButtonLoading
+export default ButtonLoading;

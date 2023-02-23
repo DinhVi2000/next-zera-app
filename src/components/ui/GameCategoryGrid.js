@@ -2,16 +2,16 @@ import React, { memo } from "react";
 
 import Categories from "@/api/categories.json";
 import GameCategory from "@/components/game/GameCategory";
+import { useSelector } from "react-redux";
 
 const GameCategoryGrid = ({ categories }) => {
   return (
     <div className="category-grid py-4">
-      {categories?.map((e, i) => (
+      {categories?.map((e) => (
         <GameCategory
-          key={i}
-          style={{
-            gridArea: `c${i + 1} / c${i + 1} / c${i + 1} / c${i + 1}`,
-          }}
+          key={e?.id}
+          area={`c${e?.id}`}
+          id={e?.id}
           size={e?.size}
           thumbnail={e?.thumbnail}
           description={e?.description}

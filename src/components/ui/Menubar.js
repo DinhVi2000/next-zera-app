@@ -9,7 +9,7 @@ import { MODAL_NAME, STATUS } from "@/utils/constant";
 
 import { sleep } from "@/utils/helper";
 
-import GameTile from "../game/GameTile";
+import GameItem from "../game/GameItem";
 import ScrollContainer from "react-indiana-drag-scroll";
 import SearchTab from "../search/SearchTab";
 import SearchBar from "@/components/search/SearchBar";
@@ -141,7 +141,7 @@ const Menubar = () => {
                   {Array(6)
                     .fill(0)
                     .map((e, i) => (
-                      <GameTile key={i} size={1} />
+                      <GameItem key={i} size={1} />
                     ))}
                 </div>
               </div>
@@ -153,7 +153,7 @@ const Menubar = () => {
                   {Array(6)
                     .fill(0)
                     .map((e, i) => (
-                      <GameTile key={i} size={1} isRecently />
+                      <GameItem key={i} size={1} isRecently />
                     ))}
                 </div>
               </div>

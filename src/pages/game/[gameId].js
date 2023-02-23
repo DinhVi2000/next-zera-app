@@ -15,46 +15,27 @@ import { useRouter } from "next/router";
 import { isEmpty, notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
+import { useApi } from "@/hooks/useApi";
 
 const GameDetail = () => {
   const router = useRouter();
   const toast = useToast();
   const dispatch = useDispatch();
 
+  const { call } = useApi();
+
   const [params, setParams] = useState();
 
-  const [game, setGame] = useState();
-  const [gamesRelate, setGamesRelate] = useState();
-  const [categories, setCategories] = useState();
+  const { categories } =
+    useSelector(({ game: { gameIndex } }) => gameIndex) ?? {};
 
   const handleGetGameDetailData = async () => {
     try {
-      const { gameId } = params;
+      const { data } =
+        (await getGameDetailById(dispatch, params?.gameId)) ?? {};
 
-      const { data } = await getGameDetailById(dispatch, gameId);
-      setGame(data);
-
-      const {
-        game_category: { id },
-      } = data;
-      const {
-        data: { rows },
-      } = await getGameByCategoryId(dispatch, id);
-      setGamesRelate(rows);
-    } catch (error) {
-      notifyErrorMessage(toast, error);
-    }
-  };
-
-  const handleGetAllCategories = async () => {
-    try {
-      const res = await getAllCategories();
-      if (!res.success) {
-        throw new Error(res?.message);
-      }
-
-      const { data } = res;
-      setCategories(data);
+      const { game_category } = data ?? {};
+      await getGameByCategoryId(dispatch, game_category?.id);
     } catch (error) {
       notifyErrorMessage(toast, error);
     }
@@ -62,16 +43,13 @@ const GameDetail = () => {
 
   useEffect(() => {
     if (!params || isEmpty(params)) return;
-    handleGetGameDetailData();
+
+    Promise.all([handleGetGameDetailData(), call(getAllCategories(dispatch))]);
   }, [params]);
 
   useEffect(() => {
     setParams(router.query);
   }, [router]);
-
-  useEffect(() => {
-    handleGetAllCategories();
-  }, []);
 
   return (
     <>
@@ -84,7 +62,7 @@ const GameDetail = () => {
 
       <MainLayout>
         <div className="w-min">
-          <GameDetailGrid game={game} gamesRelate={gamesRelate} />
+          <GameDetailGrid />
           <GameCategoryGrid categories={categories} />
         </div>
       </MainLayout>
