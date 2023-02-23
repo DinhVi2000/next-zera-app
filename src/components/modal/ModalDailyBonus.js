@@ -33,7 +33,10 @@ const ModalDailyBonus = () => {
           {Array(6)
             .fill(0)
             .map((e, i) => (
-              <div className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item relative group">
+              <div
+                key={i}
+                className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item relative group"
+              >
                 <div className=" daily-bonus__item-day">Day {i + 1}</div>
                 <div className="daily-bonus__item-zera">
                   <p>+{i + 1}</p>

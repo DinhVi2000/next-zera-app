@@ -9,6 +9,10 @@ const game = createSlice({
   name: "game",
   initialState: {
     info: null,
+    gameIndex: {
+      games: null,
+      categories: null,
+    },
     gameDetail: {
       info: null,
       gamesRelate: null,
@@ -19,14 +23,61 @@ const game = createSlice({
     setInfo: (state, action) => {
       state.info = { ...action.payload };
     },
-    setGameDetail: (state, action) => {
-      state.gameDetail = { ...action.payload };
+    setInfoAtGameDetail: (state, action) => {
+      state.gameDetail.info = action.payload;
+    },
+    setGamesRelateAtGameDetail: (state, action) => {
+      state.gameDetail.gamesRelate = action.payload;
+    },
+    setGamesAtGameIndex: (state, action) => {
+      state.gameIndex.games = action.payload;
+    },
+    setCategoriesAtGameIndex: (state, action) => {
+      state.gameIndex.categories = action.payload;
     },
   },
 });
 
 const { actions, reducer } = game;
-export const { setInfo, setGameDetail } = actions;
+export const {
+  setInfo,
+  setInfoAtGameDetail,
+  setGamesRelateAtGameDetail,
+  setGamesAtGameIndex,
+  setCategoriesAtGameIndex,
+} = actions;
+
+const getAllGame = async (dispatch, params) => {
+  try {
+    const { data } = await http.get("/game", { params });
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setGamesAtGameIndex(data?.data?.rows));
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getAllCategories = async (dispatch, params) => {
+  try {
+    const { data } = await http.get("/game/categories", { params });
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setCategoriesAtGameIndex(data?.data));
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
 
 const getGamesByKeySearch = async (keySearch) => {
   try {
@@ -39,20 +90,6 @@ const getGamesByKeySearch = async (keySearch) => {
     }
 
     return data.data;
-  } catch (e) {
-    throw e;
-  }
-};
-
-const getAllCategories = async () => {
-  try {
-    const { data } = await http.get("/game/categories");
-
-    if (!data.success) {
-      throw new Error(data?.message);
-    }
-
-    return data;
   } catch (e) {
     throw e;
   }
@@ -81,9 +118,7 @@ const getGameDetailById = async (dispatch, gameId) => {
       throw new Error(data?.message);
     }
 
-    dispatch(
-      setGameDetail({ ...game.getInitialState().gameDetail, info: data?.data })
-    );
+    dispatch(setInfoAtGameDetail(data?.data));
 
     return data;
   } catch (e) {
@@ -99,12 +134,8 @@ const getGameByCategoryId = async (dispatch, categoryId) => {
       throw new Error(data?.message);
     }
 
-    dispatch(
-      setGameDetail({
-        ...game.getInitialState().gameDetail,
-        gamesRelate: data?.data,
-      })
-    );
+    dispatch(setGamesRelateAtGameDetail(data?.data?.rows));
+
     return data;
   } catch (e) {
     throw e;
@@ -112,8 +143,9 @@ const getGameByCategoryId = async (dispatch, categoryId) => {
 };
 
 export {
-  getGamesByKeySearch,
+  getAllGame,
   getAllCategories,
+  getGamesByKeySearch,
   getGameDetailBySlug,
   getGameByCategoryId,
   getGameDetailById,

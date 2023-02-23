@@ -18,7 +18,7 @@ const GameScreenBar = ({ title, thumbnail }) => {
           alt=""
           className="w-[50px] h-[50px] rounded-xl object-cover"
         />
-        <p>{title}</p>
+        <p className="w-[380px]">{title}</p>
       </div>
 
       <div className="flex gap-5">

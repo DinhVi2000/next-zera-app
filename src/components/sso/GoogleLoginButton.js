@@ -12,6 +12,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import { useAuthContext } from "@/context/auth-context";
+import { notifyErrorMessage } from "@/utils/helper";
 
 const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
   const router = useRouter();
@@ -44,17 +45,10 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
       localStorage.setItem("accessToken", token);
       localStorage.setItem("username", username);
 
+      if (!username) return router.push("/create-username");
       router.push("/");
     } catch (error) {
-      toast({
-        title: "ERROR",
-        variant: "left-accent",
-        description: error?.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
-      });
+      notifyErrorMessage(toast, error);
       onSetIsSSOLogging(false);
     }
   };

@@ -61,5 +61,18 @@ const updateUser = async (params) => {
   }
 };
 
-export { getUserInfo, updateUser, getHallOfFameByUsername };
+const updateUsername = async (formData) => {
+  try {
+    const { data } = await http.put("/users/username", formData);
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export { getUserInfo, getHallOfFameByUsername, updateUser, updateUsername };
 export default reducer;

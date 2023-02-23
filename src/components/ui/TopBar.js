@@ -27,6 +27,9 @@ import { useModalContext } from "@/context/modal-context";
 import { MODAL_NAME } from "@/utils/constant";
 import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
+import ImageLoading from "../loading/ImageLoading";
+import { Tooltip } from "@chakra-ui/react";
+import { sleep } from "@/utils/helper";
 
 const topBarItems = [
   {
@@ -83,7 +86,7 @@ const TopBar = () => {
   const { openModal } = useModalContext();
   const { userInfo, logout } = useAuthContext();
 
-  const { username, avatar, zera } = userInfo || {};
+  const { username, avatar, zera } = userInfo ?? {};
 
   const content_ref = useRef();
 
@@ -93,7 +96,7 @@ const TopBar = () => {
   };
 
   return (
-    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit fixed z-10 max-w-[204px]">
+    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit fixed z-10 w-full max-w-[204px]">
       {/* head */}
       <div className="px-3 pb-3 border-violet-300 border-b-[1px]">
         <Link href={"/"}>
@@ -133,38 +136,7 @@ const TopBar = () => {
       {/* user info */}
       <div className="text-white text-base pt-4">
         {userInfo ? (
-          <Fragment>
-            {/* avatar */}
-            <Link href={"/profile"}>
-              <div className="flex items-center gap-2.5 pl-5 mb-4">
-                <img
-                  src={avatar}
-                  alt=""
-                  className="object-cover w-[50px] h-[50px] rounded-full"
-                />
-                <span>{username}</span>
-              </div>
-            </Link>
-
-            {/* coin */}
-            <div className="flex items-center justify-between gap-2.5 text-base font-black px-2.5 mb-4">
-              <button className="bg-pink-800 py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500">
-                Shop
-              </button>
-              <div className="flex items-center gap-2">
-                <span>{zera}</span>
-                <IconCoin />
-              </div>
-            </div>
-            <div className="w-full text-center mb-4">
-              <button
-                className="bg-pink-800 mx-auto py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500"
-                onClick={logout}
-              >
-                Logout
-              </button>
-            </div>
-          </Fragment>
+          <UserInfo></UserInfo>
         ) : (
           <Fragment>
             <div className="flex flex-col items-center gap-2 mb-8 pt-0.5">
@@ -191,3 +163,55 @@ const TopBar = () => {
 };
 
 export default memo(TopBar);
+
+const UserInfo = () => {
+  const { userInfo, logout } = useAuthContext();
+  const { username, avatar, zera } = userInfo ?? {};
+
+  const ref = useRef();
+
+  useEffect(() => {
+    sleep(10).then(() => {
+      ref.current.classList.add("h-[168px]");
+    });
+  }, []);
+
+  return (
+    <div className="overflow-hidden h-0 transition-all duration-500" ref={ref}>
+      {/* avatar */}
+      <Link href={"/profile"}>
+        <div className="flex items-center gap-2.5 pl-5 mb-4">
+          <ImageLoading
+            src={avatar}
+            alt=""
+            className="object-cover w-[50px] h-[50px] rounded-full"
+          />
+          <Tooltip label={username} aria-label="A tooltip">
+            <span className="whitespace-nowrap overflow-hidden text-ellipsis flex-1">
+              {username}
+            </span>
+          </Tooltip>
+        </div>
+      </Link>
+
+      {/* coin */}
+      <div className="flex items-center justify-between gap-2.5 text-base font-black px-2.5 mb-4">
+        <button className="bg-pink-800 py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500">
+          Shop
+        </button>
+        <div className="flex items-center gap-2">
+          <span>{zera}</span>
+          <IconCoin />
+        </div>
+      </div>
+      <div className="w-full text-center mb-4">
+        <button
+          className="bg-pink-800 mx-auto py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  );
+};

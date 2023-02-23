@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import GameTile from "@/components/game/GameTile";
+import GameItem from "@/components/game/GameItem";
 import Ads from "@/components/other/Ads";
 import BoxChat from "@/components/box-chat/BoxChat";
 import GameScreenBar from "../game/GameScreenBar";
@@ -20,7 +20,7 @@ const GameDetailGrid = () => {
     <div>
       <div className="game-detail-grid">
         {/* list ads */}
-        {Array(6)
+        {Array(4)
           .fill(0)
           .map((e, i) => (
             <Ads key={i} area={`ads${i + 1}`} ip={e?.ip}></Ads>
@@ -64,18 +64,6 @@ const GameDetailGrid = () => {
         {/* box chat  */}
         <BoxChat area={"bc"}></BoxChat>
 
-        {/* games relate */}
-        {gamesRelate?.map((e, i) => (
-          <GameTile
-            key={i}
-            // style={{
-            //   gridArea: `d${i + 1} / d${i + 1} / d${i + 1} / d${i + 1}`,
-            // }}
-            title={e?.title}
-            thumbnail={e?.thumbnail}
-          ></GameTile>
-        ))}
-
         {/* game info */}
         <GameInfo
           style={{
@@ -89,6 +77,17 @@ const GameDetailGrid = () => {
             gridArea: "hof / hof / hof / hof",
           }}
         />
+        {/* games relate */}
+        {gamesRelate?.map((e, i) => (
+          <GameItem
+            key={i}
+            // style={{
+            //   gridArea: `d${i + 1} / d${i + 1} / d${i + 1} / d${i + 1}`,
+            // }}
+            title={e?.title}
+            thumbnail={e?.thumbnail}
+          ></GameItem>
+        ))}
       </div>
     </div>
   );

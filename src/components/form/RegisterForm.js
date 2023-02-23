@@ -36,7 +36,7 @@ const RegisterForm = () => {
   });
 
   const onSubmit = async (dataUser) => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (!isValid) return;
     try {
       const data = await registerEmail({
@@ -49,10 +49,10 @@ const RegisterForm = () => {
         status: "success",
         duration: 20000,
         isClosable: true,
-      })
-      setIsLoading(false)
+      });
+      setIsLoading(false);
     } catch (e) {
-      setIsLoading(false)
+      setIsLoading(false);
       toast({
         title: e.response.data.error.message,
         status: "error",
