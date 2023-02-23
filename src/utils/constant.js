@@ -45,6 +45,11 @@ const VIEW_ALL_GAMES_TABS = {
   PURCHASE_HISTORY: "PURCHASE_HISTORY",
 };
 
+const PUBLIC_PAGE_URL = {
+  LOGIN: "/login",
+  REGISTER: "/register",
+};
+
 export {
   FACEBOOK_SIGN_IN_ERROR,
   IMAGE_URL,
@@ -54,4 +59,5 @@ export {
   STATUS,
   EDIT_PROFILE_TAB,
   VIEW_ALL_GAMES_TABS,
+  PUBLIC_PAGE_URL,
 };

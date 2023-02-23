@@ -17,7 +17,7 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
   const router = useRouter();
   const toast = useToast();
 
-  const { setToken } = useAuthContext();
+  const { setToken, setUsernameAuth } = useAuthContext();
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -33,12 +33,16 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
         method: SSO_METHOD.GOOGLE,
         token: oauthIdToken,
       });
-      if (!res) return;
 
-      const { token } = res;
+      const {
+        data: { token, username },
+      } = res;
 
       setToken(token);
+      setUsernameAuth(username);
+
       localStorage.setItem("accessToken", token);
+      localStorage.setItem("username", username);
 
       router.push("/");
     } catch (error) {

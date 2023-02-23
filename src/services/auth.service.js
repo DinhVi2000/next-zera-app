@@ -24,7 +24,11 @@ export const { setUser: setInfo } = actions;
 const verifySSOToken = async (params) => {
   try {
     const { data } = await http.post("/auth/sso", params);
-    return data.data;
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
   } catch (e) {
     throw e;
   }
@@ -34,6 +38,10 @@ const verifySSOToken = async (params) => {
 const loginWithEmail = async (params) => {
   try {
     const { data } = await http.post("/auth/login-email", params);
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
     return data;
   } catch (e) {
     throw e;
@@ -43,7 +51,11 @@ const loginWithEmail = async (params) => {
 const registerEmail = async (params) => {
   try {
     const { data } = await http.post("/auth/register-email", params);
-    return data.data;
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
   } catch (e) {
     throw e;
   }

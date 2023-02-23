@@ -8,15 +8,18 @@ import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 import {
   getAllCategories,
   getGameByCategoryId,
+  getGameDetailById,
   getGameDetailBySlug,
 } from "@/services/game.service";
 import { useRouter } from "next/router";
 import { isEmpty, notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
 
 const GameDetail = () => {
   const router = useRouter();
   const toast = useToast();
+  const dispatch = useDispatch();
 
   const [params, setParams] = useState();
 
@@ -26,24 +29,18 @@ const GameDetail = () => {
 
   const handleGetGameDetailData = async () => {
     try {
-      const res = await getGameDetailBySlug(params);
-      if (!res.success) {
-        throw new Error(res?.message);
-      }
+      const { gameId } = params;
 
-      const { data } = res;
+      const { data } = await getGameDetailById(dispatch, gameId);
       setGame(data);
 
       const {
         game_category: { id },
       } = data;
-
-      const response = await getGameByCategoryId(id);
-      if (!response.success) {
-        throw new Error(res?.message);
-      }
-
-      setGamesRelate(response?.data?.rows);
+      const {
+        data: { rows },
+      } = await getGameByCategoryId(dispatch, id);
+      setGamesRelate(rows);
     } catch (error) {
       notifyErrorMessage(toast, error);
     }
@@ -97,16 +94,9 @@ const GameDetail = () => {
 
 export default GameDetail;
 
-export async function getStaticProps(context) {
-  const { params } = context;
-
-  const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-  const data = await response.json();
-
+export async function getStaticProps() {
   return {
-    props: {
-      posts: data,
-    },
+    props: {},
   };
 }
 

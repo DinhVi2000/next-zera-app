@@ -7,12 +7,13 @@ import {
   IconPlusNoRounded,
 } from "@/resources/icons";
 import React from "react";
+import ImageLoading from "../loading/ImageLoading";
 
 const GameScreenBar = ({ title, thumbnail }) => {
   return (
-    <div className="bg-[#373737] text-white py-2 px-4 flex items-center justify-between rounded-b-2xl">
+    <div className="bg-[#373737] text-white p-2.5 flex items-center justify-between">
       <div className="flex items-center gap-2.5">
-        <img
+        <ImageLoading
           src={thumbnail}
           alt=""
           className="w-[50px] h-[50px] rounded-xl object-cover"
@@ -26,10 +27,10 @@ const GameScreenBar = ({ title, thumbnail }) => {
         </div>
 
         <div className="flex gap-2.5">
-          <IconHeart />
-          <IconPlusNoRounded />
-          <IconFullScreen />
-          <IconInfo />
+          <IconHeart className="cursor-pointer" />
+          <IconPlusNoRounded className="cursor-pointer" />
+          <IconFullScreen className="cursor-pointer" />
+          <IconInfo className="cursor-pointer" />
         </div>
       </div>
     </div>

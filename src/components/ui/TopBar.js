@@ -100,9 +100,10 @@ const TopBar = () => {
           <Image src={logo} alt="" width={134} height={72} className="mb-1" />
         </Link>
 
-        <div className="flex gap-2.5 justify-between items-center cursor-pointer">
-          <IconMenu onClick={handleToggleContent}></IconMenu>
-          <IconCup fill="red"></IconCup>
+        <div className="flex gap-2.5 justify-between items-center cursor-pointer px-4">
+          <div onClick={handleToggleContent}>
+            <IconMenu></IconMenu>
+          </div>
           <div
             onClick={() => {
               openModal(MODAL_NAME.MENUBAR);
