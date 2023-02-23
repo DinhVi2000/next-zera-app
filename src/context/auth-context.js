@@ -7,6 +7,7 @@ import { notifyErrorMessage } from "@/utils/helper";
 
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { PUBLIC_PAGE_URL } from "@/utils/constant";
 
 const AuthContext = createContext(null);
 
@@ -30,14 +31,11 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
 
+  const { pathname } = router ?? {};
+
   const verifyAccessToken = async () => {
     try {
-      const response = await getUserInfo(usernameAuth);
-      if (!response.success) {
-        throw new Error(response?.message);
-      }
-
-      const { data } = response;
+      const { data } = await getUserInfo(usernameAuth);
 
       setUserInfo(data);
     } catch (error) {
@@ -47,17 +45,9 @@ export const AuthContextProvider = ({ children }) => {
 
   const login = async (formData) => {
     try {
-      const response = await loginWithEmail(formData);
-      if (!response.success) {
-        throw new Error(response?.message);
-      }
-
       const {
-        data: {
-          token,
-          info: { username },
-        },
-      } = response;
+        data: { token, username },
+      } = await loginWithEmail(formData);
 
       localStorage.setItem("accessToken", token);
       localStorage.setItem("username", username);
@@ -77,10 +67,13 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (token && usernameAuth) {
+    const isPublicPage = Object.values(PUBLIC_PAGE_URL).includes(pathname);
+    if (token && usernameAuth && !isPublicPage) {
+      console.log("authenticate with token: ", token);
+      console.log("authenticate with username: ", usernameAuth);
       verifyAccessToken();
     }
-  }, [token, usernameAuth]);
+  }, [token, usernameAuth, pathname]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -93,10 +86,12 @@ export const AuthContextProvider = ({ children }) => {
 
   const authProvider = useMemo(
     () => ({
+      usernameAuth,
       userInfo,
-      setUserInfo,
       token,
+      setUserInfo,
       setToken,
+      setUsernameAuth,
       login,
       logout,
     }),

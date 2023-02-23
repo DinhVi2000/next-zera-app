@@ -53,7 +53,7 @@ class Http {
     http.interceptors.response.use(
       (response) => response,
       (error) => {
-        return this.handleError(error);
+        return this.handleError(error?.response?.data?.error || error);
       }
     );
 

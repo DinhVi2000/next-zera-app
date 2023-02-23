@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
+import ImageLoading from "../loading/ImageLoading";
 
 const GameCategory = ({ size, description, thumbnail, ...rest }) => {
   return (
@@ -25,11 +26,12 @@ const GameCategory = ({ size, description, thumbnail, ...rest }) => {
           className={`rounded-2xl overflow-hidden relative flex items-center bg-white cursor-pointer max-h-[94px]
                       hover:translate-y-[-2px] hover:scale-105 transition-all duration-300`}
         >
-          <img
-            alt=""
+          <ImageLoading
             src={thumbnail}
-            className=" w-[94px] h-[94px] object-cover"
-          ></img>
+            alt={description}
+            className="min-w-[94px] h-[94px] object-cover"
+          />
+
           <div className="text-violet-900 uppercase w-full px-2 font-bold text-sm h-9 flex items-center leading-5 cursor-pointer">
             {description}
           </div>

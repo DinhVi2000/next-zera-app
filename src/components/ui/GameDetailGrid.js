@@ -1,12 +1,20 @@
 import React, { memo } from "react";
 
 import GameTile from "@/components/game/GameTile";
-import Ads from "@/components/game/Ads";
+import Ads from "@/components/other/Ads";
 import BoxChat from "@/components/box-chat/BoxChat";
 import GameScreenBar from "../game/GameScreenBar";
+import GameInfo from "../game/GameInfo";
+import TopHallOfFame from "../other/TopHallOfFame";
+import ShareToEarn from "../other/ShareToEarn";
+import ReferAFriend from "../other/ReferAFriend";
+import { useSelector } from "react-redux";
 
-const GameDetailGrid = ({ game, gamesRelate }) => {
-  const { title, thumbnail, play_url } = game || {};
+const GameDetailGrid = () => {
+  const { info, gamesRelate } =
+    useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
+
+  const { title, thumbnail, play_url } = info ?? {};
 
   return (
     <div>
@@ -18,6 +26,20 @@ const GameDetailGrid = ({ game, gamesRelate }) => {
             <Ads key={i} area={`ads${i + 1}`} ip={e?.ip}></Ads>
           ))}
 
+        {/* ShareToEarn */}
+        <ShareToEarn
+          style={{
+            gridArea: "ste / ste / ste / ste",
+          }}
+        />
+
+        {/* refer a friend */}
+        <ReferAFriend
+          style={{
+            gridArea: "raf / raf / raf / raf",
+          }}
+        />
+
         {/* game screen */}
         <div
           style={{
@@ -25,29 +47,24 @@ const GameDetailGrid = ({ game, gamesRelate }) => {
           }}
           className="h-full flex flex-col"
         >
-          {thumbnail ? (
-            <iframe
-              className="rounded-t-2xl flex-1"
-              width="100%"
-              // height="au"
-              frameBorder="0"
-              marginWidth="0"
-              marginHeight="0"
-              vspace="0"
-              hspace="0"
-              scrolling="no"
-              allowFullScreen={true}
-              src={play_url}
-            ></iframe>
-          ) : (
-            <div className="skeleton w-full h-full"></div>
-          )}
+          <iframe
+            className={`${!thumbnail && "skeleton-shine"} flex-1`}
+            width="100%"
+            frameBorder="0"
+            marginHeight="0"
+            vspace="0"
+            hspace="0"
+            scrolling="no"
+            allowFullScreen={true}
+            src={play_url}
+          ></iframe>
           <GameScreenBar title={title} thumbnail={thumbnail} />
         </div>
+
         {/* box chat  */}
         <BoxChat area={"bc"}></BoxChat>
 
-        {/* games */}
+        {/* games relate */}
         {gamesRelate?.map((e, i) => (
           <GameTile
             key={i}
@@ -59,11 +76,19 @@ const GameDetailGrid = ({ game, gamesRelate }) => {
           ></GameTile>
         ))}
 
-        {/* {Array(50)
-        .fill(0)
-        .map((e, i) => (
-          <GameTile size={1} key={i}></GameTile>
-        ))} */}
+        {/* game info */}
+        <GameInfo
+          style={{
+            gridArea: "gi / gi / gi / gi",
+          }}
+        />
+
+        {/* hall of fame */}
+        <TopHallOfFame
+          style={{
+            gridArea: "hof / hof / hof / hof",
+          }}
+        />
       </div>
     </div>
   );
