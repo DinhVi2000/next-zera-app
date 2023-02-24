@@ -35,6 +35,8 @@ const GameDetail = () => {
         (await getGameDetailById(dispatch, params?.gameId)) ?? {};
 
       const { game_category } = data ?? {};
+
+      if (!game_category?.id) return;
       await getGameByCategoryId(dispatch, game_category?.id);
     } catch (error) {
       notifyErrorMessage(toast, error);

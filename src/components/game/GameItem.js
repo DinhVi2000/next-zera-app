@@ -9,7 +9,6 @@ import ImageLoading from "@/components/loading/ImageLoading";
 import { inRange } from "@/utils/helper";
 
 const GameItem = ({
-  key,
   id,
   index,
   thumbnail,
