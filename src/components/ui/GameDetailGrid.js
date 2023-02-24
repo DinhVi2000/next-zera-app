@@ -9,6 +9,8 @@ import TopHallOfFame from "../other/TopHallOfFame";
 import ShareToEarn from "../other/ShareToEarn";
 import ReferAFriend from "../other/ReferAFriend";
 import { useSelector } from "react-redux";
+import { getRandom } from "@/utils/helper";
+import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
 
 const GameDetailGrid = () => {
   const { info, gamesRelate } =
@@ -20,11 +22,9 @@ const GameDetailGrid = () => {
     <div>
       <div className="game-detail-grid">
         {/* list ads */}
-        {Array(4)
-          .fill(0)
-          .map((e, i) => (
-            <Ads key={i} area={`ads${i + 1}`} ip={e?.ip}></Ads>
-          ))}
+        {ADS_IMAGES.map((e, i) => (
+          <Ads thumbnail={e} key={i} area={`ads${i + 1}`} ip={e?.ip}></Ads>
+        ))}
 
         {/* ShareToEarn */}
         <ShareToEarn
@@ -45,7 +45,7 @@ const GameDetailGrid = () => {
           style={{
             gridArea: "gs / gs / gs / gs",
           }}
-          className="h-full flex flex-col"
+          className="h-full flex flex-col bg-white"
         >
           <iframe
             className={`${!thumbnail && "skeleton-shine"} flex-1`}
@@ -88,6 +88,31 @@ const GameDetailGrid = () => {
             thumbnail={e?.thumbnail}
           ></GameItem>
         ))}
+
+        {Array(50 - gamesRelate?.length || 0)
+          .fill(0)
+          ?.map((e, i) => (
+            <GameItem
+              key={gamesRelate?.length + i}
+              id={gamesRelate?.length + i}
+              index={gamesRelate?.length + i}
+              thumbnail={getRandom(GAMES_IMAGES)}
+              title={`game ${gamesRelate?.length + i}`}
+            ></GameItem>
+          ))}
+
+        {!gamesRelate &&
+          Array(50)
+            .fill(0)
+            ?.map((e, i) => (
+              <GameItem
+                key={i}
+                id={i}
+                index={i}
+                thumbnail={getRandom(GAMES_IMAGES)}
+                title={`game ${i}`}
+              ></GameItem>
+            ))}
       </div>
     </div>
   );

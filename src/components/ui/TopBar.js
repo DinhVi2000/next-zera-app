@@ -30,6 +30,7 @@ import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import { Tooltip } from "@chakra-ui/react";
 import { sleep } from "@/utils/helper";
+import Timer from "../other/Timer";
 
 const topBarItems = [
   {
@@ -154,9 +155,7 @@ const TopBar = () => {
         )}
 
         {/* countdown */}
-        <div className="bg-violet-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
-          00:00:00
-        </div>
+        <Timer />
       </div>
     </div>
   );

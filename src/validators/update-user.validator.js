@@ -5,9 +5,9 @@ export const updateUserFormSchema = yup.object({
     .string()
     .required("*Please enter your username")
     .min(6, "*At least 6 characters")
-    .max(64, "*Must be less than 64 characters long"),
-  // .matches(
-  //   /^@[a-z0-9_]{5,64}$/,
-  //   "Please enter the correct name according to the rules"
-  // ),
+    .max(64, "*Must be less than 64 characters long")
+    .matches(
+      /^[a-z0-9_]{5,64}$/,
+      "Please enter a valid username according to the rules"
+    ),
 });

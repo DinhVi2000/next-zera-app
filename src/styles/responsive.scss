@@ -32,7 +32,7 @@
       " ip15 ip16 ip16 . ip1 ip1 ip1 ip12 ip12 ip13 ip13 ip17 ip17 ip18 ip18"
       " . ip16 ip16 . ip20 ip20 ip21 ip21 ip22 ip22 . ip17 ip17 ip18 ip18"
       " . . . . ip20 ip20 ip21 ip21 ip22 ip22 . . . . ."
-      " . . . . . . . . . . . . . . ."
+      " . ip9 . . . . . . . . . . . . ."
       " . . . . . . . . ip23 ip23 ip23 . . . ."
       " . . . . ip26 ip26 . . ip23 ip23 ip23 . . . ."
       " ip25 ip25 . . ip26 ip26 . . ip23 ip23 ip23 . . . ."
@@ -45,8 +45,8 @@
   .category-grid {
     grid-template-areas:
       "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 c7 c7 ."
-      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 c8 c8 ."
-      "c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 c14 c14 c15 c15 ."
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 c7 c7 ."
+      "c8 c8 c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 c14 c14  ."
       "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 c21 c21 c22 c22 .";
   }
 
@@ -92,16 +92,6 @@
     grid-template-rows: repeat(15, 94px);
   }
 
-  .category-grid {
-    grid-template-areas:
-      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 "
-      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 "
-      "c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 c14 c14 "
-      "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 c21 c21 ";
-    grid-template-columns: repeat(12, 94px);
-    grid-template-rows: repeat(3, 94px);
-  }
-
   .game-detail-grid {
     grid-template-areas:
       "ads1 gs gs gs gs gs gs gs bc bc . ."
@@ -120,6 +110,16 @@
     grid-template-columns: repeat(12, 94px);
     grid-template-rows: repeat(14, 94px);
   }
+
+  .category-grid {
+    grid-template-areas:
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 "
+      "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 c6 c6 "
+      "c7 c7 c8 c8 c9 c9 c10 c10 c11 c11 c12 c12"
+      "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 c21 c21 ";
+    grid-template-columns: repeat(12, 94px);
+    grid-template-rows: repeat(3, 94px);
+  }
 }
 
 @media (min-width: 1321px) and (max-width: 1540.9px) {
@@ -130,7 +130,7 @@
       " ip0 ip0 ip0 ip1 ip1 ip1 . ip5 ip5 ."
       " . . . ip1 ip1 ip1 . ip5 ip5 ."
       " ip6 ip7 ip7 ip1 ip1 ip1 . ip8 ip8 ."
-      " ip6 ip7 ip7 . . . . ip8 ip8 ."
+      " . ip7 ip7 . . . . ip8 ip8 ."
       " . . . . . . . . . ."
       " . . . . . ip9 ip9 . . ."
       " . . . . . ip9 ip9 . . ."
@@ -149,7 +149,7 @@
     grid-template-areas:
       "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 "
       "c1 c1 c2 c2 c3 c3 c4 c4 c5 c5 "
-      "c9 c9 c10 c10 c11 c11 c12 c12 c13 c13 "
+      "c6 c6 c7 c7 c8 c8 c9 c9 c10 c10  "
       "c16 c16 c17 c17 c18 c18 c19 c19 c20 c20 ";
     grid-template-columns: repeat(10, 94px);
     grid-template-rows: repeat(auto-fill, 94px);

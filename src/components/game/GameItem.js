@@ -6,9 +6,22 @@ import Link from "next/link";
 import { IconRecently } from "@/resources/icons";
 
 import ImageLoading from "@/components/loading/ImageLoading";
+import { inRange } from "@/utils/helper";
 
-const GameItem = ({ id, thumbnail, area, title, isRecently, ...props }) => {
-  const gridArea = area && `${area} / ${area} / ${area} / ${area}`;
+const GameItem = ({
+  key,
+  id,
+  index,
+  thumbnail,
+  area,
+  title,
+  isRecently,
+  ...props
+}) => {
+  const gridArea =
+    inRange(index, 0, 16) && area
+      ? `${area} / ${area} / ${area} / ${area}`
+      : "auto";
 
   return (
     <div

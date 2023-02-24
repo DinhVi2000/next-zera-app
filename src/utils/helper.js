@@ -18,6 +18,10 @@ const isEmpty = (obj) => {
   return Object.keys(obj).length === 0;
 };
 
+const inRange = (x, min, max) => {
+  return (x - min) * (x - max) <= 0;
+};
+
 const notifySuccessMessage = (toast, data) => {
   toast({
     title: "SUCCESS",
@@ -30,4 +34,19 @@ const notifySuccessMessage = (toast, data) => {
   });
 };
 
-export { sleep, isEmpty, notifyErrorMessage, notifySuccessMessage }
+const getRandom = (list) => {
+  if (!list.length) {
+    return "";
+  }
+
+  return list[Math.floor(Math.random() * list.length)];
+};
+
+export {
+  sleep,
+  isEmpty,
+  inRange,
+  notifyErrorMessage,
+  notifySuccessMessage,
+  getRandom,
+};

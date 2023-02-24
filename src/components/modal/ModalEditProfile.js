@@ -21,7 +21,7 @@ import { useToast } from "@chakra-ui/react";
 import { updateUser } from "@/services/user.service";
 import { useAuthContext } from "@/context/auth-context";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { updateUserFormSchema } from "@/validators/update.user.validation";
+import { updateUserFormSchema } from "@/validators/update-user.validator";
 
 const ModalEditProfile = () => {
   const { userInfo, setUserInfo } = useAuthContext();

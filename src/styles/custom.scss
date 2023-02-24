@@ -176,6 +176,7 @@
     background-color: hsl(200, 20%, 95%);
   }
 }
+
 .daily-bonus {
   background: linear-gradient(180deg, #fda3ff 0%, #f4bfff 29.69%, #9949ff 100%);
   box-shadow: 4.17188px 4.17188px 8.34375px rgba(0, 0, 0, 0.25),
@@ -261,9 +262,11 @@
     transform: translate(-50%, 0);
   }
 }
+
 .gradient-radius {
   position: relative;
 }
+
 .gradient-radius::before {
   content: "";
   position: absolute;
@@ -274,4 +277,13 @@
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+}
+
+@font-face {
+  font-family: "Digital Numbers Regular"; /* đặt tên font */
+  src: url(../../public/assets/fonts/DigitalNumbers-Regular.woff); /* tải font chữ */
+}
+
+.font-numberic {
+  font-family: "Digital Numbers Regular"; /* đặt tên font */
 }
