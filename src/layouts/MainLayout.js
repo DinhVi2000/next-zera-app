@@ -8,7 +8,7 @@ const MainLayout = ({ children }) => {
     <div className="h-[100vh]">
       <div className="flex justify-between gap-4 p-4 w-fit mx-auto relative">
         <SideBar />
-        <div className="ml-[222px]">{children}</div>
+        <div>{children}</div>
       </div>
       <Footer></Footer>
     </div>

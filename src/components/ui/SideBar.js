@@ -97,9 +97,9 @@ const SideBar = () => {
   };
 
   return (
-    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit absolute z-10 w-full max-w-[204px]">
+    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit sticky top-[16px] z-10 max-w-[204px]">
       {/* head */}
-      <div className="px-3 pb-3 border-violet-300 border-b-[1px]">
+      <div className="px-3 pb-3">
         <Link href={"/"}>
           <Image src={logo} alt="" width={134} height={72} className="mb-1" />
         </Link>
@@ -121,7 +121,7 @@ const SideBar = () => {
       {/* content */}
       <div
         ref={content_ref}
-        className="h-[242px] text-white pl-6 flex flex-col overflow-y-auto gap-4 border-violet-300 transition-all "
+        className="h-[242px] text-white pl-6 flex flex-col overflow-y-auto gap-4 transition-all"
       >
         {sideBarItems?.map((e, i) => (
           <div
@@ -195,9 +195,11 @@ const UserInfo = () => {
 
       {/* coin */}
       <div className="flex items-center justify-between gap-2.5 text-base font-black px-2.5 mb-4">
-        <button className="bg-pink-800 py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500">
-          Shop
-        </button>
+        <Link href={"/shop"}>
+          <button className="bg-pink-800 py-[5px] px-5 rounded-[20px] border-[1px] border-[#F9A8D4] shadow-pink-500">
+            Shop
+          </button>
+        </Link>
         <div className="flex items-center gap-2">
           <span>{zera}</span>
           <IconCoin />

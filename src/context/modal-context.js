@@ -1,11 +1,12 @@
 import { createContext, useContext, useMemo, useState } from "react";
 
 import Menubar from "@/components/ui/Menubar";
-import ModalEditProfile from '@/components/modal/ModalEditProfile';
-import ModalViewAllGames from '@/components/modal/ModalViewAllGames';
-import ModalDailyBonus from '@/components/modal/ModalDailyBonus';
+import ModalEditProfile from "@/components/modal/ModalEditProfile";
+import ModalViewAllGames from "@/components/modal/ModalViewAllGames";
+import ModalDailyBonus from "@/components/modal/ModalDailyBonus";
+import ModalBuy from "@/components/modal/ModalBuy";
 
-import { MODAL_NAME } from "@/utils/constant";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
 
 const ModalContext = createContext(null);
 
@@ -14,6 +15,7 @@ const Modal = {
   EDIT_PROFILE: <ModalEditProfile />,
   VIEW_ALL_GAMES: <ModalViewAllGames />,
   DAILY_BONUS: <ModalDailyBonus />,
+  BUY: <ModalBuy />,
 };
 
 export const useModalContext = () => {
@@ -29,8 +31,9 @@ export const useModalContext = () => {
 };
 
 export const ModalContextProvider = ({ children }) => {
-  const [payload, setPayload] = useState()
+  const [payload, setPayload] = useState();
   const [modal, setModal] = useState(MODAL_NAME.NONE);
+  const [status, setStatus] = useState(STATUS.NOT_START);
 
   const closeModal = () => {
     setModal(MODAL_NAME.NONE);
@@ -45,10 +48,12 @@ export const ModalContextProvider = ({ children }) => {
       modal,
       openModal,
       closeModal,
-      payload, 
-      setPayload
+      payload,
+      setPayload,
+      status,
+      setStatus,
     }),
-    [modal]
+    [modal, status, payload]
   );
 
   return (
