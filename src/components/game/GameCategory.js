@@ -2,12 +2,12 @@
 import React from "react";
 import ImageLoading from "../loading/ImageLoading";
 
-const GameCategory = ({ id, area, size, description, thumbnail, ...props }) => {
+const GameCategory = ({ id, area, size, label, thumbnail, ...props }) => {
   const gridArea = `${area} / ${area} / ${area} / ${area}`;
 
   return (
     <>
-      {id < 9 && id > 0 ? (
+      {id < 8 && id > 0 ? (
         <div
           {...props}
           className={`rounded-2xl overflow-hidden relative cursor-pointer min-w-[204px] min-h-[204px]
@@ -22,7 +22,7 @@ const GameCategory = ({ id, area, size, description, thumbnail, ...props }) => {
           ></ImageLoading>
           {/* description */}
           <span className="bg-white text-violet-900 uppercase absolute w-full bottom-0 px-4 font-bold text-[13px] h-9 flex items-center">
-            {description}
+            {label}
           </span>
         </div>
       ) : (
@@ -35,12 +35,12 @@ const GameCategory = ({ id, area, size, description, thumbnail, ...props }) => {
           {/* thumbnail */}
           <ImageLoading
             src={thumbnail}
-            alt={description}
+            alt={label}
             className="min-w-[94px] h-[94px] object-cover"
           />
           {/* description */}
           <div className="text-violet-900 uppercase w-full px-2 font-bold text-sm h-9 flex items-center leading-5 cursor-pointer">
-            {description}
+            {label}
           </div>
         </div>
       )}

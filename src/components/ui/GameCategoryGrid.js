@@ -14,7 +14,7 @@ const GameCategoryGrid = ({ categories }) => {
           id={e?.id}
           size={e?.size}
           thumbnail={e?.thumbnail}
-          description={e?.description}
+          label={e?.label}
         ></GameCategory>
       ))}
     </div>

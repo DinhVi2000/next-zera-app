@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
@@ -30,6 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState();
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
+  const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
 
   const { pathname } = router ?? {};
 
@@ -61,20 +63,6 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    setToken(localStorage.getItem("accessToken") || "");
-    setUsernameAuth(localStorage.getItem("username") || "");
-  }, []);
-
-  useEffect(() => {
-    const isPublicPage = Object.values(PUBLIC_PAGE_URL).includes(pathname);
-    if (token && usernameAuth && !isPublicPage) {
-      console.log("authenticate with token: ", token);
-      console.log("authenticate with username: ", usernameAuth);
-      verifyAccessToken();
-    }
-  }, [token, usernameAuth, pathname]);
-
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("username");
@@ -98,9 +86,42 @@ export const AuthContextProvider = ({ children }) => {
     [userInfo, setUserInfo, token, setToken]
   );
 
+  const isAuthenticationPath = useMemo(
+    () => Object.values(PUBLIC_PAGE_URL).includes(pathname),
+    [pathname]
+  );
+
+  useEffect(() => {
+    setToken(localStorage.getItem("accessToken") || "");
+    setUsernameAuth(localStorage.getItem("username") || "");
+  }, []);
+
+  useEffect(() => {
+    if (token && usernameAuth && !isAuthenticationPath) {
+      setIsAuthenticationPage(false);
+
+      console.log("authenticate with token: ", token);
+      console.log("authenticate with username: ", usernameAuth);
+
+      verifyAccessToken();
+    }
+  }, [token, usernameAuth, pathname]);
+
+  useEffect(() => {
+    if (
+      pathname &&
+      isAuthenticationPath &&
+      (localStorage.getItem("accessToken") || localStorage.getItem("username"))
+    ) {
+      router.push("/");
+    } else {
+      setIsAuthenticationPage(false);
+    }
+  }, [pathname]);
+
   return (
     <AuthContext.Provider value={{ authProvider }}>
-      {children}
+      {!isAuthenticationPage && children}
     </AuthContext.Provider>
   );
 };

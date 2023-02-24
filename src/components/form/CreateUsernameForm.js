@@ -8,7 +8,7 @@ import InputHook from "../custom/InputHook";
 import { registerFormSchema } from "@/validators/register.validator";
 
 import { useAuthContext } from "@/context/auth-context";
-import { updateUserFormSchema } from "@/validators/update.user.validation";
+import { updateUserFormSchema } from "@/validators/update-user.validator";
 import { useApi } from "@/hooks/useApi";
 import { updateUsername } from "@/services/user.service";
 import { STATUS } from "@/utils/constant";
