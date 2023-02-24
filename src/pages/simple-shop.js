@@ -2,7 +2,6 @@ import MainLayout from "@/layouts/MainLayout";
 import React, { useState } from "react";
 
 import Head from "next/head";
-import TopBar from "@/components/ui/TopBar";
 import AvatarItem from "@/components/shop/AvatarItem";
 import { Checkbox } from "@chakra-ui/react";
 import { SIMPLE_SHOP_TAB } from "@/utils/constant";

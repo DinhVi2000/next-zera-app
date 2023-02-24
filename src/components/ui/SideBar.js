@@ -32,7 +32,7 @@ import { Tooltip } from "@chakra-ui/react";
 import { sleep } from "@/utils/helper";
 import Timer from "../other/Timer";
 
-const topBarItems = [
+const sideBarItems = [
   {
     icon: <IconRider />,
     text: "Rider",
@@ -49,41 +49,41 @@ const topBarItems = [
     icon: <IconBasketball />,
     text: "Basketball",
   },
-  // {
-  //   icon: <IconDressUp />,
-  //   text: "Dress up",
-  // },
-  // {
-  //   icon: <IconEscape />,
-  //   text: "Escape",
-  // },
-  // {
-  //   icon: <IconFbs />,
-  //   text: "FBS",
-  // },
-  // {
-  //   icon: <IconHorror />,
-  //   text: "Horror",
-  // },
-  // {
-  //   icon: <IconIo />,
-  //   text: ".io",
-  // },
-  // {
-  //   icon: <IconConsole />,
-  //   text: "Console",
-  // },
-  // {
-  //   icon: <IconCasual />,
-  //   text: "Casual",
-  // },
-  // {
-  //   icon: <IconHorror />,
-  //   text: "Horror",
-  // },
+  {
+    icon: <IconDressUp />,
+    text: "Dress up",
+  },
+  {
+    icon: <IconEscape />,
+    text: "Escape",
+  },
+  {
+    icon: <IconFbs />,
+    text: "FBS",
+  },
+  {
+    icon: <IconHorror />,
+    text: "Horror",
+  },
+  {
+    icon: <IconIo />,
+    text: ".io",
+  },
+  {
+    icon: <IconConsole />,
+    text: "Console",
+  },
+  {
+    icon: <IconCasual />,
+    text: "Casual",
+  },
+  {
+    icon: <IconHorror />,
+    text: "Horror",
+  },
 ];
 
-const TopBar = () => {
+const SideBar = () => {
   const { openModal } = useModalContext();
   const { userInfo, logout } = useAuthContext();
 
@@ -97,7 +97,7 @@ const TopBar = () => {
   };
 
   return (
-    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit fixed z-10 w-full max-w-[204px]">
+    <div className="px-4 pt-2.5 pb-[13px] bg-blur-500 w-fit rounded-2xl h-fit absolute z-10 w-full max-w-[204px]">
       {/* head */}
       <div className="px-3 pb-3 border-violet-300 border-b-[1px]">
         <Link href={"/"}>
@@ -121,9 +121,9 @@ const TopBar = () => {
       {/* content */}
       <div
         ref={content_ref}
-        className="h-[242px] text-white  pl-6 flex flex-col overflow-hidden gap-4 border-violet-300 border-b-[1px] transition-all "
+        className="h-[242px] text-white pl-6 flex flex-col overflow-y-auto gap-4 border-violet-300 transition-all "
       >
-        {topBarItems?.map((e, i) => (
+        {sideBarItems?.map((e, i) => (
           <div
             key={i}
             className="flex gap-2.5 items-center text-base font-bold cursor-pointer"
@@ -161,7 +161,7 @@ const TopBar = () => {
   );
 };
 
-export default memo(TopBar);
+export default memo(SideBar);
 
 const UserInfo = () => {
   const { userInfo, logout } = useAuthContext();

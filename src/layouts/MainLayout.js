@@ -1,13 +1,13 @@
 import React from "react";
 
 import Footer from "@/components/ui/Footer";
-import TopBar from "@/components/ui/TopBar";
+import SideBar from "@/components/ui/SideBar";
 
 const MainLayout = ({ children }) => {
   return (
     <div className="h-[100vh]">
       <div className="flex justify-between gap-4 p-4 w-fit mx-auto relative">
-        <TopBar />
+        <SideBar />
         <div className="ml-[222px]">{children}</div>
       </div>
       <Footer></Footer>
