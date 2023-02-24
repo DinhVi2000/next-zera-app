@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { VIEW_ALL_GAMES_TABS, MODAL_NAME } from "@/utils/constant";
+import { MODAL_NAME } from "@/utils/constant";
 import { sleep } from "@/utils/helper";
 import BoxModal from "./BoxModal";
 
 import { IconClose } from "@/resources/icons";
-import Image from "next/image";
-import avaImg from "../../../public/images/ava-user.png";
-import lineImg from "../../../public/images/Line.png";
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
@@ -33,19 +30,19 @@ const ModalViewAllGames = () => {
   const tabs = [
     {
       title: "Recent games",
-      tabName: VIEW_ALL_GAMES_TABS.RECENT_GAMES,
+      tabName: VIEW_ALL_GAMES_TAB.RECENT_GAMES,
     },
     {
       title: "Loved games",
-      tabName: VIEW_ALL_GAMES_TABS.LOVED_GAMES,
+      tabName: VIEW_ALL_GAMES_TAB.LOVED_GAMES,
     },
     {
       title: "Playlist",
-      tabName: VIEW_ALL_GAMES_TABS.PLAYLIST,
+      tabName: VIEW_ALL_GAMES_TAB.PLAYLIST,
     },
     {
       title: "Purchase history ",
-      tabName: VIEW_ALL_GAMES_TABS.PURCHASE_HISTORY,
+      tabName: VIEW_ALL_GAMES_TAB.PURCHASE_HISTORY,
     },
   ];
 

@@ -13,14 +13,10 @@ import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import ButtonLoading from "../loading/ButtonLoading";
 
-import { IconHiddenEye, IconShowEye } from "@/resources/icons";
-
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const toast = useToast();
-
-  const [passwordShown, setPasswordShown] = useState(false);
 
   const {
     handleSubmit,
@@ -97,21 +93,13 @@ const RegisterForm = () => {
             {errors?.password?.message}
           </p>
         </div>
-        <div className="relative">
-          <InputHook
-            name="password"
-            id="password"
-            control={control}
-            type={passwordShown ? "text" : "password"}
-            className="bg-violet-100 w-full rounded-[10px] px-3 py-3 text-black text-base"
-          />
-          <div
-            className="absolute top-[29%] right-[2%] cursor-pointer"
-            onClick={() => setPasswordShown((value) => !value)}
-          >
-            {passwordShown ? <IconShowEye /> : <IconHiddenEye />}
-          </div>
-        </div>
+        <InputHook
+          name="password"
+          id="password"
+          control={control}
+          type="password"
+          className="bg-violet-100 w-full rounded-[10px] px-3 py-3 text-black text-base"
+        />
       </div>
 
       {/* terms checkbox */}

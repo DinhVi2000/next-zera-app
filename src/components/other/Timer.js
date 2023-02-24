@@ -3,7 +3,7 @@ import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
 // const DEADLINE =
-//   (new Date(COUNTDOWN_DEALINE).getTime() - new Date().getTime()) / 1000;
+//   (new Date(COUNTDOWN_DEADLINE).getTime() - new Date().getTime()) / 1000;
 const DEADLINE = 3600;
 
 const Timer = () => {

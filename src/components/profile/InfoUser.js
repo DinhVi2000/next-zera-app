@@ -1,19 +1,17 @@
-import { IconCoin, IconPlus, IconEdit } from "@/resources/icons"
-import { Tooltip, useDisclosure } from "@chakra-ui/react"
-import React, { useState } from "react"
+import { IconCoin, IconPlus, IconEdit } from "@/resources/icons";
+import { Tooltip } from "@chakra-ui/react";
+import React from "react";
 
-import Image from "next/image"
-import coverImg from "../../../public/images/cover-user.png"
-import avaImg from "../../../public/images/ava-user.png"
-import { useModalContext } from "@/context/modal-context"
-import { MODAL_NAME } from "@/utils/constant"
-import { useAuthContext } from "@/context/auth-context"
+import { useModalContext } from "@/context/modal-context";
+import { MODAL_NAME } from "@/utils/constant";
+import { useAuthContext } from "@/context/auth-context";
+import ImageLoading from "../loading/ImageLoading";
 
 function InfoUser() {
-  const { openModal, setPayload } = useModalContext()
+  const { openModal, setPayload } = useModalContext();
 
-  const { userInfo } = useAuthContext()
-  const { username, quote, avatar, cover, zera } = userInfo || {}
+  const { userInfo } = useAuthContext();
+  const { username, quote, avatar, cover, zera } = userInfo || {};
 
   return (
     <>
@@ -22,15 +20,18 @@ function InfoUser() {
           <div
             className="group cursor-pointer rounded-[20px] relative"
             onClick={() => {
-              setPayload("COVER_PAGE"), openModal(MODAL_NAME.EDIT_PROFILE)
+              setPayload("COVER_PAGE"), openModal(MODAL_NAME.EDIT_PROFILE);
             }}
           >
-            <img
+            <ImageLoading
               alt=""
               className="w-full h-[350px] object-cover rounded-[20px]"
-              src={cover}
+              src={
+                cover ||
+                "http://iconerecife.com.br/wp-content/plugins/uix-page-builder/uixpb_templates/images/UixPageBuilderTmpl/default-cover-6.jpg"
+              }
             />
-            <div className="hidden group-hover:block rounded-[20px] absolute top-0 z-10 bg-[#00000099] box-border w-full h-full">
+            <div className="hidden group-hover:block rounded-[20px] absolute bottom-0 right-0 z-10 box-border w-full h-full bg-[#00000099]">
               <IconEdit className="absolute-center" />
             </div>
           </div>
@@ -40,12 +41,15 @@ function InfoUser() {
             <div
               className="group w-[250px] mr-[16px] rounded-[20px] cursor-pointer relative z-10"
               onClick={() => {
-                setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE)
+                setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE);
               }}
             >
-              <img
+              <ImageLoading
                 alt=""
-                src={avatar}
+                src={
+                  avatar ||
+                  "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+                }
                 className="w-full h-[204px] object-cover rounded-[20px]"
               />
               <div className="hidden group-hover:block rounded-[20px] absolute top-0 z-10 bg-[#00000099] box-border w-full h-full">
@@ -59,7 +63,7 @@ function InfoUser() {
               <div
                 className="group cursor-pointer relative w-fit"
                 onClick={() => {
-                  setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE)
+                  setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE);
                 }}
               >
                 <p className="font-semibold text-[28px]">{username}</p>
@@ -71,7 +75,7 @@ function InfoUser() {
               <div
                 className="group cursor-pointer relative w-fit"
                 onClick={() => {
-                  setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE)
+                  setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE);
                 }}
               >
                 <p className="font-medium">{quote}</p>
@@ -90,7 +94,7 @@ function InfoUser() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default InfoUser
+export default InfoUser;
