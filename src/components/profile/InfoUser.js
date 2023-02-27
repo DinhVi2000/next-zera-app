@@ -28,7 +28,7 @@ function InfoUser() {
               className="w-full h-[350px] object-cover rounded-[20px]"
               src={
                 cover ||
-                "http://iconerecife.com.br/wp-content/plugins/uix-page-builder/uixpb_templates/images/UixPageBuilderTmpl/default-cover-6.jpg"
+                "https://img.freepik.com/free-vector/alien-spaceship-flying-cosmos-planets_33099-2480.jpg?w=1380&t=st=1677223897~exp=1677224497~hmac=47243c07b199f051b0b4d45aa862e0130fcecddea16570ed1592b829c11cf16f"
               }
             />
             <div className="hidden group-hover:block rounded-[20px] absolute bottom-0 right-0 z-10 box-border w-full h-full bg-[#00000099]">

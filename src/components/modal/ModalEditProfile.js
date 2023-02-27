@@ -22,6 +22,7 @@ import { updateUser } from "@/services/user.service";
 import { useAuthContext } from "@/context/auth-context";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { updateUserFormSchema } from "@/validators/update-user.validator";
+import ImageLoading from "../loading/ImageLoading";
 
 const ModalEditProfile = () => {
   const { userInfo, setUserInfo } = useAuthContext();
@@ -70,7 +71,7 @@ const ModalEditProfile = () => {
 
   const {
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
     control,
   } = useForm({
     mode: "onChange",
@@ -118,21 +119,19 @@ const ModalEditProfile = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center">
             <div className="flex flex-col justify-between items-center w-[204px]">
-              <img
+              <ImageLoading
                 alt="avatar"
                 src={avatarUser}
                 className="rounded-[20px] h-[204px] w-[204px] object-cover"
               />
-              {/* <p className="text-pink-600 text-sm h-4 leading-6 mt-0.5 mb-2">
-                {errors?.username?.message}
-              </p> */}
               <InputHook
+                disabled
                 name="username"
                 id="username"
                 control={control}
                 type="text"
                 placeholder="User name"
-                className="w-full my-[10px] rounded-[20px] p-2 px-3 box-border text-black edit-input bg-[95%_50%] focus-visible:outline-0"
+                className="w-full my-[10px] rounded-[20px] p-2 px-3 box-border text-black bg-[95%_50%] focus-visible:outline-0"
               />
 
               <TextareaHook
@@ -177,11 +176,11 @@ const ModalEditProfile = () => {
                         key={i}
                         onClick={() => setAvatarUser(avaImg)}
                       >
-                        <img
+                        <ImageLoading
                           alt=""
                           src={avaImg}
                           className="rounded-2xl w-[204px] h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto"
-                        ></img>
+                        ></ImageLoading>
                         {avatarUser === avaImg && (
                           <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
                         )}
@@ -199,11 +198,11 @@ const ModalEditProfile = () => {
                         key={i}
                         onClick={() => setCoverUser(coverImg)}
                       >
-                        <img
+                        <ImageLoading
                           alt=""
                           src={coverImg}
                           className="rounded-2xl w-[424px] h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto"
-                        ></img>
+                        ></ImageLoading>
                         {coverUser === coverImg && (
                           <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
                         )}
