@@ -181,7 +181,10 @@ const UserInfo = () => {
       <Link href={"/profile"}>
         <div className="flex items-center gap-2.5 pl-5 mb-4">
           <ImageLoading
-            src={avatar}
+            src={
+              avatar ||
+              "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+            }
             alt=""
             className="object-cover w-[50px] h-[50px] rounded-full"
           />

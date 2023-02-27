@@ -9,24 +9,9 @@ import CoverPageItem from "@/components/shop/CoverPageItem";
 import PlayTimeItem from "@/components/shop/PlayTimeItem";
 import { useAuthContext } from "@/context/auth-context";
 import { IconCoin, IconPlus } from "@/resources/icons";
-import { getShopItem } from "@/services/shop.service";
+import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
 import { notifyErrorMessage } from "@/utils/helper";
 import { useModalContext } from "@/context/modal-context";
-
-const tabs = [
-  {
-    title: "Avatar",
-    tabName: SHOP_TAB.AVATAR,
-  },
-  {
-    title: "Cover page",
-    tabName: SHOP_TAB.COVER_PAGE,
-  },
-  {
-    title: "Playtimes",
-    tabName: SHOP_TAB.PLAYTIMES,
-  },
-];
 
 const Shop = () => {
   const { status } = useModalContext();
@@ -34,38 +19,44 @@ const Shop = () => {
   const { zera } = userInfo || {};
   const toast = useToast();
 
+  const [idCategory, setIdCategory] = useState("");
   const [tab, setTab] = useState(SHOP_TAB.AVATAR);
-  const [avatarsShop, setAvatarsShop] = useState();
-  const [coversShop, setCoversShop] = useState();
-  const [playtimesShop, setPlaytimesShop] = useState();
-  const [itemsBought, setItemsBought] = useState();
+  const [categories, setCategories] = useState([]);
+  const [itemsShop, setItemsShop] = useState();
 
-  const getItem = async () => {
+  const getItem = async (idCategory) => {
     try {
-      const { data } = await getShopItem();
+      const { data } = await getItemByCategory(idCategory);
       if (!data) return;
-
-      const avatars = data?.shops?.find((e) => e.name == "Avatar");
-      const covers = data?.shops?.find((e) => e.name == "Cover");
-      const playtimes = data?.shops?.find((e) => e.name == "Playtimes");
-
-      setAvatarsShop(avatars);
-      setCoversShop(covers);
-      setPlaytimesShop(playtimes);
-
-      setItemsBought(data?.user_inventory);
+      setItemsShop(data?.rows);
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
   };
 
+  const getTabShop = async () => {
+    const { data } = await getCategoriesShop();
+    setCategories(data);
+  };
+
   useEffect(() => {
-    getItem();
+    getTabShop();
   }, []);
 
   useEffect(() => {
-    getItem();
+    if (!idCategory) return;
+    getItem(idCategory);
+  }, [idCategory]);
+
+  useEffect(() => {
+    getItem(idCategory);
   }, [status == STATUS.SUCCESS]);
+
+  useEffect(() => {
+    if (categories) {
+      setIdCategory(categories[0]?.id);
+    }
+  }, [categories]);
 
   return (
     <>
@@ -77,7 +68,7 @@ const Shop = () => {
       </Head>
       <MainLayout>
         {/* content  */}
-        <div className="">
+        <div className="w-[1000px]">
           <div className="text-white bg-blur-800 border-[5px] border-violet-400 p-[62px] pt-2.5 rounded-[20px]">
             {/* title */}
             <div className="bg-pink-800 rounded-[20px] mx-auto py-2.5 text-[40px] text-center font-bold w-[280px] mb-[58px]">
@@ -86,17 +77,20 @@ const Shop = () => {
 
             {/* tab */}
             <div className="flex gap-3 justify-center relative">
-              {tabs?.map(({ title, tabName }, i) => (
+              {categories?.map((category, i) => (
                 <div
                   key={i}
-                  onClick={() => setTab(tabName)}
+                  onClick={() => {
+                    setTab(category?.name);
+                    setIdCategory(category?.id);
+                  }}
                   className={`${
-                    tabName === tab
+                    category?.name === tab
                       ? "bg-pink-800 text-white border border-pink-500"
                       : "bg-violet-900 text-[#ffffffb3] border border-violet-500"
                   } text-center text-base font-bold rounded-t-[20px] w-[120px]  border-b-0 py-2.5 cursor-pointer`}
                 >
-                  {title}
+                  {category?.name}
                 </div>
               ))}
 
@@ -128,18 +122,14 @@ const Shop = () => {
                   className="grid grid-cols-1 justify-center
                   min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
                 >
-                  {avatarsShop?.item_details?.slice(4).map((e, i) => (
-                    <AvatarItem itemsBought={itemsBought} avatar={e} key={i} />
+                  {itemsShop?.slice(4)?.map((e, i) => (
+                    <AvatarItem tab={tab} item={e} key={i} />
                   ))}
                 </div>
               ) : tab === SHOP_TAB.COVER_PAGE ? (
                 <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
-                  {coversShop?.item_details?.slice(6).map((e, i) => (
-                    <CoverPageItem
-                      itemsBought={itemsBought}
-                      cover={e}
-                      key={i}
-                    />
+                  {itemsShop?.slice(6)?.map((e, i) => (
+                    <CoverPageItem tab={tab} item={e} key={i} />
                   ))}
                 </div>
               ) : tab === SHOP_TAB.PLAYTIMES ? (
@@ -147,12 +137,8 @@ const Shop = () => {
                   className="grid grid-cols-1 justify-center
                   min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
                 >
-                  {playtimesShop?.item_details?.map((e, i) => (
-                    <PlayTimeItem
-                      itemsBought={itemsBought}
-                      playtime={e}
-                      key={i}
-                    />
+                  {itemsShop?.map((e, i) => (
+                    <PlayTimeItem tab={tab} item={e} key={i} />
                   ))}
                 </div>
               ) : null}

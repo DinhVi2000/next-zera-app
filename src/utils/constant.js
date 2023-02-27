@@ -22,9 +22,9 @@ const MODAL_NAME = {
 };
 
 const SHOP_TAB = {
-  AVATAR: "AVATAR",
-  COVER_PAGE: "COVER_PAGE",
-  PLAYTIMES: "PLAYTIMES",
+  AVATAR: "Avatar",
+  COVER_PAGE: "Cover",
+  PLAYTIMES: "Playtimes",
 };
 
 const STATUS = {

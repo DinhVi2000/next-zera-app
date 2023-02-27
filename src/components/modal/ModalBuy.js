@@ -12,14 +12,14 @@ import BoxModal from "./BoxModal";
 import { IconClose, IconCoin22 } from "@/resources/icons";
 
 import { useToast } from "@chakra-ui/react";
-import { buyShopItem, getShopItem } from "@/services/shop.service";
+import { buyShopItem } from "@/services/shop.service";
 
 const ModalBuy = () => {
   const toast = useToast();
   const { openModal, payload, setStatus } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 200;
-  const [itemShop, setItemShop] = useState(payload);
+  const [itemShop, setItemShop] = useState(payload?.item);
 
   const handleCloseModal = () => {
     modal_ref.current.classList?.remove("animation-open-modal");
@@ -35,7 +35,7 @@ const ModalBuy = () => {
   const handleBuy = async () => {
     try {
       const data = await buyShopItem({
-        item_id: itemShop.id,
+        item: parseInt(itemShop.id),
       });
       if (!data.success) {
         throw new Error(data?.message);
@@ -66,13 +66,15 @@ const ModalBuy = () => {
         <div className="flex flex-col items-center ">
           <div className="gradient-radius">
             <img
-              src={itemShop.url}
-              className="w-auto h-[204px] object-cover rounded-[20px]"
+              src={itemShop?.url}
+              className={`w-[204px] h-[204px] object-cover rounded-[20px] ${
+                payload?.tab == "Cover" ? "w-auto" : ""
+              }`}
             />
           </div>
-          <p className="font-bold text-base mt-3 mb-8">{itemShop.name}</p>
+          <p className="font-bold text-base mt-3 mb-8">{itemShop?.name}</p>
           <div className="flex justify-center items-center">
-            {itemShop.price}
+            {itemShop?.price}
             <IconCoin22 className="ml-2" />
             <button
               onClick={handleBuy}
