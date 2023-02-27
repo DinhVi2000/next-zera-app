@@ -18,34 +18,32 @@ import InputHook from "../custom/InputHook";
 import TextareaHook from "../custom/Textarea";
 
 import { useToast } from "@chakra-ui/react";
-import { updateUser } from "@/services/user.service";
+import {
+  getCategoriesInventory,
+  getItemInventory,
+  getUserInfo,
+  updateUser,
+} from "@/services/user.service";
 import { useAuthContext } from "@/context/auth-context";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { updateUserFormSchema } from "@/validators/update-user.validator";
 import ImageLoading from "../loading/ImageLoading";
+import Empty from "../empty/Empty";
 
 const ModalEditProfile = () => {
-  const { userInfo, setUserInfo } = useAuthContext();
+  const { userInfo, setUserInfo, usernameAuth } = useAuthContext();
   const { username, avatar, cover, quote } = userInfo || {};
-
-  //FAKE DATA
-  const arrImgUser = [
-    "https://img.freepik.com/free-vector/cute-corgi-dog-sleeping-pillow-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3467.jpg?w=740&t=st=1676967206~exp=1676967806~hmac=f821bf81ed1fafb6c37cc96110c9c4de182fdd29fd45cb4edb124b2cc4a5f9c2",
-    "https://img.freepik.com/free-vector/cute-shiba-inu-dog-stretching-cartoon-illustration_138676-2788.jpg?w=740&t=st=1676967223~exp=1676967823~hmac=c5089b1d2b1f733140f7de2c4bcaa940603617ba7da92ec5cdf55b20e147b9c2",
-  ];
-
-  const arrCoverUser = [
-    "https://img.freepik.com/free-vector/candy-planet-cartoon-illustration-with-fantasy-alien-trees-sweets-magic-unusual-nature-landscape_107791-6361.jpg?w=1380&t=st=1676967272~exp=1676967872~hmac=754622612efa6c2b53860afec3cf065219a66d70f4e68e1da80a3b2b1831195f",
-    "https://img.freepik.com/free-vector/game-ground-platform-with-spaceman-alien-planet_107791-14572.jpg?w=1380&t=st=1676967314~exp=1676967914~hmac=7460d92031e94e10bcd3fc241ee516b9b2277a27ec2f912b03faef88be6978c6",
-  ];
 
   const toast = useToast();
   const { openModal, payload } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 200;
   const [tab, setTab] = useState(payload);
-  const [avatarUser, setAvatarUser] = useState(avatar);
-  const [coverUser, setCoverUser] = useState(cover);
+  const [avatarUser, setAvatarUser] = useState(undefined);
+  const [coverUser, setCoverUser] = useState(undefined);
+  const [checkAvatar, setCheckAvatar] = useState(avatar);
+  const [checkCover, setCheckCover] = useState(cover);
+  const [itemInventory, setItemInventory] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [idCategory, setIdCategory] = useState("");
 
   const handleCloseModal = () => {
     modal_ref.current.classList?.remove("animation-open-modal");
@@ -58,24 +56,7 @@ const ModalEditProfile = () => {
     });
   }, []);
 
-  const tabs = [
-    {
-      title: "Avatar",
-      tabName: EDIT_PROFILE_TAB.AVATAR,
-    },
-    {
-      title: "Cover page",
-      tabName: EDIT_PROFILE_TAB.COVER_PAGE,
-    },
-  ];
-
-  const {
-    handleSubmit,
-    formState: { isValid },
-    control,
-  } = useForm({
-    mode: "onChange",
-    resolver: yupResolver(updateUserFormSchema),
+  const { handleSubmit, control } = useForm({
     defaultValues: {
       username,
       quote,
@@ -83,24 +64,55 @@ const ModalEditProfile = () => {
   });
 
   const onSubmit = async (dataUser) => {
-    if (!isValid) return;
     try {
-      const data = await updateUser({
-        username: dataUser.username ? dataUser.username : username,
-        avatar_id_active: avatarUser,
-        cover_id_active: coverUser,
-        quote: dataUser.quote ? dataUser.quote : quote,
-      });
-      if (!data) {
-        throw new Error(data?.message);
+      const formData = {
+        avatar: avatarUser,
+        cover: coverUser,
+        quote: dataUser?.quote,
+      };
+      const res = await updateUser(formData);
+      if (res) {
+        const { data } = await getUserInfo(usernameAuth);
+        setUserInfo({ ...userInfo, ...data });
       }
-      setUserInfo(data);
       notifySuccessMessage(toast, "Update successful");
       handleCloseModal();
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
   };
+
+  const getTabInventory = async () => {
+    const { data } = await getCategoriesInventory();
+    setCategories(data?.item_categories);
+  };
+
+  const getItem = async (idCategory) => {
+    try {
+      const { data } = await getItemInventory(idCategory);
+      if (!data) return;
+      setItemInventory(data?.user_inventory?.rows);
+    } catch (e) {
+      notifyErrorMessage(toast, e);
+    }
+  };
+
+  useEffect(() => {
+    getTabInventory();
+  }, []);
+
+  useEffect(() => {
+    if (categories) {
+      setIdCategory(
+        categories.filter((category) => category.name == payload)[0]?.id
+      );
+    }
+  }, [categories]);
+
+  useEffect(() => {
+    if (!idCategory) return;
+    getItem(idCategory);
+  }, [idCategory]);
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] flex-center backdrop-blur-sm">
@@ -121,7 +133,7 @@ const ModalEditProfile = () => {
             <div className="flex flex-col justify-between items-center w-[204px]">
               <ImageLoading
                 alt="avatar"
-                src={avatarUser}
+                src={checkAvatar}
                 className="rounded-[20px] h-[204px] w-[204px] object-cover"
               />
               <InputHook
@@ -150,65 +162,69 @@ const ModalEditProfile = () => {
 
             <div className="flex flex-col justify-between h-full w-fit min-w-fit self-start">
               <div className="flex">
-                {tabs?.map(({ title, tabName }, i) => (
+                {categories?.map((category, i) => (
                   <div
                     key={i}
-                    onClick={() => setTab(tabName)}
+                    onClick={() => {
+                      setTab(category?.name);
+                      setIdCategory(category?.id);
+                    }}
                     className={`${
-                      tabName === tab
+                      category?.name == tab
                         ? "border-b-2 border-b-[#fff]"
                         : "opacity-[0.7]"
                     } text-center text-[28px] font-bold rounded-t-[20px] w-fit border-b-0 px-[5px] py-[2px] cursor-pointer mx-3`}
                   >
-                    {title}
+                    {category?.name}
                   </div>
                 ))}
               </div>
+
               <div className="overflow-auto h-fit">
-                {tab == EDIT_PROFILE_TAB.AVATAR ? (
+                {itemInventory ? (
                   <div
-                    className="mt-[30px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2
-                  min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4 gap-4 overflow-auto max-h-[500px] pr-[20px]"
+                    className={`gap-4 overflow-auto max-h-[500px] pr-[20px] mt-[30px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2 ${
+                      tab == EDIT_PROFILE_TAB.AVATAR
+                        ? "min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4"
+                        : ""
+                    }`}
                   >
-                    {arrImgUser.map((avaImg, i) => (
+                    {itemInventory?.map((e, i) => (
                       <div
                         className="relative cursor-pointer"
                         key={i}
-                        onClick={() => setAvatarUser(avaImg)}
+                        onClick={
+                          tab == EDIT_PROFILE_TAB.AVATAR
+                            ? () => {
+                                setAvatarUser(e?.item_info?.id),
+                                  setCheckAvatar(e?.item_info?.url);
+                              }
+                            : () => {
+                                setCoverUser(e?.item_info?.id),
+                                  setCheckCover(e?.item_info?.url);
+                              }
+                        }
                       >
                         <ImageLoading
                           alt=""
-                          src={avaImg}
-                          className="rounded-2xl w-[204px] h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto"
+                          src={e?.item_info?.url}
+                          className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto ${
+                            tab == EDIT_PROFILE_TAB.AVATAR
+                              ? "w-[204px]"
+                              : "w-auto"
+                          }`}
                         ></ImageLoading>
-                        {avatarUser === avaImg && (
+                        {checkAvatar === e?.item_info?.url && (
+                          <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                        )}
+                        {checkCover === e?.item_info?.url && (
                           <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
                         )}
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div
-                    className="mt-[30px] grid grid-cols-1 justify-center
-                  min-[752px]:grid-cols-2 gap-4 overflow-auto max-h-[500px] pr-[20px]"
-                  >
-                    {arrCoverUser.map((coverImg, i) => (
-                      <div
-                        className="relative cursor-pointer"
-                        key={i}
-                        onClick={() => setCoverUser(coverImg)}
-                      >
-                        <ImageLoading
-                          alt=""
-                          src={coverImg}
-                          className="rounded-2xl w-[424px] h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto"
-                        ></ImageLoading>
-                        {coverUser === coverImg && (
-                          <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                  <Empty />
                 )}
               </div>
             </div>

@@ -3,7 +3,7 @@ import { Tooltip } from "@chakra-ui/react";
 import React from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { MODAL_NAME } from "@/utils/constant";
+import { EDIT_PROFILE_TAB, MODAL_NAME } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 
@@ -20,7 +20,8 @@ function InfoUser() {
           <div
             className="group cursor-pointer rounded-[20px] relative"
             onClick={() => {
-              setPayload("COVER_PAGE"), openModal(MODAL_NAME.EDIT_PROFILE);
+              setPayload(EDIT_PROFILE_TAB.COVER_PAGE),
+                openModal(MODAL_NAME.EDIT_PROFILE);
             }}
           >
             <ImageLoading
@@ -41,7 +42,8 @@ function InfoUser() {
             <div
               className="group w-[250px] mr-[16px] rounded-[20px] cursor-pointer relative z-10"
               onClick={() => {
-                setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE);
+                setPayload(EDIT_PROFILE_TAB.AVATAR),
+                  openModal(MODAL_NAME.EDIT_PROFILE);
               }}
             >
               <ImageLoading

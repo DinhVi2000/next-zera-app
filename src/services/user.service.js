@@ -54,7 +54,9 @@ const getHallOfFameByUsername = async (dispatch, username) => {
 const updateUser = async (params) => {
   try {
     const { data } = await http.put("/users", params);
-    localStorage.setItem("username", data.data.username);
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
     return data.data;
   } catch (e) {
     throw e;
@@ -74,5 +76,39 @@ const updateUsername = async (formData) => {
   }
 };
 
-export { getUserInfo, getHallOfFameByUsername, updateUser, updateUsername };
+const getCategoriesInventory = async () => {
+  try {
+    const { data } = await http.get("/users/inventories");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+const getItemInventory = async (params) => {
+  try {
+    const { data } = await http.get(
+      `/users/inventories?category_item_id=${params}`
+    );
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export {
+  getUserInfo,
+  getHallOfFameByUsername,
+  updateUser,
+  updateUsername,
+  getCategoriesInventory,
+  getItemInventory,
+};
 export default reducer;

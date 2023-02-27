@@ -35,8 +35,8 @@ const STATUS = {
 };
 
 const EDIT_PROFILE_TAB = {
-  AVATAR: "AVATAR",
-  COVER_PAGE: "COVER_PAGE",
+  AVATAR: "Avatar",
+  COVER_PAGE: "Cover",
 };
 
 const VIEW_ALL_GAMES_TAB = {
