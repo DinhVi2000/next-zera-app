@@ -3,12 +3,15 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import { loginWithEmail } from "@/services/auth.service";
-import { getUserInfo } from "@/services/user.service";
+import { getUserInfo, getUserIp } from "@/services/user.service";
 import { notifyErrorMessage } from "@/utils/helper";
 
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { PUBLIC_PAGE_URL } from "@/utils/constant";
+import { PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
+import Script from "next/script";
+import { signInAnonymously } from "firebase/auth";
+import { auth } from "@/configs/firebaseConfig";
 
 const AuthContext = createContext(null);
 
@@ -32,16 +35,21 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
+  const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
 
   const { pathname } = router ?? {};
 
   const verifyAccessToken = async () => {
+    // getUserIp().then((res) => console.log("res :", res));
     try {
+      setVerifyStatus(STATUS.IN_PROGRESS);
       const { data } = await getUserInfo(usernameAuth);
 
       setUserInfo(data);
+      setVerifyStatus(STATUS.SUCCESS);
     } catch (error) {
       notifyErrorMessage(toast, error);
+      setVerifyStatus(STATUS.FAIL);
     }
   };
 
@@ -52,6 +60,8 @@ export const AuthContextProvider = ({ children }) => {
       } = await loginWithEmail(formData);
 
       localStorage.setItem("accessToken", token);
+      if (!username) return router.push("/create-username");
+
       localStorage.setItem("username", username);
 
       setToken(token);
@@ -72,6 +82,17 @@ export const AuthContextProvider = ({ children }) => {
     router.push("/login");
   };
 
+  const loginWithAnonymously = async () => {
+    try {
+      const { user } = (await signInAnonymously(auth)) ?? {};
+      const { uid } = user ?? {};
+
+      if (uid) console.log("uid", uid);
+    } catch (error) {
+      notifyErrorMessage(error);
+    }
+  };
+
   const authProvider = useMemo(
     () => ({
       usernameAuth,
@@ -82,8 +103,10 @@ export const AuthContextProvider = ({ children }) => {
       setUsernameAuth,
       login,
       logout,
+      verifyStatus,
+      setVerifyStatus,
     }),
-    [userInfo, setUserInfo, token, setToken]
+    [userInfo, setUserInfo, token, setToken, verifyStatus, setVerifyStatus]
   );
 
   const isAuthenticationPath = useMemo(
@@ -92,17 +115,18 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    setToken(localStorage.getItem("accessToken") || "");
-    setUsernameAuth(localStorage.getItem("username") || "");
+    const accessToken = localStorage.getItem("accessToken");
+    const username = localStorage.getItem("username");
+
+    if (!accessToken || !username) loginWithAnonymously();
+
+    setToken(accessToken || "");
+    setUsernameAuth(username || "");
   }, []);
 
   useEffect(() => {
     if (token && usernameAuth && !isAuthenticationPath) {
       setIsAuthenticationPage(false);
-
-      console.log("authenticate with token: ", token);
-      console.log("authenticate with username: ", usernameAuth);
-
       verifyAccessToken();
     }
   }, [token, usernameAuth, pathname]);
@@ -121,6 +145,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ authProvider }}>
+      <Script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></Script>
       {!isAuthenticationPage && children}
     </AuthContext.Provider>
   );

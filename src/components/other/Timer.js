@@ -2,10 +2,6 @@ import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
 
-// const DEADLINE =
-//   (new Date(COUNTDOWN_DEADLINE).getTime() - new Date().getTime()) / 1000;
-const DEADLINE = 3600;
-
 const Timer = () => {
   const Ref = useRef(null);
   const router = useRouter();
@@ -47,38 +43,53 @@ const Timer = () => {
         seconds: seconds > 9 ? seconds : "0" + seconds,
       });
     }
-  };
-
-  const clearTimer = (e) => {
-    if (!route.includes("/game/[gameId]")) {
-      return;
+    const Anonymous = JSON.parse(localStorage.getItem("Anonymous")) ?? {};
+    if (Anonymous === "null") {
+      localStorage.setItem("Anonymous", JSON.stringify({ playTime: 0 }));
     }
 
+    const { playTime } = Anonymous ?? {};
+    localStorage.setItem(
+      "Anonymous",
+      JSON.stringify({ playTime: (playTime || 0) + 1 })
+    );
+  };
+
+  const runTimer = (e) => {
     if (Ref.current) clearInterval(Ref.current);
-    const id = setInterval(() => {
+
+    let id = setInterval(() => {
       startTimer(e);
     }, 1000);
+
     Ref.current = id;
   };
 
-  const getDeadTime = () => {
+  const getDeadTime = (seconds) => {
+    const Anonymous = JSON.parse(localStorage.getItem("Anonymous")) ?? {};
+    const { playTime } = Anonymous ?? {};
+
     let deadline = new Date();
-    deadline.setSeconds(DEADLINE);
+    deadline.setTime(deadline.getTime() + (seconds - playTime) * 1000);
 
     return deadline;
   };
 
   useEffect(() => {
-    clearTimer(getDeadTime());
+    if (!route.includes("/game/[gameId]")) return;
+
+    runTimer(getDeadTime(3600));
   }, [router]);
 
-  const onClickReset = () => {
-    clearTimer(getDeadTime());
-  };
+  useEffect(() => {
+    return () => {
+      clearInterval(Ref.current);
+    };
+  }, []);
 
   return (
     <Fragment>
-      <div className="text-base font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
+      <div className="font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
         {timer.hours}:{timer.minutes}:{timer.seconds}
       </div>
     </Fragment>

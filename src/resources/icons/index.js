@@ -41,6 +41,8 @@ import IconFullScreen from "./full-screen.svg";
 import IconInfo from "./info.svg";
 import IconCoinDaily from "./coin-daily.svg";
 import IconCheckDaily from "./check-daily.svg";
+import IconLogOut from "./log-out.svg";
+import IconProfile from "./profile.svg";
 
 export {
   IconBack,
@@ -86,4 +88,6 @@ export {
   IconInfo,
   IconCoinDaily,
   IconCheckDaily,
+  IconLogOut,
+  IconProfile,
 };

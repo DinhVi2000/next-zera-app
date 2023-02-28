@@ -49,7 +49,6 @@ const VIEW_ALL_GAMES_TAB = {
 const PUBLIC_PAGE_URL = {
   LOGIN: "/login",
   REGISTER: "/register",
-  CREATE_USERNAME: "/create-username",
 };
 
 const COUNTDOWN_DEADLINE = "11/20/2023 20:00:00";
