@@ -12,6 +12,7 @@ import { IconCoin, IconPlus } from "@/resources/icons";
 import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
 import { notifyErrorMessage } from "@/utils/helper";
 import { useModalContext } from "@/context/modal-context";
+import Empty from "@/components/empty/Empty";
 
 const Shop = () => {
   const { status } = useModalContext();
@@ -23,6 +24,7 @@ const Shop = () => {
   const [tab, setTab] = useState(SHOP_TAB.AVATAR);
   const [categories, setCategories] = useState([]);
   const [itemsShop, setItemsShop] = useState();
+  console.log("itemsShop :", itemsShop);
 
   const getItem = async (idCategory) => {
     try {
@@ -117,31 +119,37 @@ const Shop = () => {
               </div>
 
               {/* list item  */}
-              {tab === SHOP_TAB.AVATAR ? (
-                <div
-                  className="grid grid-cols-1 justify-center
+              {itemsShop?.length ? (
+                <>
+                  {tab === SHOP_TAB.AVATAR ? (
+                    <div
+                      className="grid grid-cols-1 justify-center
                   min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                >
-                  {itemsShop?.slice(4)?.map((e, i) => (
-                    <AvatarItem tab={tab} item={e} key={i} />
-                  ))}
-                </div>
-              ) : tab === SHOP_TAB.COVER_PAGE ? (
-                <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
-                  {itemsShop?.slice(6)?.map((e, i) => (
-                    <CoverPageItem tab={tab} item={e} key={i} />
-                  ))}
-                </div>
-              ) : tab === SHOP_TAB.PLAYTIMES ? (
-                <div
-                  className="grid grid-cols-1 justify-center
+                    >
+                      {itemsShop?.slice(4)?.map((e, i) => (
+                        <AvatarItem tab={tab} item={e} key={i} />
+                      ))}
+                    </div>
+                  ) : tab === SHOP_TAB.COVER_PAGE ? (
+                    <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
+                      {itemsShop?.slice(6)?.map((e, i) => (
+                        <CoverPageItem tab={tab} item={e} key={i} />
+                      ))}
+                    </div>
+                  ) : tab === SHOP_TAB.PLAYTIMES ? (
+                    <div
+                      className="grid grid-cols-1 justify-center
                   min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                >
-                  {itemsShop?.map((e, i) => (
-                    <PlayTimeItem tab={tab} item={e} key={i} />
-                  ))}
-                </div>
-              ) : null}
+                    >
+                      {itemsShop?.map((e, i) => (
+                        <PlayTimeItem tab={tab} item={e} key={i} />
+                      ))}
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <Empty />
+              )}
             </div>
           </div>
         </div>
