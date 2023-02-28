@@ -18,6 +18,7 @@ const game = createSlice({
       gamesRelate: null,
     },
     categories: null,
+    categoryDetail: null,
   },
   reducers: {
     setInfo: (state, action) => {
@@ -35,6 +36,9 @@ const game = createSlice({
     setCategoriesAtGameIndex: (state, action) => {
       state.gameIndex.categories = action.payload;
     },
+    setCategoryDetail: (state, action) => {
+      state.categoryDetail = action.payload;
+    },
   },
 });
 
@@ -45,6 +49,7 @@ export const {
   setGamesRelateAtGameDetail,
   setGamesAtGameIndex,
   setCategoriesAtGameIndex,
+  setCategoryDetail,
 } = actions;
 
 const getAllGame = async (dispatch, params) => {
@@ -72,6 +77,22 @@ const getAllCategories = async (dispatch, params) => {
     }
 
     dispatch(setCategoriesAtGameIndex(data?.data));
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getCategoryById = async (dispatch, categoryId) => {
+  try {
+    const { data } = await http.get(`/game/category/${categoryId}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setCategoryDetail(data?.data));
 
     return data;
   } catch (e) {
@@ -149,5 +170,6 @@ export {
   getGameDetailBySlug,
   getGameByCategoryId,
   getGameDetailById,
+  getCategoryById,
 };
 export default reducer;

@@ -8,19 +8,6 @@ import { inRange } from "@/utils/helper";
 const GameCategoryGrid = ({ categories }) => {
   return (
     <>
-      {/* <div className="category-grid py-4">
-        {categories?.map((e, i) => (
-          <GameCategory
-            key={e?.id}
-            area={`c${i}`}
-            id={e?.id}
-            index={i}
-            size={e?.size}
-            thumbnail={e?.thumbnail}
-            label={e?.label}
-          ></GameCategory>
-        ))}
-      </div> */}
       <div className="grid-category mt-4">
         {categories?.map((e, i) => (
           <GameCategory
