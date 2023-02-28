@@ -7,35 +7,45 @@ import Image from "next/image";
 
 import { io } from "socket.io-client";
 import { useRouter } from "next/router";
-
+import { useAuthContext } from '../../context/auth-context';
 import { config } from "../../envs"
 const socket = io(config.SERVER_CHAT)
 
 function BoxChat({ area }) {
   const { asPath } = useRouter();
   const userId = "TEST";
-  const userCurrent = asPath.split("=")[1];
-
+  const roomCurrent = asPath.split("/").at(-1);
   const [messages, setMessages] = useState([]);
+  const [emitReward, setEmitReward] = useState([]);
   const inputRef = useRef();
   const divRef = useRef();
+  const { userInfo } = useAuthContext();
 
   const sendMessage = (e) => {
     socket.emit("chatMessage", {
       msg: inputRef.current.value,
-      userId: userCurrent,
+      userId: userInfo?.id,
     });
     e.preventDefault();
     e.target.reset();
   };
 
   useEffect(() => {
-    socket.emit("joinRoom", { userId: userCurrent, roomId: "Room 1" });
+    socket.emit("joinRoom", { userId: userInfo?.id, roomId: roomCurrent });
     socket.on("message", (dataMessage) => {
       setMessages((value) => {
         return [...value, dataMessage];
       });
     });
+    socket.on("emitReward", (data) => {
+      console.log(data);
+      setEmitReward((value) => {
+        return [...value, data];
+      });
+    });
+    return () => {
+      socket.emit("leaveRoom", { userId: userInfo?.id, roomId: roomCurrent });
+    }
   }, []);
 
   // Scroll to Bottom
@@ -47,7 +57,6 @@ function BoxChat({ area }) {
       });
     }
   });
-
   return (
     <div
       style={{
@@ -103,6 +112,19 @@ function BoxChat({ area }) {
                 </div>
               </div>
             ))}
+            {
+              emitReward?.map((info, i) => (<div key={i}
+                className={`${
+                  userId === info.userId
+                    ? // owner
+                      "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
+                    : ""
+                  // other
+                } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
+              >
+                {info.text}
+              </div>))
+            }
             <div ref={divRef} />
           </div>
         </div>
