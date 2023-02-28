@@ -18,16 +18,10 @@ import InputHook from "../custom/InputHook";
 import TextareaHook from "../custom/Textarea";
 
 import { useToast } from "@chakra-ui/react";
-import {
-  getCategoriesInventory,
-  getItemInventory,
-  getUserInfo,
-  updateUser,
-} from "@/services/user.service";
+import { getUserInfo, updateUser } from "@/services/user.service";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import Empty from "../empty/Empty";
-import FormLoading from "@/components/loading/FormLoading";
 
 const ModalEditProfile = () => {
   const { userInfo, setUserInfo, usernameAuth } = useAuthContext();
@@ -37,15 +31,12 @@ const ModalEditProfile = () => {
   const { openModal, payload } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 200;
-  const [tab, setTab] = useState(payload);
+
+  const [tab, setTab] = useState(payload?.tab);
   const [avatarUser, setAvatarUser] = useState(undefined);
   const [coverUser, setCoverUser] = useState(undefined);
   const [checkAvatar, setCheckAvatar] = useState(avatar);
   const [checkCover, setCheckCover] = useState(cover);
-  const [itemInventory, setItemInventory] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [idCategory, setIdCategory] = useState("");
-  const [statusData, setStatusData] = useState(STATUS.NOT_START);
 
   const handleCloseModal = () => {
     modal_ref.current.classList?.remove("animation-open-modal");
@@ -83,39 +74,6 @@ const ModalEditProfile = () => {
       notifyErrorMessage(toast, e);
     }
   };
-
-  const getTabInventory = async () => {
-    const { data } = await getCategoriesInventory();
-    setCategories(data?.item_categories);
-  };
-
-  const getItem = async (idCategory) => {
-    try {
-      const { data } = await getItemInventory(idCategory);
-      if (!data) return;
-      setItemInventory(data?.user_inventory?.rows);
-      setStatusData(STATUS.SUCCESS);
-    } catch (e) {
-      notifyErrorMessage(toast, e);
-    }
-  };
-
-  useEffect(() => {
-    getTabInventory();
-  }, []);
-
-  useEffect(() => {
-    if (categories) {
-      setIdCategory(
-        categories.filter((category) => category.name == payload)[0]?.id
-      );
-    }
-  }, [categories]);
-
-  useEffect(() => {
-    if (!idCategory) return;
-    getItem(idCategory);
-  }, [idCategory]);
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] flex-center backdrop-blur-sm">
@@ -165,13 +123,10 @@ const ModalEditProfile = () => {
 
             <div className="flex flex-col justify-between h-full w-fit min-w-fit self-start">
               <div className="flex">
-                {categories?.map((category, i) => (
+                {payload?.categories?.map((category, i) => (
                   <div
                     key={i}
-                    onClick={() => {
-                      setTab(category?.name);
-                      setIdCategory(category?.id);
-                    }}
+                    onClick={() => setTab(category?.name)}
                     className={`${
                       category?.name == tab
                         ? "border-b-2 border-b-[#fff]"
@@ -184,58 +139,51 @@ const ModalEditProfile = () => {
               </div>
 
               <div className="overflow-auto h-fit">
-                {statusData === "SUCCESS" ? (
-                  <>
-                    {itemInventory?.length ? (
+                {payload?.itemsInventory ? (
+                  <div
+                    className={`gap-4 overflow-auto max-h-[500px] pr-[20px] mt-[30px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2 ${
+                      tab == EDIT_PROFILE_TAB.AVATAR
+                        ? "min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4"
+                        : ""
+                    }`}
+                  >
+                    {payload?.itemsInventory[tab]?.map((e, i) => (
                       <div
-                        className={`gap-4 overflow-auto max-h-[500px] pr-[20px] mt-[30px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2 ${
+                        className="relative cursor-pointer"
+                        key={i}
+                        onClick={
                           tab == EDIT_PROFILE_TAB.AVATAR
-                            ? "min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4"
-                            : ""
-                        }`}
+                            ? () => {
+                                setAvatarUser(e?.item_info?.id),
+                                  setCheckAvatar(e?.item_info?.url);
+                              }
+                            : () => {
+                                setCoverUser(e?.item_info?.id),
+                                  setCheckCover(e?.item_info?.url);
+                              }
+                        }
                       >
-                        {itemInventory?.map((e, i) => (
-                          <div
-                            className="relative cursor-pointer"
-                            key={i}
-                            onClick={
-                              tab == EDIT_PROFILE_TAB.AVATAR
-                                ? () => {
-                                    setAvatarUser(e?.item_info?.id),
-                                      setCheckAvatar(e?.item_info?.url);
-                                  }
-                                : () => {
-                                    setCoverUser(e?.item_info?.id),
-                                      setCheckCover(e?.item_info?.url);
-                                  }
-                            }
-                          >
-                            <ImageLoading
-                              alt=""
-                              src={e?.item_info?.url}
-                              className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto ${
-                                tab == EDIT_PROFILE_TAB.AVATAR
-                                  ? "w-[204px]"
-                                  : "w-auto"
-                              }`}
-                            ></ImageLoading>
-                            {checkAvatar === e?.item_info?.url && (
-                              <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                            )}
-                            {checkCover === e?.item_info?.url && (
-                              <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                            )}
-                          </div>
-                        ))}
+                        <ImageLoading
+                          alt=""
+                          src={e?.item_info?.url}
+                          className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto 
+                          ${
+                            tab == EDIT_PROFILE_TAB.AVATAR
+                              ? "w-[204px]"
+                              : "w-auto"
+                          }`}
+                        ></ImageLoading>
+                        {checkAvatar === e?.item_info?.url && (
+                          <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                        )}
+                        {checkCover === e?.item_info?.url && (
+                          <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                        )}
                       </div>
-                    ) : (
-                      <Empty />
-                    )}
-                  </>
-                ) : (
-                  <div className="min-w-[500px]">
-                    <FormLoading isLoading={true} />
+                    ))}
                   </div>
+                ) : (
+                  <Empty />
                 )}
               </div>
             </div>

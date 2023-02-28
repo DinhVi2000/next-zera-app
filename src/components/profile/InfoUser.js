@@ -1,11 +1,15 @@
 import { IconCoin, IconPlus, IconEdit } from "@/resources/icons";
 import { Tooltip } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { EDIT_PROFILE_TAB, MODAL_NAME } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
+import {
+  getCategoriesInventory,
+  getItemInventory,
+} from "@/services/user.service";
 
 function InfoUser() {
   const { openModal, setPayload } = useModalContext();
@@ -13,16 +17,45 @@ function InfoUser() {
   const { userInfo } = useAuthContext();
   const { username, quote, avatar, cover, zera } = userInfo || {};
 
+  const [categories, setCategories] = useState([]);
+  const [itemsInventory, setItemsInventory] = useState([]);
+
+  const getTabInventory = async () => {
+    const { data } = await getCategoriesInventory();
+    setCategories(data?.item_categories);
+  };
+
+  const getItem = async (id, name) => {
+    const { data } = await getItemInventory(id);
+    if (!data) return;
+    setItemsInventory((prev) => {
+      prev[name] = data?.user_inventory?.rows;
+      return { ...prev };
+    });
+  };
+
+  const handleOpenEdit = (tab) => {
+    setPayload({ itemsInventory, tab, categories });
+    openModal(MODAL_NAME.EDIT_PROFILE);
+  };
+
+  useEffect(() => {
+    getTabInventory();
+  }, []);
+
+  useEffect(() => {
+    if (categories) {
+      Promise.all(categories.map((e) => getItem(e.id, e?.name)));
+    }
+  }, [categories]);
+
   return (
     <>
       <div className="flex flex-col">
         <Tooltip label="Update cover image" aria-label="A tooltip">
           <div
             className="group cursor-pointer rounded-[20px] relative"
-            onClick={() => {
-              setPayload(EDIT_PROFILE_TAB.COVER_PAGE),
-                openModal(MODAL_NAME.EDIT_PROFILE);
-            }}
+            onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.COVER_PAGE)}
           >
             <ImageLoading
               alt=""
@@ -41,10 +74,7 @@ function InfoUser() {
           <Tooltip label="Update avatar" aria-label="A tooltip">
             <div
               className="group w-[250px] mr-[16px] rounded-[20px] cursor-pointer relative z-10"
-              onClick={() => {
-                setPayload(EDIT_PROFILE_TAB.AVATAR),
-                  openModal(MODAL_NAME.EDIT_PROFILE);
-              }}
+              onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.AVATAR)}
             >
               <ImageLoading
                 alt=""

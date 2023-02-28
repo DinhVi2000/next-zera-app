@@ -126,13 +126,13 @@ const Shop = () => {
                       className="grid grid-cols-1 justify-center
                   min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
                     >
-                      {itemsShop?.slice(4)?.map((e, i) => (
+                      {itemsShop?.map((e, i) => (
                         <AvatarItem tab={tab} item={e} key={i} />
                       ))}
                     </div>
                   ) : tab === SHOP_TAB.COVER_PAGE ? (
                     <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
-                      {itemsShop?.slice(6)?.map((e, i) => (
+                      {itemsShop?.map((e, i) => (
                         <CoverPageItem tab={tab} item={e} key={i} />
                       ))}
                     </div>
