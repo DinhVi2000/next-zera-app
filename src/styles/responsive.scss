@@ -57,6 +57,21 @@
     grid-template-rows: repeat(auto-fill, 94px);
   }
 
+  .grid-category-detail {
+    display: grid;
+    gap: 16px;
+    grid-template-areas:
+      "ct ct ct ct .  .  .  c1 c1 c2 c2 c3 c3 c4 c4"
+      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 ."
+      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 ."
+      "g8 g8 .  .  .  .  .  .  .  .  .  .  .  .  ."
+      "g8 g8 .  .  .  .  .  .  .  .  .  .  .  .  ."
+      ".  .  .  .  .  .  .  .  .  .  .  .  .  .  ."
+      ".  .  .  .  .  .  .  .  .  .  .  .  .  .  .";
+    grid-template-columns: repeat(15, 94px);
+    // grid-template-rows: repeat(10, 94px);
+  }
+
   .game-detail-grid {
     grid-template-areas:
       "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
@@ -74,6 +89,10 @@
       ".  .  gi gi gi gi hof hof hof hof . . . . . ";
     grid-template-columns: repeat(15, 94px);
     grid-template-rows: repeat(14, 94px);
+  }
+
+  .grid-responsive {
+    grid-template-columns: repeat(15, 94px);
   }
 }
 
@@ -128,11 +147,30 @@
     grid-template-rows: repeat(3, 94px);
   }
 
+  .grid-category-detail {
+    display: grid;
+    gap: 16px;
+    grid-template-areas:
+      "ct ct ct ct .  .  .  .  .  c1 c1 . "
+      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 c2 c2 "
+      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 c3 c3 "
+      "g6 g6 g7 g7 g8 g8 .  .  .  .  c4 c4 "
+      "g6 g6 g7 g7 g8 g8 .  .  .  .  .  .  "
+      ".  .  .  .  .  .  .  .  .  .  .  .  "
+      ".  .  .  .  .  .  .  .  .  .  .  .  ";
+    grid-template-columns: repeat(12, 94px);
+    // grid-template-rows: repeat(10, 94px);
+  }
+
   .grid-category {
     display: grid;
     gap: 16px;
     grid-template-columns: repeat(12, 94px);
     grid-template-rows: repeat(auto-fill, 94px);
+  }
+
+  .grid-responsive {
+    grid-template-columns: repeat(12, 94px);
   }
 }
 
@@ -184,10 +222,11 @@
       "g1 g1 g2 g2 g3 g3 g4 g4 c2 c2"
       "g1 g1 g2 g2 g3 g3 g4 g4 c3 c3"
       "g5 g5 g6 g6 g7 g7 g8 g8 c4 c4"
-      "g5 g5 g6 g6 g7 g7 g8 g8 .  .";
+      "g5 g5 g6 g6 g7 g7 g8 g8 .  ."
+      ".  .  .  .  .  .  .  .  .  .";
 
     grid-template-columns: repeat(10, 94px);
-    grid-template-rows: repeat(10, 94px);
+    // grid-template-rows: repeat(10, 94px);
   }
 
   .game-detail-grid {
@@ -207,6 +246,10 @@
       ".  .  gi gi gi gi hof hof hof hof ";
     grid-template-columns: repeat(10, 94px);
     grid-template-rows: repeat(14, 94px);
+  }
+
+  .grid-responsive {
+    grid-template-columns: repeat(10, 94px);
   }
 }
 
@@ -241,6 +284,10 @@
     gap: 16px;
     grid-template-columns: repeat(9, 94px);
     grid-template-rows: repeat(auto-fill, 94px);
+  }
+
+  .grid-responsive {
+    grid-template-columns: repeat(9, 94px);
   }
 }
 

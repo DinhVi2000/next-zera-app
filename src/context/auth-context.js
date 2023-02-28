@@ -50,6 +50,8 @@ export const AuthContextProvider = ({ children }) => {
     } catch (error) {
       notifyErrorMessage(toast, error);
       setVerifyStatus(STATUS.FAIL);
+
+      clearAuthenticatorData();
     }
   };
 
@@ -74,12 +76,16 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logout = () => {
+    clearAuthenticatorData();
+    router.push("/login");
+  };
+
+  const clearAuthenticatorData = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("username");
 
     setToken("");
-
-    router.push("/login");
+    setUsernameAuth("");
   };
 
   const loginWithAnonymously = async () => {

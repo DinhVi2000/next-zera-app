@@ -9,31 +9,19 @@ import MainLayout from "@/layouts/MainLayout";
 import GameGrid from "@/components/ui/GameGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 
-import { MODAL_NAME, STATUS } from "@/utils/constant";
-
 import { getAllCategories, getAllGame } from "@/services/game.service";
 
-import { useModalContext } from "@/context/modal-context";
-import { useAuthContext } from "@/context/auth-context";
 import { useApi } from "@/hooks/useApi";
 
 export default function Home() {
   const dispatch = useDispatch();
 
-  const { openModal } = useModalContext();
-  const { userInfo, verifyStatus } = useAuthContext();
   const { call } = useApi();
 
   const { gameIndex } = useSelector(({ game }) => game) ?? {};
   const { games, categories } = gameIndex ?? {};
 
   const params = { page: 1, limit: 50 };
-
-  useEffect(() => {
-    if (verifyStatus === STATUS.SUCCESS && !userInfo?.isClaimDailyBonus) {
-      openModal(MODAL_NAME.DAILY_BONUS);
-    }
-  }, [userInfo]);
 
   useEffect(() => {
     Promise.all([

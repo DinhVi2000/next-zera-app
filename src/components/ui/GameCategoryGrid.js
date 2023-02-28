@@ -5,10 +5,10 @@ import GameCategory from "@/components/game/GameCategory";
 import { useSelector } from "react-redux";
 import { inRange } from "@/utils/helper";
 
-const GameCategoryGrid = ({ categories }) => {
+const GameCategoryGrid = ({ categories, className }) => {
   return (
     <>
-      <div className="grid-category mt-4">
+      <div className={`grid-category mt-4 ${className}`}>
         {categories?.map((e, i) => (
           <GameCategory
             style={{
