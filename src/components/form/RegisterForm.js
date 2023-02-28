@@ -12,6 +12,7 @@ import { registerEmail } from "@/services/auth.service";
 import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import ButtonLoading from "../loading/ButtonLoading";
+import { notifyErrorMessage, notifySuccessMessage } from '@/utils/helper';
 
 const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,21 +41,11 @@ const RegisterForm = () => {
         password: dataUser.password,
       });
       if (!data) return;
-      toast({
-        title: "Please check your email!",
-        status: "success",
-        duration: 20000,
-        isClosable: true,
-      });
+      notifySuccessMessage(toast, "Please check your email!");
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
-      toast({
-        title: e.response.data.error.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
+      notifyErrorMessage(toast, e);
     }
   };
 

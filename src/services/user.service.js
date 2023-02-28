@@ -128,6 +128,19 @@ const getItemInventory = async (params) => {
   }
 };
 
+const claimDailyBonus = async () => {
+  try {
+    const { data } = await http.post("/users/claim-daily-bonus");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getUserInfo,
   getHallOfFameByUsername,
@@ -135,5 +148,6 @@ export {
   updateUsername,
   getCategoriesInventory,
   getItemInventory,
+  claimDailyBonus,
 };
 export default reducer;

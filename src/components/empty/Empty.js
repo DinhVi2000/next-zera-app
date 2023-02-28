@@ -4,7 +4,7 @@ import emptyImg from "../../../public/images/empty.png";
 
 function Empty() {
   return (
-    <div className="w-full h-[300px] min-w-[1000px] flex-center flex-col">
+    <div className="w-full h-[300px] min-w-[500px] flex-center flex-col">
       <Image
         alt=""
         width={150}

@@ -9,7 +9,7 @@ import MainLayout from "@/layouts/MainLayout";
 import GameGrid from "@/components/ui/GameGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 
-import { MODAL_NAME } from "@/utils/constant";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
 
 import { getAllCategories, getAllGame } from "@/services/game.service";
 
@@ -21,7 +21,7 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const { openModal } = useModalContext();
-  const { userInfo } = useAuthContext();
+  const { userInfo, verifyStatus } = useAuthContext();
   const { call } = useApi();
 
   const { gameIndex } = useSelector(({ game }) => game) ?? {};
@@ -30,7 +30,9 @@ export default function Home() {
   const params = { page: 1, limit: 50 };
 
   useEffect(() => {
-    // if (userInfo) openModal(MODAL_NAME.DAILY_BONUS);
+    if (verifyStatus === STATUS.SUCCESS && !userInfo?.isClaimDailyBonus) {
+      openModal(MODAL_NAME.DAILY_BONUS);
+    }
   }, [userInfo]);
 
   useEffect(() => {

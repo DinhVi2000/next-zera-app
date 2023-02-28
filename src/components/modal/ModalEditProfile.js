@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { useModalContext } from "@/context/modal-context";
-import { EDIT_PROFILE_TAB, MODAL_NAME } from "@/utils/constant";
+import { EDIT_PROFILE_TAB, MODAL_NAME, STATUS } from "@/utils/constant";
 import {
   notifyErrorMessage,
   notifySuccessMessage,
@@ -27,6 +27,7 @@ import {
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import Empty from "../empty/Empty";
+import FormLoading from "@/components/loading/FormLoading";
 
 const ModalEditProfile = () => {
   const { userInfo, setUserInfo, usernameAuth } = useAuthContext();
@@ -44,6 +45,7 @@ const ModalEditProfile = () => {
   const [itemInventory, setItemInventory] = useState([]);
   const [categories, setCategories] = useState([]);
   const [idCategory, setIdCategory] = useState("");
+  const [statusData, setStatusData] = useState(STATUS.NOT_START);
 
   const handleCloseModal = () => {
     modal_ref.current.classList?.remove("animation-open-modal");
@@ -92,6 +94,7 @@ const ModalEditProfile = () => {
       const { data } = await getItemInventory(idCategory);
       if (!data) return;
       setItemInventory(data?.user_inventory?.rows);
+      setStatusData(STATUS.SUCCESS);
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
@@ -181,50 +184,58 @@ const ModalEditProfile = () => {
               </div>
 
               <div className="overflow-auto h-fit">
-                {itemInventory ? (
-                  <div
-                    className={`gap-4 overflow-auto max-h-[500px] pr-[20px] mt-[30px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2 ${
-                      tab == EDIT_PROFILE_TAB.AVATAR
-                        ? "min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4"
-                        : ""
-                    }`}
-                  >
-                    {itemInventory?.map((e, i) => (
+                {statusData === "SUCCESS" ? (
+                  <>
+                    {itemInventory?.length ? (
                       <div
-                        className="relative cursor-pointer"
-                        key={i}
-                        onClick={
+                        className={`gap-4 overflow-auto max-h-[500px] pr-[20px] mt-[30px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2 ${
                           tab == EDIT_PROFILE_TAB.AVATAR
-                            ? () => {
-                                setAvatarUser(e?.item_info?.id),
-                                  setCheckAvatar(e?.item_info?.url);
-                              }
-                            : () => {
-                                setCoverUser(e?.item_info?.id),
-                                  setCheckCover(e?.item_info?.url);
-                              }
-                        }
+                            ? "min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4"
+                            : ""
+                        }`}
                       >
-                        <ImageLoading
-                          alt=""
-                          src={e?.item_info?.url}
-                          className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto ${
-                            tab == EDIT_PROFILE_TAB.AVATAR
-                              ? "w-[204px]"
-                              : "w-auto"
-                          }`}
-                        ></ImageLoading>
-                        {checkAvatar === e?.item_info?.url && (
-                          <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                        )}
-                        {checkCover === e?.item_info?.url && (
-                          <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                        )}
+                        {itemInventory?.map((e, i) => (
+                          <div
+                            className="relative cursor-pointer"
+                            key={i}
+                            onClick={
+                              tab == EDIT_PROFILE_TAB.AVATAR
+                                ? () => {
+                                    setAvatarUser(e?.item_info?.id),
+                                      setCheckAvatar(e?.item_info?.url);
+                                  }
+                                : () => {
+                                    setCoverUser(e?.item_info?.id),
+                                      setCheckCover(e?.item_info?.url);
+                                  }
+                            }
+                          >
+                            <ImageLoading
+                              alt=""
+                              src={e?.item_info?.url}
+                              className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto ${
+                                tab == EDIT_PROFILE_TAB.AVATAR
+                                  ? "w-[204px]"
+                                  : "w-auto"
+                              }`}
+                            ></ImageLoading>
+                            {checkAvatar === e?.item_info?.url && (
+                              <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                            )}
+                            {checkCover === e?.item_info?.url && (
+                              <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                            )}
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                    ) : (
+                      <Empty />
+                    )}
+                  </>
                 ) : (
-                  <Empty />
+                  <div className="min-w-[500px]">
+                    <FormLoading isLoading={true} />
+                  </div>
                 )}
               </div>
             </div>

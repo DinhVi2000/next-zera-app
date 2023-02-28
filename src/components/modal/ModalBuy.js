@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
@@ -13,9 +14,12 @@ import { IconClose, IconCoin22 } from "@/resources/icons";
 
 import { useToast } from "@chakra-ui/react";
 import { buyShopItem } from "@/services/shop.service";
+import { useAuthContext } from "@/context/auth-context";
 
 const ModalBuy = () => {
   const toast = useToast();
+  const { userInfo } = useAuthContext();
+  const { zera } = userInfo || {};
   const { openModal, payload, setStatus } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 200;
@@ -66,19 +70,29 @@ const ModalBuy = () => {
         <div className="flex flex-col items-center ">
           <div className="gradient-radius">
             <img
+              alt=""
               src={itemShop?.url}
               className={`w-[204px] h-[204px] object-cover rounded-[20px] ${
-                payload?.tab == "Cover" ? "w-auto" : ""
+                payload?.tab === "Cover" ? "w-auto" : ""
               }`}
             />
           </div>
-          <p className="font-bold text-base mt-3 mb-8">{itemShop?.name}</p>
-          <div className="flex justify-center items-center">
-            {itemShop?.price}
-            <IconCoin22 className="ml-2" />
+          <p className="font-bold text-base mt-3 mb-2">{itemShop?.name}</p>
+          <div className="flex-center flex-col ">
+            <div className="flex font-bold mt-4 mb-5">
+              {itemShop?.price}
+              <IconCoin22 className="ml-2" />
+            </div>
+            <div className="flex mb-4">
+              <p>Balance: </p>
+              <div className="flex ml-3">
+                {zera}
+                <IconCoin22 className="ml-1" />
+              </div>
+            </div>
             <button
               onClick={handleBuy}
-              className="bg-violet-700 px-[25px] py-[5px] rounded-[30px] border border-[#F5F3FF] font-medium 
+              className="bg-violet-700 px-[25px] py-[5px] rounded-[30px] border border-[#F5F3FF] font-medium
               hover:bg-[#350F1E] transition-all ml-4"
             >
               Buy
