@@ -1,14 +1,14 @@
-import React from "react"
+import React from "react";
 
-import { IconArrowRight } from "@/resources/icons"
-import Image from "next/image"
-import imgGame from "../../../public/images/game.png"
+import { IconArrowRight } from "@/resources/icons";
+import Image from "next/image";
+import imgGame from "../../../public/images/game.png";
 
-import { useModalContext } from "@/context/modal-context"
-import { MODAL_NAME } from "@/utils/constant"
+import { useModalContext } from "@/context/modal-context";
+import { MODAL_NAME } from "@/utils/constant";
 
 function Activities() {
-  const { openModal, setPayload } = useModalContext()
+  const { openModal, setPayload } = useModalContext();
 
   return (
     <div className="w-[70%] bg-[#000000cc] rounded-[20px] flex flex-col items-center justify-center pt-[22px] pb-[100px]">
@@ -27,7 +27,7 @@ function Activities() {
           <p
             className="flex items-center font-medium cursor-pointer"
             onClick={() => {
-              setPayload("RECENT_GAMES"), openModal(MODAL_NAME.VIEW_ALL_GAMES)
+              setPayload("RECENT_GAMES"), openModal(MODAL_NAME.VIEW_ALL_GAMES);
             }}
           >
             View all <IconArrowRight className="ml-[5px] mb-[2px]" />
@@ -56,7 +56,7 @@ function Activities() {
           <p
             className="flex items-center font-medium cursor-pointer"
             onClick={() => {
-              setPayload("LOVED_GAMES"), openModal(MODAL_NAME.VIEW_ALL_GAMES)
+              setPayload("LOVED_GAMES"), openModal(MODAL_NAME.VIEW_ALL_GAMES);
             }}
           >
             View all <IconArrowRight className="ml-[5px] mb-[2px]" />
@@ -85,7 +85,7 @@ function Activities() {
           <p
             className="flex items-center font-medium cursor-pointer"
             onClick={() => {
-              setPayload("PLAYLIST"), openModal(MODAL_NAME.VIEW_ALL_GAMES)
+              setPayload("PLAYLIST"), openModal(MODAL_NAME.VIEW_ALL_GAMES);
             }}
           >
             View all <IconArrowRight className="ml-[5px] mb-[2px]" />
@@ -115,7 +115,7 @@ function Activities() {
             className="flex items-center font-medium cursor-pointer"
             onClick={() => {
               setPayload("PURCHASE_HISTORY"),
-                openModal(MODAL_NAME.VIEW_ALL_GAMES)
+                openModal(MODAL_NAME.VIEW_ALL_GAMES);
             }}
           >
             View all <IconArrowRight className="ml-[5px] mb-[2px]" />
@@ -140,7 +140,7 @@ function Activities() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Activities
+export default Activities;
