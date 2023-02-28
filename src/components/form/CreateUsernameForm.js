@@ -5,17 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import InputHook from "../custom/InputHook";
 
-import { registerFormSchema } from "@/validators/register.validator";
-
 import { useAuthContext } from "@/context/auth-context";
-import { updateUserFormSchema } from "@/validators/update-user.validator";
-import { useApi } from "@/hooks/useApi";
 import { updateUsername } from "@/services/user.service";
-import { STATUS } from "@/utils/constant";
 import ButtonLoading from "../loading/ButtonLoading";
 import { notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { createUsernameFormSchema } from "@/validators/create-username.validator";
 
 const CreateUsernameForm = () => {
   const { login, setUsernameAuth } = useAuthContext();
@@ -31,7 +27,7 @@ const CreateUsernameForm = () => {
     control,
   } = useForm({
     job: "",
-    resolver: yupResolver(updateUserFormSchema),
+    resolver: yupResolver(createUsernameFormSchema),
   });
 
   const onSubmit = async (formData) => {
