@@ -5,9 +5,9 @@ import { useModalContext } from "@/context/modal-context";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 import { IconBack, IconLogo, IconSearch, IconX } from "@/resources/icons";
-import { MODAL_NAME, STATUS } from "@/utils/constant";
+import { GAMES_IMAGES, MODAL_NAME, STATUS } from "@/utils/constant";
 
-import { sleep } from "@/utils/helper";
+import { notifyErrorMessage, sleep } from "@/utils/helper";
 
 import GameItem from "../game/GameItem";
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -60,18 +60,10 @@ const Menubar = () => {
   const handleSearchGame = async () => {
     setGamesResult(undefined);
     try {
-      const res = await getGamesByKeySearch(debouncedSearchTerm);
-      setGamesResult(res);
+      const { rows } = (await getGamesByKeySearch(debouncedSearchTerm)) ?? {};
+      setGamesResult(rows);
     } catch (error) {
-      toast({
-        title: "ERROR",
-        variant: "left-accent",
-        description: error?.message,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-        position: "top-right",
-      });
+      notifyErrorMessage(error);
     }
   };
 
@@ -137,24 +129,20 @@ const Menubar = () => {
               {/* popular */}
               <div className="text-white mb-7 transition-all">
                 <p className="text-2xl font-bold mb-4">Popular this week</p>
-                <div className="flex gap-4">
-                  {Array(6)
-                    .fill(0)
-                    .map((e, i) => (
-                      <GameItem key={i} size={1} />
-                    ))}
+                <div className="grid grid-cols-6 gap-4">
+                  {GAMES_IMAGES.slice(0, 6).map((e, i) => (
+                    <GameItem key={i} size={1} thumbnail={e} />
+                  ))}
                 </div>
               </div>
 
               {/* recently */}
               <div className="text-white  transition-all">
                 <p className="text-2xl font-bold mb-4">Recently played</p>
-                <div className="flex gap-4">
-                  {Array(6)
-                    .fill(0)
-                    .map((e, i) => (
-                      <GameItem key={i} size={1} isRecently />
-                    ))}
+                <div className="grid grid-cols-6 gap-4">
+                  {GAMES_IMAGES.slice(0, 2).map((e, i) => (
+                    <GameItem key={i} size={1} isRecently thumbnail={e} />
+                  ))}
                 </div>
               </div>
             </Fragment>

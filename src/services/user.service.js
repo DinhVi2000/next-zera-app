@@ -3,6 +3,7 @@
 // eslint-disable-next-line quotes
 import { http } from "@/utils/http";
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // User slice
 const user = createSlice({
@@ -37,9 +38,33 @@ const getUserInfo = async (username) => {
   }
 };
 
+const getUserIp = async () => {
+  try {
+    const { data } = await axios.get("https://api.db-ip.com/v2/free/self");
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 const getHallOfFameByUsername = async (dispatch, username) => {
   try {
     const { data } = await http.get(`/users/hall-of-fame/${username}`);
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setHallOfFame(data.data));
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getTopHallOfFameBy = async (dispatch, limit) => {
+  try {
+    const { data } = await http.get(`/users/top-of-fame/${limit}`);
     if (!data.success) {
       throw new Error(data?.message);
     }
