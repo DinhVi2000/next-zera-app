@@ -1,18 +1,26 @@
-import MainLayout from "@/layouts/MainLayout";
 import React, { useEffect, useState } from "react";
 
 import Head from "next/head";
-import AvatarItem from "@/components/shop/AvatarItem";
+
+import MainLayout from "@/layouts/MainLayout";
+
 import { Checkbox, useToast } from "@chakra-ui/react";
+
 import { SHOP_TAB, STATUS } from "@/utils/constant";
+
+import AvatarItem from "@/components/shop/AvatarItem";
 import CoverPageItem from "@/components/shop/CoverPageItem";
-import PlayTimeItem from "@/components/shop/PlayTimeItem";
-import { useAuthContext } from "@/context/auth-context";
-import { IconCoin, IconPlus } from "@/resources/icons";
-import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
-import { notifyErrorMessage } from "@/utils/helper";
-import { useModalContext } from "@/context/modal-context";
 import Empty from "@/components/empty/Empty";
+import PlayTimeItem from "@/components/shop/PlayTimeItem";
+
+import { useAuthContext } from "@/context/auth-context";
+import { useModalContext } from "@/context/modal-context";
+
+import { IconCoin, IconPlus } from "@/resources/icons";
+
+import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
+
+import { notifyErrorMessage } from "@/utils/helper";
 
 const Shop = () => {
   const { status } = useModalContext();
@@ -24,7 +32,6 @@ const Shop = () => {
   const [tab, setTab] = useState(SHOP_TAB.AVATAR);
   const [categories, setCategories] = useState([]);
   const [itemsShop, setItemsShop] = useState();
-  console.log("itemsShop :", itemsShop);
 
   const getItem = async (idCategory) => {
     try {

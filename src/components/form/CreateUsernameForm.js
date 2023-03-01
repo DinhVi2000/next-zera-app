@@ -45,6 +45,7 @@ const CreateUsernameForm = () => {
       const { username } = formData ?? {};
 
       setUsernameAuth(username);
+      localStorage.setItem("username", username);
 
       router.push("/");
     } catch (error) {

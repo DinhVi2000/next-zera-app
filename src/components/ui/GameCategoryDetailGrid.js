@@ -1,9 +1,13 @@
-import { GAMES_IMAGES } from "@/utils/constant";
-import { getRandom } from "@/utils/helper";
 import React from "react";
+
+import { GAMES_IMAGES } from "@/utils/constant";
+
+import { getRandom } from "@/utils/helper";
+
 import { useSelector } from "react-redux";
-import GameCategory from "../game/GameCategory";
-import GameItem from "../game/GameItem";
+
+import GameCategory from "@/components/game/GameCategory";
+import GameItem from "@/components/game/GameItem";
 
 const GameCategoryDetailGrid = () => {
   const { categoryDetail } = useSelector(({ game }) => game) ?? {};
@@ -77,7 +81,7 @@ const GameCategoryDetailGrid = () => {
 
       {/* category */}
       {other_category?.length > 0 &&
-        other_category?.map((e, i) => (
+        other_category.slice(0, 4)?.map((e, i) => (
           <GameCategory
             key={i}
             id={e?.id}
@@ -90,7 +94,7 @@ const GameCategoryDetailGrid = () => {
           />
         ))}
 
-      {Array(4 - other_category?.length || 0)
+      {/* {Array(4 - other_category?.length || 0)
         .fill(0)
         ?.map((e, i) => (
           <GameCategory
@@ -107,7 +111,7 @@ const GameCategoryDetailGrid = () => {
               }`,
             }}
           />
-        ))}
+        ))} */}
 
       {!other_category &&
         Array(4)

@@ -72,6 +72,16 @@ const ADS_IMAGES = [
   "https://vao88.com/wp-content/uploads/2021/06/fb88-ads.gif",
 ];
 
+const SOCKET_EVENT = {
+  USER_JOIN_ROOM: "joinRoom",
+  USER_GET_MESSAGE: "message",
+  USER_CHAT_MESSAGE: "chatMessage",
+  USER_EMIT_REWARD: "emitReward",
+  USER_LEAVE_ROOM: "leaveRoom",
+  SOCKET_ERROR: "error",
+  ANONYMOUS_LOGIN: "loginAnonymous",
+};
+
 export {
   FACEBOOK_SIGN_IN_ERROR,
   IMAGE_URL,
@@ -85,4 +95,5 @@ export {
   GAMES_IMAGES,
   ADS_IMAGES,
   VIEW_ALL_GAMES_TAB,
+  SOCKET_EVENT,
 };
