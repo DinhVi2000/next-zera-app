@@ -5,84 +5,79 @@ import Image from "next/image";
 import ava from "@/../public/images/ava1.png";
 import { IconSendMes } from "@/resources/icons";
 import { ImgAva2 } from "@/resources/avatar/index";
-
 import { io } from "socket.io-client";
-
 import { useRouter } from "next/router";
-import { useAuthContext } from "@/context/auth-context";
-
 import { config } from "@/envs";
 
 import { SOCKET_EVENT } from "@/utils/constant";
-
-const socket = io(config.SERVER_CHAT);
+import { useAuthContext } from "@/context/auth-context";
 
 function BoxChat({ area }) {
-  const socket_id = socket?.id;
-
-  const { userInfo, anonymousInfo } = useAuthContext();
-  const userId = userInfo?.id;
-  const anonymous_id = anonymousInfo?.id;
-
+  const socket = io(config.SERVER_CHAT);
   const { asPath } = useRouter();
-
   const roomCurrent = useMemo(() => asPath.split("/").at(-1), [asPath]);
-
   const [messages, setMessages] = useState([]);
   const [emitReward, setEmitReward] = useState([]);
 
   const inputRef = useRef();
   const divRef = useRef();
-
+  const { userInfo, anonymousInfo } = useAuthContext();
+  const anonymous_id = anonymousInfo?.id;
+  const [socketCLI, setSocketCLI] = useState(socket);
   const sendMessage = (e) => {
-    socket.emit(SOCKET_EVENT.USER_CHAT_MESSAGE, {
+    socketCLI.emit("chatMessage", {
+      socket_id: socketCLI.id,
       msg: inputRef.current.value,
-      userId,
+      user_id: Number(userInfo?.id),
+      room_id: roomCurrent,
     });
     e.preventDefault();
     e.target.reset();
   };
 
   useEffect(() => {
-    if (!socket.connected) return;
-
-    socket.on(SOCKET_EVENT.USER_GET_MESSAGE, (dataMessage) => {
-      setMessages((value) => [...value, dataMessage]);
-    });
-
-    socket.on(SOCKET_EVENT.USER_EMIT_REWARD, (data) => {
-      setEmitReward((value) => [...value, data]);
-    });
-
-    socket.on(SOCKET_EVENT.SOCKET_ERROR, (e) => {});
-  }, [socket]);
+    setSocketCLI(socket);
+  }, []);
 
   useEffect(() => {
-    if (!socket?.connected || !userId) return;
-
-    socket.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
-      userId,
-      roomId: roomCurrent,
-    });
-
-    return () => {
-      socket.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
-        userId,
-        roomId: roomCurrent,
-      });
-    };
-  }, [socket, userId]);
-
-  useEffect(() => {
-    if (!socket?.connected || !anonymous_id) return;
+    if (!socketCLI?.connected|| !anonymous_id) return;
 
     socket.emit(SOCKET_EVENT.ANONYMOUS_LOGIN, {
       anonymous_id,
-      socket_id,
+      socket_id: socketCLI.id,
     });
-  }, [socket, anonymous_id]);
+  }, [socketCLI, anonymous_id]);
 
-  // scroll to bottom
+  useEffect(() => {
+    if (!socketCLI.connected) return;
+    socketCLI.emit("joinRoom", { user_id: Number(userInfo?.id), room_id: roomCurrent });
+
+    // Listen all user in room
+    socketCLI.on("roomUsers", (data) => {
+      console.log(data);
+    });
+
+    socketCLI.on("message", (dataMessage) => {
+      console.log(dataMessage);
+      if (dataMessage) {
+        setMessages((oldMes) => {
+          console.log("oldMes", oldMes);
+          return oldMes.length < 0 ? dataMessage.messages : [...oldMes].concat(dataMessage.messages);
+        });
+      }
+    });
+    socketCLI.on("emitReward", (data) => {
+      console.log(data);
+      setEmitReward((value) => {
+        return [...value, data];
+      });
+    });
+    return () => {
+      socketCLI.emit("leaveRoom", { user_id: Number(userInfo?.id), room_id: roomCurrent });
+      // socket.disconnect();
+    };
+  }, [socketCLI.connected]);
+  // Scroll to Bottom
   useEffect(() => {
     if (divRef.current) {
       divRef.current.scrollIntoView({
@@ -110,57 +105,45 @@ function BoxChat({ area }) {
       <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
         <div className="overflow-y-auto h-full flex flex-col box-chat">
           {/* Event */}
-          <div className="text-[#ffffff80] text-center">
-            Player X earn 10 Zera coin
-          </div>
           <div className="all-mess">
-            {messages?.map((msg, i) => (
+            {messages && messages?.map((msg, i) => (
               <div key={i}>
                 <div
-                  className={`w-full flex ${
-                    userId === msg.userId ? "justify-end" : "justify-start"
-                  }`}
+                  className={`w-full flex ${Number(userInfo?.id) === msg.user_id ? "justify-end" : "justify-start"
+                    }`}
                 >
                   <div className="flex flex-col my-[3px]" key={i}>
-                    {userId !== msg.userId ? (
+                    {Number(userInfo?.id) !== msg.user_id ? (
                       <div className="flex items-center text-[#ffffff80] mb-[5px]">
                         <ImgAva2 className="mr-[6px]" />
                         <div className="w-fit max-w-[150px] break-words">
-                          {msg.userId}
+                          {msg.user_id}
                         </div>
                       </div>
                     ) : (
                       ""
                     )}
                     <div
-                      className={`${
-                        userId === msg.userId
+                      className={`${Number(userInfo?.id) === msg.user_id
                           ? // owner
-                            "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
+                          "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
                           : ""
                         // other
-                      } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
+                        } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
                     >
-                      {msg.text}
+                      {msg.message}
                     </div>
                   </div>
                 </div>
               </div>
             ))}
-            {emitReward?.map((info, i) => (
-              <div
-                key={i}
-                className={`${
-                  userId === info.userId
-                    ? // owner
-                      "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
-                    : ""
-                  // other
-                } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
-              >
-                {info.text}
-              </div>
-            ))}
+            {
+              emitReward?.map((info, i) => (
+                <div key={i} className="text-[#ffffff80] text-center">
+                 { info.messages }
+                </div>
+              ))
+            }
             <div ref={divRef} />
           </div>
         </div>
