@@ -287,3 +287,35 @@
 .font-numberic {
   font-family: "Digital Numbers Regular"; /* đặt tên font */
 }
+
+.static-page {
+  background: rgba(0, 0, 0, 0.8);
+  border: 5px solid #f472b6;
+  border-radius: 20px;
+  color: #ffffff;
+  padding: 24px 28px;
+  width: 1084px;
+  box-sizing: border-box;
+  &__ttl {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 140%;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    &-roman {
+      font-size: 32px;
+      line-height: 44px;
+      letter-spacing: 0.002em;
+    }
+    &-number {
+      font-size: 28px;
+    }
+  }
+  &__txt {
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 160%;
+    letter-spacing: 0.002em;
+  }
+}

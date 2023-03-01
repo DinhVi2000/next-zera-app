@@ -41,10 +41,16 @@ const Footer = () => {
             {/* contact */}
             <div className="text-white">
               <p className="text-[28px] font-semibold mb-2.5">Useful links</p>
-              <Link href="/about" target={"_blank"} className="block mb-2.5">
-                About
+              <Link href="/about" className="block mb-2.5">
+                About us
               </Link>
-              <Link href="/contact" target={"_blank"} className="block mb-2.5">
+              <Link href="/policy" className="block mb-2.5">
+                Privacy Policy
+              </Link>
+              <Link href="/terms" className="block mb-2.5">
+                Terms
+              </Link>
+              <Link href="/contact" className="block mb-2.5">
                 Contact
               </Link>
 
