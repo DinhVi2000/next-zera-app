@@ -32,15 +32,17 @@ export const AuthContextProvider = ({ children }) => {
   const toast = useToast();
 
   const [userInfo, setUserInfo] = useState();
+  const [anonymousInfo, setAnonymousInfo] = useState();
+
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
+
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
 
   const { pathname } = router ?? {};
 
   const verifyAccessToken = async () => {
-    // getUserIp().then((res) => console.log("res :", res));
     try {
       setVerifyStatus(STATUS.IN_PROGRESS);
       const { data } = await getUserInfo(usernameAuth);
@@ -93,7 +95,7 @@ export const AuthContextProvider = ({ children }) => {
       const { user } = (await signInAnonymously(auth)) ?? {};
       const { uid } = user ?? {};
 
-      if (uid) console.log("uid", uid);
+      if (uid) setAnonymousInfo((prev) => ({ ...prev, id: uid }));
     } catch (error) {
       notifyErrorMessage(error);
     }
@@ -101,18 +103,33 @@ export const AuthContextProvider = ({ children }) => {
 
   const authProvider = useMemo(
     () => ({
-      usernameAuth,
-      userInfo,
-      token,
-      setUserInfo,
-      setToken,
-      setUsernameAuth,
+      anonymousInfo,
       login,
       logout,
-      verifyStatus,
+      userInfo,
+      usernameAuth,
+      setToken,
+      setUserInfo,
+      setAnonymousInfo,
+      setUsernameAuth,
       setVerifyStatus,
+      token,
+      verifyStatus,
     }),
-    [userInfo, setUserInfo, token, setToken, verifyStatus, setVerifyStatus]
+    [
+      anonymousInfo,
+      login,
+      logout,
+      userInfo,
+      usernameAuth,
+      setToken,
+      setUserInfo,
+      setAnonymousInfo,
+      setUsernameAuth,
+      setVerifyStatus,
+      token,
+      verifyStatus,
+    ]
   );
 
   const isAuthenticationPath = useMemo(

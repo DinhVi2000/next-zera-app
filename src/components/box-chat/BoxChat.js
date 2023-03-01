@@ -1,54 +1,88 @@
-import React, { useRef, useState, memo, useEffect } from "react";
+import React, { useRef, useState, memo, useEffect, useMemo } from "react";
 
-import ava from "../../../public/images/ava1.png";
-import { IconSendMes } from "@/resources/icons";
-import { ImgAva2 } from "@/resources/avatar/index";
 import Image from "next/image";
 
+import ava from "@/../public/images/ava1.png";
+import { IconSendMes } from "@/resources/icons";
+import { ImgAva2 } from "@/resources/avatar/index";
+
 import { io } from "socket.io-client";
+
 import { useRouter } from "next/router";
-import { useAuthContext } from '../../context/auth-context';
-import { config } from "../../envs"
-const socket = io(config.SERVER_CHAT)
+import { useAuthContext } from "@/context/auth-context";
+
+import { config } from "@/envs";
+
+import { SOCKET_EVENT } from "@/utils/constant";
+
+const socket = io(config.SERVER_CHAT);
 
 function BoxChat({ area }) {
+  const socket_id = socket?.id;
+
+  const { userInfo, anonymousInfo } = useAuthContext();
+  const userId = userInfo?.id;
+  const anonymous_id = anonymousInfo?.id;
+
   const { asPath } = useRouter();
-  const userId = "TEST";
-  const roomCurrent = asPath.split("/").at(-1);
+
+  const roomCurrent = useMemo(() => asPath.split("/").at(-1), [asPath]);
+
   const [messages, setMessages] = useState([]);
   const [emitReward, setEmitReward] = useState([]);
+
   const inputRef = useRef();
   const divRef = useRef();
-  const { userInfo } = useAuthContext();
 
   const sendMessage = (e) => {
-    socket.emit("chatMessage", {
+    socket.emit(SOCKET_EVENT.USER_CHAT_MESSAGE, {
       msg: inputRef.current.value,
-      userId: userInfo?.id,
+      userId,
     });
     e.preventDefault();
     e.target.reset();
   };
 
   useEffect(() => {
-    socket.emit("joinRoom", { userId: userInfo?.id, roomId: roomCurrent });
-    socket.on("message", (dataMessage) => {
-      setMessages((value) => {
-        return [...value, dataMessage];
-      });
-    });
-    socket.on("emitReward", (data) => {
-      console.log(data);
-      setEmitReward((value) => {
-        return [...value, data];
-      });
-    });
-    return () => {
-      socket.emit("leaveRoom", { userId: userInfo?.id, roomId: roomCurrent });
-    }
-  }, []);
+    if (!socket.connected) return;
 
-  // Scroll to Bottom
+    socket.on(SOCKET_EVENT.USER_GET_MESSAGE, (dataMessage) => {
+      setMessages((value) => [...value, dataMessage]);
+    });
+
+    socket.on(SOCKET_EVENT.USER_EMIT_REWARD, (data) => {
+      setEmitReward((value) => [...value, data]);
+    });
+
+    socket.on(SOCKET_EVENT.SOCKET_ERROR, (e) => {});
+  }, [socket]);
+
+  useEffect(() => {
+    if (!socket?.connected || !userId) return;
+
+    socket.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
+      userId,
+      roomId: roomCurrent,
+    });
+
+    return () => {
+      socket.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
+        userId,
+        roomId: roomCurrent,
+      });
+    };
+  }, [socket, userId]);
+
+  useEffect(() => {
+    if (!socket?.connected || !anonymous_id) return;
+
+    socket.emit(SOCKET_EVENT.ANONYMOUS_LOGIN, {
+      anonymous_id,
+      socket_id,
+    });
+  }, [socket, anonymous_id]);
+
+  // scroll to bottom
   useEffect(() => {
     if (divRef.current) {
       divRef.current.scrollIntoView({
@@ -57,6 +91,7 @@ function BoxChat({ area }) {
       });
     }
   });
+
   return (
     <div
       style={{
@@ -66,9 +101,9 @@ function BoxChat({ area }) {
     >
       <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e]">
         <div className="flex">
-          <Image alt='user' src={ava} className="w-[22px] mr-[-10px]" />
-          <Image alt='user' src={ava} className="w-[22px] mr-[-10px]" />
-          <Image alt='user' src={ava} className="w-[22px] mr-[-10px]" />
+          <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+          <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+          <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
         </div>
         <p className="text-[12px]">+100 more</p>
       </div>
@@ -112,8 +147,9 @@ function BoxChat({ area }) {
                 </div>
               </div>
             ))}
-            {
-              emitReward?.map((info, i) => (<div key={i}
+            {emitReward?.map((info, i) => (
+              <div
+                key={i}
                 className={`${
                   userId === info.userId
                     ? // owner
@@ -123,8 +159,8 @@ function BoxChat({ area }) {
                 } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
               >
                 {info.text}
-              </div>))
-            }
+              </div>
+            ))}
             <div ref={divRef} />
           </div>
         </div>

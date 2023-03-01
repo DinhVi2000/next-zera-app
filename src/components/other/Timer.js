@@ -1,12 +1,15 @@
 import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 
 import { useRouter } from "next/router";
+import { useAuthContext } from "@/context/auth-context";
 
 const Timer = () => {
   const Ref = useRef(null);
   const router = useRouter();
 
   const { route } = router ?? {};
+
+  const { userInfo } = useAuthContext();
 
   // The state for our timer
   const [timer, setTimer] = useState({
