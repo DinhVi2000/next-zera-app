@@ -8,7 +8,7 @@ import { notifyErrorMessage } from "@/utils/helper";
 
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
+import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
 import Script from "next/script";
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
@@ -132,8 +132,13 @@ export const AuthContextProvider = ({ children }) => {
     ]
   );
 
-  const isAuthenticationPath = useMemo(
+  const isAuthnrPath = useMemo(
     () => Object.values(PUBLIC_PAGE_URL).includes(pathname),
+    [pathname]
+  );
+
+  const isPrivatePath = useMemo(
+    () => Object.values(PRIVATE_PAGE_URL).includes(pathname),
     [pathname]
   );
 
@@ -148,22 +153,23 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (token && usernameAuth && !isAuthenticationPath) {
+    if (token && usernameAuth && !isAuthnrPath) {
       setIsAuthenticationPage(false);
       verifyAccessToken();
     }
   }, [token, usernameAuth, pathname]);
 
   useEffect(() => {
-    if (
-      pathname &&
-      isAuthenticationPath &&
-      (localStorage.getItem("accessToken") || localStorage.getItem("username"))
-    ) {
-      router.push("/");
-    } else {
-      setIsAuthenticationPage(false);
-    }
+    if (!pathname) return;
+
+    const accessToken = localStorage.getItem("accessToken");
+    const username = localStorage.getItem("username");
+
+    const isLogged = accessToken && username;
+
+    if (isAuthnrPath && isLogged) router.push("/");
+    if (isPrivatePath && !isLogged) router.push("/login");
+    else setIsAuthenticationPage(false);
   }, [pathname]);
 
   return (

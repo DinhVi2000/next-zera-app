@@ -51,6 +51,10 @@ const PUBLIC_PAGE_URL = {
   REGISTER: "/register",
 };
 
+const PRIVATE_PAGE_URL = {
+  SHOP: "/shop",
+};
+
 const COUNTDOWN_DEADLINE = "11/20/2023 20:00:00";
 
 const GAMES_IMAGES = [
@@ -91,6 +95,7 @@ export {
   STATUS,
   EDIT_PROFILE_TAB,
   PUBLIC_PAGE_URL,
+  PRIVATE_PAGE_URL,
   COUNTDOWN_DEADLINE,
   GAMES_IMAGES,
   ADS_IMAGES,

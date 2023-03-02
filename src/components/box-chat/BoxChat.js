@@ -40,7 +40,7 @@ function BoxChat({ area }) {
   }, []);
 
   useEffect(() => {
-    if (!socketCLI?.connected|| !anonymous_id) return;
+    if (!socketCLI?.connected || !anonymous_id) return;
 
     socket.emit(SOCKET_EVENT.ANONYMOUS_LOGIN, {
       anonymous_id,
@@ -50,7 +50,10 @@ function BoxChat({ area }) {
 
   useEffect(() => {
     if (!socketCLI.connected) return;
-    socketCLI.emit("joinRoom", { user_id: Number(userInfo?.id), room_id: roomCurrent });
+    socketCLI.emit("joinRoom", {
+      user_id: Number(userInfo?.id),
+      room_id: roomCurrent,
+    });
 
     // Listen all user in room
     socketCLI.on("roomUsers", (data) => {
@@ -62,7 +65,9 @@ function BoxChat({ area }) {
       if (dataMessage) {
         setMessages((oldMes) => {
           console.log("oldMes", oldMes);
-          return oldMes.length < 0 ? dataMessage.messages : [...oldMes].concat(dataMessage.messages);
+          return oldMes.length < 0
+            ? dataMessage.messages
+            : [...oldMes].concat(dataMessage.messages);
         });
       }
     });
@@ -73,7 +78,10 @@ function BoxChat({ area }) {
       });
     });
     return () => {
-      socketCLI.emit("leaveRoom", { user_id: Number(userInfo?.id), room_id: roomCurrent });
+      socketCLI.emit("leaveRoom", {
+        user_id: Number(userInfo?.id),
+        room_id: roomCurrent,
+      });
       // socket.disconnect();
     };
   }, [socketCLI.connected]);
@@ -106,44 +114,47 @@ function BoxChat({ area }) {
         <div className="overflow-y-auto h-full flex flex-col box-chat">
           {/* Event */}
           <div className="all-mess">
-            {messages && messages?.map((msg, i) => (
-              <div key={i}>
-                <div
-                  className={`w-full flex ${Number(userInfo?.id) === msg.user_id ? "justify-end" : "justify-start"
+            {messages &&
+              messages?.map((msg, i) => (
+                <div key={i}>
+                  <div
+                    className={`w-full flex ${
+                      Number(userInfo?.id) === msg.user_id
+                        ? "justify-end"
+                        : "justify-start"
                     }`}
-                >
-                  <div className="flex flex-col my-[3px]" key={i}>
-                    {Number(userInfo?.id) !== msg.user_id ? (
-                      <div className="flex items-center text-[#ffffff80] mb-[5px]">
-                        <ImgAva2 className="mr-[6px]" />
-                        <div className="w-fit max-w-[150px] break-words">
-                          {msg.user_id}
+                  >
+                    <div className="flex flex-col my-[3px]" key={i}>
+                      {Number(userInfo?.id) !== msg.user_id ? (
+                        <div className="flex items-center text-[#ffffff80] mb-[5px]">
+                          <ImgAva2 className="mr-[6px]" />
+                          <div className="w-fit max-w-[150px] break-words">
+                            {msg.user_id}
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    <div
-                      className={`${Number(userInfo?.id) === msg.user_id
-                          ? // owner
-                          "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
-                          : ""
-                        // other
+                      ) : (
+                        ""
+                      )}
+                      <div
+                        className={`${
+                          Number(userInfo?.id) === msg.user_id
+                            ? // owner
+                              "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
+                            : ""
+                          // other
                         } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
-                    >
-                      {msg.message}
+                      >
+                        {msg.message}
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))}
+            {emitReward?.map((info, i) => (
+              <div key={i} className="text-[#ffffff80] text-center">
+                {info.messages}
               </div>
             ))}
-            {
-              emitReward?.map((info, i) => (
-                <div key={i} className="text-[#ffffff80] text-center">
-                 { info.messages }
-                </div>
-              ))
-            }
             <div ref={divRef} />
           </div>
         </div>

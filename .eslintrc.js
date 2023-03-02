@@ -27,6 +27,7 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
+    "template-curly-spacing": "off",
     semi: [ESLINT.ERROR, "always"],
     quotes: [ESLINT.OFF, "single"],
     "no-console": ESLINT.WARNING,
@@ -88,7 +89,11 @@ module.exports = {
         asyncArrow: "always",
       },
     ],
-    indent: [ESLINT.WARNING, 2, { SwitchCase: 1 }],
+    indent: [
+      ESLINT.WARNING,
+      2,
+      { SwitchCase: 1, ignoredNodes: ["TemplateLiteral"] },
+    ],
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
   },

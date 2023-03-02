@@ -56,13 +56,14 @@ const getHallOfFameByUsername = async (dispatch, username) => {
     }
 
     dispatch(setHallOfFame(data.data));
+
     return data;
   } catch (e) {
     throw e;
   }
 };
 
-const getTopHallOfFameBy = async (dispatch, limit) => {
+const getTopHallOfFame = async (dispatch, limit) => {
   try {
     const { data } = await http.get(`/users/top-of-fame/${limit}`);
     if (!data.success) {
@@ -70,6 +71,19 @@ const getTopHallOfFameBy = async (dispatch, limit) => {
     }
 
     dispatch(setHallOfFame(data.data));
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getHallOfFameByUserId = async () => {
+  try {
+    const { data } = await http.get("/users/hall-of-fames");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
     return data;
   } catch (e) {
     throw e;
@@ -113,6 +127,7 @@ const getCategoriesInventory = async () => {
     throw e;
   }
 };
+
 const getItemInventory = async (params) => {
   try {
     const { data } = await http.get(
@@ -144,6 +159,9 @@ const claimDailyBonus = async () => {
 export {
   getUserInfo,
   getHallOfFameByUsername,
+  getHallOfFameByUserId,
+  getTopHallOfFame,
+  getUserIp,
   updateUser,
   updateUsername,
   getCategoriesInventory,

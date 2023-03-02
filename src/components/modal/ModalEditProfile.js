@@ -154,13 +154,13 @@ const ModalEditProfile = () => {
                         onClick={
                           tab == EDIT_PROFILE_TAB.AVATAR
                             ? () => {
-                                setAvatarUser(e?.item_info?.id),
-                                  setCheckAvatar(e?.item_info?.url);
-                              }
+                              setAvatarUser(e?.item_info?.id),
+                              setCheckAvatar(e?.item_info?.url);
+                            }
                             : () => {
-                                setCoverUser(e?.item_info?.id),
-                                  setCheckCover(e?.item_info?.url);
-                              }
+                              setCoverUser(e?.item_info?.id),
+                              setCheckCover(e?.item_info?.url);
+                            }
                         }
                       >
                         <ImageLoading

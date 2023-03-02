@@ -1,12 +1,12 @@
-import React from "react"
-import { useController } from "react-hook-form"
+import React from "react";
+import { useController } from "react-hook-form";
 
 const TextareaHook = ({ control, ...props }) => {
   const { field } = useController({
     control,
     name: props.name,
     defaultValue: "",
-  })
+  });
 
   return (
     <textarea
@@ -15,7 +15,7 @@ const TextareaHook = ({ control, ...props }) => {
       {...field}
       {...props}
     />
-  )
-}
+  );
+};
 
-export default TextareaHook
+export default TextareaHook;

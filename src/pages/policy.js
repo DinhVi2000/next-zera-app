@@ -14,6 +14,7 @@ const Policy = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <MainLayout>
         <main className="main static-page">
           <h1 className="static-page__ttl">PRIVACY POLICY</h1>

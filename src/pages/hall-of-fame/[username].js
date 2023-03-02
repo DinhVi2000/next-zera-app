@@ -24,7 +24,7 @@ const HallOfFamePage = () => {
     try {
       const { username } = params;
 
-      const response = await getHallOfFameByUsername(dispatch, username);
+      getHallOfFameByUsername(dispatch, username);
     } catch (error) {
       notifyErrorMessage(toast, error);
       setIsValidPage(false);

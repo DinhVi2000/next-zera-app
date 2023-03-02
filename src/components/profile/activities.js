@@ -115,7 +115,7 @@ function Activities() {
             className="flex items-center font-medium cursor-pointer"
             onClick={() => {
               setPayload("PURCHASE_HISTORY"),
-                openModal(MODAL_NAME.VIEW_ALL_GAMES);
+              openModal(MODAL_NAME.VIEW_ALL_GAMES);
             }}
           >
             View all <IconArrowRight className="ml-[5px] mb-[2px]" />

@@ -1,13 +1,13 @@
-import React from "react"
-import MainLayout from "@/layouts/MainLayout"
-import Head from "next/head"
+import React from "react";
+import MainLayout from "@/layouts/MainLayout";
+import Head from "next/head";
 
-import { IconPlus, IconCopy } from "@/resources/icons"
+import { IconPlus, IconCopy } from "@/resources/icons";
 
-import Activities from "@/components/profile/activities"
-import Rewards from "@/components/profile/rewards"
-import InfoUser from "@/components/profile/InfoUser"
-import { Tooltip } from "@chakra-ui/react"
+import Activities from "@/components/profile/activities";
+import Rewards from "@/components/profile/rewards";
+import InfoUser from "@/components/profile/InfoUser";
+import { Tooltip } from "@chakra-ui/react";
 
 function Profile() {
   return (
@@ -63,7 +63,7 @@ function Profile() {
         </div>
       </MainLayout>
     </>
-  )
+  );
 }
 
-export default Profile
+export default Profile;
