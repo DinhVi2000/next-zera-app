@@ -32,7 +32,7 @@ import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import { Tooltip } from "@chakra-ui/react";
-import { sleep } from "@/utils/helper";
+import { abbreviateNumber, sleep } from "@/utils/helper";
 import Timer from "../other/Timer";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useRouter } from "next/router";
@@ -90,9 +90,7 @@ const sideBarItems = [
 
 const SideBar = () => {
   const { openModal } = useModalContext();
-  const { userInfo, logout, verifyStatus, setVerifyStatus } = useAuthContext();
-
-  const { username, avatar, zera } = userInfo ?? {};
+  const { userInfo } = useAuthContext();
 
   const content_ref = useRef();
 
@@ -174,7 +172,7 @@ const SideBar = () => {
 export default memo(SideBar);
 
 const UserInfo = () => {
-  const { userInfo, logout } = useAuthContext();
+  const { userInfo } = useAuthContext();
   const { username, avatar, zera } = userInfo ?? {};
 
   const ref = useRef();
@@ -232,10 +230,13 @@ const UserInfo = () => {
             Shop
           </button>
         </Link>
-        <div className="flex items-center gap-2">
-          <span>{zera}</span>
-          <IconCoin />
-        </div>
+
+        <Tooltip label={zera > 999 && zera} aria-label="A tooltip">
+          <div className="flex items-center gap-2">
+            <span>{abbreviateNumber(zera)}</span>
+            <IconCoin />
+          </div>
+        </Tooltip>
       </div>
     </div>
   );

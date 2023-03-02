@@ -319,3 +319,14 @@
     letter-spacing: 0.002em;
   }
 }
+
+.bg-violet-gradient {
+  background: linear-gradient(
+    136.25deg,
+    rgba(255, 255, 255, 0.25) -3.64%,
+    rgba(137, 248, 255, 0.25) 23.83%,
+    rgba(255, 165, 235, 0.25) 45.01%,
+    rgba(255, 245, 158, 0.25) 78.78%,
+    rgba(255, 255, 255, 0.25) 106.25%
+  );
+}

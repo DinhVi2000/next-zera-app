@@ -1,7 +1,7 @@
-import React, { memo } from "react"
+import React, { memo } from "react";
 
 const BoxModal = ({ children, ...props }) => {
-  return <div {...props}>{children}</div>
-}
+  return <div {...props}>{children}</div>;
+};
 
-export default memo(BoxModal)
+export default memo(BoxModal);

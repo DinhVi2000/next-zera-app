@@ -5,10 +5,10 @@ import React from "react";
 const TopHallOfFame = ({ ...props }) => {
   return (
     <div
-      className="bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] text-white overflow-auto"
+      className="bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] text-white overflow-auto relative"
       {...props}
     >
-      <div className="text-[28px] font-semibold bg-blur-500 py-2.5 text-center ">
+      <div className="text-[28px] font-semibold bg-black py-2.5 text-center top-0 sticky">
         Hall of Fame
       </div>
 
@@ -17,17 +17,17 @@ const TopHallOfFame = ({ ...props }) => {
           .fill(0)
           .map((e, i) => (
             <div key={i} className="bg-blur-600 p-2.5 rounded-[10px] flex">
-              <div className="flex gap-2.5">
+              <div className="flex">
                 <img
                   src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
                   alt=""
                   className="min-w-[62px] h-[62px] rounded-full object-cover"
                 />
-                <div>
+                <div className="px-2.5">
                   <h2 className="text-base font-bold">Username</h2>
                   <p className="text-xs font-medium">
                     User’s quote:Lorem ipsum dolor sit amet consectetur
-                    adipiscing elit Ut et.
+                    adipiscing elit Ut
                   </p>
                 </div>
               </div>

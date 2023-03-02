@@ -5,7 +5,7 @@ import SideBar from "@/components/ui/SideBar";
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="h-[100vh]">
+    <div className="h-[100vh] flex flex-col justify-between">
       <div className="flex justify-between gap-4 p-4 w-fit mx-auto relative">
         <SideBar />
         <div>{children}</div>

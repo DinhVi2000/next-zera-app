@@ -1,8 +1,8 @@
-import Image from "next/image"
-import Link from "next/link"
-import React from "react"
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-import imgSuccess from "../../public/images/success.png"
+import imgSuccess from "../../public/images/success.png";
 
 function VerifyEmailSuccessful() {
   return (
@@ -15,7 +15,7 @@ function VerifyEmailSuccessful() {
         </button>
       </Link>
     </div>
-  )
+  );
 }
 
-export default VerifyEmailSuccessful
+export default VerifyEmailSuccessful;

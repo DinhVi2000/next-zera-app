@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { MODAL_NAME } from "@/utils/constant";
+import { MODAL_NAME, VIEW_ALL_GAMES_TAB } from "@/utils/constant";
 import { sleep } from "@/utils/helper";
 import BoxModal from "./BoxModal";
 
@@ -68,7 +68,7 @@ const ModalViewAllGames = () => {
                   {Array(15)
                     .fill(0)
                     .map((e, i) => (
-                      <div className="relative group cursor-pointer">
+                      <div key={i} className="relative group cursor-pointer">
                         <img
                           key={i}
                           alt=""

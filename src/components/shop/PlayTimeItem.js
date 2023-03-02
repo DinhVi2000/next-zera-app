@@ -25,7 +25,7 @@ const PlayTimeItem = ({ item, tab }) => {
               onClick={() => {
                 setPayload({ item, tab }), openModal(MODAL_NAME.BUY);
               }}
-              className="bg-violet-700 px-[25px] py-[5px] rounded-[30px] border border-[#F5F3FF] font-medium 
+              className="bg-violet-700 px-[25px] py-[5px] rounded-[30px] border border-[#F5F3FF] font-medium
           hover:bg-[#350F1E] transition-all"
             >
               Buy

@@ -94,6 +94,10 @@
   .grid-responsive {
     grid-template-columns: repeat(15, 94px);
   }
+
+  .w-responsive {
+    width: 1634px;
+  }
 }
 
 @media (min-width: 1541px) and (max-width: 1870.9px) {
@@ -171,6 +175,10 @@
 
   .grid-responsive {
     grid-template-columns: repeat(12, 94px);
+  }
+
+  .w-responsive {
+    width: 1304px;
   }
 }
 
@@ -251,6 +259,10 @@
   .grid-responsive {
     grid-template-columns: repeat(10, 94px);
   }
+
+  .w-responsive {
+    width: 1084px;
+  }
 }
 
 @media (min-width: 1211px) and (max-width: 1320.9px) {
@@ -289,10 +301,8 @@
   .grid-responsive {
     grid-template-columns: repeat(9, 94px);
   }
+
+  .w-responsive {
+    width: 1194px;
+  }
 }
-
-// .grid-category {
-
-//   grid-template-columns: repeat(17, 94px);
-//   grid-template-rows: repeat(5, 94px);
-// }

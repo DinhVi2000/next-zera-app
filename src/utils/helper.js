@@ -42,11 +42,65 @@ const getRandom = (list) => {
   return list[Math.floor(Math.random() * list.length)];
 };
 
+const formatDate = (date) => {
+  if (!date) return;
+  return new Date(date).toISOString().split("T")[0] || "";
+};
+
+const abbreviateNumber = (num) => {
+  if (!num) return 0;
+
+  const unit = Math.floor(
+      Math.round(num / 1.0e1)
+        .toLocaleString()
+        .replaceAll(",", "").length
+    ),
+    wunit = [
+      "K",
+      "M",
+      "B",
+      "T",
+      "Quadrillion",
+      "Quintillion",
+      "Sextillion",
+      "Septillion",
+      "Octillion",
+      "Nonillion",
+      "Decillion",
+      "Undecillion",
+      "Duodecillion",
+      "Tredecillion",
+      "Quattuordecillion",
+      "Quindecillion",
+      "Sexdecillion",
+      "Septemdecillion",
+      "Octodecillion",
+      "Novemdecillion",
+      "Vigintillion",
+      "Unvigintillion",
+      "Duovigintillion",
+      "Trevigintillion",
+      "Quattuorvigintillion",
+      "Quinvigintillion",
+      "Sexvigintillion",
+      "Septvigintillion",
+      "Octovigintillion",
+      "Nonvigintillion",
+      "Trigintillion",
+      "Untrigintillion",
+      "Duotrigintillion",
+    ][Math.floor(unit / 3) - 1],
+    funit = Math.abs(Number(num)) / Number("1.0e+" + (unit - (unit % 3)));
+  return wunit ? funit.toLocaleString() + "" + wunit : num.toString();
+};
+
 export {
-  sleep,
+  abbreviateNumber,
+  formatDate,
+  getRandom,
   isEmpty,
   inRange,
   notifyErrorMessage,
   notifySuccessMessage,
-  getRandom,
+  sleep,
 };
