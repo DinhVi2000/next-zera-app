@@ -11,6 +11,7 @@ import ReferAFriend from "../other/ReferAFriend";
 import { useSelector } from "react-redux";
 import { getRandom } from "@/utils/helper";
 import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
+import GameScreen from "../game/GameScreen";
 
 const GameDetailGrid = () => {
   const { info, gamesRelate } =
@@ -41,25 +42,8 @@ const GameDetailGrid = () => {
         />
 
         {/* game screen */}
-        <div
-          style={{
-            gridArea: "gs / gs / gs / gs",
-          }}
-          className="h-full flex flex-col bg-white"
-        >
-          <iframe
-            className={`${!thumbnail && "skeleton-shine"} flex-1`}
-            width="100%"
-            frameBorder="0"
-            marginHeight="0"
-            vspace="0"
-            hspace="0"
-            scrolling="no"
-            allowFullScreen={true}
-            src={play_url}
-          ></iframe>
-          <GameScreenBar title={title} thumbnail={thumbnail} />
-        </div>
+
+        <GameScreen play_url={play_url} thumbnail={thumbnail} title={title} />
 
         {/* box chat  */}
         <BoxChat area={"bc"}></BoxChat>

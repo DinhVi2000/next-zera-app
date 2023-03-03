@@ -10,12 +10,15 @@ import {
   getGameByCategoryId,
   getGameDetailById,
   getGameDetailBySlug,
+  getHallOfFameByGameId,
 } from "@/services/game.service";
 import { useRouter } from "next/router";
 import { isEmpty, notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useApi } from "@/hooks/useApi";
+
+const HALL_OF_FAME_LIMIT = 10;
 
 const GameDetail = () => {
   const router = useRouter();
@@ -47,7 +50,11 @@ const GameDetail = () => {
   useEffect(() => {
     if (!params || isEmpty(params)) return;
 
-    Promise.all([handleGetGameDetailData(), call(getAllCategories(dispatch))]);
+    Promise.all([
+      handleGetGameDetailData(),
+      call(getAllCategories(dispatch)),
+      call(getHallOfFameByGameId(dispatch, params?.gameId, HALL_OF_FAME_LIMIT)),
+    ]);
   }, [params]);
 
   useEffect(() => {

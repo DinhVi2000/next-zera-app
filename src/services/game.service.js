@@ -16,6 +16,7 @@ const game = createSlice({
     gameDetail: {
       info: null,
       gamesRelate: null,
+      hallOfFame: null,
     },
     categories: null,
     categoryDetail: null,
@@ -29,6 +30,9 @@ const game = createSlice({
     },
     setGamesRelateAtGameDetail: (state, action) => {
       state.gameDetail.gamesRelate = action.payload;
+    },
+    setHallOfFameAtGameDetail: (state, action) => {
+      state.gameDetail.hallOfFame = action.payload;
     },
     setGamesAtGameIndex: (state, action) => {
       state.gameIndex.games = action.payload;
@@ -50,6 +54,7 @@ export const {
   setGamesAtGameIndex,
   setCategoriesAtGameIndex,
   setCategoryDetail,
+  setHallOfFameAtGameDetail,
 } = actions;
 
 const getAllGame = async (dispatch, params) => {
@@ -163,6 +168,22 @@ const getGameByCategoryId = async (dispatch, categoryId) => {
   }
 };
 
+const getHallOfFameByGameId = async (dispatch, gameId, limit) => {
+  try {
+    const { data } = await http.get(`/hall-of-fames/${gameId}/game`, { limit });
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setHallOfFameAtGameDetail(data.data));
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getAllGame,
   getAllCategories,
@@ -171,5 +192,6 @@ export {
   getGameByCategoryId,
   getGameDetailById,
   getCategoryById,
+  getHallOfFameByGameId,
 };
 export default reducer;
