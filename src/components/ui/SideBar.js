@@ -197,7 +197,6 @@ const SideBar = () => {
                       <span className="my-2 flex-center skeleton-shine h-[10px] w-[94px] rounded-[10px]"></span>
                     </div>
                     <UserMenu />
-                    <Timer />
                   </div>
                 </div>
               )}
