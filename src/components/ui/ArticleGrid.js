@@ -1,9 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import { formatDate } from "@/utils/helper";
-import Link from "next/link";
 import React, { memo } from "react";
+
+import Link from "next/link";
+
+import { formatDate } from "@/utils/helper";
+
 import { useSelector } from "react-redux";
+
 import ImageLoading from "../loading/ImageLoading";
+
+import { DocumentRenderer } from "@keystone-6/document-renderer";
 
 const ArticleGrid = () => {
   const { articleIndex } = useSelector(({ article }) => article) ?? {};
@@ -43,12 +49,19 @@ const ArticleItem = ({ item, ...props }) => {
         <ImageLoading
           src={feature_image}
           alt={title}
-          className="w-[204px] h-full rounded-[10px]"
+          className="min-w-[204px] max-w-[204px] h-full rounded-[10px]"
         />
-        <div className="py-3 px-4">
+        <div className="py-3 px-4 flex-1 w-[328px]">
           <h2 className="text-base font-bold">{title}</h2>
           <span className="text-xs my-1 ">{formatDate(created_at)}</span>
-          <p className="text-xs font-medium">{content}</p>
+          <span className="text-xs font-medium ">
+            {
+              <DocumentRenderer
+                document={JSON.parse(content)}
+                className="whitespace-nowrap overflow-hidden text-ellipsis"
+              />
+            }
+          </span>
         </div>
       </div>
     </Link>
@@ -64,7 +77,7 @@ const ArticleGridLoading = ({ articles }) => {
           .map((e, i) => (
             <div
               key={i}
-              className="min-h-[204px] w-[534px] rounded-2xl bg-white flex"
+              className="min-h-[204px] w-[534px] rounded-2xl flex bg-violet-gradient border border-pink-500"
             >
               <div className="w-[204px] h-full rounded-[10px] skeleton-shine"></div>
               <div className="flex-1 py-4 px-4">
