@@ -37,12 +37,13 @@ import IconLeftWing from "./left-wing.svg";
 import IconRightWing from "./right-wing.svg";
 import IconHeart from "./heart.svg";
 import IconPlusNoRounded from "./plus-no-rounded.svg";
-import IconFullScreen from "./full-screen.svg";
 import IconInfo from "./info.svg";
 import IconCoinDaily from "./coin-daily.svg";
 import IconCheckDaily from "./check-daily.svg";
 import IconLogOut from "./log-out.svg";
 import IconProfile from "./profile.svg";
+export { default as IconZoomIn } from "./zoom-in.svg";
+export { default as IconZoomOut } from "./zoom-out.svg";
 
 export {
   IconBack,
@@ -84,7 +85,6 @@ export {
   IconRightWing,
   IconHeart,
   IconPlusNoRounded,
-  IconFullScreen,
   IconInfo,
   IconCoinDaily,
   IconCheckDaily,

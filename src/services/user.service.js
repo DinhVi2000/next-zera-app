@@ -63,20 +63,6 @@ const getHallOfFameByUsername = async (dispatch, username) => {
   }
 };
 
-const getTopHallOfFame = async (dispatch, limit) => {
-  try {
-    const { data } = await http.get(`/users/top-of-fame/${limit}`);
-    if (!data.success) {
-      throw new Error(data?.message);
-    }
-
-    dispatch(setHallOfFame(data.data));
-    return data;
-  } catch (e) {
-    throw e;
-  }
-};
-
 const getHallOfFameByUserId = async () => {
   try {
     const { data } = await http.get("/users/hall-of-fames");
@@ -160,7 +146,6 @@ export {
   getUserInfo,
   getHallOfFameByUsername,
   getHallOfFameByUserId,
-  getTopHallOfFame,
   getUserIp,
   updateUser,
   updateUsername,
