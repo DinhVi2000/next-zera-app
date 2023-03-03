@@ -33,6 +33,7 @@ const GameDetail = () => {
     try {
       const { data } =
         (await getGameDetailById(dispatch, params?.gameId)) ?? {};
+      if (!data) router.push("/404");
 
       const { game_category } = data ?? {};
 

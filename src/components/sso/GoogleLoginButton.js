@@ -37,13 +37,17 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
 
       const {
         data: { token, username },
-      } = res;
+      } = res ?? {};
 
-      setToken(token);
-      setUsernameAuth(username);
+      if (token) {
+        setToken(token);
+        localStorage.setItem("accessToken", token);
+      }
 
-      localStorage.setItem("accessToken", token);
-      localStorage.setItem("username", username);
+      if (username) {
+        setUsernameAuth(username);
+        localStorage.setItem("username", username);
+      }
 
       if (!username) return router.push("/create-username");
       router.push("/");
