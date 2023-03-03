@@ -3,7 +3,7 @@ import { Tooltip } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { EDIT_PROFILE_TAB, MODAL_NAME } from "@/utils/constant";
+import { EDIT_PROFILE_TAB, MODAL_NAME, STATUS } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import {
@@ -14,7 +14,7 @@ import {
 function InfoUser() {
   const { openModal, setPayload } = useModalContext();
 
-  const { userInfo } = useAuthContext();
+  const { userInfo, verifyStatus } = useAuthContext();
   const { username, quote, avatar, cover, zera } = userInfo || {};
 
   const [categories, setCategories] = useState([]);
@@ -35,7 +35,8 @@ function InfoUser() {
   };
 
   const handleOpenEdit = (tab) => {
-    setPayload({ itemsInventory, tab, categories });
+    const item = itemsInventory[tab];
+    setPayload({ item, tab });
     openModal(MODAL_NAME.EDIT_PROFILE);
   };
 
@@ -57,14 +58,18 @@ function InfoUser() {
             className="group cursor-pointer rounded-[20px] relative"
             onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.COVER_PAGE)}
           >
-            <ImageLoading
-              alt=""
-              className="w-full h-[350px] object-cover rounded-[20px]"
-              src={
-                cover ||
-                "https://img.freepik.com/free-vector/alien-spaceship-flying-cosmos-planets_33099-2480.jpg?w=1380&t=st=1677223897~exp=1677224497~hmac=47243c07b199f051b0b4d45aa862e0130fcecddea16570ed1592b829c11cf16f"
-              }
-            />
+            {verifyStatus === STATUS.SUCCESS ? (
+              <ImageLoading
+                alt=""
+                className="w-full h-[350px] object-cover rounded-[20px]"
+                src={
+                  cover ||
+                  "https://img.freepik.com/free-vector/alien-spaceship-flying-cosmos-planets_33099-2480.jpg?w=1380&t=st=1677223897~exp=1677224497~hmac=47243c07b199f051b0b4d45aa862e0130fcecddea16570ed1592b829c11cf16f"
+                }
+              />
+            ) : (
+              <div className="skeleton-shine w-full h-[350px] rounded-[20px]"></div>
+            )}
             <div className="hidden group-hover:block rounded-[20px] absolute bottom-0 right-0 z-10 box-border w-full h-full bg-[#00000099]">
               <IconEdit className="absolute-center" />
             </div>
@@ -76,14 +81,19 @@ function InfoUser() {
               className="group w-[250px] mr-[16px] rounded-[20px] cursor-pointer relative z-10"
               onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.AVATAR)}
             >
-              <ImageLoading
-                alt=""
-                src={
-                  avatar ||
-                  "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
-                }
-                className="w-full h-[204px] object-cover rounded-[20px]"
-              />
+              {verifyStatus === STATUS.SUCCESS ? (
+                <ImageLoading
+                  alt=""
+                  src={
+                    avatar ||
+                    "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+                  }
+                  className="w-full h-[204px] object-cover rounded-[20px]"
+                />
+              ) : (
+                <div className="skeleton-shine w-full h-[204px] rounded-[20px]"></div>
+              )}
+
               <div className="hidden group-hover:block rounded-[20px] absolute top-0 z-10 bg-[#00000099] box-border w-full h-full">
                 <IconEdit className="absolute-center" />
               </div>
@@ -92,23 +102,12 @@ function InfoUser() {
 
           <div className="w-full flex justify-between">
             <div>
-              <div
-                className="group cursor-pointer relative w-fit"
-                onClick={() => {
-                  setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE);
-                }}
-              >
+              <div className="w-fit">
                 <p className="font-semibold text-[28px]">{username}</p>
-                <IconEdit
-                  viewBox="0 0 42 42"
-                  className="absolute top-[23%] right-[-35px] group-hover:block hidden"
-                />
               </div>
               <div
                 className="group cursor-pointer relative w-fit"
-                onClick={() => {
-                  setPayload("AVATAR"), openModal(MODAL_NAME.EDIT_PROFILE);
-                }}
+                onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.AVATAR)}
               >
                 <p className="font-medium">{quote}</p>
                 <IconEdit

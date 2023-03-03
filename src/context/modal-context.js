@@ -5,6 +5,7 @@ import ModalEditProfile from "@/components/modal/ModalEditProfile";
 import ModalViewAllGames from "@/components/modal/ModalViewAllGames";
 import ModalDailyBonus from "@/components/modal/ModalDailyBonus";
 import ModalBuy from "@/components/modal/ModalBuy";
+import ModalConfirm from "@/components/modal/ModalConfirm";
 
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 
@@ -16,6 +17,7 @@ const Modal = {
   VIEW_ALL_GAMES: <ModalViewAllGames />,
   DAILY_BONUS: <ModalDailyBonus />,
   BUY: <ModalBuy />,
+  CONFIRM: <ModalConfirm />,
 };
 
 export const useModalContext = () => {
