@@ -23,21 +23,25 @@ import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
 import { notifyErrorMessage } from "@/utils/helper";
 
 const Shop = () => {
-  const { status } = useModalContext();
+  const { status, setStatus } = useModalContext();
   const { userInfo } = useAuthContext();
   const { zera } = userInfo || {};
   const toast = useToast();
 
   const [idCategory, setIdCategory] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState(SHOP_TAB.AVATAR);
   const [categories, setCategories] = useState([]);
   const [itemsShop, setItemsShop] = useState();
 
   const getItem = async (idCategory) => {
     try {
+      setIsLoading(false);
       const { data } = await getItemByCategory(idCategory);
       if (!data) return;
       setItemsShop(data?.rows);
+      setStatus(STATUS.NOT_START);
+      setIsLoading(true);
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
@@ -55,11 +59,7 @@ const Shop = () => {
   useEffect(() => {
     if (!idCategory) return;
     getItem(idCategory);
-  }, [idCategory]);
-
-  useEffect(() => {
-    getItem(idCategory);
-  }, [status == STATUS.SUCCESS]);
+  }, [status == STATUS.SUCCESS, idCategory]);
 
   useEffect(() => {
     if (categories) {
@@ -111,7 +111,7 @@ const Shop = () => {
             </div>
 
             {/* content */}
-            <div className="pt-[18px] px-[54px] pb-[26px] border-[5px] border-pink-500 bg-[#5b21b666] rounded-[30px]">
+            <div className="pt-[18px] px-[54px] pb-[26px] border-[5px] border-pink-500 bg-[#5b21b666] rounded-[30px] min-h-[400px]">
               {/* checkbox */}
               <div className="flex gap-4 justify-end mb-[26px]">
                 <Checkbox colorScheme="pink" defaultChecked>
@@ -126,37 +126,97 @@ const Shop = () => {
               </div>
 
               {/* list item  */}
-              {itemsShop?.length ? (
-                <>
-                  {tab === SHOP_TAB.AVATAR ? (
-                    <div
-                      className="grid grid-cols-1 justify-center
+
+              <>
+                {tab === SHOP_TAB.AVATAR ? (
+                  <>
+                    {isLoading ? (
+                      <div
+                        className="grid grid-cols-1 justify-center
                   min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                    >
-                      {itemsShop?.map((e, i) => (
-                        <AvatarItem tab={tab} item={e} key={i} />
-                      ))}
-                    </div>
-                  ) : tab === SHOP_TAB.COVER_PAGE ? (
-                    <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
-                      {itemsShop?.map((e, i) => (
-                        <CoverPageItem tab={tab} item={e} key={i} />
-                      ))}
-                    </div>
-                  ) : tab === SHOP_TAB.PLAYTIMES ? (
-                    <div
-                      className="grid grid-cols-1 justify-center
+                      >
+                        {itemsShop?.map((e, i) => (
+                          <AvatarItem tab={tab} item={e} key={i} />
+                        ))}
+                      </div>
+                    ) : (
+                      <div
+                        className="grid grid-cols-1 justify-center
                   min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                    >
-                      {itemsShop?.map((e, i) => (
-                        <PlayTimeItem tab={tab} item={e} key={i} />
-                      ))}
-                    </div>
-                  ) : null}
-                </>
-              ) : (
-                <Empty />
-              )}
+                      >
+                        {Array(6)
+                          .fill(0)
+                          .map((e, i) => (
+                            <div
+                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
+                              key={i}
+                            >
+                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </>
+                ) : tab === SHOP_TAB.COVER_PAGE ? (
+                  <>
+                    {isLoading ? (
+                      <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
+                        {itemsShop?.map((e, i) => (
+                          <CoverPageItem tab={tab} item={e} key={i} />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4 w-fit">
+                        {Array(4)
+                          .fill(0)
+                          .map((e, i) => (
+                            <div
+                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-[366px]"
+                              key={i}
+                            >
+                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </>
+                ) : tab === SHOP_TAB.PLAYTIMES ? (
+                  <>
+                    {isLoading ? (
+                      <div
+                        className="grid grid-cols-1 justify-center
+                  min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
+                      >
+                        {itemsShop?.map((e, i) => (
+                          <PlayTimeItem tab={tab} item={e} key={i} />
+                        ))}
+                      </div>
+                    ) : (
+                      <div
+                        className="grid grid-cols-1 justify-center
+                  min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
+                      >
+                        {Array(6)
+                          .fill(0)
+                          .map((e, i) => (
+                            <div
+                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
+                              key={i}
+                            >
+                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </>
+                ) : null}
+              </>
             </div>
           </div>
         </div>

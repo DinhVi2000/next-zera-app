@@ -15,10 +15,11 @@ import { IconClose, IconCoin22 } from "@/resources/icons";
 import { useToast } from "@chakra-ui/react";
 import { buyShopItem } from "@/services/shop.service";
 import { useAuthContext } from "@/context/auth-context";
+import { getUserInfo } from "@/services/user.service";
 
 const ModalBuy = () => {
   const toast = useToast();
-  const { userInfo } = useAuthContext();
+  const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
   const { zera } = userInfo || {};
   const { openModal, payload, setStatus } = useModalContext();
   const modal_ref = useRef(null);
@@ -38,12 +39,14 @@ const ModalBuy = () => {
 
   const handleBuy = async () => {
     try {
-      const data = await buyShopItem({
+      const res = await buyShopItem({
         item: parseInt(itemShop.id),
       });
-      if (!data.success) {
+      if (!res.success) {
         throw new Error(data?.message);
       }
+      const { data } = await getUserInfo(usernameAuth);
+      setUserInfo(data);
       notifySuccessMessage(toast, "Buy successful");
       handleCloseModal();
       setStatus(STATUS.SUCCESS);
