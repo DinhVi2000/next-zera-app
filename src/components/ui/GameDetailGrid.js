@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 
 import GameItem from "@/components/game/GameItem";
 import Ads from "@/components/other/Ads";
@@ -12,13 +12,31 @@ import { useSelector } from "react-redux";
 import { getRandom } from "@/utils/helper";
 import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
 import GameScreen from "../game/GameScreen";
+import { useAuthContext } from "@/context/auth-context";
 
 const GameDetailGrid = () => {
+  const { setIsCountDown } = useAuthContext();
+
   const { info, gamesRelate } =
     useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const { title, thumbnail, play_url } = info ?? {};
+  const ref = useRef(null);
+  useEffect(() => {
+    const handleScroll = event => {
+      if (window.scrollY > ref.current?.clientHeight) {
+        setIsCountDown(false);
+      } else {
+        setIsCountDown(true);
+      }
+    };
 
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
     <div>
       <div className="game-detail-grid">
@@ -44,6 +62,26 @@ const GameDetailGrid = () => {
         {/* game screen */}
 
         <GameScreen play_url={play_url} thumbnail={thumbnail} title={title} />
+        <div
+          style={{
+            gridArea: "gs / gs / gs / gs",
+          }}
+          className="h-full flex flex-col bg-white"
+          ref={ref}
+        >
+          <iframe
+            className={`${!thumbnail && "skeleton-shine"} flex-1`}
+            width="100%"
+            frameBorder="0"
+            marginHeight="0"
+            vspace="0"
+            hspace="0"
+            scrolling="no"
+            allowFullScreen={true}
+            src={play_url}
+          ></iframe>
+          {/* <GameScreenBar title={title} thumbnail={thumbnail} /> */}
+        </div>
 
         {/* box chat  */}
         <BoxChat area={"bc"}></BoxChat>

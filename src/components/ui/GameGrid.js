@@ -21,7 +21,7 @@ const GameGrid = ({ games }) => {
           ></GameItem>
         ))}
 
-        {Array(124 - games?.length || 0)
+        {/* {Array(124 - games?.length || 0)
           .fill(0)
           ?.map((e, i) => (
             <GameItem
@@ -46,7 +46,7 @@ const GameGrid = ({ games }) => {
                 thumbnail={""}
                 title={`game ${i}`}
               ></GameItem>
-            ))}
+            ))} */}
       </div>
     </>
   );
