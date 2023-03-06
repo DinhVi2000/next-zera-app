@@ -1,3 +1,5 @@
+import moment from "moment/moment";
+
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -94,6 +96,52 @@ const abbreviateNumber = (num) => {
   return wunit ? funit.toLocaleString() + "" + wunit : num.toString();
 };
 
+const getBetweenTwoDate = (value) => {
+  const currentDay = new Date();
+  const prevTime = new Date(value);
+  let diff =
+    (currentDay.getTime() - prevTime.getTime()) / (1000 * 60 * 60 * 24);
+  let betweenTwoDate;
+  let string = "";
+
+  // eslint-disable-next-line radix
+  switch (Math.floor(diff)) {
+    case 0:
+      if (diff * 24 >= 1) {
+        string = "hours ago";
+        // eslint-disable-next-line radix
+        betweenTwoDate = `${parseInt((diff * 24).toString())}`;
+        return [betweenTwoDate, " ", string];
+      }
+
+      string = "minutes ago";
+      // eslint-disable-next-line radix
+      betweenTwoDate = `${parseInt((diff * 24 * 60).toString())}`;
+      break;
+
+    case 1:
+      string = "day ago";
+      betweenTwoDate = "1";
+      break;
+
+    case 2:
+      string = "day ago";
+      betweenTwoDate = "2";
+      break;
+
+    default:
+      string = "";
+      betweenTwoDate = moment(value).format("MM/DD/YYYY");
+      break;
+  }
+
+  return [betweenTwoDate, " ", string];
+};
+
+const toUpperCaseFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 export {
   abbreviateNumber,
   formatDate,
@@ -103,4 +151,6 @@ export {
   notifyErrorMessage,
   notifySuccessMessage,
   sleep,
+  getBetweenTwoDate,
+  toUpperCaseFirstLetter,
 };

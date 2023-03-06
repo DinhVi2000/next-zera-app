@@ -8,12 +8,14 @@ import BoxModal from "./BoxModal";
 import { IconClose } from "@/resources/icons";
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+import GameItem from "../game/GameItem";
+import Empty from "../empty/Empty";
 
 const ModalViewAllGames = () => {
   const { openModal, payload } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 0;
-  const [tab, setTab] = useState(payload);
+  const [tab, setTab] = useState(payload?.payload);
 
   const handleCloseModal = () => {
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
@@ -40,10 +42,6 @@ const ModalViewAllGames = () => {
       title: "Playlist",
       tabName: VIEW_ALL_GAMES_TAB.PLAYLIST,
     },
-    {
-      title: "Purchase history ",
-      tabName: VIEW_ALL_GAMES_TAB.PURCHASE_HISTORY,
-    },
   ];
 
   return (
@@ -56,7 +54,10 @@ const ModalViewAllGames = () => {
           <>
             {tabName === tab && (
               <>
-                <div className="flex items-center justify-center mb-[30px]">
+                <div
+                  className="flex items-center justify-center mb-[30px]"
+                  key={i}
+                >
                   <div className="text-center text-[40px] mx-auto mt-[27px] font-bold">
                     {title}
                   </div>
@@ -64,23 +65,29 @@ const ModalViewAllGames = () => {
                     <IconClose viewBox="0 0 35 35" className="filter-svg" />
                   </button>
                 </div>
-                <div className="mt-[30px] grid grid-cols-3 min-[600px]:grid-cols-5 gap-4 overflow-auto max-h-[500px] pr-[20px]">
-                  {Array(15)
-                    .fill(0)
-                    .map((e, i) => (
-                      <div key={i} className="relative group cursor-pointer">
-                        <img
-                          key={i}
-                          alt=""
-                          src={
-                            "https://mir-s3-cdn-cf.behance.net/project_modules/1400/321478115380977.604d71f1a8580.png"
-                          }
-                          className="rounded-2xl w-[94px] h-[94px] object-cover max-[752px]:block max-[752px]:mx-auto"
-                        ></img>
-                        <div className="hidden group-hover:block rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                      </div>
+
+                {payload?.listGame?.length ? (
+                  <div className="p-[20px] grid grid-cols-3 min-[600px]:grid-cols-5 gap-4 overflow-auto max-h-[500px]">
+                    {payload?.listGame?.map((e, i) => (
+                      <>
+                        <GameItem
+                          onClick={handleCloseModal}
+                          className={`relative rounded-2xl cursor-pointer select-none group w-[94px] h-[94px]
+                        hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl`}
+                          key={e?.id}
+                          id={e?.id}
+                          index={i}
+                          thumbnail={e?.thumbnail}
+                          title={e?.title}
+                        ></GameItem>
+                      </>
                     ))}
-                </div>
+                  </div>
+                ) : (
+                  <div className="w-[400px] h-[200px]">
+                    <Empty />
+                  </div>
+                )}
               </>
             )}
           </>

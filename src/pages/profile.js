@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "@/layouts/MainLayout";
 import Head from "next/head";
 
 import { IconPlus, IconCopy } from "@/resources/icons";
 
-import Activities from "@/components/profile/activities";
-import Rewards from "@/components/profile/rewards";
+import Activities from "@/components/profile/Activities";
+import Rewards from "@/components/profile/Rewards";
 import InfoUser from "@/components/profile/InfoUser";
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip, useToast } from "@chakra-ui/react";
+import { useAuthContext } from "@/context/auth-context";
+import { statsUser } from "@/services/user.service";
+import { getBetweenTwoDate, notifyErrorMessage } from "@/utils/helper";
 
 function Profile() {
+  const { userInfo } = useAuthContext();
+  const toast = useToast();
+  const [stats, setStats] = useState([]);
+
+  const getStatsUser = async () => {
+    try {
+      const res = await statsUser();
+      setStats(res?.data);
+    } catch (e) {
+      notifyErrorMessage(toast, e);
+    }
+  };
+
+  useEffect(() => {
+    getStatsUser();
+  }, []);
+
   return (
     <>
       <Head>
@@ -24,7 +44,7 @@ function Profile() {
           <InfoUser />
 
           <div className="flex mt-[50px] gap-x-[18px]">
-            <div className="w-[30%]">
+            <div className="w-[427px]">
               <div className="rounded-[20px] bg-[#00000080]">
                 <h4 className="rounded-t-[20px] bg-[#EC4899] py-[22px] pl-[16px] text-[28px] font-bold">
                   Stats
@@ -33,13 +53,17 @@ function Profile() {
                   <p className="mt-[34px] flex items-center cursor-pointer">
                     77 minutes left <IconPlus className="ml-[10px]" />
                   </p>
-                  <p className="mt-[34px]">Playstreak: 5 days</p>
-                  <p className="text-[16px] opacity-60">
-                    Highest streak: 15 days
+                  <p className="mt-[34px]">
+                    Playstreak: {userInfo?.playstreak} days
                   </p>
-                  <p className="mt-[34px]">12 games played</p>
-                  <p className="mt-[34px]">6 games loved</p>
-                  <p className="mt-[34px] mb-[100px]">Joined 6 years ago</p>
+                  <p className="text-[16px] opacity-60">
+                    Highest streak: {userInfo?.highest_playstreak} days
+                  </p>
+                  <p className="mt-[34px]">{stats?.played_game} games played</p>
+                  <p className="mt-[34px]">{stats?.loved_game} games loved</p>
+                  <p className="mt-[34px] mb-[100px]">
+                    Joined {getBetweenTwoDate(stats?.joined)}
+                  </p>
                 </div>
                 <div
                   className="rounded-b-[20px] bg-[#8B5CF6] py-[18px] flex items-center justify-center cursor-pointer"

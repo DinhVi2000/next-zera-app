@@ -210,7 +210,7 @@ const SideBar = () => {
 
       {/* SHOP */}
       {userInfo && (
-        <div className="bg-blur-500 rounded-2xl py-2 h-[424px] mt-5 text-white">
+        <div className="bg-blur-500 rounded-2xl py-2 h-fit mt-5 text-white">
           <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 w-[70%] mx-auto">
             <span className="font-extrabold text-[12px]">{zera}</span>
             <IconCoin viewBox="-2 -7 55 55" />
@@ -335,10 +335,10 @@ const ShopSidebar = () => {
   }, [status === STATUS.SUCCESS]);
 
   return (
-    <div className="grid grid-cols-2 px-2">
+    <div className="grid grid-cols-2 px-2c overflow-auto h-[200px]">
       {verifyStatus === STATUS.SUCCESS ? (
         <>
-          {itemsShop?.slice(0, 6)?.map((item, i) => (
+          {itemsShop?.map((item, i) => (
             <div className="flex-center flex-col" key={i}>
               <div className="group relative">
                 <ImageLoading
@@ -346,11 +346,7 @@ const ShopSidebar = () => {
                   src={item?.url}
                 />
                 <div className="hidden group-hover:block bg-[#00000080] absolute-center h-full w-full rounded-[10px]">
-                  {item?.user_inventory ? (
-                    <div className="text-center absolute-center w-[60px] py-[3px] text-[10px] font-semibold bg-[#350F1E] rounded-[10px] shadow-sm shadow-[#9D174D]">
-                      Owned
-                    </div>
-                  ) : (
+                  {!item?.user_inventory && (
                     <button
                       className="absolute-center w-[60px] py-[3px] text-[10px] font-semibold bg-pink-800 rounded-[10px] shadow-sm shadow-[#9D174D]"
                       onClick={() => {
@@ -362,10 +358,18 @@ const ShopSidebar = () => {
                   )}
                 </div>
               </div>
-              <p className="flex-center ml-3 text-[10px]">
-                {item?.price}
-                <IconCoin viewBox="-4 -19 75 75" />
-              </p>
+              {item?.user_inventory ? (
+                <div className="mx-auto mb-[5px] text-center w-[60px] py-[3px] text-[10px] font-semibold bg-[#350F1E] rounded-[10px] shadow-sm shadow-[#9D174D]">
+                  Owned
+                </div>
+              ) : (
+                <>
+                  <p className="flex-center ml-3 text-[10px]">
+                    {item?.price}
+                    <IconCoin viewBox="-4 -19 75 75" />
+                  </p>
+                </>
+              )}
             </div>
           ))}{" "}
         </>

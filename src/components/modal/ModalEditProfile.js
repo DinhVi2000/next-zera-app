@@ -23,6 +23,7 @@ import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import Empty from "../empty/Empty";
 import ButtonLoading from "../loading/ButtonLoading";
+import Link from "next/link";
 
 const ModalEditProfile = () => {
   const { userInfo, setUserInfo, usernameAuth, verifyStatus } =
@@ -197,7 +198,16 @@ const ModalEditProfile = () => {
                       ))}
                     </div>
                   ) : (
-                    <Empty />
+                    <div className="h-[300px]">
+                      <div className="w-[500px] h-[200px]">
+                        <Empty />
+                      </div>
+                      <Link href={"/shop"}>
+                        <button className="block text-[20px] font-semibold btn-save-gradient mx-auto px-5 py-2">
+                          Go to shop
+                        </button>
+                      </Link>
+                    </div>
                   )}
                 </div>
                 {isLoading && (

@@ -142,6 +142,32 @@ const claimDailyBonus = async () => {
   }
 };
 
+const statsUser = async () => {
+  try {
+    const { data } = await http.get("/users/statistic");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+const getPurchaseHistory = async () => {
+  try {
+    const { data } = await http.get("users/purchase-history");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+
 export {
   getUserInfo,
   getHallOfFameByUsername,
@@ -152,5 +178,7 @@ export {
   getCategoriesInventory,
   getItemInventory,
   claimDailyBonus,
+  statsUser,
+  getPurchaseHistory,
 };
 export default reducer;
