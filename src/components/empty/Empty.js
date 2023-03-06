@@ -4,11 +4,11 @@ import emptyImg from "../../../public/images/empty.png";
 
 function Empty() {
   return (
-    <div className="w-full h-[300px] min-w-[500px] flex-center flex-col">
+    <div className="flex-center flex-col mx-auto w-full h-full">
       <Image
         alt=""
-        width={150}
-        height={150}
+        width={100}
+        height={100}
         src={emptyImg}
         className="block mx-auto"
       />

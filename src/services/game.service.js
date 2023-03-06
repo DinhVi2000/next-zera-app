@@ -177,6 +177,59 @@ const getHallOfFameByGameId = async (dispatch, gameId, limit) => {
     }
 
     dispatch(setHallOfFameAtGameDetail(data.data));
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getRecentlyGames = async () => {
+  try {
+    const { data } = await http.get(`game/recently-played`);
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getLovedGames = async () => {
+  try {
+    const { data } = await http.get(`/game/loved`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getPlaylist = async () => {
+  try {
+    const { data } = await http.get(`/game/playlist`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getMostPlayed = async () => {
+  try {
+    const { data } = await http.get(`game/most-played`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
 
     return data;
   } catch (e) {
@@ -193,5 +246,9 @@ export {
   getGameDetailById,
   getCategoryById,
   getHallOfFameByGameId,
+  getRecentlyGames,
+  getLovedGames,
+  getPlaylist,
+  getMostPlayed,
 };
 export default reducer;
