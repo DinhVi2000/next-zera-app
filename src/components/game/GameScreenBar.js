@@ -1,6 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
-
 import {
   IconHeart,
   IconInfo,
@@ -8,7 +6,7 @@ import {
   IconZoomIn,
   IconZoomOut,
 } from "@/resources/icons";
-
+import React, { useState } from "react";
 import ImageLoading from "@/components/loading/ImageLoading";
 
 const GameScreenBar = ({

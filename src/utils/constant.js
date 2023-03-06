@@ -85,6 +85,8 @@ const SOCKET_EVENT = {
   USER_LEAVE_ROOM: "leaveRoom",
   SOCKET_ERROR: "error",
   ANONYMOUS_LOGIN: "loginAnonymous",
+  STOP_GAME: 'stopGame',
+  PLAY_GAME: 'playGame',
 };
 
 export {

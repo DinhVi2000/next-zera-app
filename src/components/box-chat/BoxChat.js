@@ -20,8 +20,10 @@ function BoxChat({ area }) {
   const [emitReward, setEmitReward] = useState([]);
 
   const inputRef = useRef();
-  const divRef = useRef();
-  const { userInfo, anonymousInfo } = useAuthContext();
+  const refScroll = useRef();
+  const refBoxChat = useRef();
+
+  const { userInfo, anonymousInfo, setIsCountDown, isCountDown } = useAuthContext();
   const anonymous_id = anonymousInfo?.id;
   const [socketCLI, setSocketCLI] = useState(socket);
   const sendMessage = (e) => {
@@ -37,8 +39,24 @@ function BoxChat({ area }) {
 
   useEffect(() => {
     setSocketCLI(socket);
+    // TODO: handle set is count dơn with play game action
+    setIsCountDown(true);
+    return () => {
+      setIsCountDown(false);
+    };
   }, []);
 
+  // Effect start caculator time play
+  useEffect(() => {
+    if (!userInfo?.id) return;
+    if (isCountDown) {
+      socketCLI.emit(SOCKET_EVENT.PLAY_GAME, { user_id: Number(userInfo?.id), room_id: roomCurrent });
+    } else if (!isCountDown) {
+      socketCLI.emit(SOCKET_EVENT.STOP_GAME, { user_id: Number(userInfo?.id), room_id: roomCurrent });
+    }
+  }, [isCountDown, userInfo?.id]);
+
+  // login anonymuose
   useEffect(() => {
     if (!socketCLI?.connected || !anonymous_id) return;
 
@@ -57,41 +75,30 @@ function BoxChat({ area }) {
 
     // Listen all user in room
     socketCLI.on("roomUsers", (data) => {
-      console.log(data);
+
     });
 
     socketCLI.on("message", (dataMessage) => {
-      console.log(dataMessage);
       if (dataMessage) {
         setMessages((oldMes) => {
-          console.log("oldMes", oldMes);
-          return oldMes.length < 0
-            ? dataMessage.messages
-            : [...oldMes].concat(dataMessage.messages);
+          return oldMes.length < 0 ? dataMessage.messages : [...oldMes].concat(dataMessage.messages);
         });
       }
     });
     socketCLI.on("emitReward", (data) => {
-      console.log(data);
       setEmitReward((value) => {
         return [...value, data];
       });
     });
     return () => {
-      socketCLI.emit("leaveRoom", {
-        user_id: Number(userInfo?.id),
-        room_id: roomCurrent,
-      });
-      // socket.disconnect();
+      socketCLI.emit("leaveRoom", { user_id: Number(userInfo?.id), room_id: roomCurrent });
     };
   }, [socketCLI.connected]);
   // Scroll to Bottom
+
   useEffect(() => {
-    if (divRef.current) {
-      divRef.current.scrollIntoView({
-        block: "end",
-        inline: "nearest",
-      });
+    if (refScroll.current) {
+      refScroll.current.scrollTop = refBoxChat.current.offsetHeight;
     }
   });
 
@@ -111,51 +118,47 @@ function BoxChat({ area }) {
         <p className="text-[12px]">+100 more</p>
       </div>
       <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
-        <div className="overflow-y-auto h-full flex flex-col box-chat">
+        <div className="overflow-y-auto h-full flex flex-col box-chat" ref={refScroll}>
           {/* Event */}
-          <div className="all-mess">
-            {messages &&
-              messages?.map((msg, i) => (
-                <div key={i}>
-                  <div
-                    className={`w-full flex ${
-                      Number(userInfo?.id) === msg.user_id
-                        ? "justify-end"
-                        : "justify-start"
+          <div className="all-mess" ref={refBoxChat}>
+            {messages && messages?.map((msg, i) => (
+              <div key={i}>
+                <div
+                  className={`w-full flex ${Number(userInfo?.id) === msg.user_id ? "justify-end" : "justify-start"
                     }`}
-                  >
-                    <div className="flex flex-col my-[3px]" key={i}>
-                      {Number(userInfo?.id) !== msg.user_id ? (
-                        <div className="flex items-center text-[#ffffff80] mb-[5px]">
-                          <ImgAva2 className="mr-[6px]" />
-                          <div className="w-fit max-w-[150px] break-words">
-                            {msg.user_id}
-                          </div>
+                >
+                  <div className="flex flex-col my-[3px]" key={i}>
+                    {Number(userInfo?.id) !== msg.user_id ? (
+                      <div className="flex items-center text-[#ffffff80] mb-[5px]">
+                        <ImgAva2 className="mr-[6px]" />
+                        <div className="w-fit max-w-[150px] break-words">
+                          {msg.user_id}
                         </div>
-                      ) : (
-                        ""
-                      )}
-                      <div
-                        className={`${
-                          Number(userInfo?.id) === msg.user_id
-                            ? // owner
-                              "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
-                            : ""
-                          // other
-                        } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
-                      >
-                        {msg.message}
                       </div>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      className={`${Number(userInfo?.id) === msg.user_id
+                          ? // owner
+                          "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
+                          : ""
+                        // other
+                        } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
+                    >
+                      {msg.message}
                     </div>
                   </div>
                 </div>
-              ))}
-            {emitReward?.map((info, i) => (
-              <div key={i} className="text-[#ffffff80] text-center">
-                {info.messages}
               </div>
             ))}
-            <div ref={divRef} />
+            {
+              emitReward?.map((info, i) => (
+                <div key={i} className="text-[#ffffff80] text-center">
+                  {info.messages}
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>

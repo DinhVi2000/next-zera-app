@@ -32,6 +32,7 @@ export const AuthContextProvider = ({ children }) => {
   const toast = useToast();
 
   const [userInfo, setUserInfo] = useState();
+  const [isCountDown, setIsCountDown] = useState(false);
   const [anonymousInfo, setAnonymousInfo] = useState();
 
   const [token, setToken] = useState();
@@ -115,6 +116,8 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
+      isCountDown,
+      setIsCountDown,
     }),
     [
       anonymousInfo,
@@ -129,6 +132,8 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
+      isCountDown,
+      setIsCountDown,
     ]
   );
 
