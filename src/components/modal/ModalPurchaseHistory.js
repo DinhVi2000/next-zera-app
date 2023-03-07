@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { MODAL_NAME, VIEW_ALL_GAMES_TAB } from "@/utils/constant";
-import { sleep } from "@/utils/helper";
+import { sleep, toUpperCaseFirstLetter } from "@/utils/helper";
 import BoxModal from "./BoxModal";
 
 import { IconClose, IconCoin22 } from "@/resources/icons";
@@ -37,21 +37,21 @@ const ModalPurchaseHistory = () => {
       >
         <div className="flex items-center justify-center mb-[30px]">
           <div className="text-center text-[40px] mx-auto mt-[27px] font-bold">
-            {tab}
+            {toUpperCaseFirstLetter(tab?.replace("_", " "))}
           </div>
           <button onClick={handleCloseModal}>
             <IconClose viewBox="0 0 35 35" className="filter-svg" />
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 overflow-auto max-h-[500px]">
-          <div>
-            {payload?.listGame?.avatar?.length > 0 ? (
-              <>
+        <div>
+          {payload?.listGame?.avatar?.length > 0 &&
+          payload?.listGame?.cover?.length > 0 ? (
+            <div className="grid grid-cols-2 gap-4 overflow-auto max-h-[500px]">
+              <div>
                 {payload?.listGame?.avatar?.map((e, i) => (
-                  <div className="flex-center">
+                  <div className="flex-center" key={i}>
                     <ImageLoading
-                      key={i}
                       className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
                       src={e?.url}
                     />
@@ -63,20 +63,11 @@ const ModalPurchaseHistory = () => {
                     </div>
                   </div>
                 ))}
-              </>
-            ) : (
-              <div className="w-[400px] h-[200px]">
-                <Empty />
               </div>
-            )}
-          </div>
-          <div>
-            {payload?.listGame?.cover?.length > 0 ? (
-              <>
+              <div>
                 {payload?.listGame?.cover?.map((e, i) => (
-                  <div className="flex-center">
+                  <div className="flex-center" key={i}>
                     <ImageLoading
-                      key={i}
                       className="w-[204px] h-[94px] object-cover rounded-[20px] mb-[25px]"
                       src={e?.url}
                     />
@@ -88,13 +79,13 @@ const ModalPurchaseHistory = () => {
                     </div>
                   </div>
                 ))}
-              </>
-            ) : (
-              <div className="w-[400px] h-[200px]">
-                <Empty />
               </div>
-            )}
-          </div>
+            </div>
+          ) : (
+            <div className="w-[400px] h-[200px]">
+              <Empty />
+            </div>
+          )}
         </div>
       </div>
     </BoxModal>
