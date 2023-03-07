@@ -1,10 +1,12 @@
+import { getArea } from "@/utils/helper";
 import React from "react";
 import ImageLoading from "../loading/ImageLoading";
 
-const ReferAFriend = ({ ...props }) => {
+const ReferAFriend = ({ area, ...props }) => {
   return (
     <div
-      className="bg-[#D9D9D9] text-black w-full h-full flex items-center justify-center overflow-hidden relative rounded-2xl cursor-pointer"
+      style={{ gridArea: getArea(area) }}
+      className="mb-hidden bg-[#D9D9D9] text-black w-full h-full flex items-center justify-center overflow-hidden relative rounded-2xl cursor-pointer"
       {...props}
     >
       <ImageLoading

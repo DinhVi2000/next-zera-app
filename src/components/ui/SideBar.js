@@ -34,12 +34,16 @@ import logo from "../../../public/images/logo.png";
 
 import { useModalContext } from "@/context/modal-context";
 
-import { MODAL_NAME, SHOP_TAB, STATUS } from "@/utils/constant";
+import {
+  CLASS_NAME_BY_PATH,
+  MODAL_NAME,
+  SHOP_TAB,
+  STATUS,
+} from "@/utils/constant";
 import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import { Tooltip } from "@chakra-ui/react";
-import { abbreviateNumber, sleep } from "@/utils/helper";
 import Timer from "../other/Timer";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useRouter } from "next/router";
@@ -101,6 +105,9 @@ const SideBar = () => {
   const { openModal } = useModalContext();
   const { userInfo, verifyStatus } = useAuthContext();
 
+  const router = useRouter();
+  const { pathname } = router ?? {};
+
   const { zera } = userInfo ?? {};
 
   const content_ref = useRef();
@@ -111,7 +118,9 @@ const SideBar = () => {
   };
 
   return (
-    <div className="sticky top-[16px] z-10 min-w-[204px] max-w-[204px] h-fit">
+    <div
+      className={`sticky top-[16px] z-10 min-w-[204px] max-w-[204px] h-fit ${CLASS_NAME_BY_PATH[pathname]}`}
+    >
       <div className="bg-blur-500 rounded-2xl px-4 pt-2.5 pb-[14px] h-fit">
         {/* head */}
         <div className="px-3 pb-3">
@@ -127,7 +136,7 @@ const SideBar = () => {
 
           <div className="flex gap-2.5 justify-between items-center cursor-pointer px-4">
             <div onClick={handleToggleContent}>
-              <IconMenu></IconMenu>
+              <IconMenu className="w-[42px] text-violet-300"></IconMenu>
             </div>
             <div
               onClick={() => {
@@ -210,10 +219,10 @@ const SideBar = () => {
 
       {/* SHOP */}
       {userInfo && (
-        <div className="bg-blur-500 rounded-2xl py-2 h-fit mt-5 text-white">
-          <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 w-[70%] mx-auto">
+        <div className="bg-blur-500 rounded-2xl py-2 h-[424px] mt-5 text-white">
+          <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 py-1 w-[70%] mx-auto gap-2">
             <span className="font-extrabold text-[12px]">{zera}</span>
-            <IconCoin viewBox="-2 -7 55 55" />
+            <IconCoin className="w-5" />
           </div>
           <ShopSidebar></ShopSidebar>
           <div className="w-full">
@@ -331,8 +340,9 @@ const ShopSidebar = () => {
   };
 
   useEffect(() => {
+    if (status !== STATUS.SUCCESS) return;
     getItem();
-  }, [status === STATUS.SUCCESS]);
+  }, [status]);
 
   return (
     <div className="grid grid-cols-2 px-2c overflow-auto h-[200px]">

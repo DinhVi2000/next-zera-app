@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import { getArea } from "@/utils/helper";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const GameInfo = ({ ...props }) => {
+const GameInfo = ({ area, ...props }) => {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const {
@@ -16,7 +17,8 @@ const GameInfo = ({ ...props }) => {
 
   return (
     <div
-      className="bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] p-6 text-white overflow-auto"
+      style={{ gridArea: getArea(area) }}
+      className="mb-hidden bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] p-6 text-white overflow-auto"
       {...props}
     >
       {!info ? (

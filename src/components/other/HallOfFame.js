@@ -6,7 +6,7 @@ import {
   IconLeftWing,
   IconRightWing,
 } from "@/resources/icons";
-import React from "react";
+import React, { Fragment, memo } from "react";
 import { useSelector } from "react-redux";
 import ImageLoading from "../loading/ImageLoading";
 
@@ -23,14 +23,14 @@ const HallOfFame = () => {
     {
       id: 1,
       icon: <IconEarn className="max-h-[128px] mb-2.5 mx-auto" />,
-      value: zera,
+      value: zera || 0,
       title: "Earned Zera",
       desc: "",
     },
     {
       id: 2,
       icon: <IconGamePad className="max-h-[128px] mx-auto" />,
-      value: count,
+      value: count || 0,
       title: "Total games played",
       desc: "",
     },
@@ -40,14 +40,14 @@ const HallOfFame = () => {
         <div className="flex justify-between w-full pt-4 relative">
           <IconLeftWing />
           <span className="text-gradient-hof text-[90px] font-bold absolute left-[50%] translate-x-[-50%]">
-            {highest_playstreak}
+            {highest_playstreak || 0}
           </span>
           <IconRightWing />
         </div>
       ),
       value: null,
       title: "Highest Playstreak",
-      desc: `Playstreak: ${playstreak} days`,
+      desc: `Playstreak: ${playstreak || 0} days`,
     },
   ];
 
@@ -147,6 +147,8 @@ const HallOfFame = () => {
                   </div>
                 </div>
               ))}
+
+              <LoadingWrapper data={rows} />
             </div>
           </div>
         </div>
@@ -156,3 +158,29 @@ const HallOfFame = () => {
 };
 
 export default HallOfFame;
+
+const LoadingWrapper = memo(function LoadingItemComponent({ data }) {
+  return (
+    <Fragment>
+      {!data &&
+        Array(4)
+          .fill(0)
+          .map((e, i) => (
+            <div
+              key={i}
+              className="bg-gradient-tgp w-full rounded-[20px] p-[10px] text-base font-bold
+        flex items-center justify-between"
+            >
+              <div className="flex items-center gap-2.5">
+                <ImageLoading
+                  src=""
+                  alt=""
+                  className="w-[94px] h-[94px] object-cover rounded-2xl"
+                />
+                <p className="skeleton-shine w-[150px] h-4 rounded-xl"></p>
+              </div>
+            </div>
+          ))}
+    </Fragment>
+  );
+});

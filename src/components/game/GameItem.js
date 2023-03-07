@@ -15,6 +15,7 @@ const GameItem = ({
   area,
   title,
   isRecently,
+  className,
   ...props
 }) => {
   const gridArea =
@@ -24,8 +25,8 @@ const GameItem = ({
 
   return (
     <div
-      className={`relative rounded-2xl cursor-pointer select-none group min-h-[94px] min-w-[94px]  
-                  hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl`}
+      className={`${className} relative rounded-2xl cursor-pointer select-none group min-h-[94px] min-w-[94px]  
+                  hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl `}
       style={{ gridArea }}
       {...props}
     >

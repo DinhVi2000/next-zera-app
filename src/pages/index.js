@@ -40,7 +40,7 @@ export default function Home() {
       </Head>
 
       <MainLayout>
-        <div className="w-min">
+        <div className="w-responsive">
           <GameGrid games={games} />
           <GameCategoryGrid categories={categories} />
         </div>

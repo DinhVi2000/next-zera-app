@@ -1,17 +1,23 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef } from "react";
+
+import { useSelector } from "react-redux";
 
 import GameItem from "@/components/game/GameItem";
 import Ads from "@/components/other/Ads";
 import BoxChat from "@/components/box-chat/BoxChat";
-import GameScreenBar from "../game/GameScreenBar";
-import GameInfo from "../game/GameInfo";
-import TopHallOfFame from "../other/TopHallOfFame";
-import ShareToEarn from "../other/ShareToEarn";
-import ReferAFriend from "../other/ReferAFriend";
-import { useSelector } from "react-redux";
-import { getRandom } from "@/utils/helper";
+import GameScreenBar from "@/components/game/GameScreenBar";
+import GameInfo from "@/components/game/GameInfo";
+import TopHallOfFame from "@/components/other/TopHallOfFame";
+import ShareToEarn from "@/components/other/ShareToEarn";
+import ReferAFriend from "@/components/other/ReferAFriend";
+import GameScreen from "@/components/game/GameScreen";
+import Menu from "@/components/responsive/Menu";
+import ImageLoading from "@/components/loading/ImageLoading";
+
+import { getArea, getRandom } from "@/utils/helper";
+
 import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
-import GameScreen from "../game/GameScreen";
+
 import { useAuthContext } from "@/context/auth-context";
 
 const GameDetailGrid = () => {
@@ -23,7 +29,7 @@ const GameDetailGrid = () => {
   const { title, thumbnail, play_url } = info ?? {};
   const ref = useRef(null);
   useEffect(() => {
-    const handleScroll = event => {
+    const handleScroll = (event) => {
       if (window.scrollY > ref.current?.clientHeight) {
         setIsCountDown(false);
       } else {
@@ -31,86 +37,37 @@ const GameDetailGrid = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   return (
     <div>
       <div className="game-detail-grid">
-        {/* list ads */}
+        {/* Tablet / Mobile  */}
+        <Menu className={"tbl-flex"} />
+        <GameTitle area="gt" thumbnail={thumbnail} title={title}></GameTitle>
+        <GameScreenBar area="gsb" className="rounded-2xl mb-flex" />
+
+        {/* PC */}
+        <ShareToEarn area="ste" />
+        <ReferAFriend area="raf" />
+        <GameScreen play_url={play_url} thumbnail={thumbnail} title={title} />
+        <BoxChat area="bc" />
+        <GameInfo area="gi" />
+        <TopHallOfFame area="hof" />
         {ADS_IMAGES.map((e, i) => (
-          <Ads thumbnail={e} key={i} area={`ads${i + 1}`} ip={e?.ip}></Ads>
+          <Ads thumbnail={e} key={i} area={`ads${i + 1}`} ip={e?.ip} />
         ))}
 
-        {/* ShareToEarn */}
-        <ShareToEarn
-          style={{
-            gridArea: "ste / ste / ste / ste",
-          }}
-        />
-
-        {/* refer a friend */}
-        <ReferAFriend
-          style={{
-            gridArea: "raf / raf / raf / raf",
-          }}
-        />
-
-        {/* game screen */}
-
-        <GameScreen play_url={play_url} thumbnail={thumbnail} title={title} />
-        <div
-          style={{
-            gridArea: "gs / gs / gs / gs",
-          }}
-          className="h-full flex flex-col bg-white"
-          ref={ref}
-        >
-          <iframe
-            className={`${!thumbnail && "skeleton-shine"} flex-1`}
-            width="100%"
-            frameBorder="0"
-            marginHeight="0"
-            vspace="0"
-            hspace="0"
-            scrolling="no"
-            allowFullScreen={true}
-            src={play_url}
-          ></iframe>
-          {/* <GameScreenBar title={title} thumbnail={thumbnail} /> */}
-        </div>
-
-        {/* box chat  */}
-        <BoxChat area={"bc"}></BoxChat>
-
-        {/* game info */}
-        <GameInfo
-          style={{
-            gridArea: "gi / gi / gi / gi",
-          }}
-        />
-
-        {/* hall of fame */}
-        <TopHallOfFame
-          style={{
-            gridArea: "hof / hof / hof / hof",
-          }}
-        />
         {/* games relate */}
         {gamesRelate?.map((e, i) => (
-          <GameItem
-            key={i}
-            // style={{
-            //   gridArea: `d${i + 1} / d${i + 1} / d${i + 1} / d${i + 1}`,
-            // }}
-            title={e?.title}
-            thumbnail={e?.thumbnail}
-          ></GameItem>
+          <GameItem key={i} title={e?.title} thumbnail={e?.thumbnail} />
         ))}
 
+        {/* fake data */}
         {Array(50 - gamesRelate?.length || 0)
           .fill(0)
           ?.map((e, i) => (
@@ -123,6 +80,7 @@ const GameDetailGrid = () => {
             ></GameItem>
           ))}
 
+        {/* loading  */}
         {!gamesRelate &&
           Array(50)
             .fill(0)
@@ -141,3 +99,21 @@ const GameDetailGrid = () => {
 };
 
 export default memo(GameDetailGrid);
+
+const GameTitle = memo(function GameTitleComponent({
+  area,
+  title,
+  thumbnail,
+  ...props
+}) {
+  return (
+    <div
+      {...props}
+      style={{ gridArea: getArea(area) }}
+      className="h-[94px] text-white bg-[#373737] rounded-2xl items-center gap-2.5 px-5 mb-flex"
+    >
+      <ImageLoading src={thumbnail} className="w-[50px] h-[50px] rounded-xl" />
+      <span className="font-bold">{title}</span>
+    </div>
+  );
+});
