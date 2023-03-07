@@ -19,7 +19,8 @@ import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
 
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
-
+import { io } from "socket.io-client";
+import { config } from "@/envs";
 const AuthContext = createContext(null);
 
 export const useAuthContext = () => {
@@ -35,6 +36,8 @@ export const useAuthContext = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
+  const socket = io(config.SERVER_CHAT);
+
   const router = useRouter();
   const toast = useToast();
   const dispatch = useDispatch();
@@ -43,9 +46,10 @@ export const AuthContextProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState();
   const [isCountDown, setIsCountDown] = useState(false);
   const [anonymousInfo, setAnonymousInfo] = useState();
-
+  const [socketClient, setSocketClient] = useState(socket);
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
+  const [decrementTime, setDecrementTime] = useState(0);
 
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
@@ -105,7 +109,7 @@ export const AuthContextProvider = ({ children }) => {
       const { user } = (await signInAnonymously(auth)) ?? {};
       const { uid } = user ?? {};
 
-      if (uid) setAnonymousInfo((prev) => ({ ...prev, id: uid }));
+      if (uid) setAnonymousInfo((prev) => ({ ...prev, ...user }));
     } catch (error) {
       notifyErrorMessage(error);
     }
@@ -165,6 +169,12 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
+      isCountDown,
+      setIsCountDown,
+      setSocketClient,
+      socketClient,
+      setDecrementTime,
+      decrementTime,
     }),
     [
       anonymousInfo,
@@ -179,6 +189,12 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
+      isCountDown,
+      setIsCountDown,
+      setSocketClient,
+      socketClient,
+      setDecrementTime,
+      decrementTime,
     ]
   );
 
