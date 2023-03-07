@@ -55,6 +55,7 @@ const PUBLIC_PAGE_URL = {
 
 const PRIVATE_PAGE_URL = {
   SHOP: "/shop",
+  MY_HALL_OF_FAME: "/hall-of-fame",
 };
 
 const COUNTDOWN_DEADLINE = "11/20/2023 20:00:00";
@@ -90,19 +91,26 @@ const SOCKET_EVENT = {
   PLAY_GAME: 'playGame',
 };
 
+const CLASS_NAME_BY_PATH = {
+  "/game/[gameId]": "tbl-hidden mb-hidden",
+  "/category/[categoryId]": "mb-hidden",
+  "/": "mb-hidden",
+};
+
 export {
+  ADS_IMAGES,
+  COUNTDOWN_DEADLINE,
+  CLASS_NAME_BY_PATH,
+  EDIT_PROFILE_TAB,
   FACEBOOK_SIGN_IN_ERROR,
+  GAMES_IMAGES,
   IMAGE_URL,
   MODAL_NAME,
+  PRIVATE_PAGE_URL,
+  PUBLIC_PAGE_URL,
   SSO_METHOD,
   SHOP_TAB,
   STATUS,
-  EDIT_PROFILE_TAB,
-  PUBLIC_PAGE_URL,
-  PRIVATE_PAGE_URL,
-  COUNTDOWN_DEADLINE,
-  GAMES_IMAGES,
-  ADS_IMAGES,
-  VIEW_ALL_GAMES_TAB,
   SOCKET_EVENT,
+  VIEW_ALL_GAMES_TAB,
 };

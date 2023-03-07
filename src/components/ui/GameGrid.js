@@ -1,15 +1,17 @@
 import React, { memo } from "react";
 
 import GameItem from "@/components/game/GameItem";
-import Games from "@/api/games.json";
-import { useSelector } from "react-redux";
 import { getRandom } from "@/utils/helper";
 import { GAMES_IMAGES } from "@/utils/constant";
+import Menu from "../responsive/Menu";
 
 const GameGrid = ({ games }) => {
   return (
     <>
       <div className="game-grid">
+        {/* Tablet / mobile */}
+        <Menu className={"mb-block"} />
+
         {games?.map((e, i) => (
           <GameItem
             key={e?.id}

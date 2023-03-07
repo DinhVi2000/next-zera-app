@@ -84,7 +84,7 @@ const Menubar = () => {
   return (
     <>
       <section
-        className={`min-h-[100vh] max-w-[684px] w-full px-5 py-8 bg-[#c4b5fd80] fixed z-50 transition-all opacity-100 translate-x-[-120%] duration-${DURATION}`}
+        className={`min-h-[100vh] h-full max-w-[684px] w-full px-5 py-8 bg-[#c4b5fd80] fixed z-50 transition-all opacity-100 translate-x-[-120%] duration-${DURATION}`}
         ref={menubar_ref}
       >
         {/* searchbar */}
@@ -129,9 +129,14 @@ const Menubar = () => {
               {/* popular */}
               <div className="text-white mb-7 transition-all">
                 <p className="text-2xl font-bold mb-4">Popular this week</p>
-                <div className="grid grid-cols-6 gap-4">
+                <div className="flex flex-wrap gap-4">
                   {GAMES_IMAGES.slice(0, 6).map((e, i) => (
-                    <GameItem key={i} size={1} thumbnail={e} />
+                    <GameItem
+                      key={i}
+                      size={1}
+                      thumbnail={e}
+                      className="w-[94px] h-[94px]"
+                    />
                   ))}
                 </div>
               </div>
@@ -139,9 +144,15 @@ const Menubar = () => {
               {/* recently */}
               <div className="text-white  transition-all">
                 <p className="text-2xl font-bold mb-4">Recently played</p>
-                <div className="grid grid-cols-6 gap-4">
+                <div className="flex flex-wrap gap-4">
                   {GAMES_IMAGES.slice(0, 2).map((e, i) => (
-                    <GameItem key={i} size={1} isRecently thumbnail={e} />
+                    <GameItem
+                      key={i}
+                      size={1}
+                      isRecently
+                      thumbnail={e}
+                      className="w-[94px] h-[94px]"
+                    />
                   ))}
                 </div>
               </div>
@@ -152,7 +163,7 @@ const Menubar = () => {
 
       {/* background */}
       <div
-        className="bg-blur-500 backdrop-blur-[5px] w-full min-h-[100vh] fixed overflow-hidden z-40 opacity-100 transition-all"
+        className="bg-blur-500 h-full backdrop-blur-[5px] w-full min-h-[100vh] fixed overflow-hidden z-40 opacity-100 transition-all"
         ref={bg_ref}
       ></div>
     </>

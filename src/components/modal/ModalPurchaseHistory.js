@@ -47,45 +47,45 @@ const ModalPurchaseHistory = () => {
         <div>
           {payload?.listGame?.avatar?.length > 0 &&
           payload?.listGame?.cover?.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 overflow-auto max-h-[500px]">
-              <div>
-                {payload?.listGame?.avatar?.map((e, i) => (
-                  <div className="flex-center" key={i}>
-                    <ImageLoading
-                      className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
-                      src={e?.url}
-                    />
-                    <div className="p-2 px-4">
-                      <div className="font-semibold text-xl flex">
-                        {e?.price} <IconCoin22 />
+              <div className="grid grid-cols-2 gap-4 overflow-auto max-h-[500px]">
+                <div>
+                  {payload?.listGame?.avatar?.map((e, i) => (
+                    <div className="flex-center" key={i}>
+                      <ImageLoading
+                        className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
+                        src={e?.url}
+                      />
+                      <div className="p-2 px-4">
+                        <div className="font-semibold text-xl flex">
+                          {e?.price} <IconCoin22 />
+                        </div>
+                        <div>{e?.created_at}</div>
                       </div>
-                      <div>{e?.created_at}</div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              <div>
-                {payload?.listGame?.cover?.map((e, i) => (
-                  <div className="flex-center" key={i}>
-                    <ImageLoading
-                      className="w-[204px] h-[94px] object-cover rounded-[20px] mb-[25px]"
-                      src={e?.url}
-                    />
-                    <div className="p-2 px-4">
-                      <div className="font-semibold text-xl flex">
-                        {e?.price} <IconCoin22 className="ml-2" />
+                  ))}
+                </div>
+                <div>
+                  {payload?.listGame?.cover?.map((e, i) => (
+                    <div className="flex-center" key={i}>
+                      <ImageLoading
+                        className="w-[204px] h-[94px] object-cover rounded-[20px] mb-[25px]"
+                        src={e?.url}
+                      />
+                      <div className="p-2 px-4">
+                        <div className="font-semibold text-xl flex">
+                          {e?.price} <IconCoin22 className="ml-2" />
+                        </div>
+                        <div>{e?.created_at}</div>
                       </div>
-                      <div>{e?.created_at}</div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="w-[400px] h-[200px]">
-              <Empty />
-            </div>
-          )}
+            ) : (
+              <div className="w-[400px] h-[200px]">
+                <Empty />
+              </div>
+            )}
         </div>
       </div>
     </BoxModal>

@@ -3,6 +3,7 @@
 // eslint-disable-next-line quotes
 import { http } from "@/utils/http";
 import { createSlice } from "@reduxjs/toolkit";
+import { setRecentlyPlayedGames } from "./user.service";
 
 // Game slice
 const game = createSlice({
@@ -168,6 +169,22 @@ const getGameByCategoryId = async (dispatch, categoryId) => {
   }
 };
 
+const getGameRecentlyPlayed = async (dispatch) => {
+  try {
+    const { data } = await http.get("/game/recently-played");
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setRecentlyPlayedGames(data?.data));
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 const getHallOfFameByGameId = async (dispatch, gameId, limit) => {
   try {
     const { data } = await http.get(`/hall-of-fames/${gameId}/game`, { limit });
@@ -240,10 +257,11 @@ const getMostPlayed = async () => {
 export {
   getAllGame,
   getAllCategories,
+  getGameByCategoryId,
   getGamesByKeySearch,
   getGameDetailBySlug,
-  getGameByCategoryId,
   getGameDetailById,
+  getGameRecentlyPlayed,
   getCategoryById,
   getHallOfFameByGameId,
   getRecentlyGames,

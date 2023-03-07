@@ -44,6 +44,8 @@ import IconLogOut from "./log-out.svg";
 import IconProfile from "./profile.svg";
 export { default as IconZoomIn } from "./zoom-in.svg";
 export { default as IconZoomOut } from "./zoom-out.svg";
+export { default as IconPlay } from "./play.svg";
+export { default as IconBackXs } from "./back-xs.svg";
 
 export {
   IconBack,

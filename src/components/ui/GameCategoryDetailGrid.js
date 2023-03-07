@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 
 import GameCategory from "@/components/game/GameCategory";
 import GameItem from "@/components/game/GameItem";
+import Menu from "../responsive/Menu";
 
 const GameCategoryDetailGrid = () => {
   const { categoryDetail } = useSelector(({ game }) => game) ?? {};
@@ -17,6 +18,8 @@ const GameCategoryDetailGrid = () => {
 
   return (
     <div className="grid-category-detail transition-all">
+      <Menu />
+
       <div
         style={{
           gridArea: "ct / ct / ct / ct",

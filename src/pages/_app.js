@@ -13,14 +13,14 @@ import Script from "next/script";
 
 export default function App({ Component, pageProps }) {
   return (
-    <ChakraProvider>
-      <AuthContextProvider>
-        <ModalContextProvider>
-          <Provider store={store}>
+    <Provider store={store}>
+      <ChakraProvider>
+        <AuthContextProvider>
+          <ModalContextProvider>
             <Component {...pageProps} />
-          </Provider>
-        </ModalContextProvider>
-      </AuthContextProvider>
-    </ChakraProvider>
+          </ModalContextProvider>
+        </AuthContextProvider>
+      </ChakraProvider>
+    </Provider>
   );
 }

@@ -5,7 +5,6 @@ import { getTimeRemaining } from "@/utils/common";
 import { getUserInfo } from "@/services/user.service";
 
 const Timer = () => {
-
   const timeIntervelId = useRef(null);
 
   const { userInfo, isCountDown, setUserInfo, usernameAuth } = useAuthContext();
@@ -46,7 +45,12 @@ const Timer = () => {
 
   return (
     <Fragment>
-      <div className="font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
+      <div className="mb-hidden font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
+        {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
+      </div>
+
+      {/* mobile */}
+      <div className="mb-flex font-numberic bg-pink-700 rounded-[5px] text-center count-down text-[8px] h-5 flex-center">
         {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
       </div>
     </Fragment>

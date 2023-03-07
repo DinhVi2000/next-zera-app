@@ -2,14 +2,21 @@
 /* eslint-disable no-console */
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
+import Script from "next/script";
+
 import { loginWithEmail } from "@/services/auth.service";
 import { getUserInfo, getUserIp } from "@/services/user.service";
+import { getGameRecentlyPlayed } from "@/services/game.service";
+
 import { notifyErrorMessage } from "@/utils/helper";
 
 import { useToast } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { useApi } from "@/hooks/useApi";
 import { useRouter } from "next/router";
+
 import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
-import Script from "next/script";
+
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 
@@ -30,6 +37,8 @@ export const useAuthContext = () => {
 export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const toast = useToast();
+  const dispatch = useDispatch();
+  const { call } = useApi();
 
   const [userInfo, setUserInfo] = useState();
   const [isCountDown, setIsCountDown] = useState(false);
@@ -102,41 +111,6 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const authProvider = useMemo(
-    () => ({
-      anonymousInfo,
-      login,
-      logout,
-      userInfo,
-      usernameAuth,
-      setToken,
-      setUserInfo,
-      setAnonymousInfo,
-      setUsernameAuth,
-      setVerifyStatus,
-      token,
-      verifyStatus,
-      isCountDown,
-      setIsCountDown,
-    }),
-    [
-      anonymousInfo,
-      login,
-      logout,
-      userInfo,
-      usernameAuth,
-      setToken,
-      setUserInfo,
-      setAnonymousInfo,
-      setUsernameAuth,
-      setVerifyStatus,
-      token,
-      verifyStatus,
-      isCountDown,
-      setIsCountDown,
-    ]
-  );
-
   const isAuthnrPath = useMemo(
     () => Object.values(PUBLIC_PAGE_URL).includes(pathname),
     [pathname]
@@ -160,7 +134,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (token && usernameAuth && !isAuthnrPath) {
       setIsAuthenticationPage(false);
-      verifyAccessToken();
+      Promise.all([verifyAccessToken(), call(getGameRecentlyPlayed(dispatch))]);
     }
   }, [token, usernameAuth, pathname]);
 
@@ -176,6 +150,37 @@ export const AuthContextProvider = ({ children }) => {
     if (isPrivatePath && !isLogged) router.push("/login");
     else setIsAuthenticationPage(false);
   }, [pathname]);
+
+  const authProvider = useMemo(
+    () => ({
+      anonymousInfo,
+      login,
+      logout,
+      userInfo,
+      usernameAuth,
+      setToken,
+      setUserInfo,
+      setAnonymousInfo,
+      setUsernameAuth,
+      setVerifyStatus,
+      token,
+      verifyStatus,
+    }),
+    [
+      anonymousInfo,
+      login,
+      logout,
+      userInfo,
+      usernameAuth,
+      setToken,
+      setUserInfo,
+      setAnonymousInfo,
+      setUsernameAuth,
+      setVerifyStatus,
+      token,
+      verifyStatus,
+    ]
+  );
 
   return (
     <AuthContext.Provider value={{ authProvider }}>
