@@ -154,6 +154,7 @@ const statsUser = async () => {
     throw e;
   }
 };
+
 const getPurchaseHistory = async () => {
   try {
     const { data } = await http.get("users/purchase-history");
@@ -167,6 +168,18 @@ const getPurchaseHistory = async () => {
   }
 };
 
+const getUserReward = async () => {
+  try {
+    const { data } = await http.get("users/reward");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
 
 export {
   getUserInfo,
@@ -180,5 +193,6 @@ export {
   claimDailyBonus,
   statsUser,
   getPurchaseHistory,
+  getUserReward,
 };
 export default reducer;

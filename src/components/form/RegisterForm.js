@@ -43,10 +43,14 @@ const RegisterForm = () => {
     setStatus(STATUS.IN_PROGRESS);
 
     try {
-      const data = await registerEmail({
+      const formData = {
         email: dataUser.email,
         password: dataUser.password,
-      });
+      };
+      if (router.query?.src) {
+        formData.aff_sender = router.query?.src;
+      }
+      const data = await registerEmail(formData);
       if (!data) return;
       setStatus(STATUS.SUCCESS);
       notifySuccessMessage(toast, "Please check your email!");
