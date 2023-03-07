@@ -140,9 +140,9 @@ function BoxChat({ area }) {
                     )}
                     <div
                       className={`${Number(userInfo?.id) === msg.user_id
-                          ? // owner
-                          "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
-                          : ""
+                        ? // owner
+                        "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
+                        : ""
                         // other
                         } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
                     >

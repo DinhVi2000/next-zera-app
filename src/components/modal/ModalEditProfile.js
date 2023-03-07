@@ -169,12 +169,12 @@ const ModalEditProfile = () => {
                           onClick={
                             payload?.tab == EDIT_PROFILE_TAB.AVATAR
                               ? () => {
-                                  setAvatarUser(e?.item_info?.id),
-                                    setCheckAvatar(e?.item_info?.url);
-                                }
+                                setAvatarUser(e?.item_info?.id),
+                                setCheckAvatar(e?.item_info?.url);
+                              }
                               : () => {
-                                  updateCover(e?.item_info?.id);
-                                }
+                                updateCover(e?.item_info?.id);
+                              }
                           }
                         >
                           <ImageLoading
@@ -203,7 +203,10 @@ const ModalEditProfile = () => {
                         <Empty />
                       </div>
                       <Link href={"/shop"}>
-                        <button className="block text-[20px] font-semibold btn-save-gradient mx-auto px-5 py-2">
+                        <button
+                          onClick={handleCloseModal}
+                          className="block text-[20px] font-semibold btn-save-gradient mx-auto px-5 py-2"
+                        >
                           Go to shop
                         </button>
                       </Link>

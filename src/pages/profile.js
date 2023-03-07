@@ -4,8 +4,8 @@ import Head from "next/head";
 
 import { IconPlus, IconCopy } from "@/resources/icons";
 
-import Activities from "@/components/profile/Activities";
-import Rewards from "@/components/profile/Rewards";
+import Activities from "@/components/profile/Activity";
+import Rewards from "@/components/profile/Reward";
 import InfoUser from "@/components/profile/InfoUser";
 import { Tooltip, useToast } from "@chakra-ui/react";
 import { useAuthContext } from "@/context/auth-context";
@@ -29,6 +29,10 @@ function Profile() {
   useEffect(() => {
     getStatsUser();
   }, []);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`${userInfo?.ref_link}`);
+  };
 
   return (
     <>
@@ -67,13 +71,13 @@ function Profile() {
                 </div>
                 <div
                   className="rounded-b-[20px] bg-[#8B5CF6] py-[18px] flex items-center justify-center cursor-pointer"
-                  onClick={() => navigator.clipboard.writeText("@Zeraverse")}
+                  onClick={handleCopy}
                 >
                   <Tooltip label="Copy" placement="bottom">
                     <div className="flex items-center">
                       Referral link:{" "}
                       <span className="text-[#FBCFE8] ml-2 flex items-center">
-                        @Zeraverse
+                        @{userInfo?.username}
                         <IconCopy viewBox="0 0 30 30" className="ml-2" />
                       </span>
                     </div>
