@@ -254,6 +254,34 @@ const getMostPlayed = async () => {
   }
 };
 
+const addGameLove = async (params) => {
+  try {
+    const { data } = await http.post(`game/love`, params);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const addGamePlaylist = async (params) => {
+  try {
+    const { data } = await http.post(`game/add-playlist`, params);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getAllGame,
   getAllCategories,
@@ -268,5 +296,7 @@ export {
   getLovedGames,
   getPlaylist,
   getMostPlayed,
+  addGameLove,
+  addGamePlaylist,
 };
 export default reducer;

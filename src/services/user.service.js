@@ -53,7 +53,7 @@ const getUserAnonymous = async (id) => {
   } catch (e) {
     throw e;
   }
-}; 
+};
 
 const getUserIp = async () => {
   try {
@@ -198,6 +198,19 @@ const getUserReward = async () => {
   }
 };
 
+const getShareToEarn = async () => {
+  try {
+    const { data } = await http.get("users/share-to-earn");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getUserInfo,
   getHallOfFameByUsername,
@@ -212,5 +225,6 @@ export {
   getPurchaseHistory,
   getUserReward,
   getUserAnonymous,
+  getShareToEarn,
 };
 export default reducer;

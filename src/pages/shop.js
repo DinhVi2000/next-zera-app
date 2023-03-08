@@ -86,27 +86,29 @@ const Shop = () => {
 
             {/* tab */}
             <div className="flex gap-3 justify-center relative">
-              {categories?.map((category, i) => (
-                <div
-                  key={i}
-                  onClick={() => {
-                    setTab(category?.name);
-                    setIdCategory(category?.id);
-                  }}
-                  className={`${
-                    category?.name === tab
-                      ? "bg-pink-800 text-white border border-pink-500"
-                      : "bg-violet-900 text-[#ffffffb3] border border-violet-500"
-                  } text-center text-base font-bold rounded-t-[20px] w-[120px]  border-b-0 py-2.5 cursor-pointer`}
-                >
-                  {category?.name}
-                </div>
-              ))}
+              {categories
+                ?.sort((a, b) => (a?.id < b?.id ? -1 : 1))
+                ?.map((category, i) => (
+                  <div
+                    key={i}
+                    onClick={() => {
+                      setTab(category?.name);
+                      setIdCategory(category?.id);
+                    }}
+                    className={`${
+                      category?.name === tab
+                        ? "bg-pink-800 text-white border border-pink-500"
+                        : "bg-violet-900 text-[#ffffffb3] border border-violet-500"
+                    } text-center text-base font-bold rounded-t-[20px] w-[120px]  border-b-0 py-2.5 cursor-pointer`}
+                  >
+                    {category?.name}
+                  </div>
+                ))}
 
-              <div className="absolute right-0 top-[-13px] h-fit px-[10px] py-[3px] flex items-center content-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] cursor-pointer">
+              <div className="absolute z-50 right-0 top-[-13px] h-fit w-fit px-[10px] py-[3px] flex-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] cursor-pointer">
                 <p className=" font-black text-[24px] mr-[5px]">{zera}</p>
-                <IconCoin className="mr-[10px]" />
-                <IconPlus />
+                <IconCoin className="mr-[5px] w-9 h-9" />
+                <IconPlus className="w-8 h-8" />
               </div>
             </div>
 

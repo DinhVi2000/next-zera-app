@@ -24,8 +24,8 @@ const MODAL_NAME = {
 };
 
 const SHOP_TAB = {
-  AVATAR: "Avatar",
-  COVER_PAGE: "Cover",
+  AVATAR: "Avatars",
+  COVER_PAGE: "Cover Pages",
   PLAYTIMES: "Playtimes",
 };
 

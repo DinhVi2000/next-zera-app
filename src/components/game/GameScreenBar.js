@@ -1,14 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  IconHeart,
-  IconInfo,
-  IconPlusNoRounded,
-  IconZoomIn,
-  IconZoomOut,
-} from "@/resources/icons";
-import React, { useState } from "react";
+import { IconInfo, IconZoomIn, IconZoomOut } from "@/resources/icons";
+import React from "react";
 import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea } from "@/utils/helper";
+import { useSelector } from "react-redux";
+
+import AddPlaylist from "./screenbar/AddPlaylist";
+import AddLove from "./screenbar/AddLove";
+import { Tooltip } from "@chakra-ui/react";
 
 const GameScreenBar = ({
   area,
@@ -20,6 +19,8 @@ const GameScreenBar = ({
   className,
   ...props
 }) => {
+  const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
+
   return (
     <div
       style={{ gridArea: getArea(area) }}
@@ -41,19 +42,48 @@ const GameScreenBar = ({
         </div>
 
         <div className="flex gap-2.5 items-center">
-          <IconHeart className="cursor-pointer" />
-          <IconPlusNoRounded className="cursor-pointer" />
+          {info?.id ? (
+            <>
+              <Tooltip label="Love Game" placement="bottom">
+                <div>
+                  <AddLove />
+                </div>
+              </Tooltip>
+              <Tooltip label="Playlist" placement="bottom">
+                <div>
+                  <AddPlaylist />
+                </div>
+              </Tooltip>
+            </>
+          ) : (
+            <>
+              <div className="skeleton-shine w-7 h-7 rounded-lg"></div>
+              <div className="skeleton-shine w-7 h-7 rounded-lg"></div>
+            </>
+          )}
           <span
             className="h-fit mb-hidden"
             onClick={isFullScreen ? onZoomOutGameScreen : onZoomInGameScreen}
           >
             {isFullScreen ? (
+              // <Tooltip label="Zoom in" placement="bottom">
+              //   <div>
               <IconZoomOut className="cursor-pointer w-7 h-7 text-[#929292]" />
             ) : (
+              //   </div>
+              // </Tooltip>
+              // <Tooltip label="Zoom out" placement="bottom">
+              //   <div>
               <IconZoomIn className="cursor-pointer w-8 h-8 text-[#929292]" />
+              //   </div>
+              // </Tooltip>
             )}
           </span>
-          <IconInfo className="cursor-pointer" />
+          <Tooltip label="Report" placement="bottom">
+            <div>
+              <IconInfo className="cursor-pointer" />
+            </div>
+          </Tooltip>
         </div>
       </div>
     </div>
