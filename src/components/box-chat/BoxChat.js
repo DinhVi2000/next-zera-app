@@ -144,7 +144,7 @@ function BoxChat({ area }) {
       </div>
       <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
         <div
-          className="overflow-y-auto h-full flex flex-col box-chat"
+          className="overflow-y-auto h-full flex flex-col"
           ref={refScroll}
         >
           {/* Event */}

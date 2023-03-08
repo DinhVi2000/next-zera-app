@@ -11,7 +11,7 @@ import TopHallOfFame from "@/components/other/TopHallOfFame";
 import ShareToEarn from "@/components/other/ShareToEarn";
 import ReferAFriend from "@/components/other/ReferAFriend";
 import GameScreen from "@/components/game/GameScreen";
-import Menu from "@/components/responsive/Menu";
+import SidebarMB from "@/components/responsive/SidebarMB";
 import ImageLoading from "@/components/loading/ImageLoading";
 
 import { getArea, getRandom } from "@/utils/helper";
@@ -47,7 +47,7 @@ const GameDetailGrid = () => {
     <div>
       <div className="game-detail-grid">
         {/* Tablet Mobile  */}
-        <Menu className={"tbl-flex"} />
+        <SidebarMB className={"tbl-flex"} />
         <GameTitle area="gt" thumbnail={thumbnail} title={title}></GameTitle>
         <GameScreenBar area="gsb" className="rounded-2xl mb-flex" />
 

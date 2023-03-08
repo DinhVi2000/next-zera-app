@@ -48,7 +48,7 @@ const ModalViewAllGames = () => {
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modal_ref}
-        className="opacity-5 scale-90 w-fit h-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-black px-[30px] pb-[20px]"
+        className="opacity-5 scale-90 w-fit h-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col px-[30px] pb-[20px] bg-gradient-to-b from-[#580023] to-[#130023]"
       >
         {tabs?.map(({ title, tabName }, i) => (
           <>
