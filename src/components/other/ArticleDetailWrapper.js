@@ -5,7 +5,7 @@ const { formatDate } = require("@/utils/helper");
 import ImageLoading from "@/components/loading/ImageLoading";
 
 const ArticleDetailWrapper = ({ article }) => {
-  const { id, content, created_at, feature_image, title, seo_description } =
+  const { id, content, created_at, featured_image, title, seo_description } =
     article ?? {};
 
   return (
@@ -19,10 +19,10 @@ const ArticleDetailWrapper = ({ article }) => {
               <p className="text-xs mb-2">{formatDate(created_at)}</p>
               <p className="">{seo_description}</p>
 
-              {feature_image && (
+              {featured_image && (
                 <ImageLoading
-                  src={feature_image}
-                  className="w-full max-w-[400px] h-[200px] mx-auto my-5"
+                  src={featured_image}
+                  className="w-full max-w-[400px] h-[200px] mx-auto my-5 object-cover"
                 />
               )}
 

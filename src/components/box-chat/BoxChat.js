@@ -29,7 +29,13 @@ function BoxChat({ area }) {
   const refScroll = useRef();
   const refBoxChat = useRef();
 
-  const { userInfo, setIsCountDown, isCountDown, anonymousInfo, setTotalTimePlay } = useAuthContext();
+  const {
+    userInfo,
+    setIsCountDown,
+    isCountDown,
+    anonymousInfo,
+    setTotalTimePlay,
+  } = useAuthContext();
 
   const sendMessage = (e) => {
     socketCLI.emit("chatMessage", {
@@ -69,7 +75,6 @@ function BoxChat({ area }) {
         });
       }
     }
-
   }, [isCountDown, userInfo?.id]);
 
   useEffect(() => {
@@ -83,9 +88,9 @@ function BoxChat({ area }) {
   useEffect(() => {
     if (!socketCLI.connected) return;
     socketCLI.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
-      user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+      user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
       room_id: roomCurrent,
-      is_anonymous: !userInfo ? true : false,
+      is_anonymous: !userInfo,
     });
 
     socketCLI.on(SOCKET_EVENT.USER_GET_MESSAGE, (dataMessage) => {
@@ -106,16 +111,12 @@ function BoxChat({ area }) {
   }, [socketCLI.connected]);
 
   useEffect(() => {
-
     return () => {
-      socketCLI.emit(
-        SOCKET_EVENT.USER_LEAVE_ROOM,
-        {
-          user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
-          room_id: roomCurrent,
-          is_anonymous: !userInfo ? true : false,
-        }
-      );
+      socketCLI.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
+        user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
+        room_id: roomCurrent,
+        is_anonymous: !userInfo ? true : false,
+      });
       socketCLI.removeAllListeners();
     };
   }, []);
@@ -173,7 +174,7 @@ function BoxChat({ area }) {
                         className={`${
                           Number(userInfo?.id) === msg.user_id
                             ? // owner
-                            "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
+                              "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
                             : ""
                           // other
                         } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
@@ -205,9 +206,7 @@ function BoxChat({ area }) {
             className="bg-transparent text-[10px] w-[126px] border-b-[1px] border-b-[#00000033] focus:border-b-white"
           />
           <div className="relative group">
-            <button type="submit"
-              disabled={!userInfo}
-            >
+            <button type="submit" disabled={!userInfo}>
               <IconSendMes className="cursor-pointer" />
               <div className="hidden group-hover:block absolute bottom-[-10px] right-[-15px] bg-zinc-800 text-[7px] p-[2px] rounded-[2px]">
                 Send

@@ -34,7 +34,7 @@ const GameGrid = ({ games }) => {
               thumbnail={getRandom(GAMES_IMAGES)}
               title={`game ${games?.length + i}`}
             ></GameItem>
-          ))}
+          ))} */}
 
         {!games &&
           Array(124)
@@ -48,7 +48,7 @@ const GameGrid = ({ games }) => {
                 thumbnail={""}
                 title={`game ${i}`}
               ></GameItem>
-            ))} */}
+            ))}
       </div>
     </>
   );

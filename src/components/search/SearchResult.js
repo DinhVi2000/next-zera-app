@@ -5,8 +5,12 @@ import { sleep } from "@/utils/helper";
 
 import GameItem from "../game/GameItem";
 
+import { useModalContext } from "@/context/modal-context";
+
 const SearchResult = ({ games }) => {
   const no_result_ref = useRef();
+
+  const { closeModal } = useModalContext();
 
   useEffect(() => {
     if (!games || games.length === 0)
@@ -29,8 +33,14 @@ const SearchResult = ({ games }) => {
 
   return (
     <div className="grid grid-cols-6 gap-4 mt-10">
-      {games?.map(({ thumbnail, title }, i) => (
-        <GameItem key={i} thumbnail={thumbnail} title={title} />
+      {games?.map(({ thumbnail, title, id }, i) => (
+        <GameItem
+          key={i}
+          thumbnail={thumbnail}
+          title={title}
+          id={id}
+          onClick={closeModal}
+        />
       ))}
     </div>
   );

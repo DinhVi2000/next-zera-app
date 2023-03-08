@@ -392,10 +392,10 @@ const ShopSidebar = () => {
                 <div className="group relative">
                   <ImageLoading className="w-[80px] h-[80px] rounded-[10px]" />
                 </div>
-                <p className="flex-center ml-3 text-[10px]">
+                <div className="flex-center ml-3 text-[10px]">
                   <ButtonLoading isLoading={true} />
                   <IconCoin viewBox="-4 -19 75 75" />
-                </p>
+                </div>
               </div>
             ))}
         </>
