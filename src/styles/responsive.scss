@@ -273,7 +273,7 @@
       " ip0 ip0 ip0 ip1 ip1 ip1 .   ip5 ip5"
       " .   .   .   ip1 ip1 ip1 .   ip5 ip5"
       " ip6 ip7 ip7 ip1 ip1 ip1 .   ip8 ip8"
-      " ip6 ip7 ip7 .   .   .   .   ip8 ip8"
+      " . ip7 ip7 .   .   .   .   ip8 ip8"
       " .   .   .   .   .   .   .   .   ."
       " .   .   ip10   .   ip9 ip9 ip9 .   ."
       " .   .   .   .   ip9 ip9 ip9 .   ."
@@ -284,11 +284,11 @@
       " . ip12 ip12 ip12 . ip13 ip13 . ."
       " . ip12 ip12 ip12 . ip13 ip13 . ."
       " . . . . . . . . ."
-      " ip14 . . . . . . ip15 ip15"
+      " . . . . . . . ip15 ip15"
       " ip14 ip16 ip16 . . . . ip15 ip15"
       " . ip16 ip16 . . . . . .";
     grid-template-columns: repeat(9, 94px);
-    grid-template-rows: repeat(15, 94px);
+    grid-template-rows: repeat(20, 94px);
   }
 
   .game-detail-grid {
@@ -337,7 +337,7 @@
   }
 
   .w-responsive {
-    width: 1194px;
+    width: 974px;
   }
 }
 
