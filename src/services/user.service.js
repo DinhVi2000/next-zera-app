@@ -42,6 +42,19 @@ const getUserInfo = async (username) => {
   }
 };
 
+const getUserAnonymous = async (id) => {
+  try {
+    const { data } = await http.get(`/users/anonymous/${id}`);
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data.data;
+  } catch (e) {
+    throw e;
+  }
+}; 
+
 const getUserIp = async () => {
   try {
     const { data } = await axios.get("https://api.db-ip.com/v2/free/self");
@@ -198,5 +211,6 @@ export {
   statsUser,
   getPurchaseHistory,
   getUserReward,
+  getUserAnonymous,
 };
 export default reducer;

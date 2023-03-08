@@ -29,16 +29,15 @@ function BoxChat({ area }) {
   const refScroll = useRef();
   const refBoxChat = useRef();
 
-  const { userInfo, anonymousInfo, setIsCountDown, isCountDown } =
-    useAuthContext();
-  const anonymous_id = anonymousInfo?.id;
+  const { userInfo, setIsCountDown, isCountDown, anonymousInfo } = useAuthContext();
 
   const sendMessage = (e) => {
     socketCLI.emit("chatMessage", {
       socket_id: socketCLI.id,
       msg: inputRef.current.value,
-      user_id: Number(userInfo?.id),
+      user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
       room_id: roomCurrent,
+      is_anonymous: !userInfo ? true : false,
     });
     e.preventDefault();
     e.target.reset();
@@ -55,41 +54,35 @@ function BoxChat({ area }) {
 
   // Effect start caculator time play
   useEffect(() => {
-    if (!userInfo?.id) return;
-    if (isCountDown) {
-      socketCLI.emit(SOCKET_EVENT.PLAY_GAME, {
-        user_id: Number(userInfo?.id),
-        room_id: roomCurrent,
-      });
-    } else if (!isCountDown) {
-      socketCLI.emit(SOCKET_EVENT.STOP_GAME, {
-        user_id: Number(userInfo?.id),
-        room_id: roomCurrent,
-      });
+    if (userInfo || anonymousInfo) {
+      if (isCountDown) {
+        console.log('playgame');
+        socketCLI.emit(SOCKET_EVENT.PLAY_GAME, {
+          user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+          room_id: roomCurrent,
+          is_anonymous: !userInfo ? true : false,
+        });
+      } else if (!isCountDown) {
+        console.log('stopgame');
+        socketCLI.emit(SOCKET_EVENT.STOP_GAME, {
+          user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+          room_id: roomCurrent,
+          is_anonymous: !userInfo ? true : false,
+        });
+      }
     }
+
   }, [isCountDown, userInfo?.id]);
-
-  // login anonymous
-  useEffect(() => {
-    if (!socketCLI?.connected || !anonymous_id) return;
-
-    socket.emit(SOCKET_EVENT.ANONYMOUS_LOGIN, {
-      anonymous_id,
-      socket_id: socketCLI.id,
-    });
-  }, [socketCLI, anonymous_id]);
 
   useEffect(() => {
     if (!socketCLI.connected) return;
-    socketCLI.emit("joinRoom", {
-      user_id: Number(userInfo?.id),
+    socketCLI.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
+      user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
       room_id: roomCurrent,
+      is_anonymous: !userInfo ? true : false,
     });
 
-    // Listen all user in room
-    socketCLI.on("roomUsers", (data) => {});
-
-    socketCLI.on("message", (dataMessage) => {
+    socketCLI.on(SOCKET_EVENT.USER_GET_MESSAGE, (dataMessage) => {
       if (dataMessage) {
         setMessages((oldMes) => {
           return oldMes.length < 0
@@ -99,21 +92,29 @@ function BoxChat({ area }) {
       }
     });
 
-    socketCLI.on("emitReward", (data) => {
+    socketCLI.on(SOCKET_EVENT.USER_EMIT_REWARD, (data) => {
       setEmitReward((value) => {
         return [...value, data];
       });
     });
+  }, [socketCLI.connected]);
+
+  useEffect(() => {
 
     return () => {
-      socketCLI.emit("leaveRoom", {
-        user_id: Number(userInfo?.id),
-        room_id: roomCurrent,
-      });
+      console.log('leave game');
+      socketCLI.emit(
+        SOCKET_EVENT.USER_LEAVE_ROOM,
+        {
+          user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+          room_id: roomCurrent,
+          is_anonymous: !userInfo ? true : false,
+        }
+      );
+      socketCLI.removeAllListeners();
     };
-  }, [socketCLI.connected]);
+  }, []);
   // Scroll to Bottom
-
   useEffect(() => {
     if (refScroll.current) {
       refScroll.current.scrollTop = refBoxChat.current.offsetHeight;
@@ -194,11 +195,14 @@ function BoxChat({ area }) {
         <div className="flex items-center justify-between px-[20px] rounded-[10px] h-[37px] bg-[#52495e]">
           <input
             ref={inputRef}
+            disabled={!userInfo}
             placeholder="Say something..."
             className="bg-transparent text-[10px] w-[126px] border-b-[1px] border-b-[#00000033] focus:border-b-white"
           />
           <div className="relative group">
-            <button type="submit">
+            <button type="submit"
+              disabled={!userInfo}
+            >
               <IconSendMes className="cursor-pointer" />
               <div className="hidden group-hover:block absolute bottom-[-10px] right-[-15px] bg-zinc-800 text-[7px] p-[2px] rounded-[2px]">
                 Send
