@@ -3,14 +3,14 @@ import React, { memo } from "react";
 import GameItem from "@/components/game/GameItem";
 import { getRandom } from "@/utils/helper";
 import { GAMES_IMAGES } from "@/utils/constant";
-import Menu from "../responsive/Menu";
+import SidebarMB from "../responsive/SidebarMB";
 
 const GameGrid = ({ games }) => {
   return (
     <>
       <div className="game-grid">
         {/* Tablet / mobile */}
-        <Menu className={"mb-block"} />
+        <SidebarMB className={"mb-block"} />
 
         {games?.map((e, i) => (
           <GameItem

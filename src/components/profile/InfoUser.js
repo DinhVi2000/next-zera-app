@@ -3,7 +3,7 @@ import { Tooltip } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { EDIT_PROFILE_TAB, MODAL_NAME, STATUS } from "@/utils/constant";
+import { SHOP_TAB, MODAL_NAME, STATUS } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
 import {
@@ -56,7 +56,7 @@ function InfoUser() {
         <Tooltip label="Update cover image" aria-label="A tooltip">
           <div
             className="group cursor-pointer rounded-[20px] relative"
-            onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.COVER_PAGE)}
+            onClick={() => handleOpenEdit(SHOP_TAB.COVER_PAGE)}
           >
             {verifyStatus === STATUS.SUCCESS ? (
               <ImageLoading
@@ -79,7 +79,7 @@ function InfoUser() {
           <Tooltip label="Update avatar" aria-label="A tooltip">
             <div
               className="group w-[250px] mr-[16px] rounded-[20px] cursor-pointer relative z-10"
-              onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.AVATAR)}
+              onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
             >
               {verifyStatus === STATUS.SUCCESS ? (
                 <ImageLoading
@@ -107,7 +107,7 @@ function InfoUser() {
               </div>
               <div
                 className="group cursor-pointer relative w-fit"
-                onClick={() => handleOpenEdit(EDIT_PROFILE_TAB.AVATAR)}
+                onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
               >
                 <p className="font-medium">{quote}</p>
                 <IconEdit

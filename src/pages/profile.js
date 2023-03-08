@@ -50,12 +50,12 @@ function Profile() {
           <div className="flex mt-[50px] gap-x-[18px]">
             <div className="w-[427px]">
               <div className="rounded-[20px] bg-[#00000080]">
-                <h4 className="rounded-t-[20px] bg-[#EC4899] py-[22px] pl-[16px] text-[28px] font-bold">
+                <h4 className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold">
                   Stats
                 </h4>
                 <div className="pl-[28px] text-[28px]">
                   <p className="mt-[34px] flex items-center cursor-pointer">
-                    77 minutes left <IconPlus className="ml-[10px]" />
+                    77 minutes left
                   </p>
                   <p className="mt-[34px]">
                     Playstreak: {userInfo?.playstreak} days
@@ -77,7 +77,7 @@ function Profile() {
                     <div className="flex items-center">
                       Referral link:{" "}
                       <span className="text-[#FBCFE8] ml-2 flex items-center">
-                        @{userInfo?.username}
+                        {userInfo?.username}
                         <IconCopy viewBox="0 0 30 30" className="ml-2" />
                       </span>
                     </div>

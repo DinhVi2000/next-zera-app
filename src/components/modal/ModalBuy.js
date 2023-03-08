@@ -76,7 +76,7 @@ const ModalBuy = () => {
               alt=""
               src={itemShop?.url}
               className={`w-[204px] h-[204px] object-cover rounded-[20px] ${
-                payload?.tab === "Cover" ? "w-auto" : ""
+                payload?.tab === "Cover Pages" ? "w-[441px]" : ""
               }`}
             />
           </div>

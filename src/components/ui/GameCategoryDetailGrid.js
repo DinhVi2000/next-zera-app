@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 
 import GameCategory from "@/components/game/GameCategory";
 import GameItem from "@/components/game/GameItem";
-import Menu from "../responsive/Menu";
+import SidebarMB from "../responsive/SidebarMB";
 
 const GameCategoryDetailGrid = () => {
   const { categoryDetail } = useSelector(({ game }) => game) ?? {};
@@ -18,7 +18,7 @@ const GameCategoryDetailGrid = () => {
 
   return (
     <div className="grid-category-detail transition-all">
-      <Menu className={"mb-flex"} />
+      <SidebarMB className={"mb-flex"} />
 
       <div
         style={{

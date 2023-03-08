@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { useModalContext } from "@/context/modal-context";
-import { EDIT_PROFILE_TAB, MODAL_NAME, STATUS } from "@/utils/constant";
+import { SHOP_TAB, MODAL_NAME, STATUS } from "@/utils/constant";
 import {
   notifyErrorMessage,
   notifySuccessMessage,
@@ -105,9 +105,7 @@ const ModalEditProfile = () => {
         <div className="flex items-center justify-center mb-[30px]">
           <div className="bg-pink-800 rounded-[20px] mx-auto py-[5px] px-2 text-[32px] text-center font-bold w-fit shadow-md shadow-[#F761D6]">
             Edit
-            {payload?.tab === EDIT_PROFILE_TAB.AVATAR
-              ? " Profile"
-              : " Cover Page"}
+            {payload?.tab === SHOP_TAB.AVATAR ? " Profile" : " Cover Page"}
           </div>
           <button onClick={handleCloseModal}>
             <IconClose />
@@ -115,7 +113,7 @@ const ModalEditProfile = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center">
-            {payload?.tab === EDIT_PROFILE_TAB.AVATAR && (
+            {payload?.tab === SHOP_TAB.AVATAR && (
               <>
                 <div className="flex flex-col justify-between items-center w-[204px]">
                   <ImageLoading
@@ -157,7 +155,7 @@ const ModalEditProfile = () => {
                   {payload?.item?.length ? (
                     <div
                       className={`gap-4 overflow-auto max-h-[500px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2 ${
-                        payload?.tab == EDIT_PROFILE_TAB.AVATAR
+                        payload?.tab == SHOP_TAB.AVATAR
                           ? "min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4"
                           : ""
                       }`}
@@ -167,14 +165,14 @@ const ModalEditProfile = () => {
                           className="relative cursor-pointer group"
                           key={i}
                           onClick={
-                            payload?.tab == EDIT_PROFILE_TAB.AVATAR
+                            payload?.tab == SHOP_TAB.AVATAR
                               ? () => {
-                                setAvatarUser(e?.item_info?.id),
-                                setCheckAvatar(e?.item_info?.url);
-                              }
+                                  setAvatarUser(e?.item_info?.id),
+                                    setCheckAvatar(e?.item_info?.url);
+                                }
                               : () => {
-                                updateCover(e?.item_info?.id);
-                              }
+                                  updateCover(e?.item_info?.id);
+                                }
                           }
                         >
                           <ImageLoading
@@ -182,7 +180,7 @@ const ModalEditProfile = () => {
                             src={e?.item_info?.url}
                             className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto  
                           ${
-                            payload?.tab == EDIT_PROFILE_TAB.AVATAR
+                            payload?.tab == SHOP_TAB.AVATAR
                               ? "w-[204px]"
                               : "w-auto"
                           }`}

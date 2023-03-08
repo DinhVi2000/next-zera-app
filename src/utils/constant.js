@@ -36,11 +36,6 @@ const STATUS = {
   FAIL: "FAIL",
 };
 
-const EDIT_PROFILE_TAB = {
-  AVATAR: "Avatar",
-  COVER_PAGE: "Cover",
-};
-
 const VIEW_ALL_GAMES_TAB = {
   RECENT_GAMES: "RECENT_GAMES",
   LOVED_GAMES: "LOVED_GAMES",
@@ -87,9 +82,9 @@ const SOCKET_EVENT = {
   USER_LEAVE_ROOM: "leaveRoom",
   SOCKET_ERROR: "error",
   ANONYMOUS_LOGIN: "loginAnonymous",
-  STOP_GAME: 'stopGame',
-  PLAY_GAME: 'playGame',
-  TIME_GAME: 'timeGame',
+  STOP_GAME: "stopGame",
+  PLAY_GAME: "playGame",
+  TIME_GAME: "timeGame",
 };
 
 const CLASS_NAME_BY_PATH = {
@@ -102,7 +97,6 @@ export {
   ADS_IMAGES,
   COUNTDOWN_DEADLINE,
   CLASS_NAME_BY_PATH,
-  EDIT_PROFILE_TAB,
   FACEBOOK_SIGN_IN_ERROR,
   GAMES_IMAGES,
   IMAGE_URL,

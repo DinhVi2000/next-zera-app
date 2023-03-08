@@ -12,7 +12,7 @@ import { MODAL_NAME } from "@/utils/constant";
 import ImageLoading from "@/components/loading/ImageLoading";
 import Timer from "@/components/other/Timer";
 
-const Menu = ({ className, ...props }) => {
+const SidebarMB = ({ className, ...props }) => {
   const menu_ref = useRef();
 
   const { userInfo } = useAuthContext();
@@ -97,4 +97,4 @@ const Menu = ({ className, ...props }) => {
   );
 };
 
-export default memo(Menu);
+export default memo(SidebarMB);

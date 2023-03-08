@@ -46,8 +46,10 @@ function Activities() {
   }, []);
 
   return (
-    <div className="w-[728px] bg-[#000000cc] rounded-[20px] flex flex-col items-center justify-center pt-[22px] pb-[100px]">
-      <h2 className="text-[32px] mb-[30px] font-bold">Activities</h2>
+    <div className="w-[728px] bg-[#00000080] rounded-[20px] flex flex-col items-center justify-center pb-[100px]">
+      <h2 className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold w-full text-center">
+        Activities
+      </h2>
 
       {mostPlayed ? (
         <>
