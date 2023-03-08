@@ -37,7 +37,7 @@ const ArticleGrid = () => {
 };
 
 const ArticleItem = ({ item, ...props }) => {
-  const { id, content, created_at, feature_image, title } = item ?? {};
+  const { id, content, created_at, featured_image, title } = item ?? {};
 
   return (
     <Link
@@ -47,7 +47,7 @@ const ArticleItem = ({ item, ...props }) => {
     >
       <div className="h-full w-full flex">
         <ImageLoading
-          src={feature_image}
+          src={featured_image}
           alt={title}
           className="min-w-[204px] max-w-[204px] h-full rounded-[10px]"
         />

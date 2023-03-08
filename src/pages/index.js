@@ -21,10 +21,13 @@ export default function Home() {
   const { gameIndex } = useSelector(({ game }) => game) ?? {};
   const { games, categories } = gameIndex ?? {};
 
-  // const params = { page: 1, limit: 50 };
+  const params = { page: 1, limit: 200 };
 
   useEffect(() => {
-    Promise.all([call(getAllGame(dispatch)), call(getAllCategories(dispatch))]);
+    Promise.all([
+      call(getAllGame(dispatch, params)),
+      call(getAllCategories(dispatch, params)),
+    ]);
   }, []);
 
   return (

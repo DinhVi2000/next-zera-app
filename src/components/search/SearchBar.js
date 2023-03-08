@@ -6,7 +6,7 @@ const SearchBar = ({ searchValue, setSearchValue, onChangeInput }) => {
     <div className="pr-8">
       <div className="bg-white flex h-16 rounded-2xl overflow-hidden">
         <button className="px-4 border-r-2 transition-all hover:bg-[#f0f5fc] ">
-          <IconLogo />
+          <IconLogo className="w-7 h-full" />
         </button>
         <label htmlFor="search-input" className="flex w-full justify-between">
           <input

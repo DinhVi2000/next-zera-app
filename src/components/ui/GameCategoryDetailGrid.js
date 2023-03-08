@@ -18,7 +18,7 @@ const GameCategoryDetailGrid = () => {
 
   return (
     <div className="grid-category-detail transition-all">
-      <Menu />
+      <Menu className={"mb-flex"} />
 
       <div
         style={{
