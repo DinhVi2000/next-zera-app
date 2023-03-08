@@ -6,7 +6,7 @@ import Link from "next/link";
 import { IconRecently } from "@/resources/icons";
 
 import ImageLoading from "@/components/loading/ImageLoading";
-import { inRange } from "@/utils/helper";
+import { getGridSpanValue, getSizeByGrid, inRange } from "@/utils/helper";
 
 const GameItem = ({
   id,
@@ -14,20 +14,30 @@ const GameItem = ({
   thumbnail,
   area,
   title,
+  tileGrid,
   isRecently,
   className,
   ...props
 }) => {
-  const gridArea =
-    inRange(index, 0, 16) && area
-      ? `${area} / ${area} / ${area} / ${area}`
-      : "auto";
+  // const gridArea =
+  //   inRange(index, 0, 16) && area
+  //     ? `${area} / ${area} / ${area} / ${area}`
+  //     : "auto";
+
+  const { row, col } = getGridSpanValue(tileGrid) ?? {};
+  const gridStyle = {
+    gridRowStart: `span ${row}`,
+    gridColumnStart: `span ${col}`,
+  };
 
   return (
     <div
-      className={`${className} relative rounded-2xl cursor-pointer select-none group min-h-[94px] min-w-[94px]  
+      className={`${className} ${getSizeByGrid(
+        row,
+        col
+      )} relative rounded-2xl cursor-pointer select-none group min-h-[94px] min-w-[94px]  
                   hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl `}
-      style={{ gridArea }}
+      style={gridStyle}
       {...props}
     >
       <Link href={`/game/${id}`}>

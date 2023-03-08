@@ -146,16 +146,58 @@ const getArea = (area) => {
   return `${area} / ${area} / ${area} / ${area}`;
 };
 
+const swap = (a, b) => {
+  let temp;
+  temp = a;
+  a = b;
+  b = temp;
+};
+
+const getGridSpanValue = (tileGrid) => {
+  let row, col;
+
+  switch (tileGrid) {
+    case 1:
+      return { row: 1, col: 1 };
+    case 12:
+      return { row: 3, col: 4 };
+    default:
+      break;
+  }
+
+  for (let i = 1; i < tileGrid; i++) {
+    if (tileGrid % i === 0) (row = i), (col = tileGrid / row);
+  }
+
+  if (row > col) {
+    let temp = row;
+    row = col;
+    col = temp;
+  }
+
+  return { row, col };
+};
+
+const getSizeByGrid = (row, col) => {
+  let w = col * 94 + (col - 1) * 16,
+    h = row * 94 + (row - 1) * 16;
+
+  return `w-[${w}px] h-[${h}px]`;
+};
+
 export {
   abbreviateNumber,
   formatDate,
   getRandom,
   getArea,
+  getGridSpanValue,
+  getSizeByGrid,
   isEmpty,
   inRange,
   notifyErrorMessage,
   notifySuccessMessage,
   sleep,
+  swap,
   getBetweenTwoDate,
   toUpperCaseFirstLetter,
 };
