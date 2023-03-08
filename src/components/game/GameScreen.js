@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/context/auth-context";
 import { IconBack, IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
@@ -7,6 +8,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
   const back_tab_mb_ref = useRef();
+  const { setIsCountDown } = useAuthContext();
 
   const [isFullScreen, setIsFullScreen] = useState(false);
 
@@ -36,6 +38,22 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     window.addEventListener("keyup", (e) => {
       if (e?.keyCode === 27) handleToggleZoomOutGameScreen();
     });
+  }, []);
+
+  //handle stop/play game
+  useEffect(() => {
+    const handleScroll = (event) => {
+      if (window.scrollY > game_screen_ref.current?.clientHeight) {
+        setIsCountDown(false);
+      } else {
+        setIsCountDown(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (

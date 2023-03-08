@@ -50,7 +50,7 @@ export const AuthContextProvider = ({ children }) => {
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
   const [decrementTime, setDecrementTime] = useState(0);
-
+  const [totalTimePlay, setTotalTimePlay] = useState(0);
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
 
@@ -177,6 +177,8 @@ export const AuthContextProvider = ({ children }) => {
       socketClient,
       setDecrementTime,
       decrementTime,
+      setTotalTimePlay,
+      totalTimePlay,
     }),
     [
       anonymousInfo,
@@ -199,6 +201,8 @@ export const AuthContextProvider = ({ children }) => {
       socketClient,
       setDecrementTime,
       decrementTime,
+      setTotalTimePlay,
+      totalTimePlay,
     ]
   );
 
