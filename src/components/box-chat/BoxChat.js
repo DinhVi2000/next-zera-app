@@ -29,13 +29,13 @@ function BoxChat({ area }) {
   const refScroll = useRef();
   const refBoxChat = useRef();
 
-  const { userInfo, setIsCountDown, isCountDown, anonymousInfo } = useAuthContext();
+  const { userInfo, setIsCountDown, isCountDown, anonymousInfo, setTotalTimePlay } = useAuthContext();
 
   const sendMessage = (e) => {
     socketCLI.emit("chatMessage", {
       socket_id: socketCLI.id,
       msg: inputRef.current.value,
-      user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+      user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
       room_id: roomCurrent,
       is_anonymous: !userInfo ? true : false,
     });
@@ -56,14 +56,12 @@ function BoxChat({ area }) {
   useEffect(() => {
     if (userInfo || anonymousInfo) {
       if (isCountDown) {
-        console.log('playgame');
         socketCLI.emit(SOCKET_EVENT.PLAY_GAME, {
           user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
           room_id: roomCurrent,
           is_anonymous: !userInfo ? true : false,
         });
       } else if (!isCountDown) {
-        console.log('stopgame');
         socketCLI.emit(SOCKET_EVENT.STOP_GAME, {
           user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
           room_id: roomCurrent,
@@ -73,6 +71,14 @@ function BoxChat({ area }) {
     }
 
   }, [isCountDown, userInfo?.id]);
+
+  useEffect(() => {
+    socketCLI.on(SOCKET_EVENT.TIME_GAME, (data) => {
+      if (data) {
+        setTotalTimePlay(data.remainingTime);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (!socketCLI.connected) return;
@@ -102,11 +108,10 @@ function BoxChat({ area }) {
   useEffect(() => {
 
     return () => {
-      console.log('leave game');
       socketCLI.emit(
         SOCKET_EVENT.USER_LEAVE_ROOM,
         {
-          user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+          user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
           room_id: roomCurrent,
           is_anonymous: !userInfo ? true : false,
         }

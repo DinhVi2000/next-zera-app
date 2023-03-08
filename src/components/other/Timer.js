@@ -7,8 +7,7 @@ import { SOCKET_EVENT } from "@/utils/constant";
 
 const Timer = () => {
   const timeIntervelId = useRef(null);
-  const { isCountDown, usernameAuth, anonymousInfo, socketClient, decrementTime, setDecrementTime } = useAuthContext();
-  const [totalTimePlay, setTotalTimePlay] = useState(0);
+  const { isCountDown, usernameAuth, anonymousInfo, socketClient, setTotalTimePlay, totalTimePlay } = useAuthContext();
   const [userData, setUserData] = useState();
   const [remainingTime, setRemainingTime] = useState(() => {
     return getTimeRemaining(totalTimePlay);
@@ -26,7 +25,7 @@ const Timer = () => {
         });
         setUserData({ playtime: 3600 });
       } else {
-        setUserData({ ...anonymous, playtime: anonymous.playtime - decrementTime });
+        setUserData(anonymous);
       }
     };
     if (anonymousInfo && !usernameAuth) {
@@ -61,7 +60,6 @@ const Timer = () => {
    */
   useEffect(() => {
     if (!isCountDown && totalTimePlay) return;
-    // setDecrementTime(0);
     let timeDes = 0;
     timeIntervelId.current = setInterval(() => {
       timeDes++;

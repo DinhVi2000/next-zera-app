@@ -89,6 +89,7 @@ const SOCKET_EVENT = {
   ANONYMOUS_LOGIN: "loginAnonymous",
   STOP_GAME: 'stopGame',
   PLAY_GAME: 'playGame',
+  TIME_GAME: 'timeGame',
 };
 
 const CLASS_NAME_BY_PATH = {
