@@ -17,22 +17,41 @@ import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea, getRandom } from "@/utils/helper";
 
 import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
+
+import { useAuthContext } from "@/context/auth-context";
+
 const GameDetailGrid = () => {
+  const { setIsCountDown } = useAuthContext();
 
   const { info, gamesRelate } =
     useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const { title, thumbnail, play_url } = info ?? {};
+  const ref = useRef(null);
+  useEffect(() => {
+    const handleScroll = (event) => {
+      if (window.scrollY > ref.current?.clientHeight) {
+        setIsCountDown(false);
+      } else {
+        setIsCountDown(true);
+      }
+    };
 
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
     <div>
       <div className="game-detail-grid">
-        {/* Tablet / Mobile  */}
+        {/* Tablet Mobile  */}
         <Menu className={"tbl-flex"} />
         <GameTitle area="gt" thumbnail={thumbnail} title={title}></GameTitle>
         <GameScreenBar area="gsb" className="rounded-2xl mb-flex" />
 
-        {/* PC */}
+        {/* PC  */}
         <ShareToEarn area="ste" />
         <ReferAFriend area="raf" />
         <GameScreen play_url={play_url} thumbnail={thumbnail} title={title} />

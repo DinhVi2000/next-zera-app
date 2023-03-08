@@ -40,7 +40,7 @@ function Rewards() {
               >
                 {abbreviateNumber(+e?.zera_amount)}
               </Tooltip>{" "}
-              ZERA from {toUpperCaseFirstLetter(e?.type?.replace("_", " "))}
+              ZERA from {toUpperCaseFirstLetter(e?.type?.replaceAll("_", " "))}
             </p>
             <p className="opacity-60">{getBetweenTwoDate(e?.created_at)}</p>
           </div>

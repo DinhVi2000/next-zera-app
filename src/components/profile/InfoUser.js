@@ -116,10 +116,10 @@ function InfoUser() {
                 />
               </div>
             </div>
-            <div className="h-fit px-[10px] py-[6px] flex items-center content-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] cursor-pointer">
+            <div className="h-fit w-fit px-[10px] py-[6px] flex items-center content-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] cursor-pointer">
               <p className=" font-black text-[24px] mr-[5px]">{zera}</p>
-              <IconCoin className="mr-[10px]" />
-              <IconPlus />
+              <IconCoin className="mr-[5px] w-9 h-9" />
+              <IconPlus className="w-8 h-8" />
             </div>
           </div>
         </div>

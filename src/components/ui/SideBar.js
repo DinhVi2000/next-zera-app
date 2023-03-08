@@ -16,6 +16,7 @@ import {
   IconBasketball,
   IconCasual,
   IconCoin,
+  IconCoin22,
   IconConsole,
   IconCup,
   IconDressUp,
@@ -219,7 +220,7 @@ const SideBar = () => {
 
       {/* SHOP */}
       {userInfo && (
-        <div className="bg-blur-500 rounded-2xl py-2 h-[424px] mt-5 text-white">
+        <div className="bg-blur-500 rounded-2xl py-2 h-fit mt-5 text-white pr-1">
           <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 py-1 w-[70%] mx-auto gap-2">
             <span className="font-extrabold text-[12px]">{zera}</span>
             <IconCoin className="w-5" />
@@ -227,7 +228,7 @@ const SideBar = () => {
           <ShopSidebar></ShopSidebar>
           <div className="w-full">
             <Link href={"/shop"}>
-              <button className="bg-pink-800 text-[12px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-[40%] mx-auto block">
+              <button className="bg-pink-800 text-[12px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-[40%] mx-auto block mt-2">
                 Shop
               </button>
             </Link>
@@ -261,7 +262,7 @@ const UserInfo = () => {
   };
 
   return (
-    <div className="h-[130px] transition-all duration-500 over" ref={ref}>
+    <div className="h-[130px] transition-all duration-500" ref={ref}>
       {/* avatar */}
       <div className="group relative" onClick={toggleMenu} id="touch">
         <div className="cursor-pointer">
@@ -340,16 +341,15 @@ const ShopSidebar = () => {
   };
 
   useEffect(() => {
-    if (status !== STATUS.SUCCESS) return;
     getItem();
-  }, [status]);
+  }, [status === STATUS.SUCCESS]);
 
   return (
-    <div className="grid grid-cols-2 px-2c overflow-auto h-[200px]">
+    <div className="grid grid-cols-2 px-2 overflow-auto h-[200px]">
       {verifyStatus === STATUS.SUCCESS ? (
         <>
           {itemsShop?.map((item, i) => (
-            <div className="flex-center flex-col" key={i}>
+            <div className="flex-center flex-col mb-3" key={i}>
               <div className="group relative">
                 <ImageLoading
                   className="w-[80px] h-[80px] object-cover rounded-[10px] group"
@@ -369,14 +369,14 @@ const ShopSidebar = () => {
                 </div>
               </div>
               {item?.user_inventory ? (
-                <div className="mx-auto mb-[5px] text-center w-[60px] py-[3px] text-[10px] font-semibold bg-[#350F1E] rounded-[10px] shadow-sm shadow-[#9D174D]">
+                <div className="mx-auto mt-2 mb-[5px] text-center w-[60px] py-[3px] text-[10px] font-semibold bg-[#350F1E] rounded-[10px] shadow-sm shadow-[#9D174D]">
                   Owned
                 </div>
               ) : (
                 <>
                   <p className="flex-center ml-3 text-[10px]">
                     {item?.price}
-                    <IconCoin viewBox="-4 -19 75 75" />
+                    <IconCoin22 viewBox="-4 -5 35 35" />
                   </p>
                 </>
               )}
