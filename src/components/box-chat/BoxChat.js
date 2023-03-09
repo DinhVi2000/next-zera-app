@@ -7,25 +7,22 @@ import ava from "@/../public/images/ava1.png";
 import { IconSendMes } from "@/resources/icons";
 import { ImgAva2 } from "@/resources/avatar/index";
 import { io } from "socket.io-client";
-import { useRouter } from "next/router";
 import { config } from "@/envs";
 
 import { SOCKET_EVENT } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import { getArea } from "@/utils/helper";
 import { useSocketContext } from "@/context/socket-context";
+import { useSelector } from "react-redux";
 
 function BoxChat({ area }) {
   const socket = io(config.SERVER_CHAT);
 
-  const { asPath } = useRouter();
-
-  const roomCurrent = useMemo(() => asPath.split("/").at(-1), [asPath]);
-
   const [messages, setMessages] = useState([]);
   const [emitReward, setEmitReward] = useState([]);
   const [socketCLI, setSocketCLI] = useState(socket);
-
+  const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
+  const roomCurrent = info?.id || 0;
   const inputRef = useRef();
   const refScroll = useRef();
   const refBoxChat = useRef();
@@ -33,12 +30,12 @@ function BoxChat({ area }) {
   const { userInfo, anonymousInfo } = useAuthContext();
   const { isCountDown, setTotalTimePlay, setIsCountDown } = useSocketContext();
   const sendMessage = (e) => {
-    socketCLI.emit("chatMessage", {
+    socketCLI.emit(SOCKET_EVENT.USER_CHAT_MESSAGE, {
       socket_id: socketCLI.id,
       msg: inputRef.current.value,
       user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
       room_id: roomCurrent,
-      is_anonymous: !userInfo ? true : false,
+      is_anonymous: !userInfo,
     });
     e.preventDefault();
     e.target.reset();
@@ -60,13 +57,13 @@ function BoxChat({ area }) {
         socketCLI.emit(SOCKET_EVENT.PLAY_GAME, {
           user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
           room_id: roomCurrent,
-          is_anonymous: !userInfo ? true : false,
+          is_anonymous: !userInfo,
         });
       } else if (!isCountDown) {
         socketCLI.emit(SOCKET_EVENT.STOP_GAME, {
           user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
           room_id: roomCurrent,
-          is_anonymous: !userInfo ? true : false,
+          is_anonymous: !userInfo,
         });
       }
     }

@@ -11,7 +11,6 @@ import { Tooltip, useToast } from "@chakra-ui/react";
 import { useAuthContext } from "@/context/auth-context";
 import { statsUser } from "@/services/user.service";
 import { getBetweenTwoDate, notifyErrorMessage } from "@/utils/helper";
-
 function Profile() {
   const { userInfo } = useAuthContext();
   const toast = useToast();
@@ -29,7 +28,6 @@ function Profile() {
   useEffect(() => {
     getStatsUser();
   }, []);
-
   const handleCopy = () => {
     navigator.clipboard.writeText(`${userInfo?.ref_link}`);
   };
@@ -55,7 +53,7 @@ function Profile() {
                 </h4>
                 <div className="pl-[28px] text-[28px]">
                   <p className="mt-[34px] flex items-center cursor-pointer">
-                    77 minutes left
+                    { Math.floor(userInfo?.playtime / 60)} minutes left
                   </p>
                   <p className="mt-[34px]">
                     Playstreak: {userInfo?.playstreak} days
