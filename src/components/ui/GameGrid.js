@@ -10,7 +10,7 @@ const GameGrid = ({ games }) => {
     <>
       <div className="game-grid">
         {/* Tablet / mobile */}
-        <SidebarMB className={"tbl-block"} />
+        <SidebarMB className={"tbl-flex"} />
 
         {games?.map((e, i) => (
           <GameItem

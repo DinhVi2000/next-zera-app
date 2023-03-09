@@ -32,24 +32,25 @@ const CategoryDetail = () => {
   useEffect(() => {
     if (!router.query || isEmpty(router.query)) return;
 
-    if (typeof isValidPage === "undefined")
-      getCategoryBySlug(dispatch, router.query["category-slug"])
-        .then((data) => {
-          const { game_category } = data ?? {};
+    if (Object.values(router.query).includes("undefined"))
+      return setIsValidPage(false);
 
-          setIsValidPage(
-            !!game_category &&
-              game_category?.superslug?.value === router.query["superslug"]
-          );
-        })
-        .catch(() => setIsValidPage(false));
+    getCategoryBySlug(dispatch, router.query["category-slug"])
+      .then((data) => {
+        const { game_category } = data ?? {};
 
-    if (isValidPage)
-      Promise.all([
-        call(getAllGame(dispatch, params)),
-        call(getAllCategories(dispatch, params)),
-      ]);
-  }, [router.query, isValidPage]);
+        setIsValidPage(
+          !!game_category &&
+            game_category?.superslug?.value === router.query["superslug"]
+        );
+      })
+      .catch(() => setIsValidPage(false));
+
+    Promise.all([
+      call(getAllGame(dispatch, params)),
+      call(getAllCategories(dispatch, params)),
+    ]);
+  }, [router.query]);
 
   return (
     <>
