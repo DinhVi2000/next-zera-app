@@ -61,24 +61,27 @@ const GameScreenBar = ({
               <div className="skeleton-shine w-7 h-7 rounded-lg"></div>
             </>
           )}
-          <span
-            className="h-fit mb-hidden"
-            onClick={isFullScreen ? onZoomOutGameScreen : onZoomInGameScreen}
+          <Tooltip
+            label={isFullScreen ? "Zoom out" : "Zoom in"}
+            placement="bottom"
           >
-            {isFullScreen ? (
-              // <Tooltip label="Zoom in" placement="bottom">
-              //   <div>
-              <IconZoomOut className="cursor-pointer w-7 h-7 text-[#929292]" />
-            ) : (
-              //   </div>
-              // </Tooltip>
-              // <Tooltip label="Zoom out" placement="bottom">
-              //   <div>
-              <IconZoomIn className="cursor-pointer w-8 h-8 text-[#929292]" />
-              //   </div>
-              // </Tooltip>
-            )}
-          </span>
+            <span
+              className="h-fit mb-hidden"
+              onClick={isFullScreen ? onZoomOutGameScreen : onZoomInGameScreen}
+            >
+              {isFullScreen ? (
+                //   <div>
+                <IconZoomOut className="cursor-pointer w-7 h-7 text-[#929292]" />
+              ) : (
+                //   </div>
+                // </Tooltip>
+                // <Tooltip label="Zoom out" placement="bottom">
+                //   <div>
+                <IconZoomIn className="cursor-pointer w-8 h-8 text-[#929292]" />
+                //   </div>
+              )}
+            </span>
+          </Tooltip>
           <Tooltip label="Report" placement="bottom">
             <div>
               <IconInfo className="cursor-pointer" />

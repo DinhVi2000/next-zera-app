@@ -154,15 +154,17 @@ const getGameDetailBySlug = async (dispatch, slug) => {
   }
 };
 
-const getGameByCategoryId = async (dispatch, categoryId) => {
+const getGameByCategorySlug = async (dispatch, slug) => {
   try {
-    const { data } = await http.get(`/game/category/${categoryId}`);
+    const { data } = await http.get(`/game/category/${slug}`);
 
     if (!data.success) {
       throw new Error(data?.message);
     }
 
-    dispatch(setGamesRelateAtGameDetail(data?.data?.rows));
+    dispatch(
+      setGamesRelateAtGameDetail(data?.data?.game_category?.game_detail)
+    );
 
     return data;
   } catch (e) {
@@ -286,7 +288,7 @@ const addGamePlaylist = async (params) => {
 export {
   getAllGame,
   getAllCategories,
-  getGameByCategoryId,
+  getGameByCategorySlug,
   getGamesByKeySearch,
   getGameDetailBySlug,
   getGameDetailById,

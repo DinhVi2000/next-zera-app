@@ -19,7 +19,6 @@ import { getArea, getRandom } from "@/utils/helper";
 import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
 
 const GameDetailGrid = () => {
-
   const { info, gamesRelate } =
     useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
@@ -54,19 +53,6 @@ const GameDetailGrid = () => {
             superSlug={e?.superslug}
           />
         ))}
-
-        {/* fake data */}
-        {/* {Array(50 - gamesRelate?.length || 0)
-          .fill(0)
-          ?.map((e, i) => (
-            <GameItem
-              key={gamesRelate?.length + i}
-              id={gamesRelate?.length + i}
-              index={gamesRelate?.length + i}
-              thumbnail={getRandom(GAMES_IMAGES)}
-              title={`game ${gamesRelate?.length + i}`}
-            ></GameItem>
-          ))} */}
 
         {/* loading  */}
         {!gamesRelate &&

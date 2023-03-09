@@ -89,9 +89,9 @@ const SOCKET_EVENT = {
 };
 
 const CLASS_NAME_BY_PATH = {
-  "/game/[gameId]": "tbl-hidden mb-hidden",
-  "/category/[categoryId]": "mb-hidden",
-  "/": "mb-hidden",
+  "/[superslug]/[game-slug]": "tbl-hidden mb-hidden",
+  "/[superslug]/category/[category-slug]": "tbl-hidden mb-hidden",
+  "/": "tbl-hidden mb-hidden",
 };
 
 export {
