@@ -2,12 +2,14 @@ import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 
 import { useAuthContext } from "@/context/auth-context";
 import { getTimeRemaining } from "@/utils/common";
-import { getUserAnonymous, getUserInfo } from "@/services/user.service";
-import { SOCKET_EVENT } from "@/utils/constant";
+import { getUserAnonymous } from "@/services/user.service";
+import { SOCKET_EVENT, STATUS } from "@/utils/constant";
+import { useSocketContext } from "@/context/socket-context";
 
 const Timer = () => {
   const timeIntervelId = useRef(null);
-  const { isCountDown, usernameAuth, anonymousInfo, socketClient, setTotalTimePlay, totalTimePlay } = useAuthContext();
+  const { usernameAuth, anonymousInfo, userInfo } = useAuthContext();
+  const { isCountDown, socketClient, setTotalTimePlay, totalTimePlay, socketStatus } = useSocketContext();
   const [userData, setUserData] = useState();
   const [remainingTime, setRemainingTime] = useState(() => {
     return getTimeRemaining(totalTimePlay);
@@ -28,23 +30,19 @@ const Timer = () => {
         setUserData(anonymous);
       }
     };
-    if (anonymousInfo && !usernameAuth) {
+    if (anonymousInfo && !usernameAuth && (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)) {
       handleLogin();
     }
-  }, [anonymousInfo, socketClient, usernameAuth]);
+  }, [anonymousInfo, socketClient, usernameAuth, socketStatus]);
 
   /**
    * Get user info if user sigin
    */
   useEffect(() => {
-    const getUser = async () => {
-      const { data } = await getUserInfo(usernameAuth);
-      setUserData(data);
-    };
-    if (usernameAuth) {
-      getUser();
+    if (usernameAuth && (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)) {
+      setUserData({ ...userInfo });
     }
-  }, [usernameAuth]);
+  }, [usernameAuth, socketStatus, userInfo]);
 
   /**
    *  Set total playtime

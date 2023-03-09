@@ -1,4 +1,4 @@
-import { useAuthContext } from "@/context/auth-context";
+import { useSocketContext } from "@/context/socket-context";
 import { IconBack, IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
@@ -8,7 +8,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
   const back_tab_mb_ref = useRef();
-  const { setIsCountDown } = useAuthContext();
+  const { setIsCountDown } = useSocketContext();
 
   const [isFullScreen, setIsFullScreen] = useState(false);
 

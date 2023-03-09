@@ -34,6 +34,7 @@ const STATUS = {
   IN_PROGRESS: "IN_PROGRESS",
   SUCCESS: "SUCCESS",
   FAIL: "FAIL",
+  INIT: "INIT",
 };
 
 const VIEW_ALL_GAMES_TAB = {

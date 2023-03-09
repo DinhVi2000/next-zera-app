@@ -1,26 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-
-import Script from "next/script";
-
 import { loginWithEmail } from "@/services/auth.service";
-import { getUserInfo, getUserIp } from "@/services/user.service";
+import { getUserInfo } from "@/services/user.service";
 import { getGameRecentlyPlayed } from "@/services/game.service";
-
 import { notifyErrorMessage } from "@/utils/helper";
-
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import { useRouter } from "next/router";
-
 import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
-
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
-import { io } from "socket.io-client";
-import { config } from "@/envs";
 const AuthContext = createContext(null);
 
 export const useAuthContext = () => {
@@ -36,31 +27,23 @@ export const useAuthContext = () => {
 };
 
 export const AuthContextProvider = ({ children }) => {
-  const socket = io(config.SERVER_CHAT);
-
   const router = useRouter();
   const toast = useToast();
   const dispatch = useDispatch();
   const { call } = useApi();
 
   const [userInfo, setUserInfo] = useState();
-  const [isCountDown, setIsCountDown] = useState(false);
   const [anonymousInfo, setAnonymousInfo] = useState();
-  const [socketClient, setSocketClient] = useState(socket);
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
-  const [decrementTime, setDecrementTime] = useState(0);
-  const [totalTimePlay, setTotalTimePlay] = useState(0);
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
-
   const { pathname } = router ?? {};
 
   const verifyAccessToken = async () => {
     try {
       setVerifyStatus(STATUS.IN_PROGRESS);
       const { data } = await getUserInfo(usernameAuth);
-
       setUserInfo(data);
       setVerifyStatus(STATUS.SUCCESS);
     } catch (error) {
@@ -162,8 +145,6 @@ export const AuthContextProvider = ({ children }) => {
       logout,
       userInfo,
       usernameAuth,
-      isCountDown,
-      setIsCountDown,
       setToken,
       setUserInfo,
       setAnonymousInfo,
@@ -171,14 +152,6 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
-      isCountDown,
-      setIsCountDown,
-      setSocketClient,
-      socketClient,
-      setDecrementTime,
-      decrementTime,
-      setTotalTimePlay,
-      totalTimePlay,
     }),
     [
       anonymousInfo,
@@ -186,8 +159,6 @@ export const AuthContextProvider = ({ children }) => {
       logout,
       userInfo,
       usernameAuth,
-      isCountDown,
-      setIsCountDown,
       setToken,
       setUserInfo,
       setAnonymousInfo,
@@ -195,20 +166,11 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
-      isCountDown,
-      setIsCountDown,
-      setSocketClient,
-      socketClient,
-      setDecrementTime,
-      decrementTime,
-      setTotalTimePlay,
-      totalTimePlay,
     ]
   );
 
   return (
     <AuthContext.Provider value={{ authProvider }}>
-      <Script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></Script>
       {!isAuthenticationPage && children}
     </AuthContext.Provider>
   );

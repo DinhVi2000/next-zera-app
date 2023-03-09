@@ -9,17 +9,19 @@ import { Provider } from "react-redux";
 import { ModalContextProvider } from "@/context/modal-context";
 import { ChakraProvider } from "@chakra-ui/react";
 import { AuthContextProvider } from "@/context/auth-context";
-import Script from "next/script";
+import { SocketContextProvider } from "@/context/socket-context";
 
 export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <ChakraProvider>
-        <AuthContextProvider>
-          <ModalContextProvider>
-            <Component {...pageProps} />
-          </ModalContextProvider>
-        </AuthContextProvider>
+        <SocketContextProvider>
+          <AuthContextProvider>
+            <ModalContextProvider>
+              <Component {...pageProps} />
+            </ModalContextProvider>
+          </AuthContextProvider>
+        </SocketContextProvider>
       </ChakraProvider>
     </Provider>
   );

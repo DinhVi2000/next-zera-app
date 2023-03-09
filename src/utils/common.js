@@ -1,3 +1,9 @@
+import moment from 'moment';
+
+export const getTimeUnixMiliSecond = (time) => {
+  return moment(time).valueOf();
+};
+
 const getTimeRemaining = (time) => {
   if (time === 0) {
     return {
