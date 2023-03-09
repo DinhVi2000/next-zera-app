@@ -136,6 +136,8 @@ const Menubar = () => {
                       size={1}
                       thumbnail={e}
                       className="w-[94px] h-[94px]"
+                      slug={e?.slug}
+                      superSlug={e?.superslug}
                     />
                   ))}
                 </div>
@@ -152,6 +154,8 @@ const Menubar = () => {
                       isRecently
                       thumbnail={e}
                       className="w-[94px] h-[94px]"
+                      slug={e?.slug}
+                      superSlug={e?.superslug}
                     />
                   ))}
                 </div>

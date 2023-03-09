@@ -24,6 +24,8 @@ const GameCategoryGrid = ({ categories, className }) => {
             index={i}
             thumbnail={e?.thumbnail}
             label={e?.label}
+            superslug={e?.superslug}
+            slug={e?.slug}
           ></GameCategory>
         ))}
 

@@ -64,11 +64,17 @@ const GameDetailGrid = () => {
 
         {/* games relate */}
         {gamesRelate?.map((e, i) => (
-          <GameItem key={i} title={e?.title} thumbnail={e?.thumbnail} />
+          <GameItem
+            key={i}
+            title={e?.title}
+            thumbnail={e?.thumbnail}
+            slug={e?.slug}
+            superSlug={e?.superslug}
+          />
         ))}
 
         {/* fake data */}
-        {Array(50 - gamesRelate?.length || 0)
+        {/* {Array(50 - gamesRelate?.length || 0)
           .fill(0)
           ?.map((e, i) => (
             <GameItem
@@ -78,7 +84,7 @@ const GameDetailGrid = () => {
               thumbnail={getRandom(GAMES_IMAGES)}
               title={`game ${gamesRelate?.length + i}`}
             ></GameItem>
-          ))}
+          ))} */}
 
         {/* loading  */}
         {!gamesRelate &&
@@ -91,6 +97,8 @@ const GameDetailGrid = () => {
                 index={i}
                 thumbnail={getRandom(GAMES_IMAGES)}
                 title={`game ${i}`}
+                slug={e?.slug}
+                superSlug={e?.superslug}
               ></GameItem>
             ))}
       </div>

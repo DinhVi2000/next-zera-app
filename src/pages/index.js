@@ -8,6 +8,7 @@ import MainLayout from "@/layouts/MainLayout";
 
 import GameGrid from "@/components/ui/GameGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
+import ArticleCategoryGrid from "@/components/ui/ArticleCategoryGrid";
 
 import { getAllCategories, getAllGame } from "@/services/game.service";
 
@@ -43,6 +44,7 @@ export default function Home() {
         <div className="w-responsive">
           <GameGrid games={games} />
           <GameCategoryGrid categories={categories} />
+          <ArticleCategoryGrid />
         </div>
       </MainLayout>
     </>

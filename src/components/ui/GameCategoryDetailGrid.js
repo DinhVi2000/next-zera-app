@@ -44,29 +44,9 @@ const GameCategoryDetailGrid = () => {
               gridArea:
                 i < 8 ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}` : "",
             }}
+            slug={e?.slug}
+            superSlug={e?.superslug}
           />
-        ))}
-
-      {Array(40 - game_detail?.length || 0)
-        .fill(0)
-        ?.map((e, i) => (
-          <GameItem
-            key={game_detail?.length + i}
-            id={game_detail?.length + i}
-            index={game_detail?.length + i}
-            thumbnail={getRandom(GAMES_IMAGES)}
-            title={`game ${game_detail?.length + i}`}
-            style={{
-              gridArea:
-                game_detail?.length + i < 8
-                  ? `g${game_detail?.length + i + 1} / g${
-                      game_detail?.length + i + 1
-                    } / g${game_detail?.length + i + 1} / g${
-                      game_detail?.length + i + 1
-                    }`
-                  : "",
-            }}
-          ></GameItem>
         ))}
 
       {!game_detail &&

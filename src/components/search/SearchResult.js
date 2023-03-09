@@ -33,13 +33,15 @@ const SearchResult = ({ games }) => {
 
   return (
     <div className="grid grid-cols-6 gap-4 mt-10">
-      {games?.map(({ thumbnail, title, id }, i) => (
+      {games?.map((e, i) => (
         <GameItem
           key={i}
-          thumbnail={thumbnail}
-          title={title}
-          id={id}
+          thumbnail={e?.thumbnail}
+          title={e?.title}
+          id={e?.id}
           onClick={closeModal}
+          slug={e?.slug}
+          superSlug={e?.superslug}
         />
       ))}
     </div>
