@@ -9,6 +9,7 @@ import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 import {
   getAllCategories,
   getGameByCategoryId,
+  getGameByCategorySlug,
   getGameDetailBySlug,
   getHallOfFameByGameSlug,
 } from "@/services/game.service";
@@ -35,7 +36,10 @@ const GameDetail = () => {
   useEffect(() => {
     if (!router.query || isEmpty(router.query)) return;
 
-    if (typeof isValidPage === "undefined")
+    if (Object.values(router.query).includes("undefined"))
+      return setIsValidPage(false);
+
+    if (!isValidPage)
       getGameDetailBySlug(dispatch, router.query["game-slug"])
         .then((data) => {
           setIsValidPage(
@@ -43,9 +47,9 @@ const GameDetail = () => {
           );
 
           const { game_category } = data ?? {};
-          if (!game_category?.id) return;
+          if (!game_category?.slug) return;
 
-          getGameByCategoryId(dispatch, game_category?.id);
+          getGameByCategorySlug(dispatch, game_category?.slug);
         })
         .catch(() => setIsValidPage(false));
 

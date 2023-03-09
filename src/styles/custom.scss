@@ -345,6 +345,12 @@
   );
 }
 
+.bg-footer {
+  background-image: url(../../public/images/bg_footer.png) !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
 .full-screen {
   position: fixed;
   z-index: 100;

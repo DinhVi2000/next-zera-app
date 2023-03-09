@@ -146,9 +146,19 @@ const getArea = (area) => {
   return `${area} / ${area} / ${area} / ${area}`;
 };
 
+const categoryUrl = (superslug, slug) => {
+  return `/${superslug}/category/${slug}`;
+};
+
+const gameDetailUrl = (superslug, slug) => {
+  return `/${superslug}/${slug}`;
+};
+
 export {
   abbreviateNumber,
+  categoryUrl,
   formatDate,
+  gameDetailUrl,
   getRandom,
   getArea,
   isEmpty,

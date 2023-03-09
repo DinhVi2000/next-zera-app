@@ -18,7 +18,7 @@ const GameCategoryDetailGrid = () => {
 
   return (
     <div className="grid-category-detail transition-all">
-      <SidebarMB className={"mb-flex"} />
+      <SidebarMB className={"tbl-flex mb-flex"} />
 
       <div
         style={{
@@ -74,6 +74,8 @@ const GameCategoryDetailGrid = () => {
             style={{
               gridArea: `c${i + 1} / c${i + 1} / c${i + 1} / c${i + 1}`,
             }}
+            slug={e?.slug}
+            superslug={e?.superslug}
           />
         ))}
 

@@ -17,8 +17,10 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     setIsFullScreen(false);
     const gameScreenClassList = game_screen_ref.current?.classList;
 
-    if (gameScreenClassList?.contains("full-screen"))
+    if (gameScreenClassList?.contains("full-screen")) {
       gameScreenClassList.remove("full-screen");
+      gameScreenClassList.add("rounded-2xl");
+    }
     bg_mb_ref.current.classList.remove("hidden-imp");
     back_tab_mb_ref.current.classList.toggle("hidden-imp");
   };
@@ -29,6 +31,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
 
     bg_mb_ref.current.classList.toggle("hidden-imp");
     back_tab_mb_ref.current.classList.toggle("hidden-imp");
+    game_screen_ref.current?.classList?.remove("rounded-2xl");
     game_screen_ref.current?.classList?.add("full-screen");
     // document.requestFullscreen();
   };

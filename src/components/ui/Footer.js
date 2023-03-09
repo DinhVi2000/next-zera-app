@@ -16,15 +16,21 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <>
-      <div className="h-fit relative mt-[145px]">
-        <Image src={bg_footer} className="w-full" alt=""></Image>
-        <div className="flex w-full justify-between px-[70px] py-[50px] absolute bottom-0">
+      <div className="h-fit bg-footer relative mt-[145px]">
+        {/* <Image src={bg_footer} className="w-full" alt=""></Image> */}
+        <div
+          className="flex w-full justify-between px-[70px] py-[50px] bottom-0
+                        max-[1060px]:flex-col max-[1060px]:items-center"
+        >
           {/* logo */}
-          <div className="bg-white w-fit rounded-[30px] p-[10px] ">
+          <div
+            className="bg-white w-fit rounded-[30px] p-[10px] 
+                          max-[1060px]:mb-10"
+          >
             <Image src={logo_lg} className="m-0" alt=""></Image>
           </div>
 
-          <div className="flex gap-[84px]">
+          <div className="flex max-[550px]:flex-col gap-[84px]">
             {/* email */}
             <div className="text-white">
               <p className="text-[28px] font-semibold mb-2.5">Newsletter</p>

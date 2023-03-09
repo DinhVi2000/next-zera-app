@@ -443,9 +443,9 @@
 @media (min-width: 551px) and (max-width: 990.9px) {
   .game-grid {
     grid-template-areas:
-      " ip0 ip0 ip0 ip1 ip1 "
-      " ip0 ip0 ip0 ip1 ip1 "
-      " ip0 ip0 ip0 . . "
+      " .   .   ip0 ip0 ip0 "
+      " ip1 ip1 ip0 ip0 ip0 "
+      " ip1 ip1 ip0 ip0 ip0 "
       " ip2 ip3 ip3 . .  "
       " . ip3 ip3 . . "
       " . . . . . "
@@ -478,39 +478,16 @@
     grid-template-rows: repeat(10, 94px);
   }
 
-  .game-detail-grid {
-    grid-template-areas:
-      ". . . . . . ."
-      " gs gs gs gs gs gs gs "
-      " gs gs gs gs gs gs gs "
-      " gs gs gs gs gs gs gs "
-      " gs gs gs gs gs gs gs "
-      " gs gs gs gs gs gs gs "
-      "ads1 ads2 ste ste ste raf ads3"
-      "ads1 ads4 ads4 ads4 ads4 ads4 ads4 "
-      "bc bc .  .  .  .  . "
-      "bc bc .  .  .  .  . "
-      "bc bc .  .  .  .  . "
-      ".  gi gi gi hof hof hof "
-      ".  gi gi gi hof hof hof "
-      ".  gi gi gi hof hof hof "
-      ".  gi gi gi hof hof hof "
-      ".  gi gi gi hof hof hof ";
-    grid-template-columns: repeat(7, 94px);
-    grid-template-rows: repeat(7, 94px);
-  }
-
   .grid-category-detail {
     display: grid;
     gap: 16px;
     grid-template-areas:
-      "ct ct ct c1 c1"
-      "g1 g1 g2 g2 . "
-      "g1 g1 g2 g2 . "
-      "g5 g5 c2 c2 . "
-      "g5 g5 c3 c3 . "
-      "g3 g6 g8 c4 c4 "
-      "g4 g7 .  . . ";
+      ".  ct ct ct g1"
+      "c1 c1 g2 g2 g3 "
+      "c4 c4 g2 g2 g4 "
+      "g6 g7  c2 c2 g5 "
+      ".  .  c3 c3 . "
+      ".  .  .  . . ";
 
     grid-template-columns: repeat(5, 94px);
     grid-template-rows: repeat(5, 94px);
@@ -537,6 +514,69 @@
 
   .tbl-flex {
     display: flex;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 990.9px) {
+  .game-detail-grid {
+    grid-template-areas:
+      ". . . . . . ."
+      " gs gs gs gs gs gs gs "
+      " gs gs gs gs gs gs gs "
+      " gs gs gs gs gs gs gs "
+      " gs gs gs gs gs gs gs "
+      " gs gs gs gs gs gs gs "
+      "ads1 ads2 ste ste ste raf ads3"
+      "ads1 ads4 ads4 ads4 ads4 ads4 ads4 "
+      "bc bc .  .  .  .  . "
+      "bc bc .  .  .  .  . "
+      "bc bc .  .  .  .  . "
+      ".  gi gi gi hof hof hof "
+      ".  gi gi gi hof hof hof "
+      ".  gi gi gi hof hof hof "
+      ".  gi gi gi hof hof hof "
+      ".  gi gi gi hof hof hof ";
+    grid-template-columns: repeat(7, 94px);
+    grid-template-rows: repeat(7, 94px);
+  }
+
+  .tbl-hidden {
+    display: none;
+  }
+
+  .tbl-flex {
+    display: flex;
+  }
+
+  .tbl-col-7 {
+    grid-template-columns: repeat(7, 94px) !important;
+  }
+}
+
+@media (min-width: 550.9px) and (max-width: 800px) {
+  .game-detail-grid {
+    grid-template-areas:
+      ". . . . . "
+      " gs gs gs gs gs"
+      " gs gs gs gs gs "
+      " gs gs gs gs gs "
+      " gs gs gs gs gs "
+      "ads1 ste ste  ste  ads2 "
+      "ads1 raf ads4 ads4 ads3 "
+      "bc bc hof hof hof"
+      "bc bc hof hof hof"
+      "bc bc hof hof hof"
+      ".  .  hof hof hof"
+      "gi gi gi  .   .  "
+      "gi gi gi  .   .  "
+      "gi gi gi  .   .  "
+      "gi gi gi  .   .  ";
+    grid-template-columns: repeat(5, 94px);
+    grid-template-rows: repeat(15, 94px);
+  }
+
+  .tbl-hidden {
+    display: none;
   }
 }
 
