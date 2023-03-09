@@ -34,7 +34,10 @@ function ListGameActivities({ payload, isModal, listGame }) {
                 <>
                   <div className="responsive-grid">
                     {listGame?.avatar?.slice(0, 6)?.map((e, i) => (
-                      <div className="w-[94px] h-[94px] hover:scale-[1.1] transition-all" key={i}>
+                      <div
+                        className="w-[94px] h-[94px] hover:scale-[1.1] transition-all"
+                        key={i}
+                      >
                         <ImageLoading
                           alt=""
                           src={e?.url}
@@ -45,7 +48,10 @@ function ListGameActivities({ payload, isModal, listGame }) {
                   </div>
                   <div className="flex gap-x-[16px] mt-3">
                     {listGame?.cover?.slice(0, 3)?.map((e, i) => (
-                      <div className="w-[204px] h-[94px] hover:scale-[1.1] transition-all" key={i}>
+                      <div
+                        className="w-[204px] h-[94px] hover:scale-[1.1] transition-all"
+                        key={i}
+                      >
                         <ImageLoading
                           alt=""
                           src={e?.url}

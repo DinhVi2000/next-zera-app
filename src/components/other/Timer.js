@@ -9,7 +9,13 @@ import { useSocketContext } from "@/context/socket-context";
 const Timer = () => {
   const timeIntervelId = useRef(null);
   const { usernameAuth, anonymousInfo, userInfo } = useAuthContext();
-  const { isCountDown, socketClient, setTotalTimePlay, totalTimePlay, socketStatus } = useSocketContext();
+  const {
+    isCountDown,
+    socketClient,
+    setTotalTimePlay,
+    totalTimePlay,
+    socketStatus,
+  } = useSocketContext();
   const [userData, setUserData] = useState();
   const [remainingTime, setRemainingTime] = useState(() => {
     return getTimeRemaining(totalTimePlay);
@@ -30,7 +36,11 @@ const Timer = () => {
         setUserData(anonymous);
       }
     };
-    if (anonymousInfo && !usernameAuth && (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)) {
+    if (
+      anonymousInfo &&
+      !usernameAuth &&
+      (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)
+    ) {
       handleLogin();
     }
   }, [anonymousInfo, socketClient, usernameAuth, socketStatus]);
@@ -39,7 +49,10 @@ const Timer = () => {
    * Get user info if user sigin
    */
   useEffect(() => {
-    if (usernameAuth && (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)) {
+    if (
+      usernameAuth &&
+      (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)
+    ) {
       setUserData({ ...userInfo });
     }
   }, [usernameAuth, socketStatus, userInfo]);
@@ -61,7 +74,11 @@ const Timer = () => {
     let timeDes = 0;
     timeIntervelId.current = setInterval(() => {
       timeDes++;
-      const time = getTimeRemaining(Number(totalTimePlay) - timeDes > 0 ? Number(totalTimePlay) - timeDes : 0);
+      const time = getTimeRemaining(
+        Number(totalTimePlay) - timeDes > 0
+          ? Number(totalTimePlay) - timeDes
+          : 0
+      );
       setRemainingTime(time);
     }, 1000);
 

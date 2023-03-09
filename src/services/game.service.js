@@ -90,9 +90,9 @@ const getAllCategories = async (dispatch, params) => {
   }
 };
 
-const getCategoryById = async (dispatch, categoryId) => {
+const getCategoryBySlug = async (dispatch, slug) => {
   try {
-    const { data } = await http.get(`/game/category/${categoryId}`);
+    const { data } = await http.get(`/game/category/${slug}`);
 
     if (!data.success) {
       throw new Error(data?.message);
@@ -100,7 +100,7 @@ const getCategoryById = async (dispatch, categoryId) => {
 
     dispatch(setCategoryDetail(data?.data));
 
-    return data;
+    return data.data;
   } catch (e) {
     throw e;
   }
@@ -122,21 +122,6 @@ const getGamesByKeySearch = async (keySearch) => {
   }
 };
 
-const getGameDetailBySlug = async (params) => {
-  try {
-    const { super_slug, game_slug } = params || {};
-    const { data } = await http.get(`/game/detail/${super_slug}/${game_slug}`);
-
-    if (!data.success) {
-      throw new Error(data?.message);
-    }
-
-    return data;
-  } catch (e) {
-    throw e;
-  }
-};
-
 const getGameDetailById = async (dispatch, gameId) => {
   try {
     const { data } = await http.get(`/game/detail/${gameId}`);
@@ -148,6 +133,22 @@ const getGameDetailById = async (dispatch, gameId) => {
     dispatch(setInfoAtGameDetail(data?.data));
 
     return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getGameDetailBySlug = async (dispatch, slug) => {
+  try {
+    const { data } = await http.get(`/game/detail/${slug}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setInfoAtGameDetail(data?.data));
+
+    return data.data;
   } catch (e) {
     throw e;
   }
@@ -185,9 +186,9 @@ const getGameRecentlyPlayed = async (dispatch) => {
   }
 };
 
-const getHallOfFameByGameId = async (dispatch, gameId, limit) => {
+const getHallOfFameByGameSlug = async (dispatch, slug, limit) => {
   try {
-    const { data } = await http.get(`/hall-of-fames/${gameId}/game`, { limit });
+    const { data } = await http.get(`/hall-of-fames/${slug}/game`, { limit });
 
     if (!data.success) {
       throw new Error(data?.message);
@@ -290,8 +291,8 @@ export {
   getGameDetailBySlug,
   getGameDetailById,
   getGameRecentlyPlayed,
-  getCategoryById,
-  getHallOfFameByGameId,
+  getCategoryBySlug,
+  getHallOfFameByGameSlug,
   getRecentlyGames,
   getLovedGames,
   getPlaylist,

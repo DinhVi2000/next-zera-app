@@ -4,7 +4,15 @@ import Link from "next/link";
 import React from "react";
 import ImageLoading from "../loading/ImageLoading";
 
-const GameCategory = ({ id, index, label, thumbnail, ...props }) => {
+const GameCategory = ({
+  id,
+  index,
+  label,
+  thumbnail,
+  superslug,
+  slug,
+  ...props
+}) => {
   const isMinSize = !inRange(index, 0, 6);
 
   return (
@@ -13,7 +21,7 @@ const GameCategory = ({ id, index, label, thumbnail, ...props }) => {
       className={`rounded-2xl overflow-hidden relative cursor-pointer min-w-[204px] max-w-[204px] min-h-[94px] max-h-[204px] bg-white 
                       ${isMinSize ? "flex items-center justify-start" : ""}
                       hover:translate-y-[-2px] hover:scale-105 transition-all duration-300 shadow-[0px_6px_12px_0px_rgb(0,0,0,0.24)]`}
-      href={`/category/${id}`}
+      href={`/${superslug?.value}/category/${slug}`}
     >
       {/* thumbnail */}
       <ImageLoading

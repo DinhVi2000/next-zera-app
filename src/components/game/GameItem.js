@@ -16,6 +16,8 @@ const GameItem = ({
   title,
   isRecently,
   className,
+  slug,
+  superSlug,
   ...props
 }) => {
   const gridArea =
@@ -30,7 +32,7 @@ const GameItem = ({
       style={{ gridArea }}
       {...props}
     >
-      <Link href={`/game/${id}`}>
+      <Link href={`/${superSlug?.value}/${slug}`}>
         {isRecently && (
           <span className="absolute top-4 left-[-2px] z-100">
             <IconRecently></IconRecently>
