@@ -13,6 +13,7 @@ import { config } from "@/envs";
 import { SOCKET_EVENT } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import { getArea } from "@/utils/helper";
+import { useSocketContext } from "@/context/socket-context";
 
 function BoxChat({ area }) {
   const socket = io(config.SERVER_CHAT);
@@ -29,14 +30,8 @@ function BoxChat({ area }) {
   const refScroll = useRef();
   const refBoxChat = useRef();
 
-  const {
-    userInfo,
-    setIsCountDown,
-    isCountDown,
-    anonymousInfo,
-    setTotalTimePlay,
-  } = useAuthContext();
-
+  const { userInfo, anonymousInfo } = useAuthContext();
+  const { isCountDown, setTotalTimePlay, setIsCountDown } = useSocketContext();
   const sendMessage = (e) => {
     socketCLI.emit("chatMessage", {
       socket_id: socketCLI.id,

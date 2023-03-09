@@ -21,9 +21,11 @@ import { IconCoin, IconPlus } from "@/resources/icons";
 import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
 
 import { notifyErrorMessage } from "@/utils/helper";
+import { useSocketContext } from "@/context/socket-context";
 
 const Shop = () => {
   const { status, setStatus } = useModalContext();
+  const { socketStatus, setSocketStatus } = useSocketContext();
   const { userInfo } = useAuthContext();
   const { zera } = userInfo || {};
   const toast = useToast();
@@ -41,6 +43,7 @@ const Shop = () => {
       if (!data) return;
       setItemsShop(data?.rows);
       setStatus(STATUS.NOT_START);
+      setSocketStatus(STATUS.NOT_START);
       setIsLoading(true);
     } catch (e) {
       notifyErrorMessage(toast, e);
@@ -58,8 +61,10 @@ const Shop = () => {
 
   useEffect(() => {
     if (!idCategory) return;
+    // TODO: Only let the effect call fn once when mound, the rest only setState when status === success, limit rerender call api many times
+    //  vd: (status === STATUS.SUCCESS || status === STATUS.INIT) && getItem(idCategory);
     getItem(idCategory);
-  }, [status == STATUS.SUCCESS, idCategory]);
+  }, [status, idCategory]);
 
   useEffect(() => {
     if (categories) {

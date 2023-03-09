@@ -16,16 +16,17 @@ import { useToast } from "@chakra-ui/react";
 import { buyShopItem } from "@/services/shop.service";
 import { useAuthContext } from "@/context/auth-context";
 import { getUserInfo } from "@/services/user.service";
+import { useSocketContext } from "@/context/socket-context";
 
 const ModalBuy = () => {
   const toast = useToast();
   const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
   const { zera } = userInfo || {};
   const { openModal, payload, setStatus } = useModalContext();
+  const { setSocketStatus } = useSocketContext();
   const modal_ref = useRef(null);
   const DURATION = 200;
   const [itemShop, setItemShop] = useState(payload?.item);
-
   const handleCloseModal = () => {
     modal_ref.current.classList?.remove("animation-open-modal");
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
@@ -50,8 +51,10 @@ const ModalBuy = () => {
       notifySuccessMessage(toast, "Buy successful");
       handleCloseModal();
       setStatus(STATUS.SUCCESS);
+      setSocketStatus(STATUS.SUCCESS);
     } catch (e) {
       setStatus(STATUS.FAIL);
+      setSocketStatus(STATUS.FAIL);
       notifyErrorMessage(toast, e);
     }
   };

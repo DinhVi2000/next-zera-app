@@ -38,6 +38,8 @@ export const ModalContextProvider = ({ children }) => {
   const [payload, setPayload] = useState();
   const [modal, setModal] = useState(MODAL_NAME.NONE);
   const [status, setStatus] = useState(STATUS.NOT_START);
+  // TODO: Only let the effect call fn once when mound, the rest only setState when status === success
+  // vd: const [status, setStatus] = useState(STATUS.INIT);
 
   const closeModal = () => {
     setModal(MODAL_NAME.NONE);
