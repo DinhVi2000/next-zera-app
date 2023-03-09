@@ -39,32 +39,30 @@ const GameDetail = () => {
     if (Object.values(router.query).includes("undefined"))
       return setIsValidPage(false);
 
-    if (!isValidPage)
-      getGameDetailBySlug(dispatch, router.query["game-slug"])
-        .then((data) => {
-          setIsValidPage(
-            !!data && data?.superslug?.value === router.query["superslug"]
-          );
+    getGameDetailBySlug(dispatch, router.query["game-slug"])
+      .then((data) => {
+        setIsValidPage(
+          !!data && data?.superslug?.value === router.query["superslug"]
+        );
 
-          const { game_category } = data ?? {};
-          if (!game_category?.slug) return;
+        const { game_category } = data ?? {};
+        if (!game_category?.slug) return;
 
-          getGameByCategorySlug(dispatch, game_category?.slug);
-        })
-        .catch(() => setIsValidPage(false));
+        getGameByCategorySlug(dispatch, game_category?.slug);
+      })
+      .catch(() => setIsValidPage(false));
 
-    if (isValidPage)
-      Promise.all([
-        call(getAllCategories(dispatch)),
-        call(
-          getHallOfFameByGameSlug(
-            dispatch,
-            router.query["game-slug"],
-            HALL_OF_FAME_LIMIT
-          )
-        ),
-      ]);
-  }, [router.query, isValidPage]);
+    Promise.all([
+      call(getAllCategories(dispatch)),
+      call(
+        getHallOfFameByGameSlug(
+          dispatch,
+          router.query["game-slug"],
+          HALL_OF_FAME_LIMIT
+        )
+      ),
+    ]);
+  }, [router.query]);
 
   return (
     <>
