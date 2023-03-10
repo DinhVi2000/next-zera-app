@@ -79,17 +79,23 @@ const HallOfFame = () => {
   ];
 
   return (
-    <div className="text-white bg-blur-800 border-[5px] border-violet-400 p-[62px] pt-2.5 rounded-[20px]">
+    <div
+      className="text-white bg-blur-800 border-[5px] border-violet-400 pt-2.5 rounded-[20px]
+                     p-[62px] max-[550px]:p-[30px]"
+    >
       {/* title */}
       <div className="bg-pink-800 rounded-[20px] mx-auto py-2.5 text-[40px] text-center font-bold w-[280px] mb-[58px]">
         Hall Of Fame
       </div>
 
       {/* content */}
-      <div className="p-16 border-[5px] border-pink-500 bg-[#5b21b666] rounded-[30px]">
-        <div className="flex gap-20">
+      <div
+        className="border-[5px] border-pink-500 bg-[#5b21b666] rounded-[30px]
+                      p-16 max-[450px]:p-5"
+      >
+        <div className="flex max-[991px]:flex-col gap-20">
           {/* avatar */}
-          <div className="max-w-[204px]">
+          <div className="max-w-[204px] max-[991px]:mx-auto">
             <ImageLoading
               src={avatar}
               alt="avatar"

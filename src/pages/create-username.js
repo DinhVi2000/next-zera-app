@@ -9,7 +9,10 @@ const CreateUsername = () => {
     <>
       <SEO title={"Create username"} />
       <div className="flex-center min-h-[100vh] ">
-        <div className="bg-[#000000b3] rounded-[30px] px-[60px] pt-5 pb-12 relative overflow-hidden w-full max-w-[563px]">
+        <div
+          className="bg-[#000000b3] rounded-[30px] px-[60px] pt-5 pb-12 relative overflow-hidden w-full max-w-[563px]
+                       max-[600px]:px-6 max-[600px]:w-[400px] max-[480px]:w-[350px]"
+        >
           {/* <div>
           <Image src={logo} alt="logo" className="mx-auto"></Image>
         </div> */}

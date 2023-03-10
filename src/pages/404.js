@@ -5,9 +5,13 @@ const PageNotFound = () => {
   return (
     <div className="h-[100vh] w-full flex-center">
       <div className="text-white">
-        <h1 className="text-9xl text-center font-bold">ERROR</h1>
-        <div className="text-center mb-5">
-          Sorry, the page you requested does not exist on this site.
+        <h1 className="text-6xl min-[550px]:text-6xl min-[990px]:text-9xl text-center font-bold">
+          ERROR
+        </h1>
+        <div className="text-base text-center mb-5">
+          <span className="px-3">
+            Sorry, the page you requested does not exist on this site.
+          </span>
         </div>
         <div className="text-center">
           <Link href={"/"}>

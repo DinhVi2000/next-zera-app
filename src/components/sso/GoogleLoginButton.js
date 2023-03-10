@@ -59,7 +59,7 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
 
   return (
     <button
-      className="bg-white text-black p-2 w-full rounded-[20px]"
+      className="bg-white text-black p-2 w-full rounded-[20px] h-10"
       onClick={handleLoginWithGoogle}
     >
       <div className="flex justify-center items-center gap-1">

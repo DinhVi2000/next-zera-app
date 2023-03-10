@@ -68,7 +68,7 @@ const FacebookLoginButton = ({ onSetIsSSOLogging }) => {
         onSetIsSSOLogging(true);
       }}
       textButton=""
-      cssClass="bg-white text-black text-white py-2 px-[14px] w-full rounded-[20px] p-2 text-sm flex justify-center items-center gap-2 w-full"
+      cssClass="bg-white text-black text-white py-2 px-[14px] w-full rounded-[20px] p-2 text-sm flex justify-center items-center gap-2 w-full h-10"
     />
   );
 };
