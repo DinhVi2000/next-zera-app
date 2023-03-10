@@ -40,7 +40,7 @@ function Rewards() {
             <>
               {rewards?.map((e, i) => (
                 <div className="mt-[34px] max-[1176px]:mt-[15px]" key={i}>
-                  <p className="break-all w-full">
+                  <p className="w-full">
                     {e?.type?.includes("BUY_AVATAR") ||
                     e?.type?.includes("BUY_COVER_PAGE") ||
                     e?.type?.includes("BUY_TIME")

@@ -23,7 +23,7 @@ function Profile() {
             <InfoUser />
 
             <div className="flex max-[1176px]:flex-col items-start mt-[50px] gap-x-[18px] max-[990px]:mt-5">
-              <div className="w-[auto] max-[1176px]:w-full max-[1176px]:flex max-[1176px]:justify-between max-[550px]:flex-col">
+              <div className="w-full max-[1176px]:w-full max-[1176px]:flex max-[1176px]:justify-between max-[550px]:flex-col">
                 <Stats />
                 <Rewards />
               </div>
