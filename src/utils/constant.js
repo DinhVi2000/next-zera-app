@@ -94,8 +94,10 @@ const CLASS_NAME_BY_PATH = {
   "/[superslug]/category/[category-slug]": "tbl-hidden mb-hidden",
   "/article/category/[category-slug]": "tbl-hidden mb-hidden",
   "/article/[article-slug]": "tbl-hidden mb-hidden",
-  "/": "tbl-hidden mb-hidden",
   "/profile": "tbl-hidden mb-hidden",
+  "/hall-of-fame/[username]": "tbl-hidden mb-hidden",
+  "/hall-of-fame": "tbl-hidden mb-hidden",
+  "/": "tbl-hidden mb-hidden",
 };
 
 export {
