@@ -108,7 +108,7 @@ const ModalEditProfile = () => {
             {payload?.tab === SHOP_TAB.AVATAR ? " Profile" : " Cover Page"}
           </div>
           <button onClick={handleCloseModal}>
-            <IconClose />
+            <IconClose className="text-[#F472B6]" />
           </button>
         </div>
         <form

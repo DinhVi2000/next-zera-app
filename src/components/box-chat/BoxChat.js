@@ -30,6 +30,8 @@ function BoxChat({ area }) {
   const { userInfo, anonymousInfo } = useAuthContext();
   const { isCountDown, setTotalTimePlay, setIsCountDown } = useSocketContext();
   const sendMessage = (e) => {
+    e.preventDefault();
+    if (!inputRef.current.value) return;
     socketCLI.emit(SOCKET_EVENT.USER_CHAT_MESSAGE, {
       socket_id: socketCLI.id,
       msg: inputRef.current.value,
@@ -37,7 +39,6 @@ function BoxChat({ area }) {
       room_id: roomCurrent,
       is_anonymous: !userInfo,
     });
-    e.preventDefault();
     e.target.reset();
   };
 
@@ -135,10 +136,7 @@ function BoxChat({ area }) {
         <p className="text-[12px]">+100 more</p>
       </div>
       <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
-        <div
-          className="overflow-y-auto h-full flex flex-col"
-          ref={refScroll}
-        >
+        <div className="overflow-y-auto h-full flex flex-col" ref={refScroll}>
           {/* Event */}
           <div className="all-mess" ref={refBoxChat}>
             {messages &&

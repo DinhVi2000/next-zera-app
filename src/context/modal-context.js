@@ -7,6 +7,7 @@ import ModalPurchaseHistory from "@/components/modal/ModalPurchaseHistory";
 import ModalDailyBonus from "@/components/modal/ModalDailyBonus";
 import ModalBuy from "@/components/modal/ModalBuy";
 import ModalConfirm from "@/components/modal/ModalConfirm";
+import ModalReport from "@/components/modal/ModalReport";
 
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 
@@ -20,6 +21,7 @@ const Modal = {
   DAILY_BONUS: <ModalDailyBonus />,
   BUY: <ModalBuy />,
   CONFIRM: <ModalConfirm />,
+  REPORT: <ModalReport />,
 };
 
 export const useModalContext = () => {

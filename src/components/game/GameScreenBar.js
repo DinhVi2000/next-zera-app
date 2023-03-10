@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { IconInfo, IconZoomIn, IconZoomOut } from "@/resources/icons";
+import { IconZoomIn, IconZoomOut } from "@/resources/icons";
 import React from "react";
 import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea } from "@/utils/helper";
@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import AddPlaylist from "./screenbar/AddPlaylist";
 import AddLove from "./screenbar/AddLove";
 import { Tooltip } from "@chakra-ui/react";
+import Report from './screenbar/Report';
 
 const GameScreenBar = ({
   area,
@@ -83,9 +84,7 @@ const GameScreenBar = ({
             </span>
           </Tooltip>
           <Tooltip label="Report" placement="bottom">
-            <div>
-              <IconInfo className="cursor-pointer" />
-            </div>
+            <Report/>
           </Tooltip>
         </div>
       </div>

@@ -285,6 +285,20 @@ const addGamePlaylist = async (params) => {
   }
 };
 
+const reportGame = async (params, slug) => {
+  try {
+    const { data } = await http.post(`game/${slug}/report`, params);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getAllGame,
   getAllCategories,
@@ -301,5 +315,6 @@ export {
   getMostPlayed,
   addGameLove,
   addGamePlaylist,
+  reportGame,
 };
 export default reducer;

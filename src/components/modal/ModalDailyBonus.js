@@ -56,7 +56,10 @@ const ModalDailyBonus = () => {
       >
         <div className="flex ">
           <h4 className="mx-auto">Daily Gift</h4>
-          <IconClose className="cursor-pointer " onClick={handleCloseModal} />
+          <IconClose
+            className="cursor-pointer text-[#F472B6]"
+            onClick={handleCloseModal}
+          />
         </div>
         <div className="grid grid-cols-3 gap-6 mt-10 w-full">
           {Array(6)

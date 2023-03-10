@@ -40,7 +40,7 @@ const ModalConfirm = () => {
             REMINDER
           </div>
           <button onClick={handleCloseModal}>
-            <IconClose />
+            <IconClose className="text-[#F472B6]"/>
           </button>
         </div>
         <div className="text-[22px] flex-center flex-col">
