@@ -91,6 +91,8 @@ const SOCKET_EVENT = {
 const CLASS_NAME_BY_PATH = {
   "/[superslug]/[game-slug]": "tbl-hidden mb-hidden",
   "/[superslug]/category/[category-slug]": "tbl-hidden mb-hidden",
+  "/article/category/[category-slug]": "tbl-hidden mb-hidden",
+  "/article/[article-slug]": "tbl-hidden mb-hidden",
   "/": "tbl-hidden mb-hidden",
 };
 

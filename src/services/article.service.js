@@ -8,29 +8,27 @@ const article = createSlice({
   name: "article",
   initialState: {
     info: null,
-    articleIndex: {
-      articles: null,
-    },
+    categories: null,
   },
   reducers: {
-    setArticlesAtArticleIndex: (state, action) => {
-      state.articleIndex.articles = action.payload;
+    setArticleCategories: (state, action) => {
+      state.categories = action.payload;
     },
   },
 });
 
 const { actions, reducer } = article;
-export const { setArticlesAtArticleIndex } = actions;
+export const { setArticleCategories } = actions;
 
-const getAllArticle = async (dispatch) => {
+const getAllArticleCategory = async (dispatch) => {
   try {
-    const { data } = await http.get("/article");
+    const { data } = await http.get("/article/category");
 
     if (!data.success) {
       throw new Error(data?.message);
     }
 
-    dispatch(setArticlesAtArticleIndex(data?.data?.rows));
+    dispatch(setArticleCategories(data?.data?.rows));
 
     return data;
   } catch (e) {
@@ -52,5 +50,33 @@ const getArticleById = async (id) => {
   }
 };
 
-export { getAllArticle, getArticleById };
+const getArticleBySlug = async (slug) => {
+  try {
+    const { data } = await http.get(`/article/${slug}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getArticlesByCategorySlug = async (slug) => {
+  try {
+    const { data } = await http.get(`/article/category/${slug}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export { getAllArticleCategory, getArticleBySlug, getArticlesByCategorySlug };
 export default reducer;
