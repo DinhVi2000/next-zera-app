@@ -71,7 +71,8 @@ const GameInfo = ({ area, ...props }) => {
           )}
 
           <p className="text-base font-bold mb-[26px]">
-            {love_count || 0} players loved this game
+            {love_count || 0} {love_count > 1 ? "players" : "player"} loved this
+            game
           </p>
 
           {description && (

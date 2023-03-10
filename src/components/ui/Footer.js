@@ -10,8 +10,8 @@ import {
 import Image from "next/image";
 
 import logo_lg from "../../../public/images/logo_lg.png";
-import bg_footer from "../../../public/images/bg_footer.png";
 import Link from "next/link";
+import NewsLetterForm from "../form/NewsLetterForm";
 
 const Footer = () => {
   return (
@@ -31,18 +31,7 @@ const Footer = () => {
           </div>
 
           <div className="flex max-[550px]:flex-col gap-[84px]">
-            {/* email */}
-            <div className="text-white">
-              <p className="text-[28px] font-semibold mb-2.5">Newsletter</p>
-              <input
-                type="text"
-                placeholder="Enter your email"
-                className="rounded-[10px] p-2 w-full mb-2.5 text-black"
-              />
-              <button className="rounded-[10px] px-[10px] py-[5px] border border-white text-base">
-                Subscribe now
-              </button>
-            </div>
+            <NewsLetterForm />
 
             {/* contact */}
             <div className="text-white">
