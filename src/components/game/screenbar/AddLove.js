@@ -9,6 +9,8 @@ import { getUserInfo } from "@/services/user.service";
 
 import { Tooltip, useToast } from "@chakra-ui/react";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
+import { STATUS } from "@/utils/constant";
+import ButtonLoading from "../../loading/ButtonLoading";
 
 function AddLove() {
   const toast = useToast();
@@ -16,6 +18,7 @@ function AddLove() {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const [isLoved, setIsLoved] = useState();
+  const [status, setStatus] = useState(STATUS.SUCCESS);
 
   const checkIsLoved = () => {
     if (userInfo?.lovedGame?.includes(info?.id)) {
@@ -29,17 +32,20 @@ function AddLove() {
 
   const handleLoveGame = async () => {
     try {
+      setStatus(STATUS.NOT_START);
       const gameId = { game_detail_id: info?.id };
       const { data } = await addGameLove(gameId);
       if (!data) return;
 
       const res = await getUserInfo(usernameAuth);
       setUserInfo(res?.data);
+      setStatus(STATUS.SUCCESS);
 
       if (userInfo) {
         checkIsLoved();
       }
     } catch (e) {
+      setStatus(STATUS.SUCCESS);
       notifyErrorMessage(toast, e);
     }
   };
@@ -53,12 +59,16 @@ function AddLove() {
   return (
     <Tooltip label="Love Game" placement="bottom">
       <div>
-        <IconHeart
-          className={`cursor-pointer transition-all duration-150 w-8 h-8 active:scale-90 ${
-            isLoved ? "text-[#fd384f]" : "text-[#929292]"
-          }`}
-          onClick={handleLoveGame}
-        />
+        {status === STATUS.SUCCESS ? (
+          <IconHeart
+            className={`cursor-pointer transition-all duration-150 w-8 h-8 active:scale-90 ${
+              isLoved ? "text-[#fd384f]" : "text-[#929292]"
+            }`}
+            onClick={handleLoveGame}
+          />
+        ) : (
+          <ButtonLoading isLoading />
+        )}
       </div>
     </Tooltip>
   );

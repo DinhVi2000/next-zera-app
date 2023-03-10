@@ -17,6 +17,7 @@ import { buyShopItem } from "@/services/shop.service";
 import { useAuthContext } from "@/context/auth-context";
 import { getUserInfo } from "@/services/user.service";
 import { useSocketContext } from "@/context/socket-context";
+import ButtonLoading from "../loading/ButtonLoading";
 
 const ModalBuy = () => {
   const toast = useToast();
@@ -27,6 +28,8 @@ const ModalBuy = () => {
   const modal_ref = useRef(null);
   const DURATION = 200;
   const [itemShop, setItemShop] = useState(payload?.item);
+  const [loading, setLoading] = useState(STATUS.NOT_START);
+
   const handleCloseModal = () => {
     modal_ref.current.classList?.remove("animation-open-modal");
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
@@ -40,16 +43,18 @@ const ModalBuy = () => {
 
   const handleBuy = async () => {
     try {
+      setLoading(STATUS.IN_PROGRESS);
+
       const res = await buyShopItem({
         item: parseInt(itemShop.id),
       });
-      if (!res.success) {
-        throw new Error(data?.message);
-      }
+
       const { data } = await getUserInfo(usernameAuth);
       setUserInfo(data);
-      notifySuccessMessage(toast, "Buy successful");
-      handleCloseModal();
+
+      if (res.success) {
+        setLoading(STATUS.SUCCESS);
+      }
       setStatus(STATUS.SUCCESS);
       setSocketStatus(STATUS.SUCCESS);
     } catch (e) {
@@ -58,6 +63,13 @@ const ModalBuy = () => {
       notifyErrorMessage(toast, e);
     }
   };
+
+  useEffect(() => {
+    if (loading === STATUS.SUCCESS) {
+      handleCloseModal();
+      notifySuccessMessage(toast, "Buy successful");
+    }
+  }, [loading]);
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] flex-center">
@@ -99,8 +111,10 @@ const ModalBuy = () => {
             <button
               onClick={handleBuy}
               className="bg-violet-700 px-[25px] py-[5px] rounded-[30px] border border-[#F5F3FF] font-medium
-              hover:bg-[#350F1E] transition-all ml-4"
+              hover:bg-[#350F1E] transition-all ml-4 flex-center"
+              disabled={loading !== STATUS.NOT_START}
             >
+              {loading !== STATUS.NOT_START && <ButtonLoading isLoading />}
               Buy
             </button>
           </div>
