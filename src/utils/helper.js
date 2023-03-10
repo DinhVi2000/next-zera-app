@@ -154,7 +154,12 @@ const gameDetailUrl = (superslug, slug) => {
   return `/${superslug}/${slug}`;
 };
 
+const articleCategoryUrl = (slug) => {
+  return `/article/category/${slug}`;
+};
+
 export {
+  articleCategoryUrl,
   abbreviateNumber,
   categoryUrl,
   formatDate,

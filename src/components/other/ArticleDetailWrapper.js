@@ -22,11 +22,16 @@ const ArticleDetailWrapper = ({ article }) => {
               {featured_image && (
                 <ImageLoading
                   src={featured_image}
-                  className="w-full max-w-[400px] h-[200px] mx-auto my-5 object-cover"
+                  className="w-full max-w-[500px] max-h-[500px] mx-auto my-5 object-cover"
                 />
               )}
 
-              <p className="">{content}</p>
+              <p className="text-white">
+                <DocumentRenderer
+                  document={JSON.parse(content)}
+                  className="whitespace-nowrap overflow-hidden text-ellipsis"
+                />
+              </p>
             </Fragment>
           )}
 
@@ -38,6 +43,7 @@ const ArticleDetailWrapper = ({ article }) => {
 };
 
 import React from "react";
+import { DocumentRenderer } from "@keystone-6/document-renderer";
 
 const ArticleDetailLoading = ({ article }) => {
   return (

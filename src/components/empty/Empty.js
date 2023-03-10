@@ -2,9 +2,12 @@ import Image from "next/image";
 import React from "react";
 import emptyImg from "../../../public/images/empty.png";
 
-function Empty() {
+function Empty({ className, ...props }) {
   return (
-    <div className="flex-center flex-col mx-auto w-full h-full">
+    <div
+      {...props}
+      className={`flex-center flex-col mx-auto w-full h-full ${className}`}
+    >
       <Image
         alt=""
         width={100}
