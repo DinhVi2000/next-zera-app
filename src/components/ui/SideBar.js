@@ -50,6 +50,7 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useRouter } from "next/router";
 import { getItemByCategory } from "@/services/shop.service";
 import ButtonLoading from "../loading/ButtonLoading";
+import { abbreviateNumber } from '@/utils/helper';
 
 const sideBarItems = [
   {
@@ -222,13 +223,15 @@ const SideBar = () => {
       {userInfo && (
         <div className="bg-blur-500 rounded-2xl py-2 h-fit mt-5 text-white pr-1">
           <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 py-1 w-[70%] mx-auto gap-2">
-            <span className="font-extrabold text-[12px]">{zera}</span>
+            <span className="font-extrabold text-[16px]">
+              {abbreviateNumber(zera)}
+            </span>
             <IconCoin className="w-5" />
           </div>
           <ShopSidebar></ShopSidebar>
           <div className="w-full">
             <Link href={"/shop"}>
-              <button className="bg-pink-800 text-[12px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-[40%] mx-auto block mt-2">
+              <button className="bg-pink-800 text-[10px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-[40%] mx-auto block mt-2">
                 Shop
               </button>
             </Link>
@@ -369,12 +372,12 @@ const ShopSidebar = () => {
                 </div>
               </div>
               {item?.user_inventory ? (
-                <div className="mx-auto mt-2 mb-[5px] text-center w-[60px] py-[3px] text-[10px] font-semibold bg-[#350F1E] rounded-[10px] shadow-sm shadow-[#9D174D]">
+                <div className="mx-auto mt-2 mb-[5px] text-center w-[60px] py-[3px] text-[11px] font-semibold bg-[#350F1E] rounded-[10px] shadow-sm shadow-[#9D174D]">
                   Owned
                 </div>
               ) : (
                 <>
-                  <p className="flex-center ml-3 text-[10px]">
+                  <p className="flex-center ml-3 text-[11px]">
                     {item?.price}
                     <IconCoin22 viewBox="-4 -5 35 35" />
                   </p>

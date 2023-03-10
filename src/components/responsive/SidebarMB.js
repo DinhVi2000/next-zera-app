@@ -12,7 +12,7 @@ import { MODAL_NAME } from "@/utils/constant";
 import ImageLoading from "@/components/loading/ImageLoading";
 import Timer from "@/components/other/Timer";
 
-const SidebarMB = ({ className, ...props }) => {
+const SidebarMB = ({ className, childClassName, ...props }) => {
   const menu_ref = useRef();
 
   const { userInfo } = useAuthContext();
@@ -27,8 +27,8 @@ const SidebarMB = ({ className, ...props }) => {
   return (
     <div className={`relative ${className}`}>
       <div
-        className="fixed w-[94px] z-30 rounded-2xl bg-blur-500 shadow-[2px_2px_4px_#522658] backdrop-blur-[10px] overflow-hidden
-                     transition-all h-[94px]"
+        className={`fixed w-[94px] z-30 rounded-2xl bg-blur-500 shadow-[2px_2px_4px_#522658] backdrop-blur-[10px] overflow-hidden
+                     transition-all h-[94px] ${childClassName} `}
         ref={menu_ref}
       >
         <div className="p-3">

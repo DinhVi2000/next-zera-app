@@ -46,15 +46,15 @@ function Activities() {
   }, []);
 
   return (
-    <div className="w-[728px] bg-[#00000080] rounded-[20px] flex flex-col items-center justify-center pb-[100px]">
+    <div className="w-[55%] max-[1176px]:w-full max-[1176px]:mt-5 bg-[#00000080] rounded-[20px] flex flex-col items-center justify-center pb-[100px]">
       <h2 className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold w-full text-center">
         Activities
       </h2>
 
-      {mostPlayed ? (
+      {!mostPlayed ? (
         <>
           <h3 className="text-[28px] font-bold">Most played</h3>
-          <div className="w-[314px] h-[204px] mt-3 mb-5">
+          <div className="w-[314px] h-[204px] mt-3 mb-5 max-[400px]:w-[90%]">
             <GameItem
               id={mostPlayed?.id}
               thumbnail={mostPlayed?.thumbnail}
@@ -64,7 +64,7 @@ function Activities() {
         </>
       ) : (
         <div>
-          <Link href={"/"} className="flex-center flex-col text-lg">
+          <Link href={"/"} className="flex-center flex-col text-lg text-center p-2">
             You haven't played any games yet.
             <button className="btn-save-gradient px-5 py-2 mt-2">
               Play now!

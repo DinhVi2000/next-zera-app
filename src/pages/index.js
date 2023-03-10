@@ -15,15 +15,19 @@ import { getAllGame } from "@/services/game.service";
 import { useApi } from "@/hooks/useApi";
 import { getAllArticleCategory } from "@/services/article.service";
 import SEO from "@/components/other/SEO";
+import { useAuthContext } from "@/context/auth-context";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
+import { useModalContext } from "@/context/modal-context";
 
 export default function Home() {
   const dispatch = useDispatch();
-
   const { call } = useApi();
+
+  const { openModal } = useModalContext();
+  const { userInfo, verifyStatus } = useAuthContext();
 
   const { gameIndex } = useSelector(({ game }) => game) ?? {};
   const { games, categories } = gameIndex ?? {};
-
   const params = { page: 1, limit: 200 };
 
   useEffect(() => {
@@ -32,6 +36,12 @@ export default function Home() {
       call(getAllArticleCategory(dispatch, params)),
     ]);
   }, []);
+
+  useEffect(() => {
+    if (verifyStatus === STATUS.SUCCESS && !userInfo?.isClaimDailyBonus) {
+      openModal(MODAL_NAME.DAILY_BONUS);
+    }
+  }, [userInfo]);
 
   return (
     <>

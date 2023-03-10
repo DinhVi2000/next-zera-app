@@ -97,13 +97,13 @@ const ModalEditProfile = () => {
   };
 
   return (
-    <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] flex-center backdrop-blur-sm">
+    <BoxModal className="fixed h-[100vh] w-full z-50 text-white bg-[#00000073] flex-center backdrop-blur-sm">
       <div
         ref={modal_ref}
-        className={`duration-${DURATION} transition-all opacity-5 scale-90 h-fit w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-t from-[#740B99] to-[#2F0652] px-[30px] pb-[20px]`}
+        className={`duration-${DURATION} overflow-hidden transition-all opacity-5 scale-90 h-fit max-[990px]:h-[100vh] w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-t from-[#740B99] to-[#2F0652] px-[30px] pb-[20px] max-[990px]:w-full`}
       >
         <div className="flex items-center justify-center mb-[30px]">
-          <div className="bg-pink-800 rounded-[20px] mx-auto py-[5px] px-2 text-[32px] text-center font-bold w-fit shadow-md shadow-[#F761D6]">
+          <div className="bg-pink-800 rounded-[20px] mx-auto py-[5px] px-2 text-[32px] text-center font-bold w-fit shadow-md shadow-[#F761D6] max-[400px]:text-2xl">
             Edit
             {payload?.tab === SHOP_TAB.AVATAR ? " Profile" : " Cover Page"}
           </div>
@@ -111,53 +111,67 @@ const ModalEditProfile = () => {
             <IconClose />
           </button>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="h-full w-full overflow-hidden"
+        >
+          <div className="flex items-center max-[990px]:flex-col w-full h-full overflow-y-scroll modal-scroll">
             {payload?.tab === SHOP_TAB.AVATAR && (
-              <>
-                <div className="flex flex-col justify-between items-center w-[204px]">
-                  <ImageLoading
-                    alt="avatar"
-                    src={
-                      checkAvatar ||
-                      "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
-                    }
-                    className="rounded-[20px] h-[204px] w-[204px] object-cover"
-                  />
-                  <InputHook
-                    disabled
-                    name="username"
-                    id="username"
-                    control={control}
-                    type="text"
-                    placeholder="User name"
-                    className="w-full my-[10px] rounded-[20px] p-2 px-3 box-border text-black bg-[95%_50%] focus-visible:outline-0"
-                  />
+              <div className="max-[990px]:w-full flex">
+                <div className="flex flex-col justify-between items-center w-[204px] max-[990px]:w-full max-[990px]:pb-5 max-[990px]:border-b-[2px] max-[990px]:border-b-[#FDA3FF]">
+                  <div className="max-[990px]:flex max-[600px]:justify-between max-[990px]:justify-evenly max-[990px]:w-full max-[550px]:flex-col max-[550px]:items-center">
+                    <ImageLoading
+                      alt="avatar"
+                      src={
+                        checkAvatar ||
+                        "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+                      }
+                      className="rounded-[20px] h-[204px] w-[204px] object-cover"
+                    />
 
-                  <TextareaHook
-                    name="quote"
-                    id="quote"
-                    control={control}
-                    className="w-full h-[150px] rounded-[20px] p-2 px-3 box-border text-black edit-input bg-[95%_95%] focus-visible:outline-0"
-                    placeholder="User’s quote"
-                  />
+                    <div>
+                      <InputHook
+                        disabled
+                        name="username"
+                        id="username"
+                        control={control}
+                        type="text"
+                        placeholder="User name"
+                        className="w-full my-[10px] rounded-[20px] p-2 px-3 box-border text-black bg-[95%_50%] focus-visible:outline-0"
+                      />
+
+                      <TextareaHook
+                        maxLength="100"
+                        name="quote"
+                        id="quote"
+                        control={control}
+                        className="w-full h-[150px] rounded-[20px] p-2 px-3 box-border text-black edit-input bg-[95%_95%] focus-visible:outline-0"
+                        placeholder="User’s quote"
+                      />
+                    </div>
+                  </div>
+
                   <button className="mt-[10px] w-[74px] h-[36px] btn-save-gradient">
                     Save
                   </button>
                 </div>
 
-                <Image alt="line" className="mx-[30px]" src={lineImg} />
-              </>
+                <Image
+                  alt="line"
+                  className="mx-[30px] max-[990px]:hidden"
+                  src={lineImg}
+                />
+              </div>
             )}
             {verifyStatus === STATUS.SUCCESS ? (
-              <div className="flex flex-col justify-between h-full w-fit min-w-fit self-start">
+              <div className="flex flex-col justify-between h-full w-fit min-w-fit self-start max-[990px]:pt-5 max-[990px]:w-full">
                 <div className="overflow-auto h-fit">
                   {payload?.item?.length ? (
                     <div
-                      className={`gap-4 overflow-auto max-h-[500px] grid grid-cols-1 justify-center min-[752px]:grid-cols-2 ${
-                        payload?.tab == SHOP_TAB.AVATAR
-                          ? "min-[990px]:grid-cols-3 min-[1248px]:grid-cols-4"
-                          : ""
+                      className={`gap-4 pr-4 overflow-auto max-h-[500px] grid grid-cols-2 justify-center max-[990px]:max-h-fit ${
+                        payload?.tab === SHOP_TAB.AVATAR
+                          ? "min-[500px]:grid-cols-3 min-[800px]:grid-cols-4 "
+                          : "max-[550px]:grid-cols-1"
                       }`}
                     >
                       {payload?.item?.map((e, i) => (
@@ -165,7 +179,7 @@ const ModalEditProfile = () => {
                           className="relative cursor-pointer group"
                           key={i}
                           onClick={
-                            payload?.tab == SHOP_TAB.AVATAR
+                            payload?.tab === SHOP_TAB.AVATAR
                               ? () => {
                                   setAvatarUser(e?.item_info?.id),
                                     setCheckAvatar(e?.item_info?.url);
@@ -178,11 +192,11 @@ const ModalEditProfile = () => {
                           <ImageLoading
                             alt=""
                             src={e?.item_info?.url}
-                            className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto  
+                            className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto max-[600px]:w-full 
                           ${
-                            payload?.tab == SHOP_TAB.AVATAR
-                              ? "w-[204px]"
-                              : "w-auto"
+                            payload?.tab === SHOP_TAB.AVATAR
+                              ? "w-[204px] max-[600px]:h-[94px]"
+                              : "w-[424px] max-[550px]:w-full max-[550px]:h-[204px]"
                           }`}
                           ></ImageLoading>
                           <div className="hidden group-hover:block rounded-2xl w-full h-full absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
@@ -197,7 +211,7 @@ const ModalEditProfile = () => {
                     </div>
                   ) : (
                     <div className="h-[300px]">
-                      <div className="w-[500px] h-[200px]">
+                      <div className="w-[500px] h-[200px] max-[990px]:mx-auto">
                         <Empty />
                       </div>
                       <Link href={"/shop"}>
