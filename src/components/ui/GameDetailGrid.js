@@ -39,9 +39,7 @@ const GameDetailGrid = () => {
         <BoxChat area="bc" />
         <GameInfo area="gi" />
         <TopHallOfFame area="hof" />
-        {ADS_IMAGES.map((e, i) => (
-          <Ads thumbnail={e} key={i} area={`ads${i + 1}`} ip={e?.ip} />
-        ))}
+        <Advertisements />
 
         {/* games relate */}
         {gamesRelate?.map((e, i) => (
@@ -91,5 +89,20 @@ const GameTitle = memo(function GameTitleComponent({
       <ImageLoading src={thumbnail} className="w-[50px] h-[50px] rounded-xl" />
       <span className="font-bold">{title}</span>
     </div>
+  );
+});
+
+const Advertisements = memo(function AdvertisementsComponent() {
+  const { list } = useSelector(({ advertisements }) => advertisements) ?? {};
+
+  return (
+    <>
+      {list?.length > 0 &&
+        list
+          ?.slice(0, 4)
+          .map((e, i) => (
+            <Ads thumbnail={e?.url} key={i} area={`ads${i + 1}`} ip={e?.ip} />
+          ))}
+    </>
   );
 });

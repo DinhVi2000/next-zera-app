@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import SEO from "@/components/other/SEO";
+import { getAllAdvertisements } from "@/services/advertisements.service";
 
 const HALL_OF_FAME_LIMIT = 10;
 
@@ -66,6 +67,7 @@ const GameDetail = () => {
           HALL_OF_FAME_LIMIT
         )
       ),
+      call(getAllAdvertisements(dispatch)),
     ]);
   }, [router.query]);
 
