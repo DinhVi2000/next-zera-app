@@ -7,7 +7,7 @@ import { SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { useSocketContext } from "@/context/socket-context";
 
 const Timer = () => {
-  const timeIntervelId = useRef(null);
+  const timeIntervalId = useRef(null);
   const { usernameAuth, anonymousInfo, userInfo } = useAuthContext();
   const {
     isCountDown,
@@ -72,7 +72,7 @@ const Timer = () => {
   useEffect(() => {
     if (!isCountDown && totalTimePlay) return;
     let timeDes = 0;
-    timeIntervelId.current = setInterval(() => {
+    timeIntervalId.current = setInterval(() => {
       timeDes++;
       const time = getTimeRemaining(
         Number(totalTimePlay) - timeDes > 0
@@ -83,7 +83,7 @@ const Timer = () => {
     }, 1000);
 
     return () => {
-      clearInterval(timeIntervelId.current);
+      clearInterval(timeIntervalId.current);
     };
   }, [totalTimePlay, isCountDown]);
 

@@ -20,6 +20,7 @@ const MODAL_NAME = {
   DAILY_BONUS: "DAILY_BONUS",
   BUY: "BUY",
   CONFIRM: "CONFIRM",
+  REPORT: "REPORT",
   NONE: "NONE",
 };
 

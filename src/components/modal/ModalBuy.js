@@ -70,7 +70,7 @@ const ModalBuy = () => {
             BUY
           </div>
           <button onClick={handleCloseModal}>
-            <IconClose />
+            <IconClose className="text-[#F472B6]" />
           </button>
         </div>
         <div className="flex flex-col items-center ">
