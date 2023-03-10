@@ -13,9 +13,9 @@ function ListGameActivities({ payload, isModal, listGame }) {
 
   return (
     <>
-      <div className="w-full px-[42px] mt-[30px]">
-        <div className="flex justify-between w-full">
-          <h4 className="text-[24px] font-bold mb-[16px]">
+      <div className="w-full px-[42px] max-[1000px]:px-2 mt-[30px]">
+        <div className="flex justify-between w-full mb-[16px]">
+          <h4 className="text-[24px] font-bold">
             {toUpperCaseFirstLetter(payload?.replace("_", " "))}
           </h4>
           <p

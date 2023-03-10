@@ -38,10 +38,10 @@ const ModalPurchaseHistory = () => {
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modal_ref}
-        className="opacity-5 scale-90 w-fit h-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-b from-[#580023] to-[#130023] px-[30px] pb-[20px]"
+        className="opacity-5 scale-90 w-fit h-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-b from-[#580023] to-[#130023] px-[30px] pb-[20px] max-[500px]:px-2"
       >
         <div className="flex items-center justify-center mb-[30px]">
-          <div className="text-center text-[40px] mx-auto mt-[27px] font-bold">
+          <div className="text-center text-[40px] mx-auto mt-[27px] font-bold max-[500px]:text-2xl">
             {toUpperCaseFirstLetter(tab?.replace("_", " "))}
           </div>
           <button onClick={handleCloseModal}>
@@ -55,7 +55,7 @@ const ModalPurchaseHistory = () => {
             <div className="overflow-auto max-h-[500px]">
               <div className="flex flex-col">
                 <span className="font-bold text-2xl mb-3">Avatars</span>
-                <div className="grid grid-cols-2 gap-x-9">
+                <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
                   {payload?.listGame?.avatar?.map((e, i) => (
                     <div className="flex items-center justify-start" key={i}>
                       <ImageLoading
@@ -74,9 +74,12 @@ const ModalPurchaseHistory = () => {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-2xl mb-3">Cover pages</span>
-                <div className="grid grid-cols-2 gap-x-9">
+                <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
                   {payload?.listGame?.cover?.map((e, i) => (
-                    <div className="flex-center" key={i}>
+                    <div
+                      className="flex items-center justify-center max-[768px]:justify-start"
+                      key={i}
+                    >
                       <ImageLoading
                         className="w-[204px] h-[94px] object-cover rounded-[20px] mb-[25px]"
                         src={e?.url}
@@ -93,7 +96,7 @@ const ModalPurchaseHistory = () => {
               </div>
             </div>
           ) : (
-            <div className="w-[400px] h-[200px]">
+            <div className="w-[400px] h-[200px] max-[500px]:w-full">
               <Empty />
             </div>
           )}

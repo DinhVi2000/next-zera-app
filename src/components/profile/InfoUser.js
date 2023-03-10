@@ -6,6 +6,7 @@ import { useModalContext } from "@/context/modal-context";
 import { SHOP_TAB, MODAL_NAME, STATUS } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
+import Zera from "../zera/Zera";
 import {
   getCategoriesInventory,
   getItemInventory,
@@ -15,7 +16,7 @@ function InfoUser() {
   const { openModal, setPayload } = useModalContext();
 
   const { userInfo, verifyStatus } = useAuthContext();
-  const { username, quote, avatar, cover, zera } = userInfo || {};
+  const { username, quote, avatar, cover } = userInfo || {};
 
   const [categories, setCategories] = useState([]);
   const [itemsInventory, setItemsInventory] = useState([]);
@@ -61,7 +62,7 @@ function InfoUser() {
             {verifyStatus === STATUS.SUCCESS ? (
               <ImageLoading
                 alt=""
-                className="w-full h-[350px] object-cover rounded-[20px]"
+                className="w-full h-[350px] object-cover rounded-[20px] max-[700px]:h-[204px]"
                 src={
                   cover ||
                   "https://img.freepik.com/free-vector/alien-spaceship-flying-cosmos-planets_33099-2480.jpg?w=1380&t=st=1677223897~exp=1677224497~hmac=47243c07b199f051b0b4d45aa862e0130fcecddea16570ed1592b829c11cf16f"
@@ -75,51 +76,47 @@ function InfoUser() {
             </div>
           </div>
         </Tooltip>
-        <div className="flex items-end pl-[43px] rounded-[20px] mt-[-100px]">
-          <Tooltip label="Update avatar" aria-label="A tooltip">
-            <div
-              className="group w-[250px] mr-[16px] rounded-[20px] cursor-pointer relative z-10"
-              onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
-            >
-              {verifyStatus === STATUS.SUCCESS ? (
-                <ImageLoading
-                  alt=""
-                  src={
-                    avatar ||
-                    "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
-                  }
-                  className="w-full h-[204px] object-cover rounded-[20px]"
-                />
-              ) : (
-                <div className="skeleton-shine w-full h-[204px] rounded-[20px]"></div>
-              )}
+        <div className="pl-[42px] max-[860px]:pl-3 flex items-end rounded-[20px] mt-[-100px] max-[650px]:flex-col max-[650px]:items-center">
+          <div
+            className="group w-[204px] rounded-[20px] cursor-pointer relative z-10 mr-4"
+            onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
+          >
+            <ImageLoading
+              alt=""
+              src={
+                avatar ||
+                "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+              }
+              className="w-[204px] h-[204px] object-cover rounded-[20px]"
+            />
 
-              <div className="hidden group-hover:block rounded-[20px] absolute top-0 z-10 bg-[#00000099] box-border w-full h-full">
+            <Tooltip label="Update avatar" aria-label="A tooltip">
+              <div className="hidden group-hover:block rounded-[20px] absolute top-0 z-10 bg-[#00000099] box-border w-[204px] h-[204px]">
                 <IconEdit className="absolute-center" />
               </div>
-            </div>
-          </Tooltip>
+            </Tooltip>
+          </div>
 
-          <div className="w-full flex justify-between">
+          <div className="flex justify-between max-[650px]:flex-col max-[650px]:flex-center flex-1 max-[650px]:flex-[0] w-[80%]">
             <div>
-              <div className="w-fit">
+              <div className="w-auto max-[650px]:text-center max-[650px]:w-auto">
                 <p className="font-semibold text-[28px]">{username}</p>
               </div>
               <div
-                className="group cursor-pointer relative w-fit"
+                className="w-auto group cursor-pointer relative max-[650px]:text-center"
                 onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
               >
-                <p className="font-medium">{quote}</p>
+                <p className="font-medium overflow-hidden text-ellipsis whitespace-nowrap w-[500px] max-[1194px]:w-[300px] max-[1194px]:w-[200px] max-[650px]:text-[unset] max-[650px]:whitespace-normal max-[650px]:w-[100%] max-[650px]:px-10">
+                  {quote}
+                </p>
                 <IconEdit
                   viewBox="0 0 42 42"
                   className="absolute top-[-10%] right-[-35px] group-hover:block hidden"
                 />
               </div>
             </div>
-            <div className="h-fit w-fit px-[10px] py-[6px] flex items-center content-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] cursor-pointer">
-              <p className=" font-black text-[24px] mr-[5px]">{zera}</p>
-              <IconCoin className="mr-[5px] w-9 h-9" />
-              <IconPlus className="w-8 h-8" />
+            <div className="max-[650px]:self-end justify-self-end">
+              <Zera />
             </div>
           </div>
         </div>

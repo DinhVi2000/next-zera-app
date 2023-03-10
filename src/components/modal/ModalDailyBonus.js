@@ -4,14 +4,18 @@ import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
 
 import { MODAL_NAME } from "@/utils/constant";
-import { notifySuccessMessage, sleep } from "@/utils/helper";
+import {
+  notifyErrorMessage,
+  notifySuccessMessage,
+  sleep,
+} from "@/utils/helper";
 import BoxModal from "./BoxModal";
 import { IconCheckDaily, IconClose, IconCoinDaily } from "@/resources/icons";
-import { claimDailyBonus } from "@/services/user.service";
+import { claimDailyBonus, getUserInfo } from "@/services/user.service";
 import { useToast } from "@chakra-ui/react";
 
 const ModalDailyBonus = () => {
-  const { userInfo } = useAuthContext();
+  const { userInfo, setUserInfo, usernameAuth } = useAuthContext();
   const { openModal } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 0;
@@ -28,13 +32,19 @@ const ModalDailyBonus = () => {
   }, []);
 
   const handleClaim = async () => {
-    const { data } = await claimDailyBonus();
-    if (data) {
-      notifySuccessMessage(
-        toast,
-        "Congratulations! You have received bonus today"
-      );
-      handleCloseModal();
+    try {
+      const { data } = await claimDailyBonus();
+      if (data) {
+        notifySuccessMessage(
+          toast,
+          "Congratulations! You have received bonus today"
+        );
+        const res = await getUserInfo(usernameAuth);
+        setUserInfo(res?.data);
+        handleCloseModal();
+      }
+    } catch (e) {
+      notifyErrorMessage(toast, e);
     }
   };
 

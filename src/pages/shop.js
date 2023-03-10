@@ -23,12 +23,11 @@ import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
 import { notifyErrorMessage } from "@/utils/helper";
 import { useSocketContext } from "@/context/socket-context";
 import SEO from "@/components/other/SEO";
+import Zera from "@/components/zera/Zera";
 
 const Shop = () => {
   const { status, setStatus } = useModalContext();
-  const { socketStatus, setSocketStatus } = useSocketContext();
-  const { userInfo } = useAuthContext();
-  const { zera } = userInfo || {};
+  const { setSocketStatus } = useSocketContext();
   const toast = useToast();
 
   const [idCategory, setIdCategory] = useState("");
@@ -106,10 +105,8 @@ const Shop = () => {
                   </div>
                 ))}
 
-              <div className="absolute z-50 right-0 top-[-13px] h-fit w-fit px-[10px] py-[3px] flex-center bg-[#4C1D95] rounded-[10px] shadow-[0px_4px_4px_rgba(0,0,0,0.25)] cursor-pointer">
-                <p className=" font-black text-[24px] mr-[5px]">{zera}</p>
-                <IconCoin className="mr-[5px] w-9 h-9" />
-                <IconPlus className="w-8 h-8" />
+              <div className="absolute z-50 right-0 top-[-13px]">
+                <Zera />
               </div>
             </div>
 
@@ -134,19 +131,13 @@ const Shop = () => {
                 {tab === SHOP_TAB.AVATAR ? (
                   <>
                     {isLoading ? (
-                      <div
-                        className="grid grid-cols-1 justify-center
-                  min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                      >
+                      <div className="grid grid-cols-4 justify-center gap-4">
                         {itemsShop?.map((e, i) => (
                           <AvatarItem tab={tab} item={e} key={i} />
                         ))}
                       </div>
                     ) : (
-                      <div
-                        className="grid grid-cols-1 justify-center
-                  min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                      >
+                      <div className="grid grid-cols-4 justify-center gap-4">
                         {Array(6)
                           .fill(0)
                           .map((e, i) => (
@@ -155,8 +146,8 @@ const Shop = () => {
                               key={i}
                             >
                               <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-[60%]"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-[40%]"></div>
                             </div>
                           ))}
                       </div>
@@ -165,13 +156,13 @@ const Shop = () => {
                 ) : tab === SHOP_TAB.COVER_PAGE ? (
                   <>
                     {isLoading ? (
-                      <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-4">
                         {itemsShop?.map((e, i) => (
                           <CoverPageItem tab={tab} item={e} key={i} />
                         ))}
                       </div>
                     ) : (
-                      <div className="grid grid-cols-1 min-[1248px]:grid-cols-2 gap-4 w-fit">
+                      <div className="grid grid-cols-2 gap-4 w-fit">
                         {Array(4)
                           .fill(0)
                           .map((e, i) => (
@@ -180,8 +171,8 @@ const Shop = () => {
                               key={i}
                             >
                               <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-[60%]"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-[40%]"></div>
                             </div>
                           ))}
                       </div>
@@ -190,19 +181,13 @@ const Shop = () => {
                 ) : tab === SHOP_TAB.PLAYTIMES ? (
                   <>
                     {isLoading ? (
-                      <div
-                        className="grid grid-cols-1 justify-center
-                  min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                      >
+                      <div className="grid grid-cols-4 justify-center gap-4">
                         {itemsShop?.map((e, i) => (
                           <PlayTimeItem tab={tab} item={e} key={i} />
                         ))}
                       </div>
                     ) : (
-                      <div
-                        className="grid grid-cols-1 justify-center
-                  min-[990px]:grid-cols-2 min-[1248px]:grid-cols-3 min-[1540px]:grid-cols-4 gap-4"
-                      >
+                      <div className="grid grid-cols-4 justify-center gap-4">
                         {Array(6)
                           .fill(0)
                           .map((e, i) => (
@@ -211,8 +196,8 @@ const Shop = () => {
                               key={i}
                             >
                               <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-full ml-2"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-[60%]"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-[40%]"></div>
                             </div>
                           ))}
                       </div>
