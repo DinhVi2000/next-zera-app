@@ -15,7 +15,7 @@ import lineImg from "../../../public/images/Line.png";
 import Image from "next/image";
 
 import InputHook from "../custom/InputHook";
-import TextareaHook from "../custom/Textarea";
+import TextareaHook from "../custom/TextareaHook";
 
 import { useToast } from "@chakra-ui/react";
 import { getUserInfo, updateUser } from "@/services/user.service";

@@ -14,6 +14,7 @@ const ArticleDetailWrapper = ({ article }) => {
         <div className="bg-blur-800 text-white w-full border-[5px] border-pink-400 rounded-[20px] min-h-[400px] py-6 px-7">
           {article && (
             <Fragment>
+              <PreviousRouter />
               <h1 className="text-[40px] font-bold">{title}</h1>
 
               <p className="text-xs mb-2">{formatDate(created_at)}</p>
@@ -44,6 +45,7 @@ const ArticleDetailWrapper = ({ article }) => {
 
 import React from "react";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
+import PreviousRouter from "../previousRouter/PreviousRouter";
 
 const ArticleDetailLoading = ({ article }) => {
   return (

@@ -30,12 +30,12 @@ function Rewards() {
   }, [status === STATUS.SUCCESS]);
 
   return (
-    <div className="rounded-[20px] bg-[#00000080] pb-[80px] max-[1176px]:pb-6 mt-[16px] max-[1176px]:mt-0 max-[1176px]:w-[49%] max-[1176px]:h-[443px] max-[550px]:w-full max-[550px]:mt-5">
+    <div className="rounded-[20px] bg-[#00000080] pb-[30px] max-[1176px]:pb-6 mt-[16px] max-[1176px]:mt-0 max-[1176px]:w-[49%] max-[1176px]:h-[443px] max-[550px]:w-full max-[550px]:mt-5">
       <h4 className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold">
         Rewards
       </h4>
-      <div className="max-[1176px]:px-4 max-[1176px]:pt-3 h-full">
-        <div className="px-[28px] text-[20px] max-[400px]:text-[16px] overflow-auto max-[1176px]:h-[80%] max-[1176px]:px-5">
+      <div className="px-4 pt-3 h-full">
+        <div className="px-[28px] text-[20px] max-[400px]:text-[16px] overflow-auto h-[300px] max-[1176px]:h-[80%] max-[1176px]:px-5">
           {rewards?.length > 0 ? (
             <>
               {rewards?.map((e, i) => (

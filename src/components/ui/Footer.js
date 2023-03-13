@@ -36,17 +36,14 @@ const Footer = () => {
             {/* contact */}
             <div className="text-white">
               <p className="text-[28px] font-semibold mb-2.5">Useful links</p>
-              <Link href="/about" className="block mb-2.5">
+              <Link href="/about-us" className="block mb-2.5">
                 About us
               </Link>
-              <Link href="/policy" className="block mb-2.5">
+              <Link href="/privacy-policy" className="block mb-2.5">
                 Privacy Policy
               </Link>
               <Link href="/terms" className="block mb-2.5">
                 Terms
-              </Link>
-              <Link href="/contact" className="block mb-2.5">
-                Contact
               </Link>
 
               <div className="flex gap-3 items-center">
