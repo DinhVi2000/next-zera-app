@@ -297,7 +297,8 @@
   border-radius: 20px;
   color: #ffffff;
   padding: 24px 28px;
-  width: 1084px;
+  max-width: 1084px;
+  width: 100%;
   box-sizing: border-box;
   &__ttl {
     font-weight: 700;

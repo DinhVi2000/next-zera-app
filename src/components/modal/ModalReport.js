@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { reportGame } from "@/services/game.service";
 import CheckBoxHook from "../custom/CheckBoxHook";
-import TextareaHook from "../custom/Textarea";
+import TextareaHook from "../custom/TextareaHook";
 import { useToast } from "@chakra-ui/react";
 import ButtonLoading from "../loading/ButtonLoading";
 

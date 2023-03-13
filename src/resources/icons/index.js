@@ -26,6 +26,7 @@ import IconRecently from "./recently.svg";
 import IconPlus from "./plus.svg";
 import IconCopy from "./copy.svg";
 import IconArrowRight from "./arr-right.svg";
+import IconArrowLeft from "./arr-left.svg";
 import IconCup from "./cup.svg";
 import IconEdit from "./edit.svg";
 import IconClose from "./close.svg";
@@ -77,6 +78,7 @@ export {
   IconPlus,
   IconCopy,
   IconArrowRight,
+  IconArrowLeft,
   IconCup,
   IconEdit,
   IconClose,

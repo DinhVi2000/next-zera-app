@@ -139,7 +139,17 @@ const getBetweenTwoDate = (value) => {
 };
 
 const toUpperCaseFirstLetter = (str) => {
-  return str?.charAt(0)?.toUpperCase() + str?.slice(1)?.toLowerCase();
+  if (str?.includes("/")) {
+    return (
+      str.split("/")[0]?.charAt(0)?.toUpperCase() +
+      str.split("/")[0]?.slice(1)?.toLowerCase() +
+      " / " +
+      str.split("/")?.slice(-1).pop()?.charAt(0)?.toUpperCase() +
+      str.split("/")?.slice(-1).pop()?.slice(1)?.toLowerCase()
+    );
+  } else {
+    return str?.charAt(0)?.toUpperCase() + str?.slice(1)?.toLowerCase();
+  }
 };
 
 const getArea = (area) => {

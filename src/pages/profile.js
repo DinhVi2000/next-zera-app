@@ -14,7 +14,7 @@ function Profile() {
       <SEO title={"User profile"} />
 
       <MainLayout>
-        <div className="max-[1176px]:w-full">
+        <div className="min-[1455px]:w-[1200px] max-[1176px]:w-full">
           <SidebarMB
             className={"tbl-flex"}
             childClassName={"static-important mb-5"}
@@ -22,8 +22,8 @@ function Profile() {
           <div className="text-white">
             <InfoUser />
 
-            <div className="flex max-[1176px]:flex-col items-start mt-[50px] gap-x-[18px] max-[990px]:mt-5">
-              <div className="w-full max-[1176px]:w-full max-[1176px]:flex max-[1176px]:justify-between max-[550px]:flex-col">
+            <div className="flex justify-between max-[1176px]:flex-col items-start mt-[50px] gap-x-[18px] max-[990px]:mt-5 w-full">
+              <div className="w-[40%] max-[1176px]:w-full max-[1176px]:flex max-[1176px]:justify-between max-[550px]:flex-col">
                 <Stats />
                 <Rewards />
               </div>
