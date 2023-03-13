@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { MODAL_NAME } from "@/utils/constant";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
 import {
   notifyErrorMessage,
   notifySuccessMessage,
@@ -13,13 +13,16 @@ import { IconClose } from "@/resources/icons";
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useSelector } from "react-redux";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { reportGame } from "@/services/game.service";
 import CheckBoxHook from "../custom/CheckBoxHook";
 import TextareaHook from "../custom/Textarea";
 import { useToast } from "@chakra-ui/react";
+import ButtonLoading from "../loading/ButtonLoading";
 
 const ModalReport = () => {
+  const [status, setStatus] = useState(STATUS.NOT_START);
+  const [error, setError] = useState();
   const { openModal } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 0;
@@ -41,16 +44,34 @@ const ModalReport = () => {
   }, []);
 
   const onSubmit = async (data) => {
+    setStatus(STATUS.IN_PROGRESS);
     const title = Object?.keys(data)?.filter((key) => data[key] === true);
     const content = data?.content;
+
+    if (title?.length === 0) {
+      setError("*Please select at least one field");
+      setStatus(STATUS.NOT_START);
+      return;
+    } else {
+      setError("");
+    }
     try {
-      await reportGame({ title, content }, info?.slug);
-      notifySuccessMessage(toast, "You earned share reward today!");
-      handleCloseModal();
+      const { data } = await reportGame({ title, content }, info?.slug);
+      if (!data?.error) {
+        setStatus(STATUS.SUCCESS);
+      }
     } catch (e) {
+      setStatus(STATUS.NOT_START);
       notifyErrorMessage(toast, e);
     }
   };
+
+  useEffect(() => {
+    if (status === STATUS.SUCCESS) {
+      handleCloseModal();
+      notifySuccessMessage(toast, "You earned share reward today!");
+    }
+  }, [status]);
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
@@ -130,12 +151,18 @@ const ModalReport = () => {
             />
           </div>
           <button
-            className="bg-[#8B5CF6] px-9 py-2 rounded-[20px] self-center text-lg"
-            mb-3="mr-3"
+            className="bg-[#8B5CF6] px-9 py-2 rounded-[20px] self-center text-lg flex-center"
             type="submit"
+            disabled={status !== STATUS.NOT_START}
           >
+            {status !== STATUS.NOT_START && <ButtonLoading isLoading />}
             Send
           </button>
+          {error && (
+            <p className="text-pink-600 text-sm h-4 leading-6 text-center">
+              {error}
+            </p>
+          )}
         </form>
       </div>
     </BoxModal>

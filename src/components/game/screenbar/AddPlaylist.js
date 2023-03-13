@@ -54,7 +54,7 @@ function AddPlaylist() {
 
   return (
     <Tooltip label="Playlist" placement="bottom">
-      <div>
+      <div className="flex-center w-10">
         {status === STATUS.SUCCESS ? (
           <IconPlusNoRounded
             className={`cursor-pointer transition-all duration-150 w-8 h-8 active:scale-90 ${
@@ -63,7 +63,7 @@ function AddPlaylist() {
             onClick={handlePlaylistGame}
           />
         ) : (
-          <ButtonLoading isLoading />
+          <ButtonLoading isLoading disabled={status === STATUS.NOT_START} />
         )}
       </div>
     </Tooltip>

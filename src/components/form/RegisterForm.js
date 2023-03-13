@@ -13,8 +13,7 @@ import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import ButtonLoading from "../loading/ButtonLoading";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
-import { MODAL_NAME, STATUS } from "@/utils/constant";
-import { useModalContext } from "@/context/modal-context";
+import { STATUS } from "@/utils/constant";
 
 const RegisterForm = () => {
   const {
@@ -28,7 +27,6 @@ const RegisterForm = () => {
     control,
     name: "term",
   });
-  const { openModal } = useModalContext();
   const [status, setStatus] = useState(STATUS.NOT_START);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();

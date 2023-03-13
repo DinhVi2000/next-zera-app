@@ -58,7 +58,7 @@ function AddLove() {
 
   return (
     <Tooltip label="Love Game" placement="bottom">
-      <div>
+      <div className="flex-center w-10">
         {status === STATUS.SUCCESS ? (
           <IconHeart
             className={`cursor-pointer transition-all duration-150 w-8 h-8 active:scale-90 ${
@@ -67,7 +67,7 @@ function AddLove() {
             onClick={handleLoveGame}
           />
         ) : (
-          <ButtonLoading isLoading />
+          <ButtonLoading isLoading disabled={status === STATUS.NOT_START} />
         )}
       </div>
     </Tooltip>
