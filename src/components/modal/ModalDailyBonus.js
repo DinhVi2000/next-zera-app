@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
 
-import { MODAL_NAME } from "@/utils/constant";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
 import {
   notifyErrorMessage,
   notifySuccessMessage,
@@ -13,8 +13,10 @@ import BoxModal from "./BoxModal";
 import { IconCheckDaily, IconClose, IconCoinDaily } from "@/resources/icons";
 import { claimDailyBonus, getUserInfo } from "@/services/user.service";
 import { useToast } from "@chakra-ui/react";
+import ButtonLoading from "../loading/ButtonLoading";
 
 const ModalDailyBonus = () => {
+  const [status, setStatus] = useState(STATUS.NOT_START);
   const { userInfo, setUserInfo, usernameAuth } = useAuthContext();
   const { openModal } = useModalContext();
   const modal_ref = useRef(null);
@@ -33,20 +35,28 @@ const ModalDailyBonus = () => {
 
   const handleClaim = async () => {
     try {
+      setStatus(STATUS.IN_PROGRESS);
+
       const { data } = await claimDailyBonus();
       if (data) {
-        notifySuccessMessage(
-          toast,
-          "Congratulations! You have received bonus today"
-        );
         const res = await getUserInfo(usernameAuth);
         setUserInfo(res?.data);
-        handleCloseModal();
+        setStatus(STATUS.SUCCESS);
       }
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
   };
+
+  useEffect(() => {
+    if (status === STATUS.SUCCESS) {
+      handleCloseModal();
+      notifySuccessMessage(
+        toast,
+        "Congratulations! You have received bonus today"
+      );
+    }
+  }, [status]);
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
@@ -92,7 +102,12 @@ const ModalDailyBonus = () => {
             <IconCoinDaily />
           </div>
         </div>
-        <button onClick={handleClaim} className="mx-auto">
+        <button
+          onClick={handleClaim}
+          className="mx-auto flex-center"
+          disabled={status !== STATUS.NOT_START}
+        >
+          {status !== STATUS.NOT_START && <ButtonLoading isLoading />}
           Claim
         </button>
       </div>

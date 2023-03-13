@@ -53,7 +53,15 @@ class Http {
     http.interceptors.response.use(
       (response) => response,
       (error) => {
-        return this.handleError(error?.response?.data?.error || error);
+        if (
+          error?.response?.data?.error?.message?.includes(
+            "UnAuthorization Error"
+          )
+        ) {
+          window.location.href = "/login";
+        } else {
+          return this.handleError(error?.response?.data?.error || error);
+        }
       }
     );
 

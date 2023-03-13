@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import AddPlaylist from "./screenbar/AddPlaylist";
 import AddLove from "./screenbar/AddLove";
 import { Tooltip } from "@chakra-ui/react";
-import Report from './screenbar/Report';
+import Report from "./screenbar/Report";
 
 const GameScreenBar = ({
   area,
@@ -63,7 +63,7 @@ const GameScreenBar = ({
             </>
           )}
           <Tooltip
-            label={isFullScreen ? "Zoom out" : "Zoom in"}
+            label={isFullScreen ? "Zoom in" : "Zoom out"}
             placement="bottom"
           >
             <span
@@ -71,20 +71,14 @@ const GameScreenBar = ({
               onClick={isFullScreen ? onZoomOutGameScreen : onZoomInGameScreen}
             >
               {isFullScreen ? (
-                //   <div>
                 <IconZoomOut className="cursor-pointer w-7 h-7 text-[#929292]" />
               ) : (
-                //   </div>
-                // </Tooltip>
-                // <Tooltip label="Zoom out" placement="bottom">
-                //   <div>
                 <IconZoomIn className="cursor-pointer w-8 h-8 text-[#929292]" />
-                //   </div>
               )}
             </span>
           </Tooltip>
           <Tooltip label="Report" placement="bottom">
-            <Report/>
+            <Report />
           </Tooltip>
         </div>
       </div>
