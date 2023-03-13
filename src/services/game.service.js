@@ -18,6 +18,7 @@ const game = createSlice({
       info: null,
       gamesRelate: null,
       hallOfFame: null,
+      messages: [],
     },
     categories: null,
     categoryDetail: null,
@@ -44,6 +45,9 @@ const game = createSlice({
     setCategoryDetail: (state, action) => {
       state.categoryDetail = action.payload;
     },
+    setMessageGame: (state, action) => {
+      state.gameDetail.messages = action.payload;
+    },
   },
 });
 
@@ -56,7 +60,23 @@ export const {
   setCategoriesAtGameIndex,
   setCategoryDetail,
   setHallOfFameAtGameDetail,
+  setMessageGame,
 } = actions;
+
+const getMessages = async (dispatch, id) => {
+  try {
+    const { data } = await http.get(`/game/${id}/messages`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+    dispatch(setMessageGame(data?.data));
+
+    return data?.data;
+  } catch (e) {
+    throw e;
+  }
+};
 
 const getAllGame = async (dispatch, params) => {
   try {
@@ -316,5 +336,6 @@ export {
   addGameLove,
   addGamePlaylist,
   reportGame,
+  getMessages,
 };
 export default reducer;

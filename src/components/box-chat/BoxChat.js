@@ -1,49 +1,74 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useRef, useState, memo, useEffect, useMemo } from "react";
+import React, { useRef, useState, memo, useEffect } from "react";
 
 import Image from "next/image";
 
 import ava from "@/../public/images/ava1.png";
 import { IconSendMes } from "@/resources/icons";
 import { ImgAva2 } from "@/resources/avatar/index";
-import { io } from "socket.io-client";
-import { config } from "@/envs";
 
-import { SOCKET_EVENT } from "@/utils/constant";
 import { useAuthContext } from "@/context/auth-context";
 import { getArea } from "@/utils/helper";
 import { useSocketContext } from "@/context/socket-context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getMessages } from "@/services/game.service";
 
 function BoxChat({ area }) {
-  const socket = io(config.SERVER_CHAT);
-
-  const [messages, setMessages] = useState([]);
-  const [emitReward, setEmitReward] = useState([]);
-  const [socketCLI, setSocketCLI] = useState(socket);
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
+  const dispatch = useDispatch();
+  const [messages, setMessages] = useState([]);
   const roomCurrent = info?.id || 0;
   const inputRef = useRef();
   const refScroll = useRef();
   const refBoxChat = useRef();
-
   const { userInfo, anonymousInfo } = useAuthContext();
-  const { isCountDown, setTotalTimePlay, setIsCountDown } = useSocketContext();
-  const sendMessage = (e) => {
-    e.preventDefault();
-    if (!inputRef.current.value) return;
-    socketCLI.emit(SOCKET_EVENT.USER_CHAT_MESSAGE, {
-      socket_id: socketCLI.id,
+  const {
+    isCountDown,
+    setIsCountDown,
+    socketClient,
+    sendMessage,
+    joinRoom,
+    messageSocket,
+    playGame,
+    stopGame,
+    remainningTime,
+    emitReward,
+    leaveGame,
+    listenAllEvent,
+  } = useSocketContext();
+  const handleSendMessage = (e) => {
+    sendMessage({
+      socket_id: socketClient.id,
       msg: inputRef.current.value,
       user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
       room_id: roomCurrent,
       is_anonymous: !userInfo,
     });
     e.target.reset();
+    e.preventDefault();
   };
 
   useEffect(() => {
-    setSocketCLI(socket);
+    listenAllEvent();
+  }, []);
+  // Get all message of game
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const listMes = await getMessages(dispatch, info?.id);
+      console.log(listMes);
+      setMessages(listMes);
+    };
+    if (info?.id) {
+      fetchMessages();
+    }
+  }, [info]);
+
+  useEffect(() => {
+    if (!messageSocket) return;
+    setMessages(oldMes => [...oldMes].concat(messageSocket));
+  }, [messageSocket]);
+
+  useEffect(() => {
     // TODO: handle set is count dơn with play game action
     setIsCountDown(true);
     return () => {
@@ -55,13 +80,13 @@ function BoxChat({ area }) {
   useEffect(() => {
     if (userInfo || anonymousInfo) {
       if (isCountDown) {
-        socketCLI.emit(SOCKET_EVENT.PLAY_GAME, {
+        playGame({
           user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
           room_id: roomCurrent,
           is_anonymous: !userInfo,
         });
       } else if (!isCountDown) {
-        socketCLI.emit(SOCKET_EVENT.STOP_GAME, {
+        stopGame({
           user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
           room_id: roomCurrent,
           is_anonymous: !userInfo,
@@ -71,46 +96,27 @@ function BoxChat({ area }) {
   }, [isCountDown, userInfo?.id]);
 
   useEffect(() => {
-    socketCLI.on(SOCKET_EVENT.TIME_GAME, (data) => {
-      if (data) {
-        setTotalTimePlay(data.remainingTime);
-      }
-    });
+    remainningTime();
   }, []);
 
+  // Join room
   useEffect(() => {
-    if (!socketCLI.connected) return;
-    socketCLI.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
-      user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
-      room_id: roomCurrent,
-      is_anonymous: !userInfo,
-    });
-
-    socketCLI.on(SOCKET_EVENT.USER_GET_MESSAGE, (dataMessage) => {
-      if (dataMessage) {
-        setMessages((oldMes) => {
-          return oldMes.length < 0
-            ? dataMessage.messages
-            : [...oldMes].concat(dataMessage.messages);
-        });
-      }
-    });
-
-    socketCLI.on(SOCKET_EVENT.USER_EMIT_REWARD, (data) => {
-      setEmitReward((value) => {
-        return [...value, data];
+    if (userInfo || anonymousInfo) {
+      joinRoom({
+        user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
+        room_id: roomCurrent,
+        is_anonymous: !userInfo,
       });
-    });
-  }, [socketCLI.connected]);
+    }
+  }, [userInfo, anonymousInfo]);
 
   useEffect(() => {
     return () => {
-      socketCLI.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
+      leaveGame({
         user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
         room_id: roomCurrent,
         is_anonymous: !userInfo ? true : false,
       });
-      socketCLI.removeAllListeners();
     };
   }, []);
   // Scroll to Bottom
@@ -152,9 +158,13 @@ function BoxChat({ area }) {
                     <div className="flex flex-col my-[3px]" key={i}>
                       {Number(userInfo?.id) !== msg.user_id ? (
                         <div className="flex items-center text-[#ffffff80] mb-[5px]">
-                          <ImgAva2 className="mr-[6px]" />
+                          {/* <ImgAva2 className="mr-[6px]" /> */}
+                          <img
+                            src={msg?.user?.avatar ?? ImgAva2}
+                            className="mr-[6px] w-4 h-4 rounded-full"
+                          />
                           <div className="w-fit max-w-[150px] break-words">
-                            {msg.user_id}
+                            {msg?.user?.username}
                           </div>
                         </div>
                       ) : (
@@ -169,7 +179,7 @@ function BoxChat({ area }) {
                           // other
                         } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
                       >
-                        {msg.message}
+                        {msg?.message}
                       </div>
                     </div>
                   </div>
@@ -185,7 +195,7 @@ function BoxChat({ area }) {
       </div>
       <form
         onSubmit={(e) => {
-          sendMessage(e);
+          handleSendMessage(e);
         }}
       >
         <div className="flex items-center justify-between px-[20px] rounded-[10px] h-[37px] bg-[#52495e]">
