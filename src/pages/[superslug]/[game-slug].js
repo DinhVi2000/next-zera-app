@@ -12,6 +12,7 @@ import {
   getGameByCategorySlug,
   getGameDetailBySlug,
   getHallOfFameByGameSlug,
+  getMessages,
 } from "@/services/game.service";
 import { useRouter } from "next/router";
 import { isEmpty, notifyErrorMessage } from "@/utils/helper";
@@ -35,7 +36,6 @@ const GameDetail = () => {
 
   const { categories } =
     useSelector(({ game: { gameIndex } }) => gameIndex) ?? {};
-
   useEffect(() => {
     if (!router.query || isEmpty(router.query)) return;
 
@@ -50,8 +50,8 @@ const GameDetail = () => {
 
         const { seo_title, seo_description } = data ?? {};
         setSeo({ seo_title, seo_description });
-
         const { game_category } = data ?? {};
+        getMessages(dispatch, game_category?.id);
         if (!game_category?.slug) return;
 
         getGameByCategorySlug(dispatch, game_category?.slug);

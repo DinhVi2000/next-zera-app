@@ -78,9 +78,9 @@ const ADS_IMAGES = [
 
 const SOCKET_EVENT = {
   USER_JOIN_ROOM: "joinRoom",
-  USER_GET_MESSAGE: "message",
-  USER_CHAT_MESSAGE: "chatMessage",
   USER_EMIT_REWARD: "emitReward",
+  LISTEN_MESSAGE: "message",
+  SEND_MESSAGE: "chatMessage",
   USER_LEAVE_ROOM: "leaveRoom",
   SOCKET_ERROR: "error",
   ANONYMOUS_LOGIN: "loginAnonymous",
