@@ -98,6 +98,7 @@ const CLASS_NAME_BY_PATH = {
   "/about": "tbl-hidden mb-hidden",
   "/policy": "tbl-hidden mb-hidden",
   "/terms": "tbl-hidden mb-hidden",
+  "/shop": "tbl-hidden mb-hidden",
   "/hall-of-fame/[username]": "tbl-hidden mb-hidden",
   "/hall-of-fame": "tbl-hidden mb-hidden",
   "/": "tbl-hidden mb-hidden",

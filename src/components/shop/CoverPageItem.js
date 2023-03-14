@@ -15,7 +15,7 @@ const CoverPageItem = ({ item, tab }) => {
         <ImageLoading
           src={item?.url}
           alt=""
-          className="w-[446px] h-[204px] object-cover block mx-auto rounded-[20px]"
+          className="w-[446px] max-[700px]:w-full h-[204px] object-cover block mx-auto rounded-[20px]"
         />
         <p className="text-white text-base font-bold mt-[5px]">{item?.name}</p>
         <div className="flex justify-end text-sm">

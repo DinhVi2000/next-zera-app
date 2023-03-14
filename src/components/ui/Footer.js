@@ -24,8 +24,7 @@ const Footer = () => {
         >
           {/* logo */}
           <div
-            className="bg-white w-fit rounded-[30px] p-[10px] 
-                          max-[1060px]:mb-10"
+            className="bg-white w-fit rounded-[30px] p-[10px] max-[1060px]:mb-10"
           >
             <Image src={logo_lg} className="m-0" alt=""></Image>
           </div>
@@ -36,10 +35,10 @@ const Footer = () => {
             {/* contact */}
             <div className="text-white">
               <p className="text-[28px] font-semibold mb-2.5">Useful links</p>
-              <Link href="/about-us" className="block mb-2.5">
+              <Link href="/about" className="block mb-2.5">
                 About us
               </Link>
-              <Link href="/privacy-policy" className="block mb-2.5">
+              <Link href="/policy" className="block mb-2.5">
                 Privacy Policy
               </Link>
               <Link href="/terms" className="block mb-2.5">
