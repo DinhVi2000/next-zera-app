@@ -46,7 +46,7 @@ const NewsLetterForm = () => {
 
         <button
           type="submit"
-          className="rounded-[10px] w-[128px] h-9 px-[10px] py-[5px] flex-center border border-white text-base
+          className="rounded-[10px] w-[130px] h-9 px-[10px] py-[5px] flex-center border border-white text-base
                            transition-all hover:text-violet-400 hover:bg-white group"
         >
           {isSubmitSuccessful ? (

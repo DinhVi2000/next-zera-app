@@ -79,3 +79,7 @@ button:disabled {
     padding-bottom: 12px;
   }
 }
+
+video::-webkit-media-controls {
+  display: none !important;
+}

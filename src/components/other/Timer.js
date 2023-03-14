@@ -89,12 +89,12 @@ const Timer = () => {
 
   return (
     <Fragment>
-      <div className="mb-hidden font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
+      <div className="tbl-hidden mb-hidden font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
         {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
       </div>
 
       {/* mobile */}
-      <div className="mb-flex font-numberic bg-pink-700 rounded-[5px] text-center count-down text-[8px] h-5 flex-center">
+      <div className="tbl-flex mb-flex font-numberic bg-pink-700 rounded-[5px] text-center count-down text-[8px] h-5 flex-center">
         {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
       </div>
     </Fragment>

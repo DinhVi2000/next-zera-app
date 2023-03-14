@@ -40,11 +40,22 @@ export const AuthContextProvider = ({ children }) => {
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
   const { pathname } = router ?? {};
 
+  const handleSetUserInfo = async () => {
+    const { data } = await getUserInfo(usernameAuth);
+    setUserInfo((prev) => ({ ...data, prev }));
+  };
+
+  const handleSetUserRecentlyPlayed = async () => {
+    const { data } = await getGameRecentlyPlayed();
+    setUserInfo((prev) => ({ ...prev, gameRecentlyPlayed: data }));
+  };
+
   const verifyAccessToken = async () => {
     try {
       setVerifyStatus(STATUS.IN_PROGRESS);
-      const { data } = await getUserInfo(usernameAuth);
-      setUserInfo(data);
+
+      Promise.all([handleSetUserInfo(), handleSetUserRecentlyPlayed()]);
+
       setVerifyStatus(STATUS.SUCCESS);
     } catch (error) {
       notifyErrorMessage(toast, error);

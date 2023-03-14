@@ -3,11 +3,12 @@ import React, { memo } from "react";
 
 const SearchBar = ({ searchValue, setSearchValue, onChangeInput }) => {
   return (
-    <div className="pr-8">
-      <div className="bg-white flex h-16 rounded-2xl overflow-hidden">
+    <div className="pr-8 relative w-full max-w-[650px] mr-10 z-50">
+      <div className="bg-white w-full flex h-16 rounded-2xl overflow-hidden">
         <button className="px-4 border-r-2 transition-all hover:bg-[#f0f5fc] ">
           <IconLogo className="w-7 h-full" />
         </button>
+        {/* input */}
         <label htmlFor="search-input" className="flex w-full justify-between">
           <input
             id="search-input"

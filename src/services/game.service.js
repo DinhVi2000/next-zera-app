@@ -192,15 +192,13 @@ const getGameByCategorySlug = async (dispatch, slug) => {
   }
 };
 
-const getGameRecentlyPlayed = async (dispatch) => {
+const getGameRecentlyPlayed = async () => {
   try {
     const { data } = await http.get("/game/recently-played");
 
     if (!data.success) {
       throw new Error(data?.message);
     }
-
-    dispatch(setRecentlyPlayedGames(data?.data));
 
     return data;
   } catch (e) {

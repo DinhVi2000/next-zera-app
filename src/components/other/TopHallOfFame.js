@@ -13,7 +13,7 @@ const TopHallOfFame = ({ area, ...props }) => {
   return (
     <div
       style={{ gridArea: getArea(area) }}
-      className="mb-hidden bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] text-white overflow-auto relative"
+      className="mb-hidden modal-scroll bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] text-white overflow-x-hidden overflow-y-auto relative"
       {...props}
     >
       <div className="text-[28px] font-semibold bg-black py-2.5 text-center top-0 sticky">
@@ -34,6 +34,8 @@ const Item = ({ item, ...props }) => {
   const { user, zera_earned } = item ?? {};
   const { avatar, username, quote } = user ?? {};
 
+  if (zera_earned === 0) return;
+
   return (
     <Link href={`/hall-of-fame/${username}`}>
       <div className="bg-blur-600 p-2.5 rounded-[10px] flex justify-between cursor-pointer">
@@ -41,11 +43,13 @@ const Item = ({ item, ...props }) => {
           <ImageLoading
             src={avatar}
             alt=""
-            className="min-w-[62px] h-[62px] rounded-full object-cover"
+            className="w-[62px] h-[62px] rounded-full object-cover"
           />
-          <div className="px-2.5">
+          <div className="px-2.5 w-full max-w-[200px] flex-1">
             <h2 className="text-base font-bold">{username}</h2>
-            <p className="text-xs font-medium">{quote}</p>
+            <p className="text-xs font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+              {quote}
+            </p>
           </div>
         </div>
 

@@ -71,12 +71,14 @@ const GameDetail = () => {
     ]);
   }, [router.query]);
 
+  const title = {
+    true: `${seo?.seo_title?.toUpperCase()} - Play ${seo?.seo_title}`,
+    false: "404 not found",
+  };
+
   return (
     <>
-      <SEO
-        title={`${seo?.seo_title?.toUpperCase()} - Play ${seo?.seo_title}`}
-        description={seo?.seo_description}
-      />
+      <SEO title={title[isValidPage]} description={seo?.seo_description} />
 
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>

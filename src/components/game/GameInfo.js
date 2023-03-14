@@ -63,7 +63,7 @@ const GameInfo = ({ area, ...props }) => {
           {developer && (
             <div className="mb-[30px]">
               <p className="text-base font-medium">
-                Developed by
+                Developed by{" "}
                 <span className="text-base font-bold">{developer}</span>
               </p>
               <img src="" alt="" />
