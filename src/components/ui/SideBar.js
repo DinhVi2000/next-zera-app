@@ -44,13 +44,19 @@ import {
 import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
 import ImageLoading from "../loading/ImageLoading";
-import { Tooltip } from "@chakra-ui/react";
+import { Tooltip, useToast } from "@chakra-ui/react";
 import Timer from "../other/Timer";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useRouter } from "next/router";
 import { getItemByCategory } from "@/services/shop.service";
 import ButtonLoading from "../loading/ButtonLoading";
-import { abbreviateNumber } from '@/utils/helper';
+import {
+  abbreviateNumber,
+  categoryUrl,
+  notifyErrorMessage,
+} from "@/utils/helper";
+import { getAllCategories } from "@/services/game.service";
+import { useDispatch } from "react-redux";
 
 const sideBarItems = [
   {
@@ -104,9 +110,11 @@ const sideBarItems = [
 ];
 
 const SideBar = () => {
+  const toast = useToast();
+  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
   const { openModal } = useModalContext();
   const { userInfo, verifyStatus } = useAuthContext();
-
   const router = useRouter();
   const { pathname } = router ?? {};
 
@@ -118,6 +126,19 @@ const SideBar = () => {
     // content_ref.current.classList.toggle("py-3");
     content_ref.current.classList.toggle("h-[242px]");
   };
+
+  const getAllCategoriesGame = async () => {
+    try {
+      const { data } = await getAllCategories(dispatch);
+      setCategories(data);
+    } catch (e) {
+      notifyErrorMessage(toast, e);
+    }
+  };
+
+  useEffect(() => {
+    getAllCategoriesGame();
+  }, []);
 
   return (
     <div
@@ -153,21 +174,35 @@ const SideBar = () => {
         {/* content */}
         <div
           ref={content_ref}
-          className="h-0 text-white pl-6 flex flex-col overflow-y-auto gap-4 transition-all"
+          className="h-0 text-white px-2 flex flex-col overflow-y-auto gap-4 transition-all w-auto modal-scroll test"
         >
-          {sideBarItems?.map((e, i) => (
-            <div
-              key={i}
-              className="flex gap-2.5 items-center text-base font-bold cursor-pointer"
-              id="menu_item"
-            >
-              {e?.icon} <span>{e?.text}</span>
-            </div>
+          {categories?.map((e, i) => (
+            <Link href={categoryUrl(e?.superslug?.value, e?.slug)} key={i}>
+              <div
+                className="flex gap-x-2 items-center text-base font-bold cursor-pointer"
+                id="menu_item"
+              >
+                <div className="w-12">
+                  {e?.icon ? (
+                    <ImageLoading
+                      src={e?.icon}
+                      alt=""
+                      className="w-8 h-8 object-cover mx-auto"
+                    />
+                  ) : (
+                    <IconConsole />
+                  )}
+                </div>
+                <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
+                  {e?.label}
+                </span>
+              </div>
+            </Link>
           ))}
         </div>
 
         {/* user info */}
-        <div className="text-white text-base">
+        <div className="text-white text-base mt-2">
           {!userInfo && (
             <Fragment>
               <div className="flex flex-col items-center gap-2 mt-3 mb-4 pt-0.5">
