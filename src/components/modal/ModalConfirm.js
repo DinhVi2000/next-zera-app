@@ -33,14 +33,14 @@ const ModalConfirm = () => {
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modal_ref}
-        className="opacity-5 scale-90 w-[500px] h-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-black px-[20px] pb-[10px] relative bg-gradient-to-t from-[#740B99] to-[#2F0652]"
+        className="opacity-5 scale-90 w-[500px] h-fit mx-5 border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-black px-[20px] pb-[10px] relative bg-gradient-to-t from-[#740B99] to-[#2F0652]"
       >
         <div className="flex items-center justify-center mb-[30px]">
           <div className="bg-pink-800 rounded-[20px] mx-auto py-[8px] px-4 text-[25px] text-center font-bold w-fit shadow-md shadow-[#F761D6]">
             REMINDER
           </div>
           <button onClick={handleCloseModal}>
-            <IconClose className="text-[#F472B6]"/>
+            <IconClose className="text-[#F472B6]" />
           </button>
         </div>
         <div className="text-[22px] flex-center flex-col">

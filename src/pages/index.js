@@ -10,7 +10,7 @@ import GameGrid from "@/components/ui/GameGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 import ArticleCategoryGrid from "@/components/ui/ArticleCategoryGrid";
 
-import { getAllGame } from "@/services/game.service";
+import { getAllCategories, getAllGame } from "@/services/game.service";
 
 import { useApi } from "@/hooks/useApi";
 import { getAllArticleCategory } from "@/services/article.service";
@@ -34,6 +34,7 @@ export default function Home() {
     Promise.all([
       call(getAllGame(dispatch, params)),
       call(getAllArticleCategory(dispatch, params)),
+      call(getAllCategories(dispatch, params)),
     ]);
   }, []);
 

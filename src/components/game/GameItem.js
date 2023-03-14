@@ -1,12 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import Link from "next/link";
 
 import { IconRecently } from "@/resources/icons";
 
 import ImageLoading from "@/components/loading/ImageLoading";
-import { inRange } from "@/utils/helper";
+import { getArea, inRange } from "@/utils/helper";
+
+const MAX_WITDH = 314;
 
 const GameItem = ({
   id,
@@ -20,19 +22,28 @@ const GameItem = ({
   superSlug,
   ...props
 }) => {
-  const gridArea =
-    inRange(index, 0, 16) && area
-      ? `${area} / ${area} / ${area} / ${area}`
-      : "auto";
+  const gridArea = inRange(index, 0, 16) && area ? getArea(area) : "auto";
+
+  const game_item_ref = useRef();
+
+  useEffect(() => {
+    if (!game_item_ref) return;
+    if (game_item_ref.current.offsetWidth === MAX_WITDH)
+      game_item_ref.current.classList.add("shine-effect");
+  }, [game_item_ref]);
 
   return (
     <div
-      className={`${className} relative rounded-2xl cursor-pointer select-none group min-h-[94px] min-w-[94px]  
+      className={`${className} relative overflow-hidden rounded-2xl cursor-pointer select-none group min-h-[94px] min-w-[94px]  
                   hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl `}
       style={{ gridArea }}
+      ref={game_item_ref}
       {...props}
     >
-      <Link href={`/${superSlug?.value}/${slug}`}>
+      <Link
+        href={`/${superSlug?.value}/${slug}`}
+        className="game-item__box-shadow"
+      >
         {isRecently && (
           <span className="absolute top-4 left-[-2px] z-100">
             <IconRecently></IconRecently>
@@ -49,7 +60,7 @@ const GameItem = ({
                      group-hover:opacity-100 group-hover:translate-y-[-8px] transition-all duration-300"
         >
           {/* <Tooltip hasArrow label={title} bg="gray.600" color="white"> */}
-          <p className="whitespace-nowrap overflow-hidden text-ellipsis w-full text-white px-2">
+          <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis w-full text-white px-2">
             {title || "Games"}
           </p>
           {/* </Tooltip> */}

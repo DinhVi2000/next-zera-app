@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
@@ -21,6 +22,7 @@ import { useToast } from "@chakra-ui/react";
 import "react-indiana-drag-scroll/dist/style.css";
 
 import { getGamesByKeySearch } from "@/services/game.service";
+import { useAuthContext } from "@/context/auth-context";
 
 const DURATION = 500;
 
@@ -39,10 +41,11 @@ const Menubar = () => {
 
   const { openModal } = useModalContext();
 
-  const toast = useToast();
-
   const [searchValue, setSearchValue] = useState("");
   const [gamesResult, setGamesResult] = useState();
+
+  const { userInfo } = useAuthContext();
+  const { gameRecentlyPlayed } = userInfo ?? {};
 
   const debouncedSearchTerm = useDebounce(searchValue, 1000);
 
@@ -60,8 +63,8 @@ const Menubar = () => {
   const handleSearchGame = async () => {
     setGamesResult(undefined);
     try {
-      const { rows } = (await getGamesByKeySearch(debouncedSearchTerm)) ?? {};
-      setGamesResult(rows);
+      const response = (await getGamesByKeySearch(debouncedSearchTerm)) ?? {};
+      setGamesResult(response);
     } catch (error) {
       notifyErrorMessage(error);
     }
@@ -70,10 +73,17 @@ const Menubar = () => {
   useOnClickOutside(menubar_ref, handleCloseMenubar);
 
   useEffect(() => {
+    document.getElementsByTagName("body")[0].classList.add("overflow-hidden");
     sleep(1).then(() => {
       menubar_ref.current.classList?.remove("translate-x-[-120%]");
       bg_ref.current.classList?.add("opacity-100");
     });
+
+    return () => {
+      document
+        .getElementsByTagName("body")[0]
+        .classList.remove("overflow-hidden");
+    };
   }, []);
 
   useEffect(() => {
@@ -84,7 +94,8 @@ const Menubar = () => {
   return (
     <>
       <section
-        className={`min-h-[100vh] h-full max-w-[684px] w-full px-5 py-8 bg-[#c4b5fd80] fixed z-50 transition-all opacity-100 translate-x-[-120%] duration-${DURATION}`}
+        className={`h-full max-w-[684px] w-full px-5 py-8 bg-[#c4b5fd80] fixed z-50 
+                    transition-all opacity-100 translate-x-[-120%] duration-${DURATION}`}
         ref={menubar_ref}
       >
         {/* searchbar */}
@@ -95,9 +106,8 @@ const Menubar = () => {
         />
 
         {/* search tab */}
-        {searchValue ? (
-          <SearchResult games={gamesResult} />
-        ) : (
+        {searchValue.trim() && <SearchResult results={gamesResult} />}
+        {!searchValue.trim() && (
           <ScrollContainer>
             <div className="flex gap-[10px] mt-4 mb-7 whitespace-nowrap ">
               {SUGGESTS_SEARCH.map((item, index) => (
@@ -122,9 +132,7 @@ const Menubar = () => {
         </button>
 
         <section className=" transition-all">
-          {(!gamesResult ||
-            !searchValue.trim() ||
-            gamesResult?.length === 0) && (
+          {!searchValue.trim() && (
             <Fragment>
               {/* popular */}
               <div className="text-white mb-7 transition-all">
@@ -144,22 +152,24 @@ const Menubar = () => {
               </div>
 
               {/* recently */}
-              <div className="text-white  transition-all">
-                <p className="text-2xl font-bold mb-4">Recently played</p>
-                <div className="flex flex-wrap gap-4">
-                  {GAMES_IMAGES.slice(0, 2).map((e, i) => (
-                    <GameItem
-                      key={i}
-                      size={1}
-                      isRecently
-                      thumbnail={e}
-                      className="w-[94px] h-[94px]"
-                      slug={e?.slug}
-                      superSlug={e?.superslug}
-                    />
-                  ))}
+              {userInfo && (
+                <div className="text-white  transition-all">
+                  <p className="text-2xl font-bold mb-4">Recently played</p>
+                  <div className="flex flex-wrap gap-4">
+                    {gameRecentlyPlayed?.map((e, i) => (
+                      <GameItem
+                        key={i}
+                        size={1}
+                        isRecently
+                        thumbnail={e?.thumbnail}
+                        className="w-[94px] h-[94px]"
+                        slug={e?.slug}
+                        superSlug={e?.superslug}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </Fragment>
           )}
         </section>
