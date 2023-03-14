@@ -78,7 +78,9 @@ const GameScreenBar = ({
             </span>
           </Tooltip>
           <Tooltip label="Report" placement="bottom">
-            <Report />
+            <div>
+              <Report />
+            </div>
           </Tooltip>
         </div>
       </div>

@@ -200,6 +200,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    @media (max-width: 454px) {
+      width: 200px;
+    }
   }
   &__item {
     cursor: pointer;
@@ -219,6 +222,9 @@
       background: #f472b6;
       box-shadow: 0px 8.34375px 8.34375px rgba(0, 0, 0, 0.25),
         inset 8.34375px 2.08594px 8.34375px rgba(255, 255, 255, 0.25);
+      @media (max-width: 454px) {
+        font-size: 26px;
+      }
     }
     &-zera {
       position: relative;

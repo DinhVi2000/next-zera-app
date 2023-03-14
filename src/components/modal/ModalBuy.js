@@ -72,10 +72,10 @@ const ModalBuy = () => {
   }, [loading]);
 
   return (
-    <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] flex-center">
+    <BoxModal className="fixed h-[100vh] w-full z-[60] text-white bg-[#00000073] flex-center">
       <div
         ref={modal_ref}
-        className={`duration-${DURATION} transition-all opacity-5 scale-90 h-fit min-w-[540px] w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-b from-[#570426] to-[#270010] px-[30px] pb-[20px]`}
+        className={`duration-${DURATION} transition-all opacity-5 scale-90 h-fit min-w-[540px] w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-b from-[#570426] to-[#270010] px-[30px] pb-[20px] max-[550px]:min-w-full`}
       >
         <div className="flex items-center justify-center mb-[30px]">
           <div className="bg-pink-800 rounded-[10px] mx-auto py-[5px] text-[28px] text-center font-bold w-[109px] border-[2px] border-[#EC4899]">

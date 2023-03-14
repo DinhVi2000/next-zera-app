@@ -14,17 +14,17 @@ const InputHook = ({ control, type, ...props }) => {
   return (
     <div className="relative">
       <input
-        type={type == "password" && !passwordShown ? "password" : "text"}
+        type={type === "password" && !passwordShown ? "password" : "text"}
         className="p-4 w-full border border-gray-100 rounded-lg bg-white outline-none focus:border-blue-500 transition-all"
         {...field}
         {...props}
       />
-      {type == "password" && (
+      {type === "password" && (
         <div
           className="absolute top-[29%] right-[2%] cursor-pointer"
           onClick={() => setPasswordShown((value) => !value)}
         >
-          {passwordShown ? <IconShowEye /> : <IconHiddenEye />}
+          {passwordShown ? <IconHiddenEye /> : <IconShowEye />}
         </div>
       )}
     </div>

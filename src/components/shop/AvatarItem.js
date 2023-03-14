@@ -10,7 +10,7 @@ const AvatarItem = ({ item, tab }) => {
 
   return (
     <>
-      <div className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5">
+      <div className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 max-[990px]:w-[224px] max-[550px]:w-[226px] mx-auto">
         <ImageLoading
           src={item?.url}
           alt=""

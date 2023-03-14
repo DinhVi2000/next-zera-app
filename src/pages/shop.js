@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import Head from "next/head";
-
 import MainLayout from "@/layouts/MainLayout";
 
 import { Checkbox, useToast } from "@chakra-ui/react";
@@ -10,13 +8,11 @@ import { SHOP_TAB, STATUS } from "@/utils/constant";
 
 import AvatarItem from "@/components/shop/AvatarItem";
 import CoverPageItem from "@/components/shop/CoverPageItem";
-import Empty from "@/components/empty/Empty";
 import PlayTimeItem from "@/components/shop/PlayTimeItem";
 
-import { useAuthContext } from "@/context/auth-context";
 import { useModalContext } from "@/context/modal-context";
 
-import { IconCoin, IconPlus } from "@/resources/icons";
+import { IconArrowLeft } from "@/resources/icons";
 
 import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
 
@@ -24,8 +20,11 @@ import { notifyErrorMessage } from "@/utils/helper";
 import { useSocketContext } from "@/context/socket-context";
 import SEO from "@/components/other/SEO";
 import Zera from "@/components/zera/Zera";
+import SidebarMB from "@/components/responsive/SidebarMB";
+import { useRouter } from "next/router";
 
 const Shop = () => {
+  const router = useRouter();
   const { status, setStatus } = useModalContext();
   const { setSocketStatus } = useSocketContext();
   const toast = useToast();
@@ -77,15 +76,30 @@ const Shop = () => {
       <SEO title={"Shop"} />
       <MainLayout>
         {/* content  */}
-        <div className="w-[1000px]">
-          <div className="text-white bg-blur-800 border-[5px] border-violet-400 p-[62px] pt-2.5 rounded-[20px]">
+        <div className="min-[1352px]:min-w-[1100px] max-[990.9px]:max-w-[900px] max-[990.9px]:w-full">
+          <div className="text-white min-[990.9px]:bg-blur-800 min-[990.9px]:border-[5px] min-[990.9px]:border-violet-400 max-[1320px]:px-[30px] max-[990.9px]:p-0 p-[62px] pt-2.5 rounded-[20px] relative">
+            <button
+              className="absolute z-50 left-5 top-[10px] flex items-center justify-self-start max-[990.9px]:top-[160px] max-[550px]:top-[230px]"
+              onClick={() => router.back()}
+            >
+              <IconArrowLeft />
+              <span className="ml-2 text-[#EC4899] text-lg font-semibold">
+                Back
+              </span>
+            </button>
             {/* title */}
-            <div className="bg-pink-800 rounded-[20px] mx-auto py-2.5 text-[40px] text-center font-bold w-[280px] mb-[58px]">
-              Simple Shop
+            <div className="flex-center mb-[58px]">
+              <SidebarMB
+                className={"tbl-flex"}
+                childClassName={"static-important"}
+              />
+              <div className="bg-pink-800 rounded-[20px] mx-auto py-2.5 text-[40px] text-center font-bold w-[280px] max-[990.9px]:h-[94px] flex-center max-[400px]:w-[170px] max-[400px]:text-2xl">
+                Simple Shop
+              </div>
             </div>
 
             {/* tab */}
-            <div className="flex gap-3 justify-center relative">
+            <div className="flex gap-3 max-[600px]:gap-0 justify-center relative">
               {categories
                 ?.sort((a, b) => (a?.id < b?.id ? -1 : 1))
                 ?.map((category, i) => (
@@ -99,21 +113,21 @@ const Shop = () => {
                       category?.name === tab
                         ? "bg-pink-800 text-white border border-pink-500"
                         : "bg-violet-900 text-[#ffffffb3] border border-violet-500"
-                    } text-center text-base font-bold rounded-t-[20px] w-[120px]  border-b-0 py-2.5 cursor-pointer`}
+                    } text-center text-base font-bold rounded-t-[20px] w-[120px] border-b-0 py-2.5 max-[450px]:w-[100px] max-[400px]:px-2 max-[400px]:w-fit cursor-pointer max-[400px]:text-sm`}
                   >
                     {category?.name}
                   </div>
                 ))}
 
-              <div className="absolute z-50 right-0 top-[-13px]">
+              <div className="absolute z-50 right-0 top-[-13px] max-[990.9px]:top-[70px] max-[990.9px]:right-[30px] max-[550px]:top-[130px]">
                 <Zera />
               </div>
             </div>
 
             {/* content */}
-            <div className="pt-[18px] px-[54px] pb-[26px] border-[5px] border-pink-500 bg-[#5b21b666] rounded-[30px] min-h-[400px]">
+            <div className="pt-[18px] px-[54px] pb-[26px] border-[5px] border-pink-500 bg-[#5b21b666] max-[550px]:bg-[#1c0147c4] rounded-[30px] max-[400px]:rounded-[20px] min-h-[400px] max-[1140px]:px-5 max-[990.9px]:pt-[30px]">
               {/* checkbox */}
-              <div className="flex gap-4 justify-end mb-[26px]">
+              <div className="flex gap-4 justify-end max-[990.9px]:justify-start max-[550px]:justify-end mb-[26px] max-[550px]:mb-[100px]">
                 <Checkbox colorScheme="pink" defaultChecked>
                   All
                 </Checkbox>
@@ -131,13 +145,13 @@ const Shop = () => {
                 {tab === SHOP_TAB.AVATAR ? (
                   <>
                     {isLoading ? (
-                      <div className="grid grid-cols-4 justify-center gap-4">
+                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
                         {itemsShop?.map((e, i) => (
                           <AvatarItem tab={tab} item={e} key={i} />
                         ))}
                       </div>
                     ) : (
-                      <div className="grid grid-cols-4 justify-center gap-4">
+                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
                         {Array(6)
                           .fill(0)
                           .map((e, i) => (
@@ -145,9 +159,9 @@ const Shop = () => {
                               className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
                               key={i}
                             >
-                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-[60%]"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-[40%]"></div>
+                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
                             </div>
                           ))}
                       </div>
@@ -156,23 +170,23 @@ const Shop = () => {
                 ) : tab === SHOP_TAB.COVER_PAGE ? (
                   <>
                     {isLoading ? (
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
                         {itemsShop?.map((e, i) => (
                           <CoverPageItem tab={tab} item={e} key={i} />
                         ))}
                       </div>
                     ) : (
-                      <div className="grid grid-cols-2 gap-4 w-fit">
+                      <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
                         {Array(4)
                           .fill(0)
                           .map((e, i) => (
                             <div
-                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-[366px]"
+                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-[366px] max-[700px]:w-full"
                               key={i}
                             >
-                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-[60%]"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-[40%]"></div>
+                              <div className="skeleton-shine w-[314px] h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
                             </div>
                           ))}
                       </div>
@@ -181,13 +195,13 @@ const Shop = () => {
                 ) : tab === SHOP_TAB.PLAYTIMES ? (
                   <>
                     {isLoading ? (
-                      <div className="grid grid-cols-4 justify-center gap-4">
+                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
                         {itemsShop?.map((e, i) => (
                           <PlayTimeItem tab={tab} item={e} key={i} />
                         ))}
                       </div>
                     ) : (
-                      <div className="grid grid-cols-4 justify-center gap-4">
+                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
                         {Array(6)
                           .fill(0)
                           .map((e, i) => (
@@ -195,9 +209,9 @@ const Shop = () => {
                               className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
                               key={i}
                             >
-                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990px]:w-[60%]"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990px]:w-[40%]"></div>
+                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
+                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
                             </div>
                           ))}
                       </div>

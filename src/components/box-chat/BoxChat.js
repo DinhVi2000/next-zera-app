@@ -55,7 +55,6 @@ function BoxChat({ area }) {
   useEffect(() => {
     const fetchMessages = async () => {
       const listMes = await getMessages(dispatch, info?.id);
-      console.log(listMes);
       setMessages(listMes);
     };
     if (info?.id) {
