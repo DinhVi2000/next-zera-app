@@ -110,13 +110,13 @@ const ModalDailyBonus = () => {
           )}
         </div>
 
-        <div
+        <button
           onClick={handleClaim}
           className="flex cursor-pointer"
           disabled={status !== STATUS.NOT_START}
         >
           Claim
-        </div>
+        </button>
       </div>
     </BoxModal>
   );
