@@ -43,6 +43,7 @@ import IconCoinDaily from "./coin-daily.svg";
 import IconCheckDaily from "./check-daily.svg";
 import IconLogOut from "./log-out.svg";
 import IconProfile from "./profile.svg";
+import IconTime from "./time.png";
 export { default as IconZoomIn } from "./zoom-in.svg";
 export { default as IconZoomOut } from "./zoom-out.svg";
 export { default as IconPlay } from "./play.svg";
@@ -95,4 +96,5 @@ export {
   IconCheckDaily,
   IconLogOut,
   IconProfile,
+  IconTime,
 };

@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "@/services/game.service";
 import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
+import { MODAL_NAME } from "@/utils/constant";
+import { useModalContext } from "@/context/modal-context";
 
 function BoxChat({ area }) {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
@@ -25,6 +27,7 @@ function BoxChat({ area }) {
   const refScroll = useRef();
   const refBoxChat = useRef();
   const { userInfo, anonymousInfo } = useAuthContext();
+  const { openModal } = useModalContext();
   const {
     isCountDown,
     setIsCountDown,
@@ -38,6 +41,7 @@ function BoxChat({ area }) {
     emitReward,
     leaveGame,
     listenAllEvent,
+    showModalBuyTime,
   } = useSocketContext();
   const handleSendMessage = (e) => {
     sendMessage({
@@ -121,6 +125,10 @@ function BoxChat({ area }) {
       });
     };
   }, []);
+
+  useEffect(() => {
+    showModalBuyTime ? openModal(MODAL_NAME.BUYTIME) : openModal(MODAL_NAME.NONE);
+  }, [showModalBuyTime]);
   // Scroll to Bottom
   useEffect(() => {
     if (refScroll.current) {

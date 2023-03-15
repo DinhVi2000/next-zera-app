@@ -9,7 +9,6 @@ import {
 import { SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { io } from "socket.io-client";
 import { config } from "@/envs";
-
 const SocketContext = createContext(null);
 
 export const useSocketContext = () => {
@@ -29,9 +28,11 @@ export const SocketContextProvider = ({ children }) => {
   const [isCountDown, setIsCountDown] = useState(false);
   const [socketClient, setSocketClient] = useState();
   const [totalTimePlay, setTotalTimePlay] = useState(0);
+  const [incrementTime, setIncrementTime] = useState(0);
   const [isConnected, setIsConnected] = useState(false);
   const [messageSocket, setMessageSocket] = useState({});
   const [emitReward, setEmitReward] = useState([]);
+  const [showModalBuyTime, setShowModalBuyTime] = useState(false);
 
   const connectSocket = () => {
     const socket = io(config.SERVER_CHAT);
@@ -66,6 +67,7 @@ export const SocketContextProvider = ({ children }) => {
     },
     [socketClient, isConnected]
   );
+
   const listenAllEvent = useCallback(() => {
     if (socketClient) {
       socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
@@ -128,6 +130,10 @@ export const SocketContextProvider = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    totalTimePlay === 0 || incrementTime > totalTimePlay ? setShowModalBuyTime(true) : setShowModalBuyTime(false);
+  }, [totalTimePlay, incrementTime]);
+
   const socketProvider = useMemo(
     () => ({
       socketStatus,
@@ -149,6 +155,10 @@ export const SocketContextProvider = ({ children }) => {
       emitReward,
       leaveGame,
       listenAllEvent,
+      setIncrementTime,
+      incrementTime,
+      showModalBuyTime, 
+      setShowModalBuyTime,
     }),
     [
       socketStatus,
@@ -165,6 +175,10 @@ export const SocketContextProvider = ({ children }) => {
       emitReward,
       leaveGame,
       listenAllEvent,
+      setIncrementTime,
+      incrementTime,
+      showModalBuyTime,
+      setShowModalBuyTime,
     ]
   );
 

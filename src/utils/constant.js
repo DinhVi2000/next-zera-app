@@ -22,6 +22,7 @@ const MODAL_NAME = {
   CONFIRM: "CONFIRM",
   REPORT: "REPORT",
   NONE: "NONE",
+  BUYTIME: "BUYTIME",
 };
 
 const SHOP_TAB = {

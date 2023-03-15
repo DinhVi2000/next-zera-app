@@ -21,6 +21,16 @@ export const getItemByCategory = async (params) => {
   }
 };
 
+export const getItemTime = async () => {
+  try {
+    const { data } = await http.get(`/shops/categories/times`);
+    if (data?.data) return data.data;
+    return [];
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const buyShopItem = async (params) => {
   try {
     const { data } = await http.post("/shops/buy", params);
