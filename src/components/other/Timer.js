@@ -15,6 +15,7 @@ const Timer = () => {
     setTotalTimePlay,
     totalTimePlay,
     socketStatus,
+    setIncrementTime,
   } = useSocketContext();
   const [userData, setUserData] = useState();
   const [remainingTime, setRemainingTime] = useState(() => {
@@ -80,6 +81,7 @@ const Timer = () => {
           : 0
       );
       setRemainingTime(time);
+      setIncrementTime(timeDes);
     }, 1000);
 
     return () => {

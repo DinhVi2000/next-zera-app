@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { MODAL_NAME, VIEW_ALL_GAMES_TAB } from "@/utils/constant";
+import { MODAL_NAME } from "@/utils/constant";
 import {
   getBetweenTwoDate,
   sleep,
@@ -15,6 +15,8 @@ import { IconClose, IconCoin22 } from "@/resources/icons";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import Empty from "../empty/Empty";
 import ImageLoading from "../loading/ImageLoading";
+import PaginatedItems from "../pagination/Pagination";
+import { usePagination } from "@/hooks/usePagination";
 
 const ModalPurchaseHistory = () => {
   const { openModal, payload } = useModalContext();
@@ -33,6 +35,9 @@ const ModalPurchaseHistory = () => {
       modal_ref.current.classList?.add("animation-open-modal");
     });
   }, []);
+
+  const paginationAvatar = usePagination(4, payload?.listGame?.avatar);
+  const paginationCover = usePagination(4, payload?.listGame?.cover);
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
@@ -56,7 +61,7 @@ const ModalPurchaseHistory = () => {
               <div className="flex flex-col">
                 <span className="font-bold text-2xl mb-3">Avatars</span>
                 <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
-                  {payload?.listGame?.avatar?.map((e, i) => (
+                  {paginationAvatar?.currentItems?.map((e, i) => (
                     <div className="flex items-center justify-start" key={i}>
                       <ImageLoading
                         className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
@@ -71,11 +76,16 @@ const ModalPurchaseHistory = () => {
                     </div>
                   ))}
                 </div>
+                <PaginatedItems
+                  onPageChange={paginationAvatar?.handlePageClick}
+                  itemsPerPage={4}
+                  items={payload?.listGame?.avatar}
+                />
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-2xl mb-3">Cover pages</span>
                 <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
-                  {payload?.listGame?.cover?.map((e, i) => (
+                  {paginationCover?.currentItems?.map((e, i) => (
                     <div
                       className="flex items-center justify-center max-[768px]:justify-start"
                       key={i}
@@ -93,6 +103,11 @@ const ModalPurchaseHistory = () => {
                     </div>
                   ))}
                 </div>
+                <PaginatedItems
+                  onPageChange={paginationCover?.handlePageClick}
+                  itemsPerPage={4}
+                  items={payload?.listGame?.cover}
+                />
               </div>
             </div>
           ) : (

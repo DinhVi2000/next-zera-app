@@ -27,7 +27,7 @@ function Rewards() {
 
   useEffect(() => {
     getRewardUser();
-  }, [status === STATUS.SUCCESS]);
+  }, [status]);
 
   return (
     <div className="rounded-[20px] bg-[#00000080] pb-[30px] max-[1176px]:pb-6 mt-[16px] max-[1176px]:mt-0 max-[1176px]:w-[49%] max-[1176px]:h-[443px] max-[550px]:w-full max-[550px]:mt-5">

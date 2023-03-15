@@ -10,6 +10,8 @@ import { IconClose } from "@/resources/icons";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import GameItem from "../game/GameItem";
 import Empty from "../empty/Empty";
+import PaginatedItems from "../pagination/Pagination";
+import { usePagination } from "@/hooks/usePagination";
 
 const ModalViewAllGames = () => {
   const { openModal, payload } = useModalContext();
@@ -44,6 +46,8 @@ const ModalViewAllGames = () => {
     },
   ];
 
+  const pagination = usePagination(15, payload?.listGame);
+
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
@@ -67,22 +71,29 @@ const ModalViewAllGames = () => {
                 </div>
 
                 {payload?.listGame?.length ? (
-                  <div className="p-[20px] grid grid-cols-3 min-[600px]:grid-cols-5 gap-4 overflow-auto max-h-[500px]">
-                    {payload?.listGame?.map((e, i) => (
-                      <>
-                        <GameItem
-                          onClick={handleCloseModal}
-                          className={`relative rounded-2xl cursor-pointer select-none group w-[94px] h-[94px]
+                  <>
+                    <div className="p-[20px] grid grid-cols-3 min-[600px]:grid-cols-5 gap-4 overflow-auto max-h-[500px]">
+                      {pagination?.currentItems?.map((e, i) => (
+                        <>
+                          <GameItem
+                            onClick={handleCloseModal}
+                            className={`relative rounded-2xl cursor-pointer select-none group w-[94px] h-[94px]
                         hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl`}
-                          key={e?.id}
-                          id={e?.id}
-                          index={i}
-                          thumbnail={e?.thumbnail}
-                          title={e?.title}
-                        ></GameItem>
-                      </>
-                    ))}
-                  </div>
+                            key={e?.id}
+                            id={e?.id}
+                            index={i}
+                            thumbnail={e?.thumbnail}
+                            title={e?.title}
+                          ></GameItem>
+                        </>
+                      ))}
+                    </div>
+                    <PaginatedItems
+                      onPageChange={pagination?.handlePageClick}
+                      itemsPerPage={15}
+                      items={payload?.listGame}
+                    />
+                  </>
                 ) : (
                   <div className="w-[400px] h-[200px] max-[500px]:w-full">
                     <Empty />
