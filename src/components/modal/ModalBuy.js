@@ -49,15 +49,15 @@ const ModalBuy = () => {
         item: parseInt(itemShop.id),
       });
 
-      const { data } = await getUserInfo(usernameAuth);
-      setUserInfo(data);
-
       if (res.success) {
+        const { data } = await getUserInfo(usernameAuth);
+        setUserInfo(data);
         setLoading(STATUS.SUCCESS);
+        setStatus(STATUS.SUCCESS);
+        setSocketStatus(STATUS.SUCCESS);
       }
-      setStatus(STATUS.SUCCESS);
-      setSocketStatus(STATUS.SUCCESS);
     } catch (e) {
+      setLoading(STATUS.NOT_START);
       setStatus(STATUS.FAIL);
       setSocketStatus(STATUS.FAIL);
       notifyErrorMessage(toast, e);

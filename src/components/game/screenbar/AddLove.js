@@ -9,11 +9,13 @@ import { getUserInfo } from "@/services/user.service";
 
 import { Tooltip, useToast } from "@chakra-ui/react";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
-import { STATUS } from "@/utils/constant";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
 import ButtonLoading from "../../loading/ButtonLoading";
+import { useModalContext } from "@/context/modal-context";
 
 function AddLove() {
   const toast = useToast();
+  const { openModal } = useModalContext();
   const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
@@ -32,6 +34,10 @@ function AddLove() {
 
   const handleLoveGame = async () => {
     try {
+      if (!userInfo) {
+        openModal(MODAL_NAME.CONFIRM);
+        return;
+      }
       setStatus(STATUS.NOT_START);
       const gameId = { game_detail_id: info?.id };
       const { data } = await addGameLove(gameId);

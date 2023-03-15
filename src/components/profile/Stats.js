@@ -53,7 +53,7 @@ function Stats() {
         </p>
       </div>
       <div
-        className="rounded-b-[20px] bg-[#8B5CF6] py-[18px] flex items-center justify-center cursor-pointer"
+        className="rounded-b-[20px] bg-[#8B5CF6] py-[18px] px-4 flex items-center justify-center cursor-pointer"
         onClick={handleCopy}
       >
         <Tooltip label="Copy" placement="bottom">

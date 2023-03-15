@@ -9,6 +9,9 @@ import AddPlaylist from "./screenbar/AddPlaylist";
 import AddLove from "./screenbar/AddLove";
 import { Tooltip } from "@chakra-ui/react";
 import Report from "./screenbar/Report";
+import { MODAL_NAME } from "@/utils/constant";
+import { useModalContext } from "@/context/modal-context";
+import { useAuthContext } from "@/context/auth-context";
 
 const GameScreenBar = ({
   area,
@@ -20,7 +23,16 @@ const GameScreenBar = ({
   className,
   ...props
 }) => {
+  const { openModal } = useModalContext();
+  const { userInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
+
+  const handleOpenReport = () => {
+    if (!userInfo) {
+      openModal(MODAL_NAME.CONFIRM);
+      return;
+    }
+  };
 
   return (
     <div
@@ -78,7 +90,7 @@ const GameScreenBar = ({
             </span>
           </Tooltip>
           <Tooltip label="Report" placement="bottom">
-            <div>
+            <div onClick={handleOpenReport}>
               <Report />
             </div>
           </Tooltip>

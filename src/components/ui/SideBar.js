@@ -387,7 +387,7 @@ const ShopSidebar = () => {
       {verifyStatus === STATUS.SUCCESS ? (
         <>
           {itemsShop?.map((item, i) => (
-            <div className="flex-center flex-col mb-3" key={i}>
+            <div className="flex items-center flex-col mb-3" key={i}>
               <div className="group relative">
                 <ImageLoading
                   className="w-[80px] h-[80px] object-cover rounded-[10px] group"
