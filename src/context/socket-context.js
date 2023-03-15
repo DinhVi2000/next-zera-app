@@ -31,7 +31,6 @@ export const SocketContextProvider = ({ children }) => {
   const [incrementTime, setIncrementTime] = useState(0);
   const [isConnected, setIsConnected] = useState(false);
   const [messageSocket, setMessageSocket] = useState({});
-  const [emitReward, setEmitReward] = useState([]);
   const [showModalBuyTime, setShowModalBuyTime] = useState(false);
 
   const connectSocket = () => {
@@ -72,11 +71,6 @@ export const SocketContextProvider = ({ children }) => {
     if (socketClient) {
       socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
         setMessageSocket(data);
-      });
-      socketClient.on(SOCKET_EVENT.USER_EMIT_REWARD, (data) => {
-        setEmitReward((value) => {
-          return [...value, data];
-        });
       });
     }
   }, [socketClient]);
@@ -152,7 +146,6 @@ export const SocketContextProvider = ({ children }) => {
       stopGame,
       playGame,
       remainningTime,
-      emitReward,
       leaveGame,
       listenAllEvent,
       setIncrementTime,
@@ -172,7 +165,6 @@ export const SocketContextProvider = ({ children }) => {
       stopGame,
       playGame,
       remainningTime,
-      emitReward,
       leaveGame,
       listenAllEvent,
       setIncrementTime,

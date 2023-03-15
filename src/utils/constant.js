@@ -90,6 +90,8 @@ const SOCKET_EVENT = {
   TIME_GAME: "timeGame",
 };
 
+const PLAYTIME_CATEGORY = "Playtimes";
+
 const CLASS_NAME_BY_PATH = {
   "/[superslug]/[game-slug]": "tbl-hidden mb-hidden",
   "/[superslug]/category/[category-slug]": "tbl-hidden mb-hidden",
@@ -120,4 +122,5 @@ export {
   STATUS,
   SOCKET_EVENT,
   VIEW_ALL_GAMES_TAB,
+  PLAYTIME_CATEGORY,
 };

@@ -33,7 +33,7 @@ const ModalBuyTime = () => {
     () => {
       if (totalTimePlay - incrementTime < 0 || totalTimePlay - incrementTime === 0) {
         router.push("/");
-      } 
+      }
       sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
     },
     [incrementTime, totalTimePlay]
@@ -64,15 +64,11 @@ const ModalBuyTime = () => {
       const playtimeTtems = await getItemTime();
       if (playtimeTtems) {
         setTimeItems(playtimeTtems);
-        setItemActive(playtimeTtems.item_details[1]);
+        setItemActive(playtimeTtems.rows[0]);
       }
     };
     getTimes();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(incrementTime, totalTimePlay);
-  // }, []);
 
   useEffect(() => {
     if (status === STATUS.SUCCESS) {
@@ -98,8 +94,8 @@ const ModalBuyTime = () => {
           />
         </div>
         <div className="grid grid-cols-3 gap-6 mt-10 w-full">
-          {timeItems?.item_details &&
-            timeItems.item_details.map((e, i) => (
+          {timeItems?.rows &&
+            timeItems.rows.map((e, i) => (
               <div
                 key={i}
                 className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item relative group"

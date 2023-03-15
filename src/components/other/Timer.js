@@ -5,7 +5,6 @@ import { getTimeRemaining } from "@/utils/common";
 import { getUserAnonymous } from "@/services/user.service";
 import { SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { useSocketContext } from "@/context/socket-context";
-import { useSelector } from "react-redux";
 
 const Timer = () => {
   const timeIntervalId = useRef(null);
@@ -17,7 +16,6 @@ const Timer = () => {
     totalTimePlay,
     socketStatus,
     setIncrementTime,
-    showModalBuyTime,
   } = useSocketContext();
   const [userData, setUserData] = useState();
   const [remainingTime, setRemainingTime] = useState(() => {
