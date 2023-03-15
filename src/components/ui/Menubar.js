@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import React, { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
-import { IconBack, IconLogo, IconSearch, IconX } from "@/resources/icons";
-import { GAMES_IMAGES, MODAL_NAME, STATUS } from "@/utils/constant";
+import { IconBack } from "@/resources/icons";
+import { GAMES_IMAGES, MODAL_NAME } from "@/utils/constant";
 
 import { notifyErrorMessage, sleep } from "@/utils/helper";
 
@@ -17,7 +17,6 @@ import SearchBar from "@/components/search/SearchBar";
 import SearchResult from "@/components/search/SearchResult";
 
 import { useDebounce } from "@/hooks/useDebounced";
-import { useToast } from "@chakra-ui/react";
 
 import "react-indiana-drag-scroll/dist/style.css";
 
@@ -128,7 +127,7 @@ const Menubar = () => {
           className="bg-white rounded-full h-16 w-16 flex items-center justify-center absolute top-0 right-0 translate-x-[50%] translate-y-8 shadow-xxl hover:translate-y-7 transition-all"
           onClick={handleCloseMenubar}
         >
-          <IconBack className="mr-1" />
+          <IconBack className="mr-1 w-5 text-violet-500" />
         </button>
 
         <section className=" transition-all">

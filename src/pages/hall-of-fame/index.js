@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 
@@ -16,12 +17,13 @@ import { notifyErrorMessage } from "@/utils/helper";
 import HallOfFame from "@/components/other/HallOfFame";
 import { useAuthContext } from "@/context/auth-context";
 import SEO from "@/components/other/SEO";
+import { STATUS } from "@/utils/constant";
 
 const MyHallOfFamePage = () => {
   const toast = useToast();
   const dispatch = useDispatch();
 
-  const { userInfo } = useAuthContext();
+  const { userInfo, verifyStatus } = useAuthContext();
 
   const handleGetHallOfFame = async () => {
     try {
@@ -32,9 +34,10 @@ const MyHallOfFamePage = () => {
   };
 
   useEffect(() => {
-    if (!userInfo) return;
-    handleGetHallOfFame();
-  }, [userInfo]);
+    if (userInfo && verifyStatus === STATUS.SUCCESS) {
+      handleGetHallOfFame();
+    }
+  }, [userInfo, verifyStatus]);
 
   // if (!isValidPage) return <PageNotFound />;
   return (

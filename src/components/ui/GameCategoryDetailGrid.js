@@ -32,22 +32,27 @@ const GameCategoryDetailGrid = () => {
       </div>
 
       {/* game */}
-      {game_detail?.length > 0 &&
-        game_detail?.map((e, i) => (
-          <GameItem
-            key={i}
-            id={e?.id}
-            index={i}
-            thumbnail={e?.thumbnail}
-            title={e?.title}
-            style={{
-              gridArea:
-                i < 8 ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}` : "",
-            }}
-            slug={e?.slug}
-            superSlug={e?.superslug}
-          />
-        ))}
+      <ul className="contents">
+        {game_detail?.length > 0 &&
+          game_detail?.map((e, i) => (
+            <li key={i} className="contents">
+              <GameItem
+                id={e?.id}
+                index={i}
+                thumbnail={e?.thumbnail}
+                title={e?.title}
+                style={{
+                  gridArea:
+                    i < 8
+                      ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}`
+                      : "",
+                }}
+                slug={e?.slug}
+                superSlug={e?.superslug}
+              />
+            </li>
+          ))}
+      </ul>
 
       {!game_detail &&
         Array(40)
@@ -79,25 +84,6 @@ const GameCategoryDetailGrid = () => {
           />
         ))}
 
-      {/* {Array(4 - other_category?.length || 0)
-        .fill(0)
-        ?.map((e, i) => (
-          <GameCategory
-            key={other_category?.length + i}
-            id={other_category?.length + e?.id}
-            index={other_category?.length + i + 7}
-            label={"label"}
-            thumbnail={getRandom(GAMES_IMAGES)}
-            style={{
-              gridArea: `c${other_category?.length + i + 1} / c${
-                other_category?.length + i + 1
-              } / c${other_category?.length + i + 1} / c${
-                other_category?.length + i + 1
-              }`,
-            }}
-          />
-        ))} */}
-
       {!other_category &&
         Array(4)
           .fill(0)
@@ -115,7 +101,10 @@ const GameCategoryDetailGrid = () => {
 
 const ItemLoading = ({ ...props }) => {
   return (
-    <div {...props} className="skeleton-shine w-full h-full rounded-2xl"></div>
+    <div
+      {...props}
+      className="skeleton-shine w-full h-full rounded-2xl min-h-[94px]"
+    ></div>
   );
 };
 

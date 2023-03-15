@@ -12,8 +12,9 @@ import React, { useEffect, useState } from "react";
 import Empty from "../empty/Empty";
 
 function Rewards() {
-  const { status, setStatus } = useModalContext();
+  const { status } = useModalContext();
   const [rewards, setRewards] = useState([]);
+
   const toast = useToast();
 
   const getRewardUser = async () => {

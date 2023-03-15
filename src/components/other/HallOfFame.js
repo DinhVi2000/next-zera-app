@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { useAuthContext } from "@/context/auth-context";
 import {
   IconCoin,
   IconEarn,
@@ -6,6 +7,7 @@ import {
   IconLeftWing,
   IconRightWing,
 } from "@/resources/icons";
+import { useRouter } from "next/router";
 import React, { Fragment, memo } from "react";
 import { useSelector } from "react-redux";
 import ImageLoading from "../loading/ImageLoading";
@@ -13,6 +15,8 @@ import SidebarMB from "../responsive/SidebarMB";
 
 const HallOfFame = () => {
   const { hallOfFame } = useSelector(({ user }) => user) ?? {};
+
+  const { pathname } = useRouter();
 
   const { info, played_game } = hallOfFame ?? {};
 
@@ -52,33 +56,6 @@ const HallOfFame = () => {
     },
   ];
 
-  const top_played_items = [
-    {
-      id: 1,
-      imageUrl: "",
-      title: "Onmyoji The World",
-      earnValue: 1000,
-    },
-    {
-      id: 2,
-      imageUrl: "",
-      title: "Marvel Fight",
-      earnValue: 900,
-    },
-    {
-      id: 1,
-      imageUrl: "",
-      title: "Assasins Creed",
-      earnValue: 900,
-    },
-    {
-      id: 1,
-      imageUrl: "",
-      title: "Raid",
-      earnValue: 10,
-    },
-  ];
-
   return (
     <div>
       <SidebarMB
@@ -99,17 +76,19 @@ const HallOfFame = () => {
           className="border-[5px] border-pink-500 bg-[#5b21b666] rounded-[30px]
                       p-16 max-[450px]:p-5"
         >
-          <div className="flex max-[991px]:flex-col gap-20">
+          <div className="flex items-center max-[991px]:flex-col gap-20">
             {/* avatar */}
-            <div className="max-w-[204px] max-[991px]:mx-auto">
-              <ImageLoading
-                src={avatar}
-                alt="avatar"
-                className="w-[204px] h-[204px] object-cover rounded-[20px]"
-              />
-              <h2 className="text-center font-bold text-base">{username}</h2>
-              <p className="text-[12px]">{quote}</p>
-            </div>
+            {pathname !== "/hall-of-fame" && (
+              <div className="max-w-[204px] max-[991px]:mx-auto">
+                <ImageLoading
+                  src={avatar}
+                  alt="avatar"
+                  className="w-[204px] h-[204px] object-cover rounded-[20px]"
+                />
+                <h2 className="text-center font-bold text-base">{username}</h2>
+                <p className="text-[12px]">{quote}</p>
+              </div>
+            )}
 
             {/* item */}
             <div className="grid grid-cols-1 min-[1250px]:grid-cols-2 min-[1492px]:grid-cols-3 gap-[25px]">

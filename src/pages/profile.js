@@ -14,7 +14,7 @@ function Profile() {
       <SEO title={"User profile"} />
 
       <MainLayout>
-        <div className="max-[1176px]:w-full">
+        <div className="w-responsive">
           <SidebarMB
             className={"tbl-flex"}
             childClassName={"static-important mb-5"}

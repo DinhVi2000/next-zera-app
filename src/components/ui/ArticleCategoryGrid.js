@@ -1,16 +1,21 @@
+import { IconBack } from "@/resources/icons";
 import { articleCategoryUrl } from "@/utils/helper";
 import Link from "next/link";
 import React from "react";
 import { useSelector } from "react-redux";
+import PreviousRouter from "../previousRouter/PreviousRouter";
 
 const ArticleCategoryGrid = () => {
   const { categories } = useSelector(({ article }) => article) ?? {};
 
   return (
-    <div className="bg-blur-800 rounded-2xl mt-[110px] py-8 px-7">
-      <h2 className="text-white text-[28px] font-bold">
-        List Article category
-      </h2>
+    <div className="bg-blur-800 rounded-2xl py-8 px-7 w-responsive border-[5px] border-pink-400">
+      {/* breadcrumb */}
+      <PreviousRouter className="text-white" />
+
+      {/* tags */}
+
+      {/* list */}
       <div className="text-pink-500 text-sm pl-6">
         <ul className="list-disc">
           {categories?.length > 0 &&
