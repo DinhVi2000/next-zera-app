@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "@/services/game.service";
 import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
+import { MODAL_NAME } from "@/utils/constant";
+import { useModalContext } from "@/context/modal-context";
 
 function BoxChat({ area }) {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
@@ -25,6 +27,7 @@ function BoxChat({ area }) {
   const refScroll = useRef();
   const refBoxChat = useRef();
   const { userInfo, anonymousInfo } = useAuthContext();
+  const { openModal } = useModalContext();
   const {
     isCountDown,
     setIsCountDown,
@@ -35,11 +38,13 @@ function BoxChat({ area }) {
     playGame,
     stopGame,
     remainningTime,
-    emitReward,
     leaveGame,
     listenAllEvent,
+    showModalBuyTime,
   } = useSocketContext();
   const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (!inputRef.current.value) return;
     sendMessage({
       socket_id: socketClient.id,
       msg: inputRef.current.value,
@@ -48,7 +53,7 @@ function BoxChat({ area }) {
       is_anonymous: !userInfo,
     });
     e.target.reset();
-    e.preventDefault();
+
   };
 
   useEffect(() => {
@@ -121,6 +126,10 @@ function BoxChat({ area }) {
       });
     };
   }, []);
+
+  useEffect(() => {
+    showModalBuyTime ? openModal(MODAL_NAME.BUYTIME) : openModal(MODAL_NAME.NONE);
+  }, [showModalBuyTime]);
   // Scroll to Bottom
   useEffect(() => {
     if (refScroll.current) {
@@ -165,51 +174,9 @@ function BoxChat({ area }) {
               {/* Event */}
               <div className="all-mess" ref={refBoxChat}>
                 {messages &&
-                  messages?.map((msg, i) => (
-                    <div key={i}>
-                      <div
-                        className={`w-full flex ${
-                          Number(userInfo?.id) === msg.user_id
-                            ? "justify-end"
-                            : "justify-start"
-                        }`}
-                      >
-                        <div className="flex flex-col my-[3px]" key={i}>
-                          {Number(userInfo?.id) !== msg.user_id ? (
-                            <div className="flex items-center text-[#ffffff80] mb-[5px]">
-                              {/* <ImgAva2 className="mr-[6px]" /> */}
-                              <ImageLoading
-                                alt=""
-                                src={msg?.user?.avatar ?? ImgAva2}
-                                className="mr-[6px] w-4 h-4 rounded-full"
-                              />
-                              <div className="w-fit max-w-[150px] break-words">
-                                {msg?.user?.username}
-                              </div>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                          <div
-                            className={`${
-                              Number(userInfo?.id) === msg.user_id
-                                ? // owner
-                                  "mr-[2px] rounded-[10px] bg-[#EC4899] px-[6px] py-[3px] max-w-[150px] w-fit mb-[5px]"
-                                : ""
-                              // other
-                            } rounded-[10px] bg-[#8B5CF6] px-[6px] py-[3px] max-w-[150px] w-fit`}
-                          >
-                            {msg?.message}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                {emitReward?.map((info, i) => (
-                  <div key={i} className="text-[#ffffff80] text-center">
-                    {info.messages}
-                  </div>
-                ))}
+                  messages?.map((msg, i) => {
+                    return <MessageItem key={i} msg={msg} />;
+                  })}
               </div>
             </div>
           </div>
@@ -241,4 +208,34 @@ function BoxChat({ area }) {
     </div>
   );
 }
+
+const MessageItem = ({ msg }) => {
+  const { userInfo } = useAuthContext();
+  return (
+    <div>
+      <div
+        className={`w-full flex ${!msg.user ? "justify-center" : (Number(userInfo?.id) === msg.user_id ? "justify-end" : "justify-start")}`}
+      >
+        <div className="flex flex-col my-[3px] items-center" >
+          {
+            msg.user &&
+            (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${ (Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "") }`}>
+                <ImageLoading
+                  alt=""
+                  src={msg?.user?.avatar ?? ImgAva2}
+                  className="w-4 h-4 rounded-full"
+                />
+                <div className="w-fit max-w-[150px] break-words">
+                  {msg?.user?.username}
+                </div>
+              </div>)
+          }
+          <div className={ `rounded-md max-w-[150px] w-fit items-end ${ !msg.user ? "text-[#fff] text-[10px]" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none") }`}>
+            {msg?.message}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 export default memo(BoxChat);

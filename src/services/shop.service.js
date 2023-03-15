@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable quotes */
 // eslint-disable-next-line quotes
+import { PLAYTIME_CATEGORY } from "@/utils/constant";
 import { http } from "@/utils/http";
 
 export const getCategoriesShop = async () => {
@@ -18,6 +19,19 @@ export const getItemByCategory = async (params) => {
     return data;
   } catch (e) {
     throw e;
+  }
+};
+
+export const getItemTime = async () => {
+  try {
+    const itemCategries = await getCategoriesShop();
+    const category = itemCategries.data.find(category => (category.name).trim() === PLAYTIME_CATEGORY);
+    const { data } = await getItemByCategory(category?.id);
+    if (data) return data;
+    return [];
+  } catch (e) {
+    console.log(e);
+    return [];
   }
 };
 

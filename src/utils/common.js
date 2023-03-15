@@ -5,12 +5,14 @@ export const getTimeUnixMiliSecond = (time) => {
 };
 
 const getTimeRemaining = (time) => {
-  if (time === 0) {
+  if (time === 0 || time < 0) {
     return {
       days: "00",
       hours: "00",
       minutes: "00",
       seconds: "00",
+      time: 0,
+      isTimeOut: true,
     };
   }
   time = time * 1000;
@@ -23,6 +25,8 @@ const getTimeRemaining = (time) => {
     hours: hours > 9 ? hours : "0" + hours,
     minutes: minutes > 9 ? minutes : "0" + minutes,
     seconds: seconds > 9 ? seconds : "0" + seconds,
+    time,
+    isTimeOut: false,
   };
 };
 
