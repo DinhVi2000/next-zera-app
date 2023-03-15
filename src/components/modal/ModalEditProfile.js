@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useEffect, useRef, useState } from "react";
 
 import { useForm } from "react-hook-form";
@@ -24,6 +25,8 @@ import ImageLoading from "../loading/ImageLoading";
 import Empty from "../empty/Empty";
 import ButtonLoading from "../loading/ButtonLoading";
 import Link from "next/link";
+import PaginatedItems from "../pagination/Pagination";
+import { usePagination } from "@/hooks/usePagination";
 
 const ModalEditProfile = () => {
   const { userInfo, setUserInfo, usernameAuth, verifyStatus } =
@@ -96,6 +99,9 @@ const ModalEditProfile = () => {
     }
   };
 
+  const displayItems = payload?.tab !== SHOP_TAB.COVER_PAGE ? 8 : 4;
+  const pagination = usePagination(displayItems, payload?.item);
+
   return (
     <BoxModal className="fixed h-[100vh] w-full z-50 text-white bg-[#00000073] flex-center backdrop-blur-sm">
       <div
@@ -115,7 +121,7 @@ const ModalEditProfile = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="h-full w-full overflow-hidden"
         >
-          <div className="flex items-center max-[990px]:flex-col w-full h-full overflow-y-scroll modal-scroll">
+          <div className="flex max-[990px]:flex-col w-full h-full overflow-y-scroll modal-scroll">
             {payload?.tab === SHOP_TAB.AVATAR && (
               <div className="max-[990px]:w-full flex">
                 <div className="flex flex-col justify-between items-center w-[204px] max-[990px]:w-full max-[990px]:pb-5 max-[990px]:border-b-[2px] max-[990px]:border-b-[#FDA3FF]">
@@ -164,50 +170,59 @@ const ModalEditProfile = () => {
               </div>
             )}
             {verifyStatus === STATUS.SUCCESS ? (
-              <div className="flex flex-col justify-between h-full w-fit min-w-fit self-start max-[990px]:pt-5 max-[990px]:w-full">
-                <div className="overflow-auto h-fit">
+              <div className="flex flex-col justify-between h-full w-fit min-w-fit max-[990px]:pt-5 max-[990px]:w-full">
+                <div className="h-full">
                   {payload?.item?.length ? (
-                    <div
-                      className={`gap-4 pr-4 overflow-auto max-h-[500px] grid grid-cols-2 justify-center max-[990px]:max-h-fit ${
-                        payload?.tab === SHOP_TAB.AVATAR
-                          ? "min-[500px]:grid-cols-3 min-[800px]:grid-cols-4 "
-                          : "max-[550px]:grid-cols-1"
-                      }`}
-                    >
-                      {payload?.item?.map((e, i) => (
-                        <div
-                          className="relative cursor-pointer group"
-                          key={i}
-                          onClick={
-                            payload?.tab === SHOP_TAB.AVATAR
-                              ? () => {
-                                  setAvatarUser(e?.item_info?.id),
-                                    setCheckAvatar(e?.item_info?.url);
-                                }
-                              : () => {
-                                  updateCover(e?.item_info?.id);
-                                }
-                          }
-                        >
-                          <ImageLoading
-                            alt=""
-                            src={e?.item_info?.url}
-                            className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto max-[600px]:w-full 
+                    <div className="h-full flex flex-col">
+                      <div
+                        className={`gap-4 pr-4 max-h-[500px] grid grid-cols-2 justify-between max-[990px]:max-h-fit ${
+                          payload?.tab === SHOP_TAB.AVATAR
+                            ? "min-[500px]:grid-cols-3 min-[800px]:grid-cols-4 "
+                            : "max-[550px]:grid-cols-1"
+                        }`}
+                      >
+                        {pagination?.currentItems?.map((e, i) => (
+                          <div
+                            className="relative cursor-pointer group"
+                            key={i}
+                            onClick={
+                              payload?.tab === SHOP_TAB.AVATAR
+                                ? () => {
+                                    setAvatarUser(e?.item_info?.id),
+                                      setCheckAvatar(e?.item_info?.url);
+                                  }
+                                : () => {
+                                    updateCover(e?.item_info?.id);
+                                  }
+                            }
+                          >
+                            <ImageLoading
+                              alt=""
+                              src={e?.item_info?.url}
+                              className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto max-[600px]:w-full 
                           ${
                             payload?.tab === SHOP_TAB.AVATAR
                               ? "w-[204px] max-[600px]:h-[94px]"
                               : "w-[424px] max-[550px]:w-full max-[550px]:h-[204px]"
                           }`}
-                          ></ImageLoading>
-                          <div className="hidden group-hover:block rounded-2xl w-full h-full absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                          {checkAvatar === e?.item_info?.url && (
-                            <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                          )}
-                          {cover === e?.item_info?.url && (
-                            <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
-                          )}
-                        </div>
-                      ))}
+                            ></ImageLoading>
+                            <div className="hidden group-hover:block rounded-2xl w-full h-full absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                            {checkAvatar === e?.item_info?.url && (
+                              <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                            )}
+                            {cover === e?.item_info?.url && (
+                              <div className="rounded-2xl w-full h-full bg-[#00000080] absolute z-20 top-0 left-0 border-[4px] border-[#DB2777]"></div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      {/* <div className="absolute bottom-[-50px] left-[50%] translate-x-[-50%] translate-y-[0%]"> */}
+                      <PaginatedItems
+                        onPageChange={pagination?.handlePageClick}
+                        itemsPerPage={displayItems}
+                        items={payload?.item}
+                      />
+                      {/* </div> */}
                     </div>
                   ) : (
                     <div className="h-[300px]">

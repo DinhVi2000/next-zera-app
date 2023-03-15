@@ -44,6 +44,8 @@ import IconCheckDaily from "./check-daily.svg";
 import IconLogOut from "./log-out.svg";
 import IconProfile from "./profile.svg";
 import IconTime from "./time.png";
+import IconNext from "./arr-next.svg";
+import IconPre from "./arr-pre.svg";
 export { default as IconZoomIn } from "./zoom-in.svg";
 export { default as IconZoomOut } from "./zoom-out.svg";
 export { default as IconPlay } from "./play.svg";
@@ -51,6 +53,8 @@ export { default as IconBackXs } from "./back-xs.svg";
 export { default as IconCheck } from "./check.svg";
 
 export {
+  IconNext,
+  IconPre,
   IconBack,
   IconLogo,
   IconSearch,

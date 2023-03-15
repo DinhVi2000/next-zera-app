@@ -22,6 +22,8 @@ import SEO from "@/components/other/SEO";
 import Zera from "@/components/zera/Zera";
 import SidebarMB from "@/components/responsive/SidebarMB";
 import { useRouter } from "next/router";
+import PaginatedItems from "@/components/pagination/Pagination";
+import { usePagination } from "@/hooks/usePagination";
 
 const Shop = () => {
   const router = useRouter();
@@ -70,6 +72,9 @@ const Shop = () => {
       setIdCategory(categories[0]?.id);
     }
   }, [categories]);
+
+  const displayItems = tab !== SHOP_TAB.COVER_PAGE ? 8 : 4;
+  const pagination = usePagination(displayItems, itemsShop);
 
   return (
     <>
@@ -145,14 +150,21 @@ const Shop = () => {
                 {tab === SHOP_TAB.AVATAR ? (
                   <>
                     {isLoading ? (
-                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                        {itemsShop?.map((e, i) => (
-                          <AvatarItem tab={tab} item={e} key={i} />
-                        ))}
-                      </div>
+                      <>
+                        <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
+                          {pagination?.currentItems?.map((e, i) => (
+                            <AvatarItem tab={tab} item={e} key={i} />
+                          ))}
+                        </div>
+                        <PaginatedItems
+                          onPageChange={pagination?.handlePageClick}
+                          itemsPerPage={8}
+                          items={itemsShop}
+                        />
+                      </>
                     ) : (
                       <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                        {Array(6)
+                        {Array(8)
                           .fill(0)
                           .map((e, i) => (
                             <div
@@ -170,18 +182,25 @@ const Shop = () => {
                 ) : tab === SHOP_TAB.COVER_PAGE ? (
                   <>
                     {isLoading ? (
-                      <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
-                        {itemsShop?.map((e, i) => (
-                          <CoverPageItem tab={tab} item={e} key={i} />
-                        ))}
-                      </div>
+                      <>
+                        <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
+                          {pagination?.currentItems?.map((e, i) => (
+                            <CoverPageItem tab={tab} item={e} key={i} />
+                          ))}
+                        </div>
+                        <PaginatedItems
+                          onPageChange={pagination?.handlePageClick}
+                          itemsPerPage={4}
+                          items={itemsShop}
+                        />
+                      </>
                     ) : (
                       <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
                         {Array(4)
                           .fill(0)
                           .map((e, i) => (
                             <div
-                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-[366px] max-[700px]:w-full"
+                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-full max-[700px]:w-full"
                               key={i}
                             >
                               <div className="skeleton-shine w-[314px] h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
@@ -195,11 +214,18 @@ const Shop = () => {
                 ) : tab === SHOP_TAB.PLAYTIMES ? (
                   <>
                     {isLoading ? (
-                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                        {itemsShop?.map((e, i) => (
-                          <PlayTimeItem tab={tab} item={e} key={i} />
-                        ))}
-                      </div>
+                      <>
+                        <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
+                          {pagination?.currentItems?.map((e, i) => (
+                            <PlayTimeItem tab={tab} item={e} key={i} />
+                          ))}
+                        </div>
+                        <PaginatedItems
+                          onPageChange={pagination?.handlePageClick}
+                          itemsPerPage={8}
+                          items={itemsShop}
+                        />
+                      </>
                     ) : (
                       <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
                         {Array(6)
