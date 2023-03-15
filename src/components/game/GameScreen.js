@@ -11,6 +11,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const { setIsCountDown } = useSocketContext();
 
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // handle zoom out
   const handleToggleZoomOutGameScreen = () => {
@@ -34,6 +35,10 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     game_screen_ref.current?.classList?.remove("rounded-2xl");
     game_screen_ref.current?.classList?.add("full-screen");
     // document.requestFullscreen();
+  };
+
+  const handlePlaying = () => {
+    setIsPlaying(true);
   };
 
   // handle zoom out
@@ -102,6 +107,19 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
           <IconLogo className="w-6 h-5" />
         </div>
       </div>
+
+      {/* bg before play */}
+      {!isPlaying && (
+        <div className="w-full h-full bg-blur-800 absolute top-0 flex-center">
+          <button
+            className="text-base text-white rounded-[20px] bg-linear-violet-300 py-3 px-10 w-[220px]
+                        transition-all hover:scale-105"
+            onClick={handlePlaying}
+          >
+            Play
+          </button>
+        </div>
+      )}
 
       {/* bg mb */}
       <div

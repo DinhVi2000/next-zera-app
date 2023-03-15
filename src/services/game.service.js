@@ -200,7 +200,7 @@ const getGameRecentlyPlayed = async () => {
       throw new Error(data?.message);
     }
 
-    return data;
+    return data?.data;
   } catch (e) {
     throw e;
   }
@@ -241,7 +241,7 @@ const getLovedGames = async () => {
       throw new Error(data?.message);
     }
 
-    return data;
+    return data?.data;
   } catch (e) {
     throw e;
   }
@@ -255,7 +255,7 @@ const getPlaylist = async () => {
       throw new Error(data?.message);
     }
 
-    return data;
+    return data?.data;
   } catch (e) {
     throw e;
   }
@@ -269,7 +269,7 @@ const getMostPlayed = async () => {
       throw new Error(data?.message);
     }
 
-    return data;
+    return data?.data;
   } catch (e) {
     throw e;
   }

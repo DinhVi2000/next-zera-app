@@ -4,17 +4,17 @@ import { toUpperCaseFirstLetter } from "@/utils/helper";
 import { useRouter } from "next/router";
 import React from "react";
 
-function PreviousRouter() {
+function PreviousRouter({ ...props }) {
   const router = useRouter();
   const previousRoute = localStorage.getItem("previousRoute");
 
   return (
-    <div>
+    <div {...props}>
       <button className="flex items-center" onClick={() => router.back()}>
         <IconArrowLeft />
         <span className="ml-2 text-[#EC4899]">Back</span>
       </button>
-      <div>
+      <div className="my-5">
         {previousRoute === "/"
           ? "Home"
           : toUpperCaseFirstLetter(

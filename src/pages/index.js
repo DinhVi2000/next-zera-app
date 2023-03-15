@@ -33,7 +33,6 @@ export default function Home() {
   useEffect(() => {
     Promise.all([
       call(getAllGame(dispatch, params)),
-      call(getAllArticleCategory(dispatch, params)),
       call(getAllCategories(dispatch, params)),
     ]);
   }, []);
@@ -52,7 +51,6 @@ export default function Home() {
         <div className="w-responsive">
           <GameGrid games={games} />
           <GameCategoryGrid categories={categories} />
-          <ArticleCategoryGrid />
         </div>
       </MainLayout>
     </>

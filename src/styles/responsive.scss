@@ -391,7 +391,7 @@
       ".  gi gi gi hof hof hof "
       ".  gi gi gi hof hof hof ";
     grid-template-columns: repeat(7, 94px);
-    grid-template-rows: repeat(7, 94px);
+    grid-template-rows: repeat(10, 94px);
   }
 
   .grid-category-detail {
@@ -537,7 +537,7 @@
       ".  gi gi gi hof hof hof "
       ".  gi gi gi hof hof hof ";
     grid-template-columns: repeat(7, 94px);
-    grid-template-rows: repeat(7, 94px);
+    grid-template-rows: repeat(10, 94px);
   }
 
   .tbl-hidden {
@@ -556,23 +556,28 @@
 @media (min-width: 550.9px) and (max-width: 800px) {
   .game-detail-grid {
     grid-template-areas:
-      ". . . . . "
-      " gs gs gs gs gs"
-      " gs gs gs gs gs "
-      " gs gs gs gs gs "
-      " gs gs gs gs gs "
-      "ads1 ste ste  ste  ads2 "
-      "ads1 raf ads4 ads4 ads3 "
-      "bc bc hof hof hof"
-      "bc bc hof hof hof"
-      "bc bc hof hof hof"
-      ".  .  hof hof hof"
-      "gi gi gi  .   .  "
-      "gi gi gi  .   .  "
-      "gi gi gi  .   .  "
-      "gi gi gi  .   .  ";
-    grid-template-columns: repeat(5, 94px);
+      ". . . . .  ."
+      " gs gs gs gs gs gs"
+      " gs gs gs gs gs gs"
+      " gs gs gs gs gs gs"
+      " gs gs gs gs gs gs"
+      "ste ste ste raf raf ads1"
+      "bc bc ads2 ads3 ads3 ads3"
+      "bc bc ads2 ads3 ads3 ads3"
+      "bc bc ads2 ads3 ads3 ads3"
+      "gi gi gi  hof hof hof  "
+      "gi gi gi  hof hof hof "
+      "gi gi gi  hof hof hof  "
+      "gi gi gi  hof hof hof ";
+    grid-template-columns: repeat(6, 94px);
     grid-template-rows: repeat(15, 94px);
+  }
+
+  .grid-category {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(6, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
   }
 
   .tbl-hidden {

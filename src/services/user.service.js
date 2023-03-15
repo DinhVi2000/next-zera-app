@@ -68,13 +68,11 @@ const getUserIp = async () => {
 const getHallOfFameByUsername = async (dispatch, username) => {
   try {
     const { data } = await http.get(`/hall-of-fames/${username}`);
-    // if (!data.success) {
-    //   throw new Error(data?.message);
-    // }
+    if (!data.success) throw new Error(data?.message);
 
     dispatch(setHallOfFame(data.data));
 
-    return data;
+    return data.data;
   } catch (e) {
     throw e;
   }
@@ -179,7 +177,7 @@ const getPurchaseHistory = async () => {
       throw new Error(data?.message);
     }
 
-    return data;
+    return data?.data;
   } catch (e) {
     throw e;
   }

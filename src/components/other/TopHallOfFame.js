@@ -38,22 +38,25 @@ const Item = ({ item, ...props }) => {
 
   return (
     <Link href={`/hall-of-fame/${username}`}>
-      <div className="bg-blur-600 p-2.5 rounded-[10px] flex justify-between cursor-pointer">
-        <div className="flex">
+      <div className="bg-blur-600 p-2.5 rounded-[10px] flex justify-between cursor-pointer h-[84px] max-h-[84px] overflow-hidden">
+        <div className="flex w-full">
           <ImageLoading
             src={avatar}
             alt=""
-            className="w-[62px] h-[62px] rounded-full object-cover"
+            className="min-w-[62px] w-[62px] h-[62px] rounded-full object-cover"
           />
-          <div className="px-2.5 w-full max-w-[200px] flex-1">
-            <h2 className="text-base font-bold">{username}</h2>
-            <p className="text-xs font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+          {/* user info */}
+          <div className="px-2.5 w-full flex-1">
+            <h2 className="text-base font-bold overflow-hidden text-ellipsis w-full overflow-wrap-anywhere whitespace-normal ">
+              {username}
+            </h2>
+            <p className="text-xs font-medium overflow-wrap-anywhere whitespace-normal overflow-hidden text-ellipsis">
               {quote}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 pl-1.5 border-transparent border-l-white  border-[1px] w-20 max-w-20 justify-end">
+        <div className="flex items-center gap-1 pl-1.5 border-transparent border-l-white  border-[1px] min-w-20 w-20 max-w-20 justify-end">
           <span className="text-sm font-bold">{zera_earned}</span>
           <IconCoin className="w-[18px]" />
         </div>

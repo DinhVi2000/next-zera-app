@@ -36,6 +36,7 @@ const GameDetail = () => {
 
   const { categories } =
     useSelector(({ game: { gameIndex } }) => gameIndex) ?? {};
+
   useEffect(() => {
     if (!router.query || isEmpty(router.query)) return;
 

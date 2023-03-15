@@ -18,14 +18,7 @@ const ArticleDetailWrapper = ({ article }) => {
               <h1 className="text-[40px] font-bold">{title}</h1>
 
               <p className="text-xs mb-2">{formatDate(created_at)}</p>
-              <p className="">{seo_description}</p>
-
-              {featured_image && (
-                <ImageLoading
-                  src={featured_image}
-                  className="w-full max-w-[500px] max-h-[500px] mx-auto my-5 object-cover"
-                />
-              )}
+              <p className="mb-5">{seo_description}</p>
 
               <p className="text-white">
                 <DocumentRenderer
@@ -33,6 +26,13 @@ const ArticleDetailWrapper = ({ article }) => {
                   className="whitespace-nowrap overflow-hidden text-ellipsis"
                 />
               </p>
+
+              {featured_image && (
+                <ImageLoading
+                  src={featured_image}
+                  className="w-full max-w-[500px] max-h-[500px] mx-auto my-5 object-cover"
+                />
+              )}
             </Fragment>
           )}
 

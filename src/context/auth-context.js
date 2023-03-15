@@ -2,8 +2,13 @@
 /* eslint-disable no-console */
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { loginWithEmail } from "@/services/auth.service";
-import { getUserInfo } from "@/services/user.service";
-import { getGameRecentlyPlayed } from "@/services/game.service";
+import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
+import {
+  getGameRecentlyPlayed,
+  getLovedGames,
+  getMostPlayed,
+  getPlaylist,
+} from "@/services/game.service";
 import { notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
@@ -26,6 +31,29 @@ export const useAuthContext = () => {
   return useMemo(() => ({ ...authProvider }), [authProvider]);
 };
 
+const userInfoFunctions = [
+  {
+    key: "recentlyPlayed",
+    callback: getGameRecentlyPlayed,
+  },
+  {
+    key: "loved",
+    callback: getLovedGames,
+  },
+  {
+    key: "playlist",
+    callback: getPlaylist,
+  },
+  {
+    key: "purchaseHistory",
+    callback: getPurchaseHistory,
+  },
+  {
+    key: "mostPlayed",
+    callback: getMostPlayed,
+  },
+];
+
 export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const toast = useToast();
@@ -42,25 +70,28 @@ export const AuthContextProvider = ({ children }) => {
 
   const handleSetUserInfo = async () => {
     const { data } = await getUserInfo(usernameAuth);
-    setUserInfo((prev) => ({ ...data, prev }));
-  };
-
-  const handleSetUserRecentlyPlayed = async () => {
-    const { data } = await getGameRecentlyPlayed();
-    setUserInfo((prev) => ({ ...prev, gameRecentlyPlayed: data }));
+    setUserInfo((prev) => ({ ...data, ...prev }));
   };
 
   const verifyAccessToken = async () => {
     try {
       setVerifyStatus(STATUS.IN_PROGRESS);
 
-      Promise.all([handleSetUserInfo(), handleSetUserRecentlyPlayed()]);
-
-      setVerifyStatus(STATUS.SUCCESS);
+      Promise.all([
+        handleSetUserInfo(),
+        ...userInfoFunctions.map(({ key, callback }) =>
+          callback().then((data) =>
+            setUserInfo((prev) => {
+              if (!prev) prev = {};
+              prev[key] = data;
+              return { ...prev };
+            })
+          )
+        ),
+      ]).then(() => setVerifyStatus(STATUS.SUCCESS));
     } catch (error) {
       notifyErrorMessage(toast, error);
       setVerifyStatus(STATUS.FAIL);
-
       clearAuthenticatorData();
     }
   };
