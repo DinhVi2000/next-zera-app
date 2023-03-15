@@ -6,11 +6,13 @@ import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
 import { Tooltip, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { STATUS } from "@/utils/constant";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
 import ButtonLoading from "../../loading/ButtonLoading";
+import { useModalContext } from "@/context/modal-context";
 
 function AddPlaylist() {
   const toast = useToast();
+  const { openModal } = useModalContext();
   const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
@@ -29,6 +31,10 @@ function AddPlaylist() {
 
   const handlePlaylistGame = async () => {
     try {
+      if (!userInfo) {
+        openModal(MODAL_NAME.CONFIRM);
+        return;
+      }
       setStatus(STATUS.NOT_START);
       const gameId = { game_detail_id: info?.id };
       const { data } = await addGamePlaylist(gameId);

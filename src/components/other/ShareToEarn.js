@@ -8,11 +8,18 @@ import {
 } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
 import { InlineShareButtons } from "sharethis-reactjs";
+import { useAuthContext } from "@/context/auth-context";
+import { useModalContext } from "@/context/modal-context";
+import { MODAL_NAME } from "@/utils/constant";
 
 const ShareToEarn = ({ area, ...props }) => {
+  const { userInfo } = useAuthContext();
+  const { openModal } = useModalContext();
+
   const toast = useToast();
   const handleShare = async () => {
     try {
+      if (!userInfo) return;
       await getShareToEarn();
       notifySuccessMessage(toast, "You earned share reward today!");
     } catch (e) {
@@ -27,7 +34,13 @@ const ShareToEarn = ({ area, ...props }) => {
       {...props}
     >
       <div className="mb-2 text-[19px] font-semibold">Share to earn 1 coin</div>
-      <div onClick={handleShare}>
+      <div onClick={handleShare} className="relative">
+        {!userInfo && (
+          <div
+            className="w-full h-full absolute z-50"
+            onClick={() => openModal(MODAL_NAME.CONFIRM)}
+          ></div>
+        )}
         <InlineShareButtons
           config={{
             alignment: "center",

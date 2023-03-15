@@ -69,7 +69,7 @@ const ModalReport = () => {
   useEffect(() => {
     if (status === STATUS.SUCCESS) {
       handleCloseModal();
-      notifySuccessMessage(toast, "You earned share reward today!");
+      notifySuccessMessage(toast, "You reported successful!");
     }
   }, [status]);
 

@@ -46,7 +46,7 @@ function Activities() {
   }, []);
 
   return (
-    <div className="h-full min-h-[1072px] w-[60%] max-[1176px]:w-full max-[1176px]:mt-5 bg-[#00000080] rounded-[20px] flex flex-col items-center justify-center pb-[100px]">
+    <div className="h-full min-h-[1072px] w-[60%] max-[1176px]:w-full max-[1176px]:mt-5 bg-[#00000080] rounded-[20px] flex flex-col items-center pb-[100px]">
       <h2 className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold w-full text-center">
         Activities
       </h2>

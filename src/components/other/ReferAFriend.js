@@ -3,12 +3,20 @@ import { useAuthContext } from "@/context/auth-context";
 import { getArea, notifySuccessMessage } from "@/utils/helper";
 import ImageLoading from "../loading/ImageLoading";
 import { useToast } from "@chakra-ui/react";
+import { MODAL_NAME } from "@/utils/constant";
+import { useModalContext } from "@/context/modal-context";
 
 const ReferAFriend = ({ area, ...props }) => {
   const { userInfo } = useAuthContext();
+  const { openModal } = useModalContext();
+
   const toast = useToast();
 
   const handleCopy = () => {
+    if (!userInfo) {
+      openModal(MODAL_NAME.CONFIRM);
+      return;
+    }
     navigator.clipboard.writeText(`${userInfo?.ref_link}`);
     notifySuccessMessage(
       toast,
