@@ -15,7 +15,7 @@ import { IconClose, IconCoin22 } from "@/resources/icons";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import Empty from "../empty/Empty";
 import ImageLoading from "../loading/ImageLoading";
-import PaginatedItems from "../pagination/Pagination";
+import Pagination from "../pagination/Pagination";
 import { usePagination } from "@/hooks/usePagination";
 
 const ModalPurchaseHistory = () => {
@@ -76,7 +76,7 @@ const ModalPurchaseHistory = () => {
                     </div>
                   ))}
                 </div>
-                <PaginatedItems
+                <Pagination
                   onPageChange={paginationAvatar?.handlePageClick}
                   itemsPerPage={4}
                   items={payload?.listGame?.avatar}
@@ -103,7 +103,7 @@ const ModalPurchaseHistory = () => {
                     </div>
                   ))}
                 </div>
-                <PaginatedItems
+                <Pagination
                   onPageChange={paginationCover?.handlePageClick}
                   itemsPerPage={4}
                   items={payload?.listGame?.cover}

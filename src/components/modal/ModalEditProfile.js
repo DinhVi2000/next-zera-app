@@ -25,7 +25,7 @@ import ImageLoading from "../loading/ImageLoading";
 import Empty from "../empty/Empty";
 import ButtonLoading from "../loading/ButtonLoading";
 import Link from "next/link";
-import PaginatedItems from "../pagination/Pagination";
+import Pagination from "../pagination/Pagination";
 import { usePagination } from "@/hooks/usePagination";
 
 const ModalEditProfile = () => {
@@ -217,7 +217,7 @@ const ModalEditProfile = () => {
                         ))}
                       </div>
                       {/* <div className="absolute bottom-[-50px] left-[50%] translate-x-[-50%] translate-y-[0%]"> */}
-                      <PaginatedItems
+                      <Pagination
                         onPageChange={pagination?.handlePageClick}
                         itemsPerPage={displayItems}
                         items={payload?.item}

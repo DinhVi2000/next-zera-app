@@ -2,8 +2,8 @@ import { IconNext, IconPre } from "@/resources/icons";
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-function PaginatedItems({ items, onPageChange, itemsPerPage }) {
-  const pageCount = items?.length / itemsPerPage;
+function Pagination({ items, onPageChange, itemsPerPage }) {
+  const pageCount = Math.floor(items?.length / itemsPerPage) + 1;
 
   return (
     <>
@@ -29,4 +29,4 @@ function PaginatedItems({ items, onPageChange, itemsPerPage }) {
   );
 }
 
-export default PaginatedItems;
+export default Pagination;
