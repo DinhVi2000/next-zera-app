@@ -30,6 +30,12 @@ function Rewards() {
     getRewardUser();
   }, [status]);
 
+  useEffect(() => {
+    if (status === STATUS.SUCCESS) {
+      getRewardUser();
+    }
+  }, []);
+
   return (
     <div className="rounded-[20px] bg-[#00000080] pb-[30px] max-[1176px]:pb-6 mt-[16px] max-[1176px]:mt-0 max-[1176px]:w-[49%] max-[1176px]:h-[443px] max-[550px]:w-full max-[550px]:mt-5">
       <h4 className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold">
@@ -41,7 +47,7 @@ function Rewards() {
             <>
               {rewards?.map((e, i) => (
                 <div className="mt-[34px] max-[1176px]:mt-[15px]" key={i}>
-                  <p className="w-full">
+                  <div className="w-full flex">
                     {e?.type?.includes("BUY_AVATAR") ||
                     e?.type?.includes("BUY_COVER_PAGE") ||
                     e?.type?.includes("BUY_TIME")
@@ -51,14 +57,14 @@ function Rewards() {
                       label={+e?.zera_amount > 999 && +e?.zera_amount}
                       aria-label="A tooltip"
                     >
-                      {abbreviateNumber(+e?.zera_amount)}
+                      <p>&nbsp;{abbreviateNumber(+e?.zera_amount)}&nbsp;</p>
                     </Tooltip>{" "}
                     ZERA from{" "}
                     {toUpperCaseFirstLetter(e?.type?.replaceAll("_", " "))}
-                  </p>
-                  <p className="opacity-60 text-base">
+                  </div>
+                  <div className="opacity-60 text-base">
                     {getBetweenTwoDate(e?.created_at)}
-                  </p>
+                  </div>
                 </div>
               ))}
             </>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
 
-import { Checkbox, useToast } from "@chakra-ui/react";
+import { useToast, RadioGroup, Radio } from "@chakra-ui/react";
 
 import { SHOP_TAB, STATUS } from "@/utils/constant";
 
@@ -22,7 +22,7 @@ import SEO from "@/components/other/SEO";
 import Zera from "@/components/zera/Zera";
 import SidebarMB from "@/components/responsive/SidebarMB";
 import { useRouter } from "next/router";
-import PaginatedItems from "@/components/pagination/Pagination";
+import Pagination from "@/components/pagination/Pagination";
 import { usePagination } from "@/hooks/usePagination";
 
 const Shop = () => {
@@ -36,6 +36,16 @@ const Shop = () => {
   const [tab, setTab] = useState(SHOP_TAB.AVATAR);
   const [categories, setCategories] = useState([]);
   const [itemsShop, setItemsShop] = useState();
+  const [itemsSort, setItemsSort] = useState();
+  const [sortShop, setSortShop] = useState("all");
+
+  const displayItems = tab !== SHOP_TAB.COVER_PAGE ? 8 : 4;
+  const checkItems = sortShop !== "all" ? itemsSort : itemsShop;
+  const { currentItems, handlePageClick } = usePagination(
+    displayItems,
+    checkItems,
+    sortShop
+  );
 
   const getItem = async (idCategory) => {
     try {
@@ -73,8 +83,20 @@ const Shop = () => {
     }
   }, [categories]);
 
-  const displayItems = tab !== SHOP_TAB.COVER_PAGE ? 8 : 4;
-  const pagination = usePagination(displayItems, itemsShop);
+  const itemsOwned = itemsShop?.filter((e) => e?.user_inventory);
+  const itemsBuy = itemsShop?.filter((e) => !e?.user_inventory);
+
+  useEffect(() => {
+    if (sortShop === "owned") {
+      setItemsSort(itemsOwned);
+    } else if (sortShop === "buy") {
+      setItemsSort(itemsBuy);
+    }
+  }, [sortShop]);
+
+  useEffect(() => {
+    setSortShop("all");
+  }, [tab]);
 
   return (
     <>
@@ -132,17 +154,25 @@ const Shop = () => {
             {/* content */}
             <div className="pt-[18px] px-[54px] pb-[26px] border-[5px] border-pink-500 bg-[#5b21b666] max-[550px]:bg-[#1c0147c4] rounded-[30px] max-[400px]:rounded-[20px] min-h-[400px] max-[1140px]:px-5 max-[990.9px]:pt-[30px]">
               {/* checkbox */}
-              <div className="flex gap-4 justify-end max-[990.9px]:justify-start max-[550px]:justify-end mb-[26px] max-[550px]:mb-[100px]">
-                <Checkbox colorScheme="pink" defaultChecked>
-                  All
-                </Checkbox>
-                <Checkbox colorScheme="pink" defaultChecked>
-                  Buy
-                </Checkbox>
-                <Checkbox colorScheme="pink" defaultChecked>
-                  Owned
-                </Checkbox>
-              </div>
+              {tab !== SHOP_TAB.PLAYTIMES && (
+                <div className="flex gap-4 justify-end max-[990.9px]:justify-start max-[550px]:justify-end mb-[26px] max-[550px]:mb-[100px]">
+                  <RadioGroup
+                    onChange={setSortShop}
+                    value={sortShop}
+                    className="flex-center gap-x-3 text-lg"
+                  >
+                    <Radio colorScheme="pink" value="all" defaultChecked>
+                      All
+                    </Radio>
+                    <Radio colorScheme="pink" value="buy">
+                      Buy
+                    </Radio>
+                    <Radio colorScheme="pink" value="owned">
+                      Owned
+                    </Radio>
+                  </RadioGroup>
+                </div>
+              )}
 
               {/* list item  */}
 
@@ -152,14 +182,14 @@ const Shop = () => {
                     {isLoading ? (
                       <>
                         <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                          {pagination?.currentItems?.map((e, i) => (
+                          {currentItems?.map((e, i) => (
                             <AvatarItem tab={tab} item={e} key={i} />
                           ))}
                         </div>
-                        <PaginatedItems
-                          onPageChange={pagination?.handlePageClick}
+                        <Pagination
+                          onPageChange={handlePageClick}
                           itemsPerPage={8}
-                          items={itemsShop}
+                          items={checkItems}
                         />
                       </>
                     ) : (
@@ -184,14 +214,14 @@ const Shop = () => {
                     {isLoading ? (
                       <>
                         <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
-                          {pagination?.currentItems?.map((e, i) => (
+                          {currentItems?.map((e, i) => (
                             <CoverPageItem tab={tab} item={e} key={i} />
                           ))}
                         </div>
-                        <PaginatedItems
-                          onPageChange={pagination?.handlePageClick}
+                        <Pagination
+                          onPageChange={handlePageClick}
                           itemsPerPage={4}
-                          items={itemsShop}
+                          items={checkItems}
                         />
                       </>
                     ) : (
@@ -216,14 +246,14 @@ const Shop = () => {
                     {isLoading ? (
                       <>
                         <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                          {pagination?.currentItems?.map((e, i) => (
+                          {currentItems?.map((e, i) => (
                             <PlayTimeItem tab={tab} item={e} key={i} />
                           ))}
                         </div>
-                        <PaginatedItems
-                          onPageChange={pagination?.handlePageClick}
+                        <Pagination
+                          onPageChange={handlePageClick}
                           itemsPerPage={8}
-                          items={itemsShop}
+                          items={checkItems}
                         />
                       </>
                     ) : (

@@ -10,7 +10,7 @@ import { IconClose } from "@/resources/icons";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import GameItem from "../game/GameItem";
 import Empty from "../empty/Empty";
-import PaginatedItems from "../pagination/Pagination";
+import Pagination from "../pagination/Pagination";
 import { usePagination } from "@/hooks/usePagination";
 
 const ModalViewAllGames = () => {
@@ -88,7 +88,7 @@ const ModalViewAllGames = () => {
                         </>
                       ))}
                     </div>
-                    <PaginatedItems
+                    <Pagination
                       onPageChange={pagination?.handlePageClick}
                       itemsPerPage={15}
                       items={payload?.listGame}
