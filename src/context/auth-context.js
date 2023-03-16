@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { loginWithEmail } from "@/services/auth.service";
 import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
 import {
@@ -14,9 +14,10 @@ import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import { useRouter } from "next/router";
-import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
+import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
+import { useSocketContext } from "./socket-context";
 const AuthContext = createContext(null);
 
 export const useAuthContext = () => {
@@ -67,7 +68,7 @@ export const AuthContextProvider = ({ children }) => {
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
   const { pathname } = router ?? {};
-
+  const { setTotalTimePlay, socketClient  } = useSocketContext();
   const handleSetUserInfo = async () => {
     const { data } = await getUserInfo(usernameAuth);
     setUserInfo((prev) => ({ ...data, ...prev }));
@@ -150,6 +151,26 @@ export const AuthContextProvider = ({ children }) => {
     [pathname]
   );
 
+  const remainningTime = useCallback((data) => {
+    if (data) {
+      setUserInfo((prev) => ({ ...prev, playtime: data.remainingTime }));
+    }
+  }, [socketClient]);
+
+  useEffect(() => {
+    if (!socketClient) return;
+    socketClient.on(SOCKET_EVENT.TIME_GAME, remainningTime);
+    return () => {
+      if (!socketClient) return;
+      socketClient.off(SOCKET_EVENT.TIME_GAME);
+    };
+  }, [socketClient]);
+
+  useEffect(() => {
+    if (!userInfo) return;
+    setTotalTimePlay(userInfo.playtime);
+  }, [userInfo]);
+
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const username = localStorage.getItem("username");
@@ -194,6 +215,7 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
+      handleSetUserInfo,
     }),
     [
       anonymousInfo,
@@ -208,6 +230,7 @@ export const AuthContextProvider = ({ children }) => {
       setVerifyStatus,
       token,
       verifyStatus,
+      handleSetUserInfo,
     ]
   );
 

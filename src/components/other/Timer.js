@@ -63,10 +63,11 @@ const Timer = () => {
    */
   useEffect(() => {
     if (userData) {
-      setTotalTimePlay(userData?.playtime || 0);
-      setRemainingTime(getTimeRemaining(Number(userData?.playtime) || 0));
+      setTotalTimePlay(userData?.playtime);
+      setRemainingTime(getTimeRemaining(Number(userData?.playtime)));
     }
   }, [userData]);
+
   /**
    *  Countdown time play
    */

@@ -1,22 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-
-import Head from "next/head";
 import MainLayout from "@/layouts/MainLayout";
-
 import GameDetailGrid from "@/components/ui/GameDetailGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 import {
   getAllCategories,
-  getGameByCategoryId,
   getGameByCategorySlug,
   getGameDetailBySlug,
   getHallOfFameByGameSlug,
-  getMessages,
 } from "@/services/game.service";
 import { useRouter } from "next/router";
-import { isEmpty, notifyErrorMessage } from "@/utils/helper";
-import { useToast } from "@chakra-ui/react";
+import { isEmpty} from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
@@ -52,7 +46,6 @@ const GameDetail = () => {
         const { seo_title, seo_description } = data ?? {};
         setSeo({ seo_title, seo_description });
         const { game_category } = data ?? {};
-        getMessages(dispatch, game_category?.id);
         if (!game_category?.slug) return;
 
         getGameByCategorySlug(dispatch, game_category?.slug);

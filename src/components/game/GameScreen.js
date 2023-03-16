@@ -8,10 +8,8 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
   const back_tab_mb_ref = useRef();
-  const { setIsCountDown } = useSocketContext();
-
+  const { setIsCountDown, isCountDown } = useSocketContext();
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
 
   // handle zoom out
   const handleToggleZoomOutGameScreen = () => {
@@ -38,7 +36,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   };
 
   const handlePlaying = () => {
-    setIsPlaying(true);
+    setIsCountDown(true);
   };
 
   // handle zoom out
@@ -50,11 +48,9 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
 
   //handle stop/play game
   useEffect(() => {
-    const handleScroll = (event) => {
+    const handleScroll = () => {
       if (window.scrollY > game_screen_ref.current?.clientHeight) {
         setIsCountDown(false);
-      } else {
-        setIsCountDown(true);
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -109,7 +105,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
       </div>
 
       {/* bg before play */}
-      {!isPlaying && (
+      {!isCountDown && (
         <div className="w-full h-full bg-blur-800 absolute top-0 flex-center">
           <button
             className="text-base text-white rounded-[20px] bg-linear-violet-300 py-3 px-10 w-[220px]
