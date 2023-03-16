@@ -5,7 +5,7 @@ export const getTimeUnixMiliSecond = (time) => {
 };
 
 const getTimeRemaining = (time) => {
-  if (time === 0 || time < 0) {
+  if (time === 0 || time < 0 || !time) {
     return {
       days: "00",
       hours: "00",

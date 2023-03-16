@@ -37,7 +37,6 @@ function BoxChat({ area }) {
     messageSocket,
     playGame,
     stopGame,
-    remainningTime,
     leaveGame,
     listenAllEvent,
     showModalBuyTime,
@@ -75,14 +74,6 @@ function BoxChat({ area }) {
     setMessages((oldMes) => [...oldMes].concat(messageSocket));
   }, [messageSocket]);
 
-  useEffect(() => {
-    // TODO: handle set is count dơn with play game action
-    setIsCountDown(true);
-    return () => {
-      setIsCountDown(false);
-    };
-  }, []);
-
   // Effect start caculator time play
   useEffect(() => {
     if (userInfo || anonymousInfo) {
@@ -102,10 +93,6 @@ function BoxChat({ area }) {
     }
   }, [isCountDown, userInfo?.id]);
 
-  useEffect(() => {
-    remainningTime();
-  }, []);
-
   // Join room
   useEffect(() => {
     if (userInfo || anonymousInfo) {
@@ -119,6 +106,7 @@ function BoxChat({ area }) {
 
   useEffect(() => {
     return () => {
+      setIsCountDown(false);
       leaveGame({
         user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
         room_id: roomCurrent,
@@ -135,7 +123,7 @@ function BoxChat({ area }) {
     if (refScroll.current) {
       refScroll.current.scrollTop = refBoxChat.current.offsetHeight;
     }
-  });
+  }, [refScroll.current, messageSocket, messages]);
 
   return (
     <div
@@ -214,9 +202,9 @@ const MessageItem = ({ msg }) => {
   return (
     <div>
       <div
-        className={`w-full flex ${!msg.user ? "justify-center" : (Number(userInfo?.id) === msg.user_id ? "justify-end" : "justify-start")}`}
+        className={`w-full flex ${!msg.user ? "justify-center" : (Number(userInfo?.id) === msg.user_id ? "justify-end pr-1" : "justify-start")}`}
       >
-        <div className="flex flex-col my-[3px] items-center" >
+        <div className={ `flex flex-col my-[3px] ${(Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start") }`} >
           {
             msg.user &&
             (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${ (Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "") }`}>

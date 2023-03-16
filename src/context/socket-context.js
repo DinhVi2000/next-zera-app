@@ -91,14 +91,6 @@ export const SocketContextProvider = ({ children }) => {
     });
   }, [socketClient]);
 
-  const remainningTime = useCallback(() => {
-    socketClient.on(SOCKET_EVENT.TIME_GAME, (data) => {
-      if (data) {
-        setTotalTimePlay(data.remainingTime);
-      }
-    });
-  }, [socketClient]);
-
   const leaveGame = useCallback(({ room_id, user_id, is_anonymous }) => {
     socketClient.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
       user_id,
@@ -125,8 +117,8 @@ export const SocketContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    totalTimePlay === 0 || incrementTime > totalTimePlay ? setShowModalBuyTime(true) : setShowModalBuyTime(false);
-  }, [totalTimePlay, incrementTime]);
+    isCountDown === true && incrementTime === totalTimePlay ? setShowModalBuyTime(true) : setShowModalBuyTime(false);
+  }, [incrementTime]);
 
   const socketProvider = useMemo(
     () => ({
@@ -145,7 +137,6 @@ export const SocketContextProvider = ({ children }) => {
       setMessageSocket,
       stopGame,
       playGame,
-      remainningTime,
       leaveGame,
       listenAllEvent,
       setIncrementTime,
@@ -164,7 +155,6 @@ export const SocketContextProvider = ({ children }) => {
       sendMessage,
       stopGame,
       playGame,
-      remainningTime,
       leaveGame,
       listenAllEvent,
       setIncrementTime,
