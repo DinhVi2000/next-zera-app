@@ -68,7 +68,7 @@ export const AuthContextProvider = ({ children }) => {
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
   const { pathname } = router ?? {};
-  const { setTotalTimePlay, socketClient  } = useSocketContext();
+  const { socketClient } = useSocketContext();
   const handleSetUserInfo = async () => {
     const { data } = await getUserInfo(usernameAuth);
     setUserInfo((prev) => ({ ...data, ...prev }));
@@ -151,11 +151,11 @@ export const AuthContextProvider = ({ children }) => {
     [pathname]
   );
 
-  const remainningTime = useCallback((data) => {
+  const remainningTime = (data) => {
     if (data) {
       setUserInfo((prev) => ({ ...prev, playtime: data.remainingTime }));
     }
-  }, [socketClient]);
+  };
 
   useEffect(() => {
     if (!socketClient) return;
@@ -165,11 +165,6 @@ export const AuthContextProvider = ({ children }) => {
       socketClient.off(SOCKET_EVENT.TIME_GAME);
     };
   }, [socketClient]);
-
-  useEffect(() => {
-    if (!userInfo) return;
-    setTotalTimePlay(userInfo.playtime);
-  }, [userInfo]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
