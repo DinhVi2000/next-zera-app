@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "@/services/game.service";
 import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
-import { MODAL_NAME } from "@/utils/constant";
+import { MESSAGE_MAX_LENGTH, MODAL_NAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useToast } from "@chakra-ui/react";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
@@ -47,6 +47,10 @@ function BoxChat({ area }) {
     e.preventDefault();
     if (!(inputRef.current.value).trim()) {
       notifyErrorMessage(toast, { message: "Please enter message before send!" });
+      return;
+    }
+    if ((inputRef.current.value).trim().length > MESSAGE_MAX_LENGTH) {
+      notifyErrorMessage(toast, { message: `Please enter message with length less than ${ MESSAGE_MAX_LENGTH } character` });
       return;
     }
     sendMessage({
@@ -152,7 +156,9 @@ function BoxChat({ area }) {
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e] cursor-pointer" >
+          <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e] cursor-pointer"
+            onClick={() => openModal(MODAL_NAME.USERS_ONLINE_GAME)}
+          >
             <div className="flex">
               {
                 Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? usersInRoom.rows.slice(0, 3).map((user) => {

@@ -11,6 +11,7 @@ import ModalReport from "@/components/modal/ModalReport";
 
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 import ModalBuyTime from "@/components/modal/ModalBuyTime";
+import ModalUsersOnline from "@/components/modal/ModalUsersOnline";
 
 const ModalContext = createContext(null);
 
@@ -24,6 +25,7 @@ const Modal = {
   CONFIRM: <ModalConfirm />,
   REPORT: <ModalReport />,
   BUYTIME: <ModalBuyTime />,
+  USERS_ONLINE_GAME: <ModalUsersOnline/>,
 };
 
 export const useModalContext = () => {
