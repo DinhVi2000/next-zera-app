@@ -74,7 +74,7 @@ export const AuthContextProvider = ({ children }) => {
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
   const { pathname } = router ?? {};
-  const { socketClient } = useSocketContext();
+  const { socketClient, receiveZera } = useSocketContext();
 
   const handleSetUserInfo = async () => {
     setVerifyStatus(STATUS.IN_PROGRESS);
@@ -182,6 +182,12 @@ export const AuthContextProvider = ({ children }) => {
       socketClient.off(SOCKET_EVENT.TIME_GAME);
     };
   }, [socketClient]);
+
+  useEffect(() => {
+    if (receiveZera > 0) {
+      setUserInfo((prev) => ({ ...prev, zera: receiveZera + prev.zera }));
+    }
+  }, [receiveZera]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");

@@ -127,7 +127,6 @@ function BoxChat({ area }) {
       });
     };
   }, []);
-
   useEffect(() => {
     showModalBuyTime
       ? openModal(MODAL_NAME.BUYTIME)
@@ -168,7 +167,7 @@ function BoxChat({ area }) {
             <div className="flex">
               {
                 Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? usersInRoom.rows.slice(0, 3).map((user) => {
-                  return <img key={user.id} alt="user" src={user.avatar} className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full" />;
+                  return <img key={user.id} alt="user" src={user?.avatar ?? '/avatar-1.svg'} className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full" />;
                 }) : <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
               }
             </div>
@@ -237,7 +236,7 @@ const MessageItem = ({ msg }) => {
                     alt=""
                     src={msg?.user?.avatar}
                     className="w-4 h-4 rounded-full"
-                    /> : <Image src="/avatar-1.svg" width="16" height="16"  className="w-4 h-4 rounded-full" />
+                    /> : <Image src="/avatar-1.svg" alt="Image default" width="16" height="16" className="w-4 h-4 rounded-full" />
                 }
                 <div className="w-fit max-w-[150px] break-words">
                   {msg?.user?.username}

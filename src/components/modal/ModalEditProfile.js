@@ -133,7 +133,7 @@ const ModalEditProfile = () => {
                       alt="avatar"
                       src={
                         checkAvatar ||
-                        "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+                        "/avatar-1.svg"
                       }
                       className="rounded-[20px] h-[204px] w-[204px] object-cover"
                     />

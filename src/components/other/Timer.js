@@ -50,19 +50,19 @@ const Timer = () => {
   /**
    * Get user info if user sigin
    */
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     const { data } = await getUserInfo(usernameAuth);
-  //     setUserData(data);
-  //   };
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const { data } = await getUserInfo(usernameAuth);
+      setUserData(data);
+    };
 
-  //   if (
-  //     usernameAuth &&
-  //     (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)
-  //   ) {
-  //     fetchUserData();
-  //   }
-  // }, [usernameAuth, socketStatus]);
+    if (
+      usernameAuth &&
+      (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)
+    ) {
+      fetchUserData();
+    }
+  }, [usernameAuth, socketStatus]);
 
   /**
    *  Set total playtime

@@ -298,7 +298,7 @@ const UserInfo = () => {
             <ImageLoading
               src={
                 avatar ||
-                "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+                "/avatar-1.svg"
               }
               alt=""
               className="object-cover w-[94px] h-[94px] rounded-[20px]"
