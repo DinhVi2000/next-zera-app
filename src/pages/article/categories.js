@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
 
@@ -8,10 +8,12 @@ import { useApi } from "@/hooks/useApi";
 import ArticleCategoryGrid from "@/components/ui/ArticleCategoryGrid";
 import SEO from "@/components/other/SEO";
 import { getAllArticleCategory } from "@/services/article.service";
+import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 
 const ArticleCategories = () => {
   const dispatch = useDispatch();
   const { call } = useApi();
+  const [isValidPage, setIsValidPage] = useState();
 
   const params = { page: 1, limit: 200 };
 
@@ -22,10 +24,11 @@ const ArticleCategories = () => {
   return (
     <>
       <SEO title={"Article categories"} />
-
-      <MainLayout>
-        <ArticleCategoryGrid />
-      </MainLayout>
+      <HandleNotFoundPage isValidPage={isValidPage}>
+        <MainLayout>
+          <ArticleCategoryGrid />
+        </MainLayout>
+      </HandleNotFoundPage>
     </>
   );
 };

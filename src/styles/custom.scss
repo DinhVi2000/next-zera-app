@@ -354,6 +354,14 @@
   );
 }
 
+.bg-gradient-hof {
+  background: linear-gradient(
+    180deg,
+    rgba(99, 0, 255, 0.4) 0%,
+    rgba(79, 0, 81, 0.4) 100%
+  );
+}
+
 .bg-footer {
   background-image: url(../../public/images/bg_footer.png) !important;
   background-repeat: no-repeat !important;

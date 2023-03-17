@@ -15,13 +15,18 @@ const HandleNotFoundPage = ({ isValidPage, children }) => {
 export default HandleNotFoundPage;
 
 const LoadingPage = () => {
-  useEffect(() => {
-    sleep(1).then(() => loading_ref.current.classList.add("bg-blur-500"));
-  }, []);
-
   const loading_ref = useRef();
 
+  useEffect(() => {
+    sleep(1).then(() => loading_ref?.current?.classList.add("bg-blur-500"));
+  }, []);
+
   return (
-    <div ref={loading_ref} className="w-full h-[100vh] transition-all"></div>
+    <div
+      ref={loading_ref}
+      className="w-full flex-center h-[100vh] transition-all"
+    >
+      <div className="dots-5"></div>
+    </div>
   );
 };

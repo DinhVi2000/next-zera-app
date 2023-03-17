@@ -145,7 +145,6 @@ export const AuthContextProvider = ({ children }) => {
     setToken("");
     setUsernameAuth("");
     setUserInfo();
-    setVerifyStatus(STATUS.IN_PROGRESS);
   };
 
   const loginWithAnonymously = async () => {
