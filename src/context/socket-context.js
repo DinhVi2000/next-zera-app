@@ -71,13 +71,13 @@ export const SocketContextProvider = ({ children }) => {
   const listenAllEvent = useCallback(() => {
     if (socketClient) {
       socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
+        if (!data) return;
         setMessageSocket(data);
       });
       socketClient.on(SOCKET_EVENT.TIME_GAME, (data) => {
         console.log(data);
       });
       socketClient.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
-        console.log(data);
         if (!data) return;
         setUsersInRoom(data.users);
       });

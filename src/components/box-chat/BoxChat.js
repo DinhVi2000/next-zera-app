@@ -167,20 +167,11 @@ function BoxChat({ area }) {
             onClick={() => openModal(MODAL_NAME.USERS_ONLINE_GAME)}
           >
             <div className="flex">
-              {Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? (
-                usersInRoom.rows.slice(0, 3).map((user) => {
-                  return (
-                    <img
-                      key={user.id}
-                      alt="user"
-                      src={user.avatar}
-                      className="w-5 h-5 mr-[-10px] rounded-full"
-                    />
-                  );
-                })
-              ) : (
-                <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
-              )}
+              {
+                Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? usersInRoom.rows.slice(0, 3).map((user) => {
+                  return <img key={user.id} alt="user" src={user.avatar} className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full" />;
+                }) : <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+              }
             </div>
             {usersInRoom?.count && usersInRoom?.count > 3 && (
               <p className="text-[12px]">
@@ -236,54 +227,28 @@ const MessageItem = ({ msg }) => {
   return (
     <div>
       <div
-        className={`w-full flex ${
-          !msg.user
-            ? "justify-center"
-            : Number(userInfo?.id) === msg.user_id
-            ? "justify-end pr-1"
-            : "justify-start"
-        }`}
+        className={`w-full flex ${!msg.is_message ? "justify-center" : (Number(userInfo?.id) === msg.user_id ? "justify-end pr-1" : "justify-start")}`}
       >
-        <div
-          className={`flex flex-col my-[3px] ${
-            Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start"
-          }`}
-        >
-          {msg.user && (
-            <div
-              className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${
-                Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : ""
-              }`}
-            >
-              {msg?.user?.avatar ? (
-                <ImageLoading
-                  alt=""
-                  src={msg?.user?.avatar}
-                  className="w-4 h-4 rounded-full"
-                />
-              ) : (
-                <Image
-                  src="/avatar-1.svg"
-                  width="16"
-                  height="16"
-                  className="w-4 h-4 rounded-full"
-                />
-              )}
-              <div className="w-fit max-w-[150px] break-words">
-                {msg?.user?.username}
-              </div>
-            </div>
-          )}
-          <div
-            className={`rounded-md max-w-[150px] w-fit items-end ${
-              !msg.user
-                ? "text-[#fff] text-[10px] max-w-full"
-                : Number(userInfo?.id) === msg.user_id
-                ? "bg-[#EC4899] p-1 rounded-br-none"
-                : "bg-[#8B5CF6] p-1 rounded-tl-none"
-            }`}
-          >
-            {msg?.message}
+        <div className={ `flex flex-col my-[3px] ${(Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start") }`} >
+          {
+            msg.is_message &&
+            (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${ (Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "") }`}>
+                {
+                  msg?.user?.avatar ? <ImageLoading
+                    alt=""
+                    src={msg?.user?.avatar}
+                    className="w-4 h-4 rounded-full"
+                    /> : <Image src="/avatar-1.svg" width="16" height="16"  className="w-4 h-4 rounded-full" />
+                }
+                <div className="w-fit max-w-[150px] break-words">
+                  {msg?.user?.username}
+                </div>
+              </div>)
+          }
+          <div className={ `rounded-md max-w-[150px] w-fit items-end ${ !msg.is_message ? "text-[#fff] text-[10px] max-w-full" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none") }`}>
+            {
+              !msg.is_message ? (Number(userInfo?.id) === msg.user_id ? (msg?.message).replace(`Player ${msg.user.username}`, 'You') : msg?.message) : msg?.message
+            }
           </div>
         </div>
       </div>
