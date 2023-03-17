@@ -24,6 +24,7 @@ import SidebarMB from "@/components/responsive/SidebarMB";
 import { useRouter } from "next/router";
 import Pagination from "@/components/pagination/Pagination";
 import { usePagination } from "@/hooks/usePagination";
+import Empty from "@/components/empty/Empty";
 
 const Shop = () => {
   const router = useRouter();
@@ -175,106 +176,109 @@ const Shop = () => {
               )}
 
               {/* list item  */}
-
-              <>
-                {tab === SHOP_TAB.AVATAR ? (
-                  <>
-                    {isLoading ? (
-                      <>
+              {currentItems?.length > 0 ? (
+                <>
+                  {tab === SHOP_TAB.AVATAR ? (
+                    <>
+                      {isLoading ? (
+                        <>
+                          <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
+                            {currentItems?.map((e, i) => (
+                              <AvatarItem tab={tab} item={e} key={i} />
+                            ))}
+                          </div>
+                          <Pagination
+                            onPageChange={handlePageClick}
+                            itemsPerPage={8}
+                            items={checkItems}
+                          />
+                        </>
+                      ) : (
                         <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                          {currentItems?.map((e, i) => (
-                            <AvatarItem tab={tab} item={e} key={i} />
-                          ))}
+                          {Array(8)
+                            .fill(0)
+                            .map((e, i) => (
+                              <div
+                                className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
+                                key={i}
+                              >
+                                <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                                <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
+                                <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
+                              </div>
+                            ))}
                         </div>
-                        <Pagination
-                          onPageChange={handlePageClick}
-                          itemsPerPage={8}
-                          items={checkItems}
-                        />
-                      </>
-                    ) : (
-                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                        {Array(8)
-                          .fill(0)
-                          .map((e, i) => (
-                            <div
-                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
-                              key={i}
-                            >
-                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
-                            </div>
-                          ))}
-                      </div>
-                    )}
-                  </>
-                ) : tab === SHOP_TAB.COVER_PAGE ? (
-                  <>
-                    {isLoading ? (
-                      <>
+                      )}
+                    </>
+                  ) : tab === SHOP_TAB.COVER_PAGE ? (
+                    <>
+                      {isLoading ? (
+                        <>
+                          <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
+                            {currentItems?.map((e, i) => (
+                              <CoverPageItem tab={tab} item={e} key={i} />
+                            ))}
+                          </div>
+                          <Pagination
+                            onPageChange={handlePageClick}
+                            itemsPerPage={4}
+                            items={checkItems}
+                          />
+                        </>
+                      ) : (
                         <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
-                          {currentItems?.map((e, i) => (
-                            <CoverPageItem tab={tab} item={e} key={i} />
-                          ))}
+                          {Array(4)
+                            .fill(0)
+                            .map((e, i) => (
+                              <div
+                                className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-full max-[700px]:w-full"
+                                key={i}
+                              >
+                                <div className="skeleton-shine w-[314px] h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                                <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
+                                <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
+                              </div>
+                            ))}
                         </div>
-                        <Pagination
-                          onPageChange={handlePageClick}
-                          itemsPerPage={4}
-                          items={checkItems}
-                        />
-                      </>
-                    ) : (
-                      <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">
-                        {Array(4)
-                          .fill(0)
-                          .map((e, i) => (
-                            <div
-                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-full max-[700px]:w-full"
-                              key={i}
-                            >
-                              <div className="skeleton-shine w-[314px] h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
-                            </div>
-                          ))}
-                      </div>
-                    )}
-                  </>
-                ) : tab === SHOP_TAB.PLAYTIMES ? (
-                  <>
-                    {isLoading ? (
-                      <>
+                      )}
+                    </>
+                  ) : tab === SHOP_TAB.PLAYTIMES ? (
+                    <>
+                      {isLoading ? (
+                        <>
+                          <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
+                            {currentItems?.map((e, i) => (
+                              <PlayTimeItem tab={tab} item={e} key={i} />
+                            ))}
+                          </div>
+                          <Pagination
+                            onPageChange={handlePageClick}
+                            itemsPerPage={8}
+                            items={checkItems}
+                          />
+                        </>
+                      ) : (
                         <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                          {currentItems?.map((e, i) => (
-                            <PlayTimeItem tab={tab} item={e} key={i} />
-                          ))}
+                          {Array(6)
+                            .fill(0)
+                            .map((e, i) => (
+                              <div
+                                className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
+                                key={i}
+                              >
+                                <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                                <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
+                                <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
+                              </div>
+                            ))}
                         </div>
-                        <Pagination
-                          onPageChange={handlePageClick}
-                          itemsPerPage={8}
-                          items={checkItems}
-                        />
-                      </>
-                    ) : (
-                      <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                        {Array(6)
-                          .fill(0)
-                          .map((e, i) => (
-                            <div
-                              className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
-                              key={i}
-                            >
-                              <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
-                              <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
-                              <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
-                            </div>
-                          ))}
-                      </div>
-                    )}
-                  </>
-                ) : null}
-              </>
+                      )}
+                    </>
+                  ) : null}
+                </>
+              ) : (
+                <Empty />
+              )}
             </div>
           </div>
         </div>
