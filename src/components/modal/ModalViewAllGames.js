@@ -84,6 +84,8 @@ const ModalViewAllGames = () => {
                             index={i}
                             thumbnail={e?.thumbnail}
                             title={e?.title}
+                            slug={e?.slug}
+                            superSlug={e?.superslug}
                           ></GameItem>
                         </>
                       ))}

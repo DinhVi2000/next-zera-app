@@ -3,7 +3,7 @@ import React from "react";
 import ReactPaginate from "react-paginate";
 
 function Pagination({ items, onPageChange, itemsPerPage, ...props }) {
-  const pageCount = Math.floor(items?.length / itemsPerPage) + 1;
+  const pageCount = Math.floor(items?.length / itemsPerPage);
 
   return (
     <>

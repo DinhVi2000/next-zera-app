@@ -55,60 +55,72 @@ const ModalPurchaseHistory = () => {
         </div>
 
         <div>
-          {payload?.listGame?.avatar?.length > 0 &&
+          {payload?.listGame?.avatar?.length > 0 ||
           payload?.listGame?.cover?.length > 0 ? (
             <div className="overflow-auto max-h-[500px]">
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl mb-3">Avatars</span>
-                <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
-                  {paginationAvatar?.currentItems?.map((e, i) => (
-                    <div className="flex items-center justify-start" key={i}>
-                      <ImageLoading
-                        className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
-                        src={e?.url}
-                      />
-                      <div className="p-2 px-4">
-                        <div className="font-semibold text-xl flex">
-                          {e?.price} <IconCoin22 />
+              <>
+                {payload?.listGame?.avatar?.length > 0 && (
+                  <div className="flex flex-col">
+                    <span className="font-bold text-2xl mb-3">Avatars</span>
+                    <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
+                      {paginationAvatar?.currentItems?.map((e, i) => (
+                        <div
+                          className="flex items-center justify-start"
+                          key={i}
+                        >
+                          <ImageLoading
+                            className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
+                            src={e?.url}
+                          />
+                          <div className="p-2 px-4">
+                            <div className="font-semibold text-xl flex">
+                              {e?.price} <IconCoin22 />
+                            </div>
+                            <div>{getBetweenTwoDate(e?.created_at)}</div>
+                          </div>
                         </div>
-                        <div>{getBetweenTwoDate(e?.created_at)}</div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                <Pagination
-                  onPageChange={paginationAvatar?.handlePageClick}
-                  itemsPerPage={4}
-                  items={payload?.listGame?.avatar}
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-2xl mb-3">Cover pages</span>
-                <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
-                  {paginationCover?.currentItems?.map((e, i) => (
-                    <div
-                      className="flex items-center justify-center max-[768px]:justify-start"
-                      key={i}
-                    >
-                      <ImageLoading
-                        className="w-[204px] h-[94px] object-cover rounded-[20px] mb-[25px]"
-                        src={e?.url}
-                      />
-                      <div className="p-2 px-4">
-                        <div className="font-semibold text-xl flex">
-                          {e?.price} <IconCoin22 className="ml-2" />
+                    <Pagination
+                      onPageChange={paginationAvatar?.handlePageClick}
+                      itemsPerPage={4}
+                      items={payload?.listGame?.avatar}
+                    />
+                  </div>
+                )}
+              </>
+
+              <>
+                {payload?.listGame?.cover?.length > 0 && (
+                  <div className="flex flex-col">
+                    <span className="font-bold text-2xl mb-3">Cover pages</span>
+                    <div className="grid grid-cols-2 gap-x-9 max-[768px]:grid-cols-1">
+                      {paginationCover?.currentItems?.map((e, i) => (
+                        <div
+                          className="flex items-center justify-center max-[768px]:justify-start"
+                          key={i}
+                        >
+                          <ImageLoading
+                            className="w-[204px] h-[94px] object-cover rounded-[20px] mb-[25px]"
+                            src={e?.url}
+                          />
+                          <div className="p-2 px-4">
+                            <div className="font-semibold text-xl flex">
+                              {e?.price} <IconCoin22 className="ml-2" />
+                            </div>
+                            <div>{getBetweenTwoDate(e?.created_at)}</div>
+                          </div>
                         </div>
-                        <div>{getBetweenTwoDate(e?.created_at)}</div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                <Pagination
-                  onPageChange={paginationCover?.handlePageClick}
-                  itemsPerPage={4}
-                  items={payload?.listGame?.cover}
-                />
-              </div>
+                    <Pagination
+                      onPageChange={paginationCover?.handlePageClick}
+                      itemsPerPage={4}
+                      items={payload?.listGame?.cover}
+                    />
+                  </div>
+                )}
+              </>
             </div>
           ) : (
             <div className="w-[400px] h-[200px] max-[500px]:w-full">

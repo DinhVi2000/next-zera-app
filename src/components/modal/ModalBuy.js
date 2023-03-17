@@ -15,7 +15,7 @@ import { IconClose, IconCoin22 } from "@/resources/icons";
 import { useToast } from "@chakra-ui/react";
 import { buyShopItem } from "@/services/shop.service";
 import { useAuthContext } from "@/context/auth-context";
-import { getUserInfo } from "@/services/user.service";
+import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
 import { useSocketContext } from "@/context/socket-context";
 import ButtonLoading from "../loading/ButtonLoading";
 
@@ -50,8 +50,19 @@ const ModalBuy = () => {
       });
 
       if (res.success) {
-        const { data } = await getUserInfo(usernameAuth);
-        setUserInfo(data);
+        Promise.all([
+          getUserInfo(usernameAuth).then((res) => {
+            setUserInfo((prev) => {
+              return { ...prev, ...res?.data };
+            });
+          }),
+          getPurchaseHistory().then((data) =>
+            setUserInfo((prev) => {
+              return { ...prev, purchaseHistory: data };
+            })
+          ),
+        ]);
+
         setLoading(STATUS.SUCCESS);
         setStatus(STATUS.SUCCESS);
         setSocketStatus(STATUS.SUCCESS);

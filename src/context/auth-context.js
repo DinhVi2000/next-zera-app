@@ -20,7 +20,6 @@ import {
   SOCKET_EVENT,
   STATUS,
 } from "@/utils/constant";
-
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 import { useSocketContext } from "./socket-context";
@@ -76,6 +75,7 @@ export const AuthContextProvider = ({ children }) => {
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
   const { pathname } = router ?? {};
   const { socketClient } = useSocketContext();
+
   const handleSetUserInfo = async () => {
     setVerifyStatus(STATUS.IN_PROGRESS);
     getUserInfo(usernameAuth)
@@ -169,7 +169,7 @@ export const AuthContextProvider = ({ children }) => {
     [pathname]
   );
 
-  const remainningTime = (data) => {
+  const remainingTime = (data) => {
     if (data) {
       setUserInfo((prev) => ({ ...prev, playtime: data.remainingTime }));
     }
@@ -177,7 +177,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!socketClient) return;
-    socketClient.on(SOCKET_EVENT.TIME_GAME, remainningTime);
+    socketClient.on(SOCKET_EVENT.TIME_GAME, remainingTime);
     return () => {
       if (!socketClient) return;
       socketClient.off(SOCKET_EVENT.TIME_GAME);

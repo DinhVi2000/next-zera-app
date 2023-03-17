@@ -4,47 +4,14 @@ import { useToast } from "@chakra-ui/react";
 import { notifyErrorMessage } from "@/utils/helper";
 
 import { MODAL_NAME } from "@/utils/constant";
-import {
-  getLovedGames,
-  getMostPlayed,
-  getPlaylist,
-  getRecentlyGames,
-} from "@/services/game.service";
 import ListGameActivities from "./ListGameActivities";
-import { getPurchaseHistory } from "@/services/user.service";
 import GameItem from "../game/GameItem";
 import Link from "next/link";
 import { staticPaths } from "@/utils/$path";
+import { useAuthContext } from "@/context/auth-context";
 
 function Activities() {
-  const toast = useToast();
-  const [recentGames, setRecentGames] = useState([]);
-  const [lovedGames, setLovedGames] = useState([]);
-  const [playlist, setPlaylist] = useState([]);
-  const [purchaseHistory, setPurchaseHistory] = useState([]);
-  const [mostPlayed, setMostPlayed] = useState("");
-
-  const handleRecentlyPlayed = async () => {
-    try {
-      const recent = await getRecentlyGames();
-      setRecentGames(recent?.data);
-      const loved = await getLovedGames();
-      setLovedGames(loved?.data);
-      const playlist = await getPlaylist();
-      setPlaylist(playlist?.data);
-      const purchase = await getPurchaseHistory();
-      setPurchaseHistory(purchase?.data);
-
-      const mostPlayedGame = await getMostPlayed();
-      setMostPlayed(mostPlayedGame?.data?.game_detail);
-    } catch (e) {
-      notifyErrorMessage(toast, e);
-    }
-  };
-
-  useEffect(() => {
-    handleRecentlyPlayed();
-  }, []);
+  const { userInfo } = useAuthContext();
 
   return (
     <div className="h-full min-h-[1072px] w-[60%] max-[1176px]:w-full max-[1176px]:mt-5 bg-[#00000080] rounded-[20px] flex flex-col items-center pb-[100px]">
@@ -52,14 +19,16 @@ function Activities() {
         Activities
       </h2>
 
-      {!mostPlayed ? (
+      {userInfo?.mostPlayed ? (
         <>
           <h3 className="text-[28px] font-bold">Most played</h3>
           <div className="w-[314px] h-[204px] mt-3 mb-5 max-[400px]:w-[90%]">
             <GameItem
-              id={mostPlayed?.id}
-              thumbnail={mostPlayed?.thumbnail}
-              title={mostPlayed?.title}
+              id={userInfo?.mostPlayed?.game_detail?.id}
+              thumbnail={userInfo?.mostPlayed?.game_detail?.thumbnail}
+              title={userInfo?.mostPlayed?.game_detail?.title}
+              slug={userInfo?.mostPlayed?.game_detail?.slug}
+              superSlug={userInfo?.mostPlayed?.game_detail?.superslug}
             ></GameItem>
           </div>
         </>
@@ -78,22 +47,22 @@ function Activities() {
       )}
 
       <ListGameActivities
-        listGame={recentGames}
+        listGame={userInfo?.recentGames}
         payload={"RECENT_GAMES"}
         isModal={MODAL_NAME.VIEW_ALL_GAMES}
       />
       <ListGameActivities
-        listGame={lovedGames}
+        listGame={userInfo?.loved}
         payload={"LOVED_GAMES"}
         isModal={MODAL_NAME.VIEW_ALL_GAMES}
       />
       <ListGameActivities
-        listGame={playlist}
+        listGame={userInfo?.playlist}
         payload={"PLAYLIST"}
         isModal={MODAL_NAME.VIEW_ALL_GAMES}
       />
       <ListGameActivities
-        listGame={purchaseHistory}
+        listGame={userInfo?.purchaseHistory}
         payload={"PURCHASE_HISTORY"}
         isModal={MODAL_NAME.VIEW_PURCHASE_HISTORY}
       />
