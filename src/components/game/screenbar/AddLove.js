@@ -5,7 +5,6 @@ import { useAuthContext } from "@/context/auth-context";
 import { useSelector } from "react-redux";
 
 import { addGameLove } from "@/services/game.service";
-import { getUserInfo } from "@/services/user.service";
 
 import { Tooltip, useToast } from "@chakra-ui/react";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
@@ -16,21 +15,11 @@ import { useModalContext } from "@/context/modal-context";
 function AddLove() {
   const toast = useToast();
   const { openModal } = useModalContext();
-  const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
+  const { userInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const [isLoved, setIsLoved] = useState();
   const [status, setStatus] = useState(STATUS.SUCCESS);
-
-  const checkIsLoved = () => {
-    if (userInfo?.lovedGame?.includes(info?.id)) {
-      setIsLoved(false);
-      notifySuccessMessage(toast, "Successfully removed from the Love Games!");
-    } else {
-      setIsLoved(true);
-      notifySuccessMessage(toast, "Successfully added to the Love Games!");
-    }
-  };
 
   const handleLoveGame = async () => {
     try {
@@ -41,15 +30,19 @@ function AddLove() {
       setStatus(STATUS.NOT_START);
       const gameId = { game_detail_id: info?.id };
       const { data } = await addGameLove(gameId);
-      if (!data) return;
 
-      const res = await getUserInfo(usernameAuth);
-      setUserInfo(res?.data);
-      setStatus(STATUS.SUCCESS);
-
-      if (userInfo) {
-        checkIsLoved();
+      if (data) {
+        setIsLoved(true);
+        notifySuccessMessage(toast, "Successfully added to the Love Games!");
+      } else {
+        setIsLoved(false);
+        notifySuccessMessage(
+          toast,
+          "Successfully removed from the Love Games!"
+        );
       }
+
+      setStatus(STATUS.SUCCESS);
     } catch (e) {
       setStatus(STATUS.SUCCESS);
       notifyErrorMessage(toast, e);
@@ -57,8 +50,8 @@ function AddLove() {
   };
 
   useEffect(() => {
-    if (userInfo?.lovedGame && info?.id) {
-      setIsLoved(userInfo?.lovedGame?.includes(info?.id));
+    if (userInfo?.loved && info?.id) {
+      setIsLoved(!!userInfo?.loved?.find((e) => e?.id == info?.id));
     }
   }, [info]);
 

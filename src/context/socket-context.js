@@ -75,7 +75,6 @@ export const SocketContextProvider = ({ children }) => {
         setMessageSocket(data);
       });
       socketClient.on(SOCKET_EVENT.TIME_GAME, (data) => {
-        console.log(data);
       });
       socketClient.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
         if (!data) return;
