@@ -6,8 +6,6 @@ import Image from "next/image";
 
 import ava from "@/../public/images/ava1.png";
 import { IconSendMes } from "@/resources/icons";
-import { ImgAva2 } from "@/resources/avatar/index";
-
 import { useAuthContext } from "@/context/auth-context";
 import { getArea } from "@/utils/helper";
 import { useSocketContext } from "@/context/socket-context";
@@ -17,6 +15,8 @@ import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
 import { MODAL_NAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
+import { useToast } from "@chakra-ui/react";
+import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
 
 function BoxChat({ area }) {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
@@ -40,10 +40,15 @@ function BoxChat({ area }) {
     leaveGame,
     listenAllEvent,
     showModalBuyTime,
+    usersInRoom,
   } = useSocketContext();
+  const toast = useToast();
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (!inputRef.current.value) return;
+    if (!(inputRef.current.value).trim()) {
+      notifyErrorMessage(toast, { message: "Please enter message before send!" });
+      return;
+    }
     sendMessage({
       socket_id: socketClient.id,
       msg: inputRef.current.value,
@@ -115,6 +120,7 @@ function BoxChat({ area }) {
     };
   }, []);
 
+  console.log(usersInRoom);
   useEffect(() => {
     showModalBuyTime ? openModal(MODAL_NAME.BUYTIME) : openModal(MODAL_NAME.NONE);
   }, [showModalBuyTime]);
@@ -146,13 +152,17 @@ function BoxChat({ area }) {
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e]">
+          <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e] cursor-pointer" >
             <div className="flex">
-              <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
-              <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
-              <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+              {
+                Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? usersInRoom.rows.slice(0, 3).map((user) => {
+                  return <img key={user.id} alt="user" src={user.avatar} className="w-5 h-5 mr-[-10px] rounded-full" />;
+                }) : <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+              }
             </div>
-            <p className="text-[12px]">+100 more</p>
+            {
+              usersInRoom?.count && usersInRoom?.count > 3 && <p className="text-[12px]">+ { usersInRoom?.count && (usersInRoom.count - 3)} more</p>
+            }
           </div>
           <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
             <div
@@ -208,17 +218,19 @@ const MessageItem = ({ msg }) => {
           {
             msg.user &&
             (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${ (Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "") }`}>
-                <ImageLoading
-                  alt=""
-                  src={msg?.user?.avatar ?? ImgAva2}
-                  className="w-4 h-4 rounded-full"
-                />
+                {
+                  msg?.user?.avatar ? <ImageLoading
+                    alt=""
+                    src={msg?.user?.avatar}
+                    className="w-4 h-4 rounded-full"
+                    /> : <Image src="/avatar-1.svg" width="16" height="16"  className="w-4 h-4 rounded-full" />
+                }
                 <div className="w-fit max-w-[150px] break-words">
                   {msg?.user?.username}
                 </div>
               </div>)
           }
-          <div className={ `rounded-md max-w-[150px] w-fit items-end ${ !msg.user ? "text-[#fff] text-[10px]" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none") }`}>
+          <div className={ `rounded-md max-w-[150px] w-fit items-end ${ !msg.user ? "text-[#fff] text-[10px] max-w-full" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none") }`}>
             {msg?.message}
           </div>
         </div>

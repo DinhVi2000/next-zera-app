@@ -32,6 +32,7 @@ export const SocketContextProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [messageSocket, setMessageSocket] = useState({});
   const [showModalBuyTime, setShowModalBuyTime] = useState(false);
+  const [usersInRoom, setUsersInRoom] = useState({});
 
   const connectSocket = () => {
     const socket = io(config.SERVER_CHAT);
@@ -74,6 +75,11 @@ export const SocketContextProvider = ({ children }) => {
       });
       socketClient.on(SOCKET_EVENT.TIME_GAME, (data) => {
         console.log(data);
+      });
+      socketClient.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
+        console.log(data);
+        if (!data) return;
+        setUsersInRoom(data.users);
       });
     }
   }, [socketClient]);
@@ -143,8 +149,9 @@ export const SocketContextProvider = ({ children }) => {
       listenAllEvent,
       setIncrementTime,
       incrementTime,
-      showModalBuyTime, 
+      showModalBuyTime,
       setShowModalBuyTime,
+      usersInRoom,
     }),
     [
       socketStatus,
@@ -163,6 +170,7 @@ export const SocketContextProvider = ({ children }) => {
       incrementTime,
       showModalBuyTime,
       setShowModalBuyTime,
+      usersInRoom,
     ]
   );
 
