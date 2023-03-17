@@ -128,7 +128,6 @@ function BoxChat({ area }) {
     };
   }, []);
 
-  console.log(usersInRoom);
   useEffect(() => {
     showModalBuyTime
       ? openModal(MODAL_NAME.BUYTIME)

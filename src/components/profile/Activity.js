@@ -47,7 +47,7 @@ function Activities() {
       )}
 
       <ListGameActivities
-        listGame={userInfo?.recentGames}
+        listGame={userInfo?.recentlyPlayed}
         payload={"RECENT_GAMES"}
         isModal={MODAL_NAME.VIEW_ALL_GAMES}
       />

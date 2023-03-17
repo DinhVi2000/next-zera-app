@@ -83,3 +83,11 @@ button:disabled {
 video::-webkit-media-controls {
   display: none !important;
 }
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}
