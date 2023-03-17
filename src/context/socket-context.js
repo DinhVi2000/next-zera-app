@@ -33,6 +33,7 @@ export const SocketContextProvider = ({ children }) => {
   const [messageSocket, setMessageSocket] = useState({});
   const [showModalBuyTime, setShowModalBuyTime] = useState(false);
   const [usersInRoom, setUsersInRoom] = useState({});
+  const [receiveZera, setReceiveZera] = useState(0);
 
   const connectSocket = () => {
     const socket = io(config.SERVER_CHAT);
@@ -72,6 +73,9 @@ export const SocketContextProvider = ({ children }) => {
     if (socketClient) {
       socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
         if (!data) return;
+        if (data?.zera) {
+          setReceiveZera(data.zera);
+        }
         setMessageSocket(data);
       });
       socketClient.on(SOCKET_EVENT.TIME_GAME, (data) => {
@@ -151,6 +155,8 @@ export const SocketContextProvider = ({ children }) => {
       showModalBuyTime,
       setShowModalBuyTime,
       usersInRoom,
+      receiveZera,
+      setReceiveZera,
     }),
     [
       socketStatus,
@@ -170,6 +176,8 @@ export const SocketContextProvider = ({ children }) => {
       showModalBuyTime,
       setShowModalBuyTime,
       usersInRoom,
+      receiveZera,
+      setReceiveZera,
     ]
   );
 

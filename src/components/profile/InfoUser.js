@@ -85,7 +85,7 @@ function InfoUser() {
               alt=""
               src={
                 avatar ||
-                "https://img.freepik.com/premium-vector/cute-animal-design_24911-11520.jpg?w=740"
+                "/avatar-1.svg"
               }
               className="w-[204px] h-[204px] object-cover rounded-[20px]"
             />

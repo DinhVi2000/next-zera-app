@@ -2,14 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useModalContext } from "@/context/modal-context";
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 import {
-  notifyErrorMessage,
   notifySuccessMessage,
   sleep,
 } from "@/utils/helper";
 import BoxModal from "./BoxModal";
-import { IconCheckDaily, IconClose } from "@/resources/icons";
+import { IconClose } from "@/resources/icons";
 import { useToast } from "@chakra-ui/react";
-import ButtonLoading from "../loading/ButtonLoading";
 import { useSocketContext } from "@/context/socket-context";
 import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
@@ -17,8 +15,6 @@ import { useAuthContext } from "@/context/auth-context";
 const ModalUsersOnline = () => {
 
   const [status, setStatus] = useState(STATUS.NOT_START);
-  const [timeItems, setTimeItems] = useState([]);
-  const [itemActive, setItemActive] = useState();
   const { usersInRoom } = useSocketContext();
   const { openModal } = useModalContext();
   const modalTimeRef = useRef(null);
@@ -61,24 +57,30 @@ const ModalUsersOnline = () => {
             onClick={() => handleCloseModal()}
           />
         </div>
-        <div className="grid grid-cols-3 gap-6 mt-10 w-full">
-          {usersInRoom?.rows &&
-            (usersInRoom.rows).filter((userF) => userF.id !== userInfo?.id).map((user, i) => (
-              <Link href={`/hall-of-fame/${ user.username }`} key={i} target="_blank">
-                <div
-                  className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item group"
-                  onClick={() => setItemActive(user)}
-                >
-                  <div className="flex justify-center p-1 border-b-[1px] border-[#fff]">
-                    <span className="text-xs"> {user.username} </span>
+
+        {usersInRoom?.rows && usersInRoom.rows.length > 1 ?
+          <div className="grid grid-cols-3 gap-6 mt-10 w-full">
+            {
+              (usersInRoom.rows).filter((userF) => userF.id !== userInfo?.id).map((user, i) => (
+                <Link href={`/hall-of-fame/${user.username}`} key={i} target="_blank">
+                  <div
+                    className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item group"
+                  >
+                    <div className="flex justify-center p-1 border-b-[1px] border-[#fff]">
+                      <span className="text-xs"> {user.username} </span>
+                    </div>
+                    <div className="overflow-hidden w-full h-[calc(100%-2rem)] p-2 rounded-xl">
+                      <img className="w-full h-full object-cover rounded-xl" src={user?.avatar ?? '/avatar-1.svg'} />
+                    </div>
                   </div>
-                  <div className="overflow-hidden w-full h-[calc(100%-2rem)] p-2 rounded-xl">
-                    <img className="w-full h-full object-cover rounded-xl" src={user.avatar} />
-                  </div>
-                </div>
-              </Link>
-            ))}
-        </div>
+                </Link>
+              ))
+            }
+          </div> :
+          <div className="flex justify-center items-center">
+            <h2 > No one in the room </h2>
+          </div>
+        }
       </div>
     </BoxModal>
   );
