@@ -2,13 +2,13 @@ import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 
 import { useAuthContext } from "@/context/auth-context";
 import { getTimeRemaining } from "@/utils/common";
-import { getUserAnonymous } from "@/services/user.service";
+import { getUserAnonymous, getUserInfo } from "@/services/user.service";
 import { SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { useSocketContext } from "@/context/socket-context";
 
 const Timer = () => {
   const timeIntervalId = useRef(null);
-  const { usernameAuth, anonymousInfo, userInfo } = useAuthContext();
+  const { usernameAuth, anonymousInfo } = useAuthContext();
   const {
     isCountDown,
     socketClient,
@@ -17,6 +17,7 @@ const Timer = () => {
     socketStatus,
     setIncrementTime,
   } = useSocketContext();
+
   const [userData, setUserData] = useState();
   const [remainingTime, setRemainingTime] = useState(() => {
     return getTimeRemaining(totalTimePlay);
@@ -50,13 +51,18 @@ const Timer = () => {
    * Get user info if user sigin
    */
   useEffect(() => {
+    const fetchUserData = async () => {
+      const { data } = await getUserInfo(usernameAuth);
+      setUserData(data);
+    };
+
     if (
       usernameAuth &&
       (socketStatus === STATUS.SUCCESS || socketStatus === STATUS.INIT)
     ) {
-      setUserData({ ...userInfo });
+      fetchUserData();
     }
-  }, [usernameAuth, socketStatus, userInfo]);
+  }, [usernameAuth, socketStatus]);
 
   /**
    *  Set total playtime
@@ -67,12 +73,12 @@ const Timer = () => {
       setRemainingTime(getTimeRemaining(Number(userData?.playtime)));
     }
   }, [userData]);
-
   /**
    *  Countdown time play
    */
   useEffect(() => {
-    if (!isCountDown && totalTimePlay) return;
+    if (!isCountDown) return;
+
     let timeDes = 0;
     timeIntervalId.current = setInterval(() => {
       timeDes++;
@@ -88,7 +94,7 @@ const Timer = () => {
     return () => {
       clearInterval(timeIntervalId.current);
     };
-  }, [totalTimePlay, isCountDown]);
+  }, [isCountDown]);
 
   return (
     <Fragment>

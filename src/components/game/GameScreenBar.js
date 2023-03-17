@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { IconZoomIn, IconZoomOut } from "@/resources/icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea } from "@/utils/helper";
 import { useSelector } from "react-redux";
@@ -12,6 +12,8 @@ import Report from "./screenbar/Report";
 import { MODAL_NAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
+import { useSocketContext } from "@/context/socket-context";
+import { getTimeRemaining } from "@/utils/common";
 
 const GameScreenBar = ({
   area,
@@ -26,6 +28,12 @@ const GameScreenBar = ({
   const { openModal } = useModalContext();
   const { userInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
+
+  const { incrementTime } = useSocketContext();
+  const [remainingTime, setRemainingTime] = useState(getTimeRemaining(0));
+  useEffect(() => {
+    setRemainingTime(getTimeRemaining(incrementTime));
+  }, [incrementTime]);
 
   const handleOpenReport = () => {
     if (!userInfo) {
@@ -51,7 +59,7 @@ const GameScreenBar = ({
 
       <div className="flex gap-5 justify-between max-[550px]:w-full">
         <div className="bg-[#5B5B5B] rounded-[10px] py-[5px] px-2.5 text-base">
-          00 : 00 : 00
+          {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
         </div>
 
         <div className="flex gap-2.5 items-center">

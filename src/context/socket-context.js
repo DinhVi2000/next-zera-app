@@ -72,6 +72,9 @@ export const SocketContextProvider = ({ children }) => {
       socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
         setMessageSocket(data);
       });
+      socketClient.on(SOCKET_EVENT.TIME_GAME, (data) => {
+        console.log(data);
+      });
     }
   }, [socketClient]);
 
@@ -97,7 +100,6 @@ export const SocketContextProvider = ({ children }) => {
       room_id,
       is_anonymous,
     });
-    socketClient.removeAllListeners();
   }, [socketClient]);
 
   useEffect(() => {
