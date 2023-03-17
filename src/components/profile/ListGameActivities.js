@@ -78,6 +78,8 @@ function ListGameActivities({ payload, isModal, listGame }) {
                       index={i}
                       thumbnail={e?.thumbnail}
                       title={e?.title}
+                      slug={e?.slug}
+                      superSlug={e?.superslug}
                     ></GameItem>
                   ))}
                 </div>

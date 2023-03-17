@@ -34,7 +34,7 @@ function Stats() {
       </h4>
       <div className="pl-[28px] text-[28px] max-[1176px]:text-[20px] max-[400px]:text-[16px]">
         <p className="mt-[34px] max-[1176px]:mt-[15px] flex items-center cursor-pointer">
-          { Math.floor(userInfo.playtime / 60) } minutes left
+          { Math.floor(userInfo?.playtime / 60) } minutes left
         </p>
         <p className="mt-[34px] max-[1176px]:mt-[15px]">
           Playstreak: {userInfo?.playstreak} days

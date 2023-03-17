@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { loginWithEmail } from "@/services/auth.service";
 import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
 import {
@@ -14,7 +21,12 @@ import { useToast } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import { useRouter } from "next/router";
-import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, SOCKET_EVENT, STATUS } from "@/utils/constant";
+import {
+  PRIVATE_PAGE_URL,
+  PUBLIC_PAGE_URL,
+  SOCKET_EVENT,
+  STATUS,
+} from "@/utils/constant";
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 import { useSocketContext } from "./socket-context";
@@ -69,6 +81,7 @@ export const AuthContextProvider = ({ children }) => {
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
   const { pathname } = router ?? {};
   const { socketClient } = useSocketContext();
+
   const handleSetUserInfo = async () => {
     const { data } = await getUserInfo(usernameAuth);
     setUserInfo((prev) => ({ ...data, ...prev }));
@@ -151,7 +164,7 @@ export const AuthContextProvider = ({ children }) => {
     [pathname]
   );
 
-  const remainningTime = (data) => {
+  const remainingTime = (data) => {
     if (data) {
       setUserInfo((prev) => ({ ...prev, playtime: data.remainingTime }));
     }
@@ -159,7 +172,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!socketClient) return;
-    socketClient.on(SOCKET_EVENT.TIME_GAME, remainningTime);
+    socketClient.on(SOCKET_EVENT.TIME_GAME, remainingTime);
     return () => {
       if (!socketClient) return;
       socketClient.off(SOCKET_EVENT.TIME_GAME);

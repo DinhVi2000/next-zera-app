@@ -100,13 +100,16 @@ const ModalEditProfile = () => {
   };
 
   const displayItems = payload?.tab !== SHOP_TAB.COVER_PAGE ? 8 : 4;
-  const pagination = usePagination(displayItems, payload?.item);
+  const { currentItems, handlePageClick } = usePagination(
+    displayItems,
+    payload?.item
+  );
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-50 text-white bg-[#00000073] flex-center backdrop-blur-sm">
       <div
         ref={modal_ref}
-        className={`duration-${DURATION} overflow-hidden transition-all opacity-5 scale-90 h-fit max-[990px]:h-[100vh] w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-t from-[#740B99] to-[#2F0652] px-[30px] pb-[20px] max-[990px]:w-full`}
+        className={`duration-${DURATION} overflow-hidden transition-all opacity-5 scale-90 h-fit max-[990px]:h-fit w-fit max-[700px]:w-[90%] max-[350px]:w-full border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-t from-[#740B99] to-[#2F0652] px-[30px] pb-[20px]`}
       >
         <div className="flex items-center justify-center mb-[30px]">
           <div className="bg-pink-800 rounded-[20px] mx-auto py-[5px] px-2 text-[32px] text-center font-bold w-fit shadow-md shadow-[#F761D6] max-[400px]:text-2xl">
@@ -177,11 +180,11 @@ const ModalEditProfile = () => {
                       <div
                         className={`gap-4 pr-4 max-h-[500px] grid grid-cols-2 justify-between max-[990px]:max-h-fit ${
                           payload?.tab === SHOP_TAB.AVATAR
-                            ? "min-[500px]:grid-cols-3 min-[800px]:grid-cols-4 "
+                            ? "min-[500px]:grid-cols-3 min-[800px]:grid-cols-4 flex-wrap"
                             : "max-[550px]:grid-cols-1"
                         }`}
                       >
-                        {pagination?.currentItems?.map((e, i) => (
+                        {currentItems?.map((e, i) => (
                           <div
                             className="relative cursor-pointer group"
                             key={i}
@@ -202,7 +205,7 @@ const ModalEditProfile = () => {
                               className={`rounded-2xl h-[204px] object-cover max-[752px]:block max-[752px]:mx-auto max-[600px]:w-full 
                           ${
                             payload?.tab === SHOP_TAB.AVATAR
-                              ? "w-[204px] max-[600px]:h-[94px]"
+                              ? "w-[204px] max-[990px]:h-[150px] max-[600px]:h-[94px]"
                               : "w-[424px] max-[550px]:w-full max-[550px]:h-[204px]"
                           }`}
                             ></ImageLoading>
@@ -218,7 +221,7 @@ const ModalEditProfile = () => {
                       </div>
                       {/* <div className="absolute bottom-[-50px] left-[50%] translate-x-[-50%] translate-y-[0%]"> */}
                       <Pagination
-                        onPageChange={pagination?.handlePageClick}
+                        onPageChange={handlePageClick}
                         itemsPerPage={displayItems}
                         items={payload?.item}
                       />
@@ -226,14 +229,15 @@ const ModalEditProfile = () => {
                     </div>
                   ) : (
                     <div className="h-[300px]">
-                      <div className="w-[500px] h-[200px] max-[990px]:mx-auto">
+                      <div className="w-[500px] h-[200px] max-[990px]:mx-auto max-[350px]:w-full max-[700px]:w-[90%]">
                         <Empty />
                       </div>
-                      <Link href={"/shop"}>
-                        <button
-                          onClick={handleCloseModal}
-                          className="block text-[20px] font-semibold btn-save-gradient mx-auto px-5 py-2"
-                        >
+                      <Link
+                        href={"/shop"}
+                        onClick={handleCloseModal}
+                        className="w-fit self-center"
+                      >
+                        <button className="block text-[20px] font-semibold btn-save-gradient mx-auto px-5 py-2">
                           Go to shop
                         </button>
                       </Link>
