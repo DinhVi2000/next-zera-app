@@ -1,7 +1,6 @@
 import { useAuthContext } from "@/context/auth-context";
 import { IconPlusNoRounded } from "@/resources/icons";
 import { addGamePlaylist } from "@/services/game.service";
-import { getUserInfo } from "@/services/user.service";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
 import { Tooltip, useToast } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -13,21 +12,11 @@ import { useModalContext } from "@/context/modal-context";
 function AddPlaylist() {
   const toast = useToast();
   const { openModal } = useModalContext();
-  const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
+  const { userInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const [isPlaylist, setIsPlaylist] = useState();
   const [status, setStatus] = useState(STATUS.SUCCESS);
-
-  const checkIsPlaylist = () => {
-    if (userInfo?.playlist?.includes(info?.id)) {
-      setIsPlaylist(false);
-      notifySuccessMessage(toast, "Successfully removed from the Playlist!");
-    } else {
-      setIsPlaylist(true);
-      notifySuccessMessage(toast, "Successfully added to the Playlist!");
-    }
-  };
 
   const handlePlaylistGame = async () => {
     try {
@@ -38,15 +27,19 @@ function AddPlaylist() {
       setStatus(STATUS.NOT_START);
       const gameId = { game_detail_id: info?.id };
       const { data } = await addGamePlaylist(gameId);
-      if (!data) return;
 
-      const res = await getUserInfo(usernameAuth);
-      setUserInfo(res?.data);
-      setStatus(STATUS.SUCCESS);
-
-      if (userInfo) {
-        checkIsPlaylist();
+      if (data) {
+        setIsPlaylist(true);
+        notifySuccessMessage(toast, "Successfully added to the Love Games!");
+      } else {
+        setIsPlaylist(false);
+        notifySuccessMessage(
+          toast,
+          "Successfully removed from the Love Games!"
+        );
       }
+
+      setStatus(STATUS.SUCCESS);
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
@@ -54,7 +47,7 @@ function AddPlaylist() {
 
   useEffect(() => {
     if (userInfo?.playlist && info?.id) {
-      setIsPlaylist(userInfo?.playlist?.includes(info?.id));
+      setIsPlaylist(!!userInfo?.playlist?.find((e) => e?.id == info?.id));
     }
   }, [info]);
 
