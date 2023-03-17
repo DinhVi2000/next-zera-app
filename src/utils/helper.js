@@ -46,7 +46,7 @@ const getRandom = (list) => {
 
 const formatDate = (date) => {
   if (!date) return;
-  return new Date(date).toISOString().split("T")[0] || "";
+  return moment(new Date(date)).format("MM/DD/YYYY h:mm A");
 };
 
 const abbreviateNumber = (num) => {
@@ -168,6 +168,20 @@ const articleCategoryUrl = (slug) => {
   return `/article/category/${slug}`;
 };
 
+const hasNoValueUndefined = (obj) => {
+  if (Object.keys(obj).length === 0) return false;
+
+  return !Object.values(obj).find((value) =>
+    ["undefined", undefined].includes(value)
+  );
+};
+
+const isValidPath = (query, setIsValidPage) => {
+  if (!query || isEmpty(query)) return;
+  if (Object.values(query).includes("undefined")) return setIsValidPage(false);
+  return true;
+};
+
 export {
   articleCategoryUrl,
   abbreviateNumber,
@@ -178,9 +192,11 @@ export {
   getArea,
   isEmpty,
   inRange,
+  hasNoValueUndefined,
   notifyErrorMessage,
   notifySuccessMessage,
   sleep,
   getBetweenTwoDate,
   toUpperCaseFirstLetter,
+  isValidPath,
 };

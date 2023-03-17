@@ -23,7 +23,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const { call } = useApi();
 
-  const { openModal } = useModalContext();
+  const { openModal, closeModal } = useModalContext();
   const { userInfo, verifyStatus } = useAuthContext();
 
   const { gameIndex } = useSelector(({ game }) => game) ?? {};
@@ -38,7 +38,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (verifyStatus === STATUS.SUCCESS && !userInfo?.isClaimDailyBonus) {
+    if (
+      verifyStatus === STATUS.SUCCESS &&
+      userInfo &&
+      !userInfo?.isClaimDailyBonus
+    ) {
       openModal(MODAL_NAME.DAILY_BONUS);
     }
   }, [userInfo]);

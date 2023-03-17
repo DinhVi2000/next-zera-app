@@ -1,3 +1,4 @@
+import { staticPaths } from "@/utils/$path";
 import Link from "next/link";
 import React from "react";
 
@@ -14,7 +15,7 @@ const PageNotFound = () => {
           </span>
         </div>
         <div className="text-center">
-          <Link href={"/"}>
+          <Link href={staticPaths.home}>
             <button
               type="submit"
               className="text-base rounded-[20px] bg-linear-violet-300 w-[50%] py-3

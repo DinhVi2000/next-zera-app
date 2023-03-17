@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { dynamicPaths } from "@/utils/$path";
 import {
   categoryUrl,
   formatDate,
@@ -42,7 +43,7 @@ const GameInfo = ({ area, ...props }) => {
           <div className="text-sm font-semibold  mb-5">
             <span>{superslug?.label} </span> /
             <Link
-              href={categoryUrl(
+              href={dynamicPaths.category_by_slug(
                 game_category?.superslug?.value,
                 game_category?.slug
               )}

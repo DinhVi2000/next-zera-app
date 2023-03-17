@@ -17,6 +17,7 @@ import { MESSAGE_MAX_LENGTH, MODAL_NAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useToast } from "@chakra-ui/react";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
+import { staticPaths } from "@/utils/$path";
 
 function BoxChat({ area }) {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
@@ -45,12 +46,16 @@ function BoxChat({ area }) {
   const toast = useToast();
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (!(inputRef.current.value).trim()) {
-      notifyErrorMessage(toast, { message: "Please enter message before send!" });
+    if (!inputRef.current.value.trim()) {
+      notifyErrorMessage(toast, {
+        message: "Please enter message before send!",
+      });
       return;
     }
-    if ((inputRef.current.value).trim().length > MESSAGE_MAX_LENGTH) {
-      notifyErrorMessage(toast, { message: `Please enter message with length less than ${ MESSAGE_MAX_LENGTH } character` });
+    if (inputRef.current.value.trim().length > MESSAGE_MAX_LENGTH) {
+      notifyErrorMessage(toast, {
+        message: `Please enter message with length less than ${MESSAGE_MAX_LENGTH} character`,
+      });
       return;
     }
     sendMessage({
@@ -61,7 +66,6 @@ function BoxChat({ area }) {
       is_anonymous: !userInfo,
     });
     e.target.reset();
-
   };
 
   useEffect(() => {
@@ -126,7 +130,9 @@ function BoxChat({ area }) {
 
   console.log(usersInRoom);
   useEffect(() => {
-    showModalBuyTime ? openModal(MODAL_NAME.BUYTIME) : openModal(MODAL_NAME.NONE);
+    showModalBuyTime
+      ? openModal(MODAL_NAME.BUYTIME)
+      : openModal(MODAL_NAME.NONE);
   }, [showModalBuyTime]);
   // Scroll to Bottom
   useEffect(() => {
@@ -145,7 +151,7 @@ function BoxChat({ area }) {
       {!userInfo ? (
         <div className="flex-center flex-col h-full text-lg text-center">
           Please login to chat!{" "}
-          <Link href={"/login"}>
+          <Link href={staticPaths.login}>
             <button
               type="submit"
               className="text-base rounded-[20px] bg-linear-violet-300 w-auto px-4 py-0 mt-3"
@@ -156,19 +162,31 @@ function BoxChat({ area }) {
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e] cursor-pointer"
+          <div
+            className="flex items-center justify-between px-[10px] rounded-[10px] h-[37px] bg-[#52495e] cursor-pointer"
             onClick={() => openModal(MODAL_NAME.USERS_ONLINE_GAME)}
           >
             <div className="flex">
-              {
-                Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? usersInRoom.rows.slice(0, 3).map((user) => {
-                  return <img key={user.id} alt="user" src={user.avatar} className="w-5 h-5 mr-[-10px] rounded-full" />;
-                }) : <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
-              }
+              {Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? (
+                usersInRoom.rows.slice(0, 3).map((user) => {
+                  return (
+                    <img
+                      key={user.id}
+                      alt="user"
+                      src={user.avatar}
+                      className="w-5 h-5 mr-[-10px] rounded-full"
+                    />
+                  );
+                })
+              ) : (
+                <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+              )}
             </div>
-            {
-              usersInRoom?.count && usersInRoom?.count > 3 && <p className="text-[12px]">+ { usersInRoom?.count && (usersInRoom.count - 3)} more</p>
-            }
+            {usersInRoom?.count && usersInRoom?.count > 3 && (
+              <p className="text-[12px]">
+                + {usersInRoom?.count && usersInRoom.count - 3} more
+              </p>
+            )}
           </div>
           <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
             <div
@@ -218,25 +236,53 @@ const MessageItem = ({ msg }) => {
   return (
     <div>
       <div
-        className={`w-full flex ${!msg.user ? "justify-center" : (Number(userInfo?.id) === msg.user_id ? "justify-end pr-1" : "justify-start")}`}
+        className={`w-full flex ${
+          !msg.user
+            ? "justify-center"
+            : Number(userInfo?.id) === msg.user_id
+            ? "justify-end pr-1"
+            : "justify-start"
+        }`}
       >
-        <div className={ `flex flex-col my-[3px] ${(Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start") }`} >
-          {
-            msg.user &&
-            (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${ (Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "") }`}>
-                {
-                  msg?.user?.avatar ? <ImageLoading
-                    alt=""
-                    src={msg?.user?.avatar}
-                    className="w-4 h-4 rounded-full"
-                    /> : <Image src="/avatar-1.svg" width="16" height="16"  className="w-4 h-4 rounded-full" />
-                }
-                <div className="w-fit max-w-[150px] break-words">
-                  {msg?.user?.username}
-                </div>
-              </div>)
-          }
-          <div className={ `rounded-md max-w-[150px] w-fit items-end ${ !msg.user ? "text-[#fff] text-[10px] max-w-full" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none") }`}>
+        <div
+          className={`flex flex-col my-[3px] ${
+            Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start"
+          }`}
+        >
+          {msg.user && (
+            <div
+              className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${
+                Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : ""
+              }`}
+            >
+              {msg?.user?.avatar ? (
+                <ImageLoading
+                  alt=""
+                  src={msg?.user?.avatar}
+                  className="w-4 h-4 rounded-full"
+                />
+              ) : (
+                <Image
+                  src="/avatar-1.svg"
+                  width="16"
+                  height="16"
+                  className="w-4 h-4 rounded-full"
+                />
+              )}
+              <div className="w-fit max-w-[150px] break-words">
+                {msg?.user?.username}
+              </div>
+            </div>
+          )}
+          <div
+            className={`rounded-md max-w-[150px] w-fit items-end ${
+              !msg.user
+                ? "text-[#fff] text-[10px] max-w-full"
+                : Number(userInfo?.id) === msg.user_id
+                ? "bg-[#EC4899] p-1 rounded-br-none"
+                : "bg-[#8B5CF6] p-1 rounded-tl-none"
+            }`}
+          >
             {msg?.message}
           </div>
         </div>

@@ -9,6 +9,7 @@ import { registerFormSchema } from "@/validators/register.validator";
 
 import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
+import { staticPaths } from "@/utils/$path";
 
 const LoginForm = ({ onSetIsSSOLogging }) => {
   const { login } = useAuthContext();
@@ -75,7 +76,7 @@ const LoginForm = ({ onSetIsSSOLogging }) => {
       </div>
 
       <div className="mb-5 text-right">
-        <Link href={"/"} className="text-violet-300">
+        <Link href={staticPaths.home} className="text-violet-300">
           Forgot the password ?
         </Link>
       </div>

@@ -25,12 +25,13 @@ export const getItemByCategory = async (params) => {
 export const getItemTime = async () => {
   try {
     const itemCategries = await getCategoriesShop();
-    const category = itemCategries.data.find(category => (category.name).trim() === PLAYTIME_CATEGORY);
+    const category = itemCategries.data.find(
+      (category) => category.name.trim() === PLAYTIME_CATEGORY
+    );
     const { data } = await getItemByCategory(category?.id);
     if (data) return data;
     return [];
   } catch (e) {
-    console.log(e);
     return [];
   }
 };

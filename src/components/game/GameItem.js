@@ -7,6 +7,7 @@ import { IconRecently } from "@/resources/icons";
 
 import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea, inRange } from "@/utils/helper";
+import { dynamicPaths } from "@/utils/$path";
 
 const MAX_WITDH = 314;
 
@@ -41,7 +42,7 @@ const GameItem = ({
       {...props}
     >
       <Link
-        href={`/${superSlug?.value}/${slug}`}
+        href={dynamicPaths.game_by_slug(superSlug?.value, slug)}
         className="game-item__box-shadow"
       >
         {isRecently && (

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { dynamicPaths } from "@/utils/$path";
 import { inRange } from "@/utils/helper";
 import Link from "next/link";
 import React from "react";
@@ -22,7 +23,7 @@ const GameCategory = ({
       className={`${className} rounded-2xl overflow-hidden relative cursor-pointer min-w-[204px] max-w-[204px] min-h-[94px] max-h-[204px] bg-white 
                       ${isMinSize ? "flex items-center justify-start" : ""}
                       hover:translate-y-[-2px] hover:scale-105 transition-all duration-300 shadow-[0px_6px_12px_0px_rgb(0,0,0,0.24)]`}
-      href={`/${superslug?.value}/category/${slug}`}
+      href={dynamicPaths.category_by_slug(superslug?.value, slug)}
     >
       {/* thumbnail */}
       <ImageLoading

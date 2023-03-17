@@ -12,6 +12,7 @@ import { isEmpty, notifyErrorMessage } from "@/utils/helper";
 import { useDispatch } from "react-redux";
 import HallOfFame from "@/components/other/HallOfFame";
 import SEO from "@/components/other/SEO";
+import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 
 const HallOfFamePage = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const HallOfFamePage = () => {
   const dispatch = useDispatch();
 
   const [params, setParams] = useState();
-  const [isValidPage, setIsValidPage] = useState(true);
+  const [isValidPage, setIsValidPage] = useState();
 
   const handleGetHallOfFame = async () => {
     try {
@@ -47,10 +48,11 @@ const HallOfFamePage = () => {
     <>
       <SEO title={`Hall of fame - ${params?.username}`} />
 
-      <MainLayout>
-        {/* content  */}
-        <HallOfFame></HallOfFame>
-      </MainLayout>
+      <HandleNotFoundPage isValidPage={isValidPage}>
+        <MainLayout>
+          <HallOfFame></HallOfFame>
+        </MainLayout>
+      </HandleNotFoundPage>
     </>
   );
 };

@@ -4,12 +4,14 @@ import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import SEO from "@/components/other/SEO";
 import GameCategoryDetailGrid from "@/components/ui/GameCategoryDetailGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
+import GameTagDetailGrid from "@/components/ui/GameTagDetailGrid";
 import { useApi } from "@/hooks/useApi";
 import MainLayout from "@/layouts/MainLayout";
 import {
   getAllCategories,
   getAllGame,
   getCategoryBySlug,
+  getGamesByTagSlug,
 } from "@/services/game.service";
 import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
@@ -36,7 +38,7 @@ const CategoryDetail = () => {
     if (Object.values(router.query).includes("undefined"))
       return setIsValidPage(false);
 
-    getCategoryBySlug(dispatch, router.query["category-slug"])
+    getGamesByTagSlug(dispatch, router.query["tag-slug"])
       .then((data) => {
         const { game_category } = data ?? {};
         setSeo({
@@ -60,11 +62,10 @@ const CategoryDetail = () => {
   return (
     <>
       <SEO title={seo?.title} description={seo?.description} />
-
       <HandleNotFoundPage isValidPage={true}>
         <MainLayout>
           <div className="w-min">
-            <GameCategoryDetailGrid />
+            <GameTagDetailGrid />
             <GameGrid games={games} />
             <GameCategoryGrid categories={categories} />
           </div>

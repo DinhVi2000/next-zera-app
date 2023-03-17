@@ -8,9 +8,10 @@ import {
   getGameByCategorySlug,
   getGameDetailBySlug,
   getHallOfFameByGameSlug,
+  getMessages,
 } from "@/services/game.service";
 import { useRouter } from "next/router";
-import { isEmpty} from "@/utils/helper";
+import { isEmpty } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
@@ -47,8 +48,9 @@ const GameDetail = () => {
         setSeo({ seo_title, seo_description });
         const { game_category } = data ?? {};
         if (!game_category?.slug) return;
-
         getGameByCategorySlug(dispatch, game_category?.slug);
+
+        getMessages(dispatch, game_category?.id);
       })
       .catch(() => setIsValidPage(false));
 

@@ -24,6 +24,7 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 import { useRouter } from "next/router";
 import { abbreviateNumber } from "@/utils/helper";
+import { staticPaths } from "@/utils/$path";
 
 const SidebarMB = ({ className, childClassName, ...props }) => {
   const ref = useRef();
@@ -59,7 +60,7 @@ const SidebarMB = ({ className, childClassName, ...props }) => {
       >
         <div className="p-3 pb-[6px]">
           {/* logo  */}
-          <Link href={"/"}>
+          <Link href={staticPaths.home}>
             <IconLogo className="mx-auto mb-1 w-10 h-10"></IconLogo>
           </Link>
 
@@ -83,13 +84,13 @@ const SidebarMB = ({ className, childClassName, ...props }) => {
               {!userInfo && (
                 <div className="flex flex-col items-center mt-3 pt-0.5 overflow-hidden">
                   <Link
-                    href={"/login"}
+                    href={staticPaths.login}
                     className="btn-login text-[8px] text-white text-center flex items-center justify-center font-semibold rounded-[5px] mx-auto w-[50px] h-[18px]"
                   >
                     Login
                   </Link>
                   <Link
-                    href={"/register"}
+                    href={staticPaths.register}
                     className="text-violet-400 text-[8px]"
                   >
                     Register

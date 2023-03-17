@@ -2,14 +2,15 @@ import { IconNext, IconPre } from "@/resources/icons";
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-function Pagination({ items, onPageChange, itemsPerPage }) {
+function Pagination({ items, onPageChange, itemsPerPage, ...props }) {
   const pageCount = Math.floor(items?.length / itemsPerPage) + 1;
 
   return (
     <>
       {pageCount > 1 && (
         <ReactPaginate
-          className="flex-center mt-5"
+          {...props}
+          className="text-white flex-center mt-5"
           activeClassName="text-[#F472B6]"
           previousLinkClassName="bg-[#4C1D95] rounded-[5px] p-1 w-8 h-8 flex-center"
           nextLinkClassName="bg-[#4C1D95] rounded-[5px] p-1 w-8 h-8 flex-center"

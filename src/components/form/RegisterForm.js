@@ -14,6 +14,7 @@ import { useToast } from "@chakra-ui/react";
 import ButtonLoading from "../loading/ButtonLoading";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
 import { STATUS } from "@/utils/constant";
+import { staticPaths } from "@/utils/$path";
 
 const RegisterForm = () => {
   const {
@@ -148,12 +149,16 @@ const RegisterForm = () => {
         >
           <p>
             I accept{" "}
-            <Link href={"/terms"} className="text-violet-300" target={"_blank"}>
+            <Link
+              href={staticPaths.term}
+              className="text-violet-300"
+              target={"_blank"}
+            >
               Terms & Conditions{" "}
             </Link>
             and{" "}
             <Link
-              href={"/policy"}
+              href={staticPaths.policy}
               className="text-violet-300"
               target={"_blank"}
             >

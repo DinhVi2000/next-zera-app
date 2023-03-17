@@ -22,6 +22,7 @@ const game = createSlice({
     },
     categories: null,
     categoryDetail: null,
+    gameDetailByTag: null,
   },
   reducers: {
     setInfo: (state, action) => {
@@ -45,6 +46,9 @@ const game = createSlice({
     setCategoryDetail: (state, action) => {
       state.categoryDetail = action.payload;
     },
+    setGameDetailByTag: (state, action) => {
+      state.gameDetailByTag = action.payload;
+    },
     setMessageGame: (state, action) => {
       state.gameDetail.messages = action.payload;
     },
@@ -61,6 +65,7 @@ export const {
   setCategoryDetail,
   setHallOfFameAtGameDetail,
   setMessageGame,
+  setGameDetailByTag,
 } = actions;
 
 const getMessages = async (dispatch, id) => {
@@ -135,6 +140,22 @@ const getGamesByKeySearch = async (keySearch) => {
     if (!data.success) {
       throw new Error(data?.message);
     }
+
+    return data.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getGamesByTagSlug = async (dispatch, tagSlug) => {
+  try {
+    const { data } = await http.get(`/game/tag/${tagSlug}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setGameDetailByTag(data?.data?.rows));
 
     return data.data;
   } catch (e) {
@@ -317,10 +338,23 @@ const reportGame = async (params, slug) => {
   }
 };
 
+const getAllGameTagBySuperslug = async (superslug) => {
+  try {
+    const { data } = await http.get(`game/${superslug}/tag`);
+    if (!data.success) throw new Error(data?.message);
+
+    return data?.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getAllGame,
   getAllCategories,
+  getAllGameTagBySuperslug,
   getGameByCategorySlug,
+  getGamesByTagSlug,
   getGamesByKeySearch,
   getGameDetailBySlug,
   getGameDetailById,
