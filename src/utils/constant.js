@@ -23,6 +23,7 @@ const MODAL_NAME = {
   REPORT: "REPORT",
   NONE: "NONE",
   BUYTIME: "BUYTIME",
+  USERS_ONLINE_GAME: "USERS_ONLINE_GAME",
 };
 
 const SHOP_TAB = {
@@ -108,6 +109,8 @@ const CLASS_NAME_BY_PATH = {
   "/": "tbl-hidden mb-hidden",
 };
 
+const MESSAGE_MAX_LENGTH = 150;
+
 export {
   ADS_IMAGES,
   COUNTDOWN_DEADLINE,
@@ -124,4 +127,5 @@ export {
   SOCKET_EVENT,
   VIEW_ALL_GAMES_TAB,
   PLAYTIME_CATEGORY,
+  MESSAGE_MAX_LENGTH,
 };

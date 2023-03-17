@@ -11,7 +11,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { AuthContextProvider } from "@/context/auth-context";
 import { SocketContextProvider } from "@/context/socket-context";
 import { usePreviousRoute } from "@/hooks/usePreviousRoute";
-import { useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
   usePreviousRoute();
