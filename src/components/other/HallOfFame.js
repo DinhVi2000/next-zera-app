@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useAuthContext } from "@/context/auth-context";
+import { usePagination } from "@/hooks/usePagination";
 import {
   IconCoin,
   IconEarn,
@@ -7,22 +8,30 @@ import {
   IconLeftWing,
   IconRightWing,
 } from "@/resources/icons";
+import { dynamicPaths } from "@/utils/$path";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, memo } from "react";
 import { useSelector } from "react-redux";
 import ImageLoading from "../loading/ImageLoading";
+import Pagination from "../pagination/Pagination";
 import SidebarMB from "../responsive/SidebarMB";
+
+const ITEM_PER_PAGE = 4;
 
 const HallOfFame = () => {
   const { hallOfFame } = useSelector(({ user }) => user) ?? {};
+  console.log("hallOfFame :", hallOfFame);
 
   const { pathname } = useRouter();
 
-  const { info, played_game } = hallOfFame ?? {};
+  const { user_info, played_game } = hallOfFame ?? {};
 
   const { username, avatar, quote, zera, highest_playstreak, playstreak } =
-    info ?? {};
+    user_info ?? {};
   const { count, rows } = played_game ?? {};
+
+  const { currentItems, handlePageClick } = usePagination(ITEM_PER_PAGE, rows);
 
   const items = [
     {
@@ -63,7 +72,7 @@ const HallOfFame = () => {
         childClassName={"static-important"}
       />
       <div
-        className="text-white bg-blur-800 border-[5px] border-violet-400 pt-2.5 rounded-[20px]
+        className="text-white w-responsive bg-blur-800 border-[5px] border-violet-400 pt-2.5 rounded-[20px]
                      p-[62px] max-[550px]:p-[30px]"
       >
         {/* title */}
@@ -72,26 +81,26 @@ const HallOfFame = () => {
         </div>
 
         {/* content */}
-        <div
-          className="border-[5px] border-pink-500 bg-[#5b21b666] rounded-[30px]
-                      p-16 max-[450px]:p-5"
-        >
+        <div className="border-[5px] border-pink-500 bg-gradient-hof rounded-[30px] p-16 max-[450px]:p-5">
           <div className="flex items-center max-[991px]:flex-col gap-20">
             {/* avatar */}
             {pathname !== "/hall-of-fame" && (
-              <div className="max-w-[204px] max-[991px]:mx-auto">
+              <div className="w-full max-w-[204px] h-full max-h-[204px] max-[991px]:mx-auto">
                 <ImageLoading
                   src={avatar}
                   alt="avatar"
                   className="w-[204px] h-[204px] object-cover rounded-[20px]"
                 />
-                <h2 className="text-center font-bold text-base">{username}</h2>
+                <h2 className="text-center font-bold text-base mt-2">
+                  {username}
+                </h2>
                 <p className="text-[12px]">{quote}</p>
               </div>
             )}
 
             {/* item */}
-            <div className="grid grid-cols-1 min-[1250px]:grid-cols-2 min-[1492px]:grid-cols-3 gap-[25px]">
+            {/* <div className="grid grid-cols-1 min-[1250px]:grid-cols-2 min-[1492px]:grid-cols-3 gap-[25px]"> */}
+            <div className="flex flex-wrap w-full justify-center gap-[25px]">
               {items?.map(({ icon, value, desc, title }, i) => (
                 <div
                   key={i}
@@ -113,36 +122,52 @@ const HallOfFame = () => {
             </div>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             {/* top played */}
             <div className="max-w-[845px] w-full text-center">
-              <h1 className="text-[28px] font-semibold py-4">
+              <h1 className="text-[28px] font-semibold py-6">
                 Top game played
               </h1>
+
+              {/* list */}
               <div className="w-full grid grid-cols-1 min-[1492px]:grid-cols-2 gap-x-5 gap-y-[15px]">
-                {rows?.map(({ game_detail, zera_earned }, i) => (
-                  <div
+                {currentItems?.map(({ game_detail, zera_earned }, i) => (
+                  <Link
+                    href={dynamicPaths.game_by_slug(
+                      game_detail?.superslug?.value,
+                      game_detail?.slug
+                    )}
                     key={i}
-                    className="bg-gradient-tgp w-full rounded-[20px] p-[10px] text-base font-bold
-                      flex items-center justify-between"
                   >
-                    <div className="flex items-center gap-2.5">
-                      <ImageLoading
-                        src={game_detail?.thumbnail}
-                        alt=""
-                        className="w-[94px] h-[94px] object-cover rounded-2xl"
-                      />
-                      <p>{game_detail?.title}</p>
+                    <div
+                      className="bg-gradient-tgp max-h-[114px] overflow-hidden w-full rounded-[20px] p-[10px] text-base font-bold
+                      flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <ImageLoading
+                          src={game_detail?.thumbnail}
+                          alt=""
+                          className="w-[94px] h-[94px] object-cover rounded-2xl"
+                        />
+                        <p>{game_detail?.title}</p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span>{zera_earned}</span>
+                        <IconCoin className="w-[30px] h-[30px]" />
+                      </div>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <span>{zera_earned}</span>
-                      <IconCoin />
-                    </div>
-                  </div>
+                  </Link>
                 ))}
 
                 <LoadingWrapper data={rows} />
               </div>
+
+              {/* pagination */}
+              <Pagination
+                items={rows}
+                itemsPerPage={ITEM_PER_PAGE}
+                onPageChange={handlePageClick}
+              />
             </div>
           </div>
         </div>

@@ -10,7 +10,10 @@ import { useToast } from "@chakra-ui/react";
 
 import { useDispatch } from "react-redux";
 
-import { getHallOfFameByUsername } from "@/services/user.service";
+import {
+  getHallOfFameByUsername,
+  setHallOfFame,
+} from "@/services/user.service";
 
 import { notifyErrorMessage } from "@/utils/helper";
 
@@ -18,37 +21,37 @@ import HallOfFame from "@/components/other/HallOfFame";
 import { useAuthContext } from "@/context/auth-context";
 import SEO from "@/components/other/SEO";
 import { STATUS } from "@/utils/constant";
+import { useApi } from "@/hooks/useApi";
+import { apiURL } from "@/utils/$apiUrl";
+import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
+import { Fragment } from "react";
 
 const MyHallOfFamePage = () => {
-  const toast = useToast();
-  const dispatch = useDispatch();
-
+  const { get } = useApi();
   const { userInfo, verifyStatus } = useAuthContext();
 
-  const handleGetHallOfFame = async () => {
-    try {
-      getHallOfFameByUsername(dispatch, userInfo?.username);
-    } catch (error) {
-      notifyErrorMessage(toast, error);
-    }
-  };
+  const [isValidPage, setIsValidPage] = useState();
 
   useEffect(() => {
-    if (userInfo && verifyStatus === STATUS.SUCCESS) {
-      handleGetHallOfFame();
-    }
-  }, [userInfo, verifyStatus]);
+    if (verifyStatus === STATUS.SUCCESS)
+      get(
+        apiURL.get.hall_of_fame_by_username(userInfo?.username),
+        null,
+        setHallOfFame
+      )
+        .then(() => setIsValidPage(true))
+        .catch(() => setIsValidPage(false));
+  }, [verifyStatus]);
 
-  // if (!isValidPage) return <PageNotFound />;
   return (
-    <>
+    <Fragment>
       <SEO title={"My Hall Of Fame"} />
-
-      <MainLayout>
-        {/* content  */}
-        <HallOfFame></HallOfFame>
-      </MainLayout>
-    </>
+      <HandleNotFoundPage isValidPage={isValidPage}>
+        <MainLayout>
+          <HallOfFame />
+        </MainLayout>
+      </HandleNotFoundPage>
+    </Fragment>
   );
 };
 

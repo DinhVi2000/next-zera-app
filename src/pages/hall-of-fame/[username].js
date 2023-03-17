@@ -1,59 +1,47 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
-
-import Head from "next/head";
+import React, { Fragment, useEffect, useState } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
 
-import { useRouter } from "next/router";
-import { useToast } from "@chakra-ui/react";
-import { getHallOfFameByUsername } from "@/services/user.service";
-import { isEmpty, notifyErrorMessage } from "@/utils/helper";
-import { useDispatch } from "react-redux";
 import HallOfFame from "@/components/other/HallOfFame";
 import SEO from "@/components/other/SEO";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 
-const HallOfFamePage = () => {
-  const router = useRouter();
-  const toast = useToast();
-  const dispatch = useDispatch();
+import { useRouter } from "next/router";
+import { setHallOfFame } from "@/services/user.service";
+import { isValidPath } from "@/utils/helper";
+import { useApi } from "@/hooks/useApi";
+import { apiURL } from "@/utils/$apiUrl";
 
-  const [params, setParams] = useState();
+const HallOfFamePage = () => {
+  const { get } = useApi();
+  const router = useRouter();
+
+  const { query } = router ?? {};
+
   const [isValidPage, setIsValidPage] = useState();
 
-  const handleGetHallOfFame = async () => {
-    try {
-      const { username } = params;
-
-      getHallOfFameByUsername(dispatch, username);
-    } catch (error) {
-      notifyErrorMessage(toast, error);
-      setIsValidPage(false);
-    }
-  };
-
   useEffect(() => {
-    if (!params || isEmpty(params)) return;
-    handleGetHallOfFame();
-  }, [params]);
-
-  useEffect(() => {
-    setParams(router.query);
-  }, [router]);
-
-  // if (!isValidPage) return <PageNotFound />;
+    if (isValidPath(query, setIsValidPage))
+      get(
+        apiURL.get.hall_of_fame_by_username(query?.username),
+        null,
+        setHallOfFame
+      )
+        .then(() => setIsValidPage(true))
+        .catch(() => setIsValidPage(false));
+  }, [query]);
 
   return (
-    <>
-      <SEO title={`Hall of fame - ${params?.username}`} />
-
+    <Fragment>
+      <SEO title={`Hall of fame - ${query?.username}`} />
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
           <HallOfFame></HallOfFame>
         </MainLayout>
       </HandleNotFoundPage>
-    </>
+    </Fragment>
   );
 };
 
