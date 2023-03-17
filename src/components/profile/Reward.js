@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { useModalContext } from "@/context/modal-context";
 import { getUserReward } from "@/services/user.service";
 import { STATUS } from "@/utils/constant";
@@ -47,20 +48,27 @@ function Rewards() {
             <>
               {rewards?.map((e, i) => (
                 <div className="mt-[34px] max-[1176px]:mt-[15px]" key={i}>
-                  <div className="w-full flex">
+                  <div className="w-full ">
                     {e?.type?.includes("BUY_AVATAR") ||
                     e?.type?.includes("BUY_COVER_PAGE") ||
-                    e?.type?.includes("BUY_TIME")
-                      ? "Spend "
-                      : "Earn "}
+                    e?.type?.includes("BUY_TIME") ? (
+                      <span>Spend </span>
+                    ) : (
+                      <span>Earn </span>
+                    )}
                     <Tooltip
                       label={+e?.zera_amount > 999 && +e?.zera_amount}
                       aria-label="A tooltip"
                     >
-                      <p>&nbsp;{abbreviateNumber(+e?.zera_amount)}&nbsp;</p>
+                      <span>
+                        &nbsp;{abbreviateNumber(+e?.zera_amount)}&nbsp;
+                      </span>
                     </Tooltip>{" "}
-                    ZERA from{" "}
-                    {toUpperCaseFirstLetter(e?.type?.replaceAll("_", " "))}
+                    <span>ZERA from</span>{" "}
+                    <span>
+                      {" "}
+                      {toUpperCaseFirstLetter(e?.type?.replaceAll("_", " "))}
+                    </span>
                   </div>
                   <div className="opacity-60 text-base">
                     {getBetweenTwoDate(e?.created_at)}
