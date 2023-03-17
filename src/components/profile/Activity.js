@@ -7,6 +7,7 @@ import { MODAL_NAME } from "@/utils/constant";
 import ListGameActivities from "./ListGameActivities";
 import GameItem from "../game/GameItem";
 import Link from "next/link";
+import { staticPaths } from "@/utils/$path";
 import { useAuthContext } from "@/context/auth-context";
 
 function Activities() {
@@ -34,7 +35,7 @@ function Activities() {
       ) : (
         <div>
           <Link
-            href={"/"}
+            href={staticPaths.home}
             className="flex-center flex-col text-lg text-center p-2"
           >
             You haven't played any games yet.

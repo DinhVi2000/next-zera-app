@@ -36,27 +36,24 @@ const getAllArticleCategory = async (dispatch) => {
   }
 };
 
-const getArticleById = async (id) => {
+const getArticleBySlug = async (slug) => {
   try {
-    const { data } = await http.get(`/article/${id}`);
+    const { data } = await http.get(`/article/detail/${slug}`);
 
     if (!data.success) {
       throw new Error(data?.message);
     }
 
-    return data;
+    return data.data;
   } catch (e) {
     throw e;
   }
 };
 
-const getArticleBySlug = async (slug) => {
+const getAllArticleTag = async () => {
   try {
-    const { data } = await http.get(`/article/${slug}`);
-
-    if (!data.success) {
-      throw new Error(data?.message);
-    }
+    const { data } = await http.get(`/article/tag`);
+    if (!data.success) throw new Error(data?.message);
 
     return data.data;
   } catch (e) {
@@ -78,5 +75,24 @@ const getArticlesByCategorySlug = async (slug) => {
   }
 };
 
-export { getAllArticleCategory, getArticleBySlug, getArticlesByCategorySlug };
+const getArticlesByTagSlug = async (slug) => {
+  try {
+    const { data } = await http.get(`/article/tag/${slug}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export {
+  getAllArticleCategory,
+  getAllArticleTag,
+  getArticleBySlug,
+  getArticlesByCategorySlug,
+};
 export default reducer;

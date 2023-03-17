@@ -10,6 +10,7 @@ import GoogleLoginButton from "@/components/sso/GoogleLoginButton";
 import FacebookLoginButton from "@/components/sso/FacebookLoginButton";
 import FormLoading from "@/components/loading/FormLoading";
 import SEO from "@/components/other/SEO";
+import { staticPaths } from "@/utils/$path";
 
 const Login = () => {
   const [isSSOLogging, setIsSSOLogging] = useState(false);
@@ -35,7 +36,7 @@ const Login = () => {
 
           <div className="text-white text-center mt-4">
             No account yet?
-            <Link className="ml-1 text-violet-300" href={"/register"}>
+            <Link className="ml-1 text-violet-300" href={staticPaths.register}>
               Register now!
             </Link>
           </div>

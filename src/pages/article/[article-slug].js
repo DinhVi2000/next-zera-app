@@ -1,8 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import Head from "next/head";
 
-import ArticleDetailWrapper from "@/components/other/ArticleDetailWrapper";
+import ArticleDetailWrapper from "@/components/wrapper/ArticleDetailWrapper";
 
 import MainLayout from "@/layouts/MainLayout";
 
@@ -13,27 +14,29 @@ import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import SEO from "@/components/other/SEO";
+import { isValidPath } from "@/utils/helper";
+import { useApi } from "@/hooks/useApi";
+import { apiURL } from "@/utils/$apiUrl";
 
 const ArticleDetail = () => {
   const router = useRouter();
+  const { get } = useApi();
+
+  const { query } = router;
 
   const [article, setArticle] = useState();
 
   const [isValidPage, setIsValidPage] = useState();
 
   useEffect(() => {
-    if (!router.query || isEmpty(router.query)) return;
-
-    if (Object.values(router.query).includes("undefined"))
-      return setIsValidPage(false);
-
-    getArticleBySlug(router.query["article-slug"])
-      .then((data) => {
-        setIsValidPage(!!data);
-        setArticle(data);
-      })
-      .catch(() => setIsValidPage(false));
-  }, [router.query]);
+    if (isValidPath(query, setIsValidPage))
+      get(apiURL.get.article_by_slug(query["article-slug"]))
+        .then((data) => {
+          setIsValidPage(!!data);
+          setArticle(data);
+        })
+        .catch(() => setIsValidPage(false));
+  }, [query]);
 
   return (
     <>

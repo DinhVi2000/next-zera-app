@@ -12,28 +12,22 @@ import React, {
 import Image from "next/image";
 
 import {
-  IconAction,
-  IconBasketball,
-  IconCasual,
+  IconCategories,
   IconCoin,
   IconCoin22,
   IconConsole,
   IconCup,
-  IconDressUp,
-  IconEscape,
-  IconFbs,
-  IconHorror,
-  IconIo,
   IconLogOut,
   IconMenu,
   IconProfile,
-  IconRider,
   IconSearchViolet300,
+  IconTags,
 } from "@/resources/icons";
 
 import logo from "../../../public/images/logo.png";
 
 import { useModalContext } from "@/context/modal-context";
+import { useAuthContext } from "@/context/auth-context";
 
 import {
   CLASS_NAME_BY_PATH,
@@ -41,15 +35,21 @@ import {
   SHOP_TAB,
   STATUS,
 } from "@/utils/constant";
+
 import Link from "next/link";
-import { useAuthContext } from "@/context/auth-context";
-import ImageLoading from "../loading/ImageLoading";
+
+import ImageLoading from "@/components/loading/ImageLoading";
+import ButtonLoading from "@/components/loading/ButtonLoading";
+import Timer from "@/components/other/Timer";
+
 import { Tooltip, useToast } from "@chakra-ui/react";
-import Timer from "../other/Timer";
+
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+
 import { useRouter } from "next/router";
+
 import { getItemByCategory } from "@/services/shop.service";
-import ButtonLoading from "../loading/ButtonLoading";
+
 import {
   abbreviateNumber,
   categoryUrl,
@@ -57,55 +57,28 @@ import {
 } from "@/utils/helper";
 import { getAllCategories } from "@/services/game.service";
 import { useDispatch } from "react-redux";
+import { dynamicPaths, staticPaths } from "@/utils/$path";
 
-const sideBarItems = [
+const ALL_MENU_NODE = [
   {
-    icon: <IconRider />,
-    text: "Rider",
+    icon: <IconCategories className="w-8 h-8 mx-auto" />,
+    title: "Game Category",
+    href: dynamicPaths.all_categories_by_superslug("game"),
   },
   {
-    icon: <IconAction />,
-    text: "Action",
+    icon: <IconCategories className="w-8 h-8 mx-auto" />,
+    title: "Article Category",
+    href: staticPaths.all_article_category,
   },
   {
-    icon: <IconCasual />,
-    text: "Casual",
+    icon: <IconTags className="w-8 h-8 mx-auto" />,
+    title: "Game Tags",
+    href: dynamicPaths.all_game_tags_by_superslug("game"),
   },
   {
-    icon: <IconBasketball />,
-    text: "Basketball",
-  },
-  {
-    icon: <IconDressUp />,
-    text: "Dress up",
-  },
-  {
-    icon: <IconEscape />,
-    text: "Escape",
-  },
-  {
-    icon: <IconFbs />,
-    text: "FBS",
-  },
-  {
-    icon: <IconHorror />,
-    text: "Horror",
-  },
-  {
-    icon: <IconIo />,
-    text: ".io",
-  },
-  {
-    icon: <IconConsole />,
-    text: "Console",
-  },
-  {
-    icon: <IconCasual />,
-    text: "Casual",
-  },
-  {
-    icon: <IconHorror />,
-    text: "Horror",
+    icon: <IconTags className="w-8 h-8 mx-auto" />,
+    title: "Article Tags",
+    href: staticPaths.all_article_tags,
   },
 ];
 
@@ -147,7 +120,7 @@ const SideBar = () => {
       <div className="bg-blur-500 rounded-2xl px-4 pt-2.5 pb-[14px] h-fit">
         {/* head */}
         <div className="px-3 pb-3">
-          <Link href={"/"}>
+          <Link href={staticPaths.home}>
             <Image
               src={logo}
               alt=""
@@ -171,15 +144,15 @@ const SideBar = () => {
           </div>
         </div>
 
-        {/* content */}
+        {/* menu items */}
         <div
           ref={content_ref}
-          className="h-0 text-white px-2 flex flex-col overflow-y-auto gap-4 transition-all w-auto modal-scroll test"
+          className="h-0 text-violet-300 text-sm px-2 mb-5 flex flex-col overflow-y-auto gap-5 transition-all w-auto modal-scroll test"
         >
           {categories?.map((e, i) => (
             <Link href={categoryUrl(e?.superslug?.value, e?.slug)} key={i}>
               <div
-                className="flex gap-x-2 items-center text-base font-bold cursor-pointer"
+                className="flex gap-x-2 items-center font-bold cursor-pointer"
                 id="menu_item"
               >
                 <div className="w-12">
@@ -190,11 +163,28 @@ const SideBar = () => {
                       className="w-8 h-8 object-cover mx-auto"
                     />
                   ) : (
-                    <IconConsole />
+                    <IconConsole className="w-8 h-8 mx-auto" />
                   )}
                 </div>
                 <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
                   {e?.label}
+                </span>
+              </div>
+            </Link>
+          ))}
+
+          <p className="w-[90%] mx-auto bg-[#ffcde980] pt-[1px]"></p>
+
+          {/* menu items all */}
+          {ALL_MENU_NODE.map(({ icon, title, href }, i) => (
+            <Link href={href} key={i}>
+              <div
+                className="flex gap-x-2 items-center font-bold cursor-pointer"
+                id="menu_item"
+              >
+                <div className="w-12">{icon}</div>
+                <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
+                  {title}
                 </span>
               </div>
             </Link>
@@ -207,12 +197,12 @@ const SideBar = () => {
             <Fragment>
               <div className="flex flex-col items-center gap-2 mt-3 mb-4 pt-0.5">
                 <Link
-                  href={"/login"}
+                  href={staticPaths.login}
                   className="btn-login text-base text-white font-semibold rounded-[10px] py-[5px] px-[30px] mx-auto"
                 >
                   Login
                 </Link>
-                <Link href={"/register"} className="text-violet-400">
+                <Link href={staticPaths.register} className="text-violet-400">
                   Register
                 </Link>
                 <button

@@ -1,13 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { loginWithEmail } from "@/services/auth.service";
 import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
 import {
@@ -30,6 +23,7 @@ import {
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 import { useSocketContext } from "./socket-context";
+
 const AuthContext = createContext(null);
 
 export const useAuthContext = () => {
@@ -83,29 +77,38 @@ export const AuthContextProvider = ({ children }) => {
   const { socketClient } = useSocketContext();
 
   const handleSetUserInfo = async () => {
-    const { data } = await getUserInfo(usernameAuth);
-    setUserInfo((prev) => ({ ...data, ...prev }));
+    setVerifyStatus(STATUS.IN_PROGRESS);
+    getUserInfo(usernameAuth)
+      .then((response) => {
+        setUserInfo((prev) => ({ ...response?.data, ...prev }));
+        setVerifyStatus(STATUS.SUCCESS);
+      })
+      .catch((e) => {
+        setVerifyStatus(STATUS.FAIL);
+        notifyErrorMessage(toast, e);
+      });
   };
 
   const verifyAccessToken = async () => {
     try {
-      setVerifyStatus(STATUS.IN_PROGRESS);
-
       Promise.all([
         handleSetUserInfo(),
         ...userInfoFunctions.map(({ key, callback }) =>
-          callback().then((data) =>
-            setUserInfo((prev) => {
-              if (!prev) prev = {};
-              prev[key] = data;
-              return { ...prev };
+          callback()
+            .then((data) =>
+              setUserInfo((prev) => {
+                if (!prev) prev = {};
+                prev[key] = data;
+                return { ...prev };
+              })
+            )
+            .catch((e) => {
+              throw e;
             })
-          )
         ),
-      ]).then(() => setVerifyStatus(STATUS.SUCCESS));
+      ]);
     } catch (error) {
       notifyErrorMessage(toast, error);
-      setVerifyStatus(STATUS.FAIL);
       clearAuthenticatorData();
     }
   };
@@ -141,6 +144,8 @@ export const AuthContextProvider = ({ children }) => {
 
     setToken("");
     setUsernameAuth("");
+    setUserInfo();
+    setVerifyStatus(STATUS.IN_PROGRESS);
   };
 
   const loginWithAnonymously = async () => {
