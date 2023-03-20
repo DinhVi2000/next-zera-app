@@ -98,6 +98,7 @@ const CLASS_NAME_BY_PATH = {
   "/[superslug]/[game-slug]": "tbl-hidden mb-hidden",
   "/[superslug]/category/[category-slug]": "tbl-hidden mb-hidden",
   "/article/category/[category-slug]": "tbl-hidden mb-hidden",
+  "/article/tag/[tag-slug]": "tbl-hidden mb-hidden",
   "/article/[article-slug]": "tbl-hidden mb-hidden",
   "/profile": "tbl-hidden mb-hidden",
   "/about": "tbl-hidden mb-hidden",
@@ -109,7 +110,18 @@ const CLASS_NAME_BY_PATH = {
   "/": "tbl-hidden mb-hidden",
 };
 
+const PATH_NOT_HIDDEN_SIDEBAR = {};
+
+const SUPERSLUGS_CODES = {
+  GAME: "game",
+  ARTICLE: "article",
+};
+
 const MESSAGE_MAX_LENGTH = 150;
+
+const HTTP_ERROR_CODE = {
+  UN_AUTHORIZATION: [401],
+};
 
 export {
   ADS_IMAGES,
@@ -128,4 +140,6 @@ export {
   VIEW_ALL_GAMES_TAB,
   PLAYTIME_CATEGORY,
   MESSAGE_MAX_LENGTH,
+  SUPERSLUGS_CODES,
+  HTTP_ERROR_CODE,
 };

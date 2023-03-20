@@ -74,11 +74,13 @@ button:disabled {
   cursor: not-allowed;
 }
 
-// #menu_item {
-//   &:last-child {
-//     padding-bottom: 12px;
-//   }
-// }
+#menu_item {
+  a {
+    &:last-child {
+      padding-bottom: 20px;
+    }
+  }
+}
 
 video::-webkit-media-controls {
   display: none !important;

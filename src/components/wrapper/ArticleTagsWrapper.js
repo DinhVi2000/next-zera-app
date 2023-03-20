@@ -1,13 +1,25 @@
-import PreviousRouter from "../previousRouter/PreviousRouter";
+import { useRouter } from "next/router";
+import Breadcrumb from "../ui/Breadcrumb";
 
-const { dynamicPaths } = require("@/utils/$path");
+const { dynamicPaths, staticPaths } = require("@/utils/$path");
 const { default: Link } = require("next/link");
 
 const ArticleTagsWrapper = ({ tags }) => {
+  const breadcrumbsData = [
+    {
+      label: "Home",
+      url: staticPaths.home,
+    },
+    {
+      label: "All Article Tags",
+      url: staticPaths.all_article_tags,
+    },
+  ];
+
   return (
     <div className="w-responsive">
       <div className="bg-blur-800 rounded-2xl py-8 px-7 w-responsive border-[5px] border-pink-400">
-        <PreviousRouter className="text-white" />
+        <Breadcrumb className="text-white mb-5" list={breadcrumbsData} />
 
         <h1 className="text-white text-[40px] font-bold mb-5">
           All Article Tags

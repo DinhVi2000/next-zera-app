@@ -154,7 +154,7 @@ export const AuthContextProvider = ({ children }) => {
 
       if (uid) setAnonymousInfo((prev) => ({ ...prev, ...user }));
     } catch (error) {
-      notifyErrorMessage(error);
+      notifyErrorMessage(toast, error);
     }
   };
 
@@ -202,7 +202,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (token && usernameAuth && !isAuthnrPath) {
       setIsAuthenticationPage(false);
-      Promise.all([verifyAccessToken(), call(getGameRecentlyPlayed(dispatch))]);
+      Promise.all([verifyAccessToken()]);
     }
   }, [token, usernameAuth, pathname]);
 

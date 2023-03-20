@@ -9,9 +9,10 @@ import {
   IconRightWing,
 } from "@/resources/icons";
 import { dynamicPaths } from "@/utils/$path";
+import { animateValue } from "@/utils/helper";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ImageLoading from "../loading/ImageLoading";
 import Pagination from "../pagination/Pagination";
@@ -21,11 +22,10 @@ const ITEM_PER_PAGE = 4;
 
 const HallOfFame = () => {
   const { hallOfFame } = useSelector(({ user }) => user) ?? {};
-  console.log("hallOfFame :", hallOfFame);
 
   const { pathname } = useRouter();
 
-  const { user_info, played_game } = hallOfFame ?? {};
+  const { user_info, played_game, total_earned_zera } = hallOfFame ?? {};
 
   const { username, avatar, quote, zera, highest_playstreak, playstreak } =
     user_info ?? {};
@@ -37,7 +37,7 @@ const HallOfFame = () => {
     {
       id: 1,
       icon: <IconEarn className="max-h-[128px] mb-2.5 mx-auto" />,
-      value: zera || 0,
+      value: parseInt(total_earned_zera) || 0,
       title: "Earned Zera",
       desc: "",
     },
@@ -53,7 +53,7 @@ const HallOfFame = () => {
       icon: (
         <div className="flex justify-between w-full pt-4 relative">
           <IconLeftWing />
-          <span className="text-gradient-hof text-[90px] font-bold absolute left-[50%] translate-x-[-50%]">
+          <span className="count-number text-gradient-hof text-[90px] font-bold absolute left-[50%] translate-x-[-50%]">
             {highest_playstreak || 0}
           </span>
           <IconRightWing />
@@ -61,9 +61,24 @@ const HallOfFame = () => {
       ),
       value: null,
       title: "Highest Playstreak",
-      desc: `Playstreak: ${playstreak || 0} days`,
+      desc: (
+        <span>
+          Playstreak: <span className="count-number">{playstreak || 0}</span>{" "}
+          days
+        </span>
+      ),
     },
   ];
+
+  const objs = document.getElementsByClassName("count-number");
+
+  useEffect(() => {
+    if (!items || !objs) return;
+
+    for (let i = 0; i < objs.length; i++) {
+      animateValue(objs[i], 0, objs[i].innerText, 2000);
+    }
+  }, [user_info, objs]);
 
   return (
     <div>
@@ -109,7 +124,7 @@ const HallOfFame = () => {
                 >
                   <div className="w-full mb-[61px]">
                     {icon}
-                    <h2 className="text-gradient-hof text-[28px] font-semibold">
+                    <h2 className="count-number text-gradient-hof text-[28px] font-semibold">
                       {value}
                     </h2>
                   </div>
@@ -152,7 +167,7 @@ const HallOfFame = () => {
                         <p>{game_detail?.title}</p>
                       </div>
                       <div className="flex items-center gap-4">
-                        <span>{zera_earned}</span>
+                        <span className="count-number">{zera_earned}</span>
                         <IconCoin className="w-[30px] h-[30px]" />
                       </div>
                     </div>

@@ -9,18 +9,20 @@ import newsImg from "@/../public/images/news.avif";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setCategoryDetail } from "@/services/game.service";
 
 const GameCategoryGrid = ({ categories, className }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { pathname } = router;
 
   return (
     <>
       <div
-        className={`grid-category ${
-          pathname === "/[superslug]/[game-slug]" && "tbl-col-7"
-        } mt-4 ${className}`}
+        className={`grid-category mt-4 ${className}`}
+        onClick={() => dispatch(setCategoryDetail(null))}
       >
         {categories?.map((e, i) => (
           <GameCategory

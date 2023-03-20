@@ -2,7 +2,7 @@ import React from "react";
 
 import { GAMES_IMAGES } from "@/utils/constant";
 
-import { getRandom } from "@/utils/helper";
+import { getArea, getRandom } from "@/utils/helper";
 
 import { useSelector } from "react-redux";
 
@@ -20,7 +20,7 @@ const GameCategoryDetailGrid = () => {
     <div className="grid-category-detail transition-all">
       <SidebarMB className={"tbl-flex mb-flex"} />
 
-      <div
+      <header
         style={{
           gridArea: "ct / ct / ct / ct",
           background:
@@ -29,7 +29,7 @@ const GameCategoryDetailGrid = () => {
         className="text-white min-h-[94px] rounded-2xl flex items-center justify-center text-lg font-bold"
       >
         {label}
-      </div>
+      </header>
 
       {/* game */}
       <ul className="contents">
@@ -42,10 +42,7 @@ const GameCategoryDetailGrid = () => {
                 thumbnail={e?.thumbnail}
                 title={e?.title}
                 style={{
-                  gridArea:
-                    i < 8
-                      ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}`
-                      : "",
+                  gridArea: i < 7 ? getArea(`g${i + 1}`) : "",
                 }}
                 slug={e?.slug}
                 superSlug={e?.superslug}
@@ -55,7 +52,7 @@ const GameCategoryDetailGrid = () => {
       </ul>
 
       {!game_detail &&
-        Array(40)
+        Array(20)
           .fill(0)
           .map((e, i) => (
             <ItemLoading

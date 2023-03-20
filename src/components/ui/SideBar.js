@@ -115,11 +115,11 @@ const SideBar = () => {
 
   return (
     <div
-      className={`sticky top-[16px] z-10 min-w-[204px] max-w-[204px] h-fit ${CLASS_NAME_BY_PATH[pathname]}`}
+      className={`sticky top-[16px] z-10 min-w-[204px] max-w-[204px] h-fit tbl-hidden mb-hidden`}
     >
       <div className="bg-blur-500 rounded-2xl px-4 pt-2.5 pb-[14px] h-fit">
         {/* head */}
-        <div className="px-3 pb-3">
+        <div className="px-3 pb-[2px]">
           <Link href={staticPaths.home}>
             <Image
               src={logo}
@@ -130,7 +130,7 @@ const SideBar = () => {
             />
           </Link>
 
-          <div className="flex gap-2.5 justify-between items-center cursor-pointer px-4">
+          <div className="flex gap-2.5 justify-between items-center cursor-pointer px-5">
             <div onClick={handleToggleContent}>
               <IconMenu className="w-[42px] text-violet-300"></IconMenu>
             </div>
@@ -147,14 +147,12 @@ const SideBar = () => {
         {/* menu items */}
         <div
           ref={content_ref}
-          className="h-0 text-violet-300 text-sm px-2 mb-5 flex flex-col overflow-y-auto gap-5 transition-all w-auto modal-scroll test"
+          className="h-0 text-violet-300 text-sm px-2 flex flex-col overflow-y-auto gap-5 transition-all w-auto modal-scroll"
+          id="menu_item"
         >
           {categories?.map((e, i) => (
             <Link href={categoryUrl(e?.superslug?.value, e?.slug)} key={i}>
-              <div
-                className="flex gap-x-2 items-center font-bold cursor-pointer"
-                id="menu_item"
-              >
+              <div className="flex gap-x-2 items-center font-bold cursor-pointer">
                 <div className="w-12">
                   {e?.icon ? (
                     <ImageLoading
@@ -178,10 +176,7 @@ const SideBar = () => {
           {/* menu items all */}
           {ALL_MENU_NODE.map(({ icon, title, href }, i) => (
             <Link href={href} key={i}>
-              <div
-                className="flex gap-x-2 items-center font-bold cursor-pointer"
-                id="menu_item"
-              >
+              <div className="flex gap-x-2 items-center font-bold cursor-pointer">
                 <div className="w-12">{icon}</div>
                 <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
                   {title}
@@ -246,7 +241,7 @@ const SideBar = () => {
 
       {/* SHOP */}
       {userInfo && (
-        <div className="bg-blur-500 rounded-2xl py-2 h-fit mt-5 text-white pr-1">
+        <div className="bg-blur-500 rounded-2xl py-2 h-fit mt-4 text-white pr-1">
           <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 py-1 w-[70%] mx-auto gap-2">
             <span className="font-extrabold text-[16px]">
               {abbreviateNumber(zera)}

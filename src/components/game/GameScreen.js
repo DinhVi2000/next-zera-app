@@ -5,10 +5,12 @@ import ImageLoading from "../loading/ImageLoading";
 import GameScreenBar from "./GameScreenBar";
 
 const GameScreen = ({ thumbnail, play_url, title }) => {
+  const { setIsCountDown, isCountDown } = useSocketContext();
+
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
   const back_tab_mb_ref = useRef();
-  const { setIsCountDown, isCountDown } = useSocketContext();
+
   const [isFullScreen, setIsFullScreen] = useState(false);
 
   // handle zoom out
