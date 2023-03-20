@@ -22,7 +22,7 @@ const Register = () => {
 
       <div className="flex-center min-h-[100vh]">
         <div
-          className="bg-[#000000b3] rounded-[30px] px-[60px] pt-5 pb-12
+          className="bg-[#000000b3] rounded-[30px] px-[60px] pt-5 pb-12 my-10 relative overflow-hidden
                        max-[600px]:px-6 max-[600px]:w-[400px] max-[480px]:w-[350px]"
         >
           <div>

@@ -9,16 +9,20 @@ import ArticleCategoryGrid from "@/components/ui/ArticleCategoryGrid";
 import SEO from "@/components/other/SEO";
 import { getAllArticleCategory } from "@/services/article.service";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
+import { apiURL } from "@/utils/$apiUrl";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 const ArticleCategories = () => {
   const dispatch = useDispatch();
-  const { call } = useApi();
+  const { call, get } = useApi();
   const [isValidPage, setIsValidPage] = useState();
 
   const params = { page: 1, limit: 200 };
 
   useEffect(() => {
-    call(getAllArticleCategory(dispatch, params));
+    call(getAllArticleCategory(dispatch, params))
+      .then(() => setIsValidPage(true))
+      .catch(() => setIsValidPage(false));
   }, []);
 
   return (

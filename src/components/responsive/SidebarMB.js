@@ -148,7 +148,7 @@ const UserMenu = forwardRef(function UserMenuComponent(props, ref) {
   return (
     <div
       ref={ref}
-      className="opacity-0 bg-[#0C0020] px-4 py-3 absolute z-20 scale-90 left-[calc(100%+5px)] rounded-2xl border border-pink-900 min-w-[204px] top-[120px] invisible
+      className="opacity-0 bg-[#0C0020] px-4 py-3 absolute z-20 scale-75 rounded-2xl border border-pink-900 min-w-[204px] top-[80px] left-[74px] invisible
               transition-all"
     >
       <div>

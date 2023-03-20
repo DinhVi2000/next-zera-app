@@ -35,19 +35,6 @@ const GameGrid = ({ games }) => {
         ></GameItem>
       ))}
 
-      {/* {Array(124 - games?.length || 0)
-          .fill(0)
-          ?.map((e, i) => (
-            <GameItem
-              key={games?.length + i}
-              id={games?.length + i}
-              area={`ip${games?.length + i}`}
-              index={games?.length + i}
-              thumbnail={getRandom(GAMES_IMAGES)}
-              title={`game ${games?.length + i}`}
-            ></GameItem>
-          ))} */}
-
       {!games &&
         Array(124)
           .fill(0)

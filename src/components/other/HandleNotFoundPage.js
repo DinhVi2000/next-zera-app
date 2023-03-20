@@ -9,7 +9,7 @@ const HandleNotFoundPage = ({ isValidPage, children }) => {
     undefined: <LoadingPage />,
   };
 
-  return nodeObj[isValidPage];
+  return <Fragment>{nodeObj[isValidPage]}</Fragment>;
 };
 
 export default HandleNotFoundPage;

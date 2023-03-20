@@ -22,6 +22,8 @@ import "react-indiana-drag-scroll/dist/style.css";
 
 import { getGamesByKeySearch } from "@/services/game.service";
 import { useAuthContext } from "@/context/auth-context";
+import { useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 
 const DURATION = 500;
 
@@ -38,13 +40,17 @@ const Menubar = () => {
   const menubar_ref = useRef(null);
   const bg_ref = useRef(null);
 
+  const toast = useToast();
+
   const { openModal } = useModalContext();
 
   const [searchValue, setSearchValue] = useState("");
   const [gamesResult, setGamesResult] = useState();
 
   const { userInfo } = useAuthContext();
-  const { gameRecentlyPlayed } = userInfo ?? {};
+  const {
+    gameIndex: { categories },
+  } = useSelector(({ game }) => game) ?? {};
 
   const debouncedSearchTerm = useDebounce(searchValue, 1000);
 
@@ -65,7 +71,7 @@ const Menubar = () => {
       const response = (await getGamesByKeySearch(debouncedSearchTerm)) ?? {};
       setGamesResult(response);
     } catch (error) {
-      notifyErrorMessage(error);
+      notifyErrorMessage(toast, error);
     }
   };
 
@@ -109,14 +115,14 @@ const Menubar = () => {
         {!searchValue.trim() && (
           <ScrollContainer>
             <div className="flex gap-[10px] mt-4 mb-7 whitespace-nowrap ">
-              {SUGGESTS_SEARCH.map((item, index) => (
+              {categories?.map((e, i) => (
                 <SearchTab
-                  key={index}
+                  key={i}
                   setSearchValue={(e) => {
                     setGamesResult(undefined);
                     setSearchValue(e);
                   }}
-                  value={item}
+                  value={e?.label}
                 />
               ))}
             </div>
@@ -151,24 +157,23 @@ const Menubar = () => {
               </div>
 
               {/* recently */}
-              {userInfo && (
-                <div className="text-white  transition-all">
-                  <p className="text-2xl font-bold mb-4">Recently played</p>
-                  <div className="flex flex-wrap gap-4">
-                    {gameRecentlyPlayed?.map((e, i) => (
-                      <GameItem
-                        key={i}
-                        size={1}
-                        isRecently
-                        thumbnail={e?.thumbnail}
-                        className="w-[94px] h-[94px]"
-                        slug={e?.slug}
-                        superSlug={e?.superslug}
-                      />
-                    ))}
-                  </div>
+              <div className="text-white  transition-all">
+                <p className="text-2xl font-bold mb-4">Recently played</p>
+                <div className="flex flex-wrap gap-4">
+                  {userInfo?.recentlyPlayed?.rows?.map((e, i) => (
+                    <GameItem
+                      key={i}
+                      size={1}
+                      isRecently
+                      thumbnail={e?.thumbnail}
+                      title={e?.title}
+                      className="w-[94px] h-[94px]"
+                      slug={e?.slug}
+                      superSlug={e?.superslug}
+                    />
+                  ))}
                 </div>
-              )}
+              </div>
             </Fragment>
           )}
         </section>

@@ -25,8 +25,9 @@ const ArticleGrid = ({ articleInfo, articles }) => {
     <div className="w-responsive h-full">
       {/* title */}
       <div className="flex gap-4">
+        <SidebarMB className={"tbl-flex left-0"} />
         <div
-          className="text-white min-h-[94px] w-full max-[550px]:max-w-[204px] max-w-[424px] rounded-2xl flex items-center justify-center text-lg font-bold"
+          className="max-[990px]:ml-[94px] text-white overflow-hidden text-ellipsis min-h-[94px] max-h-[94px] w-full max-[550px]:max-w-[204px] max-w-[424px] rounded-2xl flex items-center justify-center text-lg font-bold px-6 py-3"
           style={{
             background:
               "linear-gradient(rgb(196, 181, 253) 0%, rgb(151, 155, 255) 0.01%, rgb(239, 54, 198) 100%)",
@@ -34,7 +35,6 @@ const ArticleGrid = ({ articleInfo, articles }) => {
         >
           {articleInfo?.label}
         </div>
-        <SidebarMB className={"tbl-flex"} />
       </div>
 
       {articles?.length > 0 && (

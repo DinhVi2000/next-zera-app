@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { config } from "../envs";
+import { HTTP_ERROR_CODE } from "./constant";
 
 // const StatusCode = {
 //   Unauthorized: 401,
@@ -54,14 +55,15 @@ class Http {
       (response) => response,
       (error) => {
         if (
-          error?.response?.data?.error?.message?.includes(
-            "UnAuthorization Error"
+          HTTP_ERROR_CODE.UN_AUTHORIZATION.includes(
+            error?.response?.data?.error?.code
           )
         ) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("username");
           window.location.href = "/login";
-        } else {
-          return this.handleError(error?.response?.data?.error || error);
         }
+        return this.handleError(error?.response?.data?.error || error);
       }
     );
 

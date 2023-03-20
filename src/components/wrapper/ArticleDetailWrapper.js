@@ -5,8 +5,34 @@ const { formatDate } = require("@/utils/helper");
 import ImageLoading from "@/components/loading/ImageLoading";
 
 const ArticleDetailWrapper = ({ article }) => {
-  const { id, content, created_at, featured_image, title, seo_description } =
-    article ?? {};
+  const {
+    id,
+    content,
+    created_at,
+    featured_image,
+    title,
+    seo_description,
+    slug,
+  } = article ?? {};
+
+  const breadcrumbsData = [
+    {
+      label: "Home",
+      url: staticPaths.home,
+    },
+    {
+      label: "All Article Tags",
+      url: staticPaths.all_article_tags,
+    },
+    {
+      label: "All Article Tags",
+      url: staticPaths.all_article_tags,
+    },
+    {
+      label: title,
+      url: dynamicPaths.article_by_slug(slug),
+    },
+  ];
 
   return (
     <>
@@ -14,7 +40,8 @@ const ArticleDetailWrapper = ({ article }) => {
         <div className="bg-blur-800 text-white w-full border-[5px] border-pink-400 rounded-[20px] min-h-[400px] py-6 px-7">
           {article && (
             <Fragment>
-              <PreviousRouter />
+              <Breadcrumb className="text-white mb-5" list={breadcrumbsData} />
+
               <h1 className="text-[40px] font-bold">{title}</h1>
 
               <p className="text-xs mb-2">{formatDate(created_at)}</p>
@@ -46,6 +73,8 @@ const ArticleDetailWrapper = ({ article }) => {
 import React from "react";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 import PreviousRouter from "../previousRouter/PreviousRouter";
+import Breadcrumb from "../ui/Breadcrumb";
+import { dynamicPaths, staticPaths } from "@/utils/$path";
 
 const ArticleDetailLoading = ({ article }) => {
   return (

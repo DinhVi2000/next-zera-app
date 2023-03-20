@@ -12,8 +12,9 @@ import { getAllGameTagBySuperslug } from "@/services/game.service";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { dynamicPaths } from "@/utils/$path";
+import { dynamicPaths, staticPaths } from "@/utils/$path";
 import { hasNoValueUndefined } from "@/utils/helper";
+import Breadcrumb from "@/components/ui/Breadcrumb";
 
 const CategoryTags = () => {
   const router = useRouter();
@@ -50,10 +51,25 @@ const GameTagsWrapper = memo(function GameTagsWrapperComponent({
   superslug,
   tags,
 }) {
+  const router = useRouter();
+
+  const { query } = router;
+
+  const breadcrumbsData = [
+    {
+      label: "Home",
+      url: staticPaths.home,
+    },
+    {
+      label: "All Game Tags",
+      url: dynamicPaths.all_game_tags_by_superslug(query?.superslug),
+    },
+  ];
+
   return (
     <div className="w-responsive">
       <div className="bg-blur-800 rounded-2xl py-8 px-7 w-responsive border-[5px] border-pink-400">
-        <PreviousRouter className="text-white" />
+        <Breadcrumb className="text-white mb-5" list={breadcrumbsData} />
 
         <h1 className="text-white text-[40px] font-bold mb-5">All Game Tags</h1>
 
