@@ -5,7 +5,7 @@ import ImageLoading from "../loading/ImageLoading";
 const Ads = ({ area, thumbnail, className, ...props }) => {
   return (
     <div
-      className={`${className} mb-hidden min-h-[94px] w-full h-full bg-[#D9D9D9] rounded-2xl flex items-center justify-center text-lg relative overflow-hidden cursor-pointer`}
+      className={`${className} min-h-[94px] w-full h-full bg-[#D9D9D9] rounded-2xl flex items-center justify-center text-lg relative overflow-hidden cursor-pointer`}
       style={{
         gridArea: getArea(area),
       }}

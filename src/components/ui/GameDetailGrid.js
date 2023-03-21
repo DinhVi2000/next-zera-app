@@ -17,6 +17,7 @@ import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea, getRandom } from "@/utils/helper";
 
 import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
+import { useMediaQuery } from "@chakra-ui/react";
 
 const GameDetailGrid = () => {
   const { info, gamesRelate } =
@@ -48,7 +49,7 @@ const GameDetailGrid = () => {
             title={e?.title}
             thumbnail={e?.thumbnail}
             slug={e?.slug}
-            superSlug={e?.superslug}
+            superslug={e?.superslug}
           />
         ))}
 
@@ -64,7 +65,7 @@ const GameDetailGrid = () => {
                 thumbnail={getRandom(GAMES_IMAGES)}
                 title={`game ${i}`}
                 slug={e?.slug}
-                superSlug={e?.superslug}
+                superslug={e?.superslug}
               ></GameItem>
             ))}
       </div>
@@ -95,13 +96,20 @@ const GameTitle = memo(function GameTitleComponent({
 const Advertisements = memo(function AdvertisementsComponent() {
   const { list } = useSelector(({ advertisements }) => advertisements) ?? {};
 
+  const matches = useMediaQuery("(max-width: 550px)");
   return (
     <>
       {list?.length > 0 &&
         list
           ?.slice(0, 4)
           .map((e, i) => (
-            <Ads thumbnail={e?.url} key={i} area={`ads${i + 1}`} ip={e?.ip} />
+            <Ads
+              thumbnail={e?.url}
+              key={i}
+              area={`ads${i + 1}`}
+              ip={e?.ip}
+              className={matches[0] && i !== 0 ? "hidden" : ""}
+            />
           ))}
     </>
   );

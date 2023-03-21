@@ -80,6 +80,14 @@ const ArticleItem = ({ item, ...props }) => {
         <div className="py-3 px-4 flex-1 w-[328px] flex flex-col h-full justify-between">
           <div>
             <h2 className="text-base font-bold">{title}</h2>
+
+            {/* tags */}
+            {/* <div className="flex gap-[5px]">
+              <div className="bg-white text-black text-sm my-1 px-2.5 font-semibold rounded-[20px]">
+                tag
+              </div>
+            </div> */}
+
             <span className="text-xs font-medium ">
               {
                 <DocumentRenderer

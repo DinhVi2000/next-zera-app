@@ -30,7 +30,7 @@ const ShareToEarn = ({ area, ...props }) => {
   return (
     <div
       style={{ gridArea: getArea(area) }}
-      className="mb-hidden bg-[#831843] border-[3px] border-[#EC4899] text-base font-bold w-full h-full flex flex-col items-center justify-center rounded-2xl text-white"
+      className="bg-[#831843] border-[3px] border-[#EC4899] text-base font-bold w-full h-full flex flex-col items-center justify-center rounded-2xl text-white"
       {...props}
     >
       <div className="mb-2 text-[19px] font-semibold">Share to earn 1 coin</div>

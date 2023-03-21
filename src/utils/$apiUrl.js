@@ -6,5 +6,6 @@ export const apiURL = {
     articles_by_category: (categorySlug) => `/article/category/${categorySlug}`,
     article_by_slug: (slug) => `/article/detail/${slug}`,
     hall_of_fame_by_username: (username) => `/hall-of-fames/${username}`,
+    popular_game: "/game/popular-game",
   },
 };

@@ -20,7 +20,7 @@ const GameItem = ({
   isRecently,
   className,
   slug,
-  superSlug,
+  superslug,
   ...props
 }) => {
   const gridArea = inRange(index, 0, 16) && area ? getArea(area) : "auto";
@@ -42,7 +42,7 @@ const GameItem = ({
       {...props}
     >
       <Link
-        href={dynamicPaths.game_by_slug(superSlug?.value, slug)}
+        href={dynamicPaths.game_by_slug(superslug?.value, slug)}
         className="game-item__box-shadow"
       >
         {isRecently && (

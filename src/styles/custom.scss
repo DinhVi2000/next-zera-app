@@ -381,8 +381,8 @@
   backdrop-filter: blur(10px);
 }
 
-.h-104-imp {
-  height: 104px !important;
+.h-110-imp {
+  height: 110px !important;
 }
 
 .hidden-imp {
@@ -445,4 +445,37 @@
 .css-14iyyou {
   margin-left: 5px !important;
   font-size: 17px !important;
+}
+
+.search-tab-wrapper {
+  // &::before {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0px;
+  //   left: 0px;
+  //   width: 20px;
+  //   height: 72px;
+  //   background: linear-gradient(
+  //     270deg,
+  //     rgba(131, 255, 231, 0) 0%,
+  //     #c4b5fd80 20%
+  //   );
+  //   pointer-events: none;
+  //   z-index: 1;
+  // }
+
+  // &::after {
+  //   content: "";
+  //   position: absolute;
+  //   top: 0px;
+  //   right: 0px;
+  //   width: 120px;
+  //   height: 72px;
+  //   background: linear-gradient(
+  //     270deg,
+  //     #c4b5fd80 20%,
+  //     rgba(131, 255, 231, 0) 50%
+  //   );
+  //   pointer-events: none;
+  // }
 }

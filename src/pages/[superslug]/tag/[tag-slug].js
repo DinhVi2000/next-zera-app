@@ -89,7 +89,7 @@ const GameGrid = memo(function GameGridComponent({ games }) {
           style={{ gridArea: "auto" }}
           title={e?.title}
           slug={e?.slug}
-          superSlug={e?.superslug}
+          superslug={e?.superslug}
         ></GameItem>
       ))}
     </div>

@@ -1,7 +1,14 @@
 import { IconLogo, IconSearch, IconX } from "@/resources/icons";
-import React, { memo } from "react";
+import { STATUS } from "@/utils/constant";
+import React, { Fragment, memo } from "react";
 
-const SearchBar = ({ searchValue, setSearchValue, onChangeInput }) => {
+const SearchBar = ({
+  searchValue,
+  setSearchValue,
+  onChangeInput,
+  searchStatus,
+  setSearchStatus,
+}) => {
   return (
     <div className="pr-8 relative w-full max-w-[650px] mr-10 z-50">
       <div className="bg-white w-full flex h-16 rounded-2xl overflow-hidden">
@@ -20,16 +27,22 @@ const SearchBar = ({ searchValue, setSearchValue, onChangeInput }) => {
           />
           <div className="flex items-center px-4 cursor-pointer">
             {searchValue ? (
-              <div
-                className="bg-violet-200 h-[26px] w-[26px] rounded-[5px] py-[5px] flex items-center group overflow-hidden text-violet-900 font-bold
+              <Fragment>
+                {searchStatus === STATUS.IN_PROGRESS ? (
+                  <div className="w-5 h-5 border-[3px] border-violet-500 border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <div
+                    className="bg-violet-200 h-[26px] w-[26px] rounded-[5px] py-[5px] flex items-center group overflow-hidden text-violet-900 font-bold
                                 hover:w-[75px] transition-all duration-200"
-                onClick={() => setSearchValue("")}
-              >
-                <IconX className="shrink-0 mx-[5px]"></IconX>Clear
-              </div>
+                    onClick={() => setSearchValue("")}
+                  >
+                    <IconX className="shrink-0 mx-[5px]"></IconX>Clear
+                  </div>
+                )}
+              </Fragment>
             ) : (
               <div>
-                <IconSearch />
+                <IconSearch className="w-6 h-6 text-violet-500" />
               </div>
             )}
           </div>

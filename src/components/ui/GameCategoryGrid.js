@@ -13,10 +13,7 @@ import { useDispatch } from "react-redux";
 import { setCategoryDetail } from "@/services/game.service";
 
 const GameCategoryGrid = ({ categories, className }) => {
-  const router = useRouter();
   const dispatch = useDispatch();
-
-  const { pathname } = router;
 
   return (
     <>
@@ -37,6 +34,7 @@ const GameCategoryGrid = ({ categories, className }) => {
             label={e?.label}
             superslug={e?.superslug}
             slug={e?.slug}
+            className={inRange(i, 0, 6) ? "h-[204px]" : "h-[94px]"}
           ></GameCategory>
         ))}
       </div>

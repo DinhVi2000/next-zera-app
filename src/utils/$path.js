@@ -6,6 +6,7 @@ export const staticPaths = {
   policy: "/policy",
   all_article_category: "/article/categories",
   all_article_tags: "/article/tags",
+  my_hall_of_fame: "/hall-of-fame",
 };
 
 export const dynamicPaths = {
@@ -18,4 +19,5 @@ export const dynamicPaths = {
     `/${superslug}/category/${categorySlug}`,
   game_by_slug: (superslug, gameSlug) => `/${superslug}/${gameSlug}`,
   game_by_tag: (superslug, tagSlug) => `/${superslug}/tag/${tagSlug}`,
+  hall_of_fame_by_username: (username) => `/hall-of-fame/${username}`,
 };

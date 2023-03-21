@@ -725,12 +725,14 @@
       "gs gs gs "
       "gs gs gs "
       "gsb gsb gsb"
+      "ste ste ste"
+      "raf raf ads1"
       "bc bc .  "
       "bc bc .  "
       "bc bc .  "
       ".  .  .  ";
     grid-template-columns: repeat(3, 94px);
-    grid-template-rows: repeat(5, 94px);
+    grid-template-rows: repeat(10, 94px);
   }
 
   .grid-category-detail {

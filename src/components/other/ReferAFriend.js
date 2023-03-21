@@ -27,7 +27,7 @@ const ReferAFriend = ({ area, ...props }) => {
   return (
     <div
       style={{ gridArea: getArea(area) }}
-      className="mb-hidden bg-[#D9D9D9] text-black w-full h-full flex items-center justify-center overflow-hidden relative rounded-2xl cursor-pointer"
+      className="bg-[#D9D9D9] text-black w-full h-full flex items-center justify-center overflow-hidden relative rounded-2xl cursor-pointer"
       {...props}
       onClick={handleCopy}
     >

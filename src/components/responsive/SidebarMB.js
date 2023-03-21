@@ -15,7 +15,7 @@ import {
   IconSearch,
 } from "@/resources/icons";
 
-import { MODAL_NAME } from "@/utils/constant";
+import { DEFAULT_AVATAR_SRC, MODAL_NAME } from "@/utils/constant";
 
 import ImageLoading from "@/components/loading/ImageLoading";
 import Timer from "@/components/other/Timer";
@@ -49,7 +49,7 @@ const SidebarMB = ({ className, childClassName, ...props }) => {
   const { avatar, username, zera } = userInfo ?? {};
 
   const handleToggleMenu = () => {
-    ref.current.classList.toggle("h-104-imp");
+    ref.current.classList.toggle("h-110-imp");
   };
 
   return (
@@ -106,7 +106,7 @@ const SidebarMB = ({ className, childClassName, ...props }) => {
                     id="touch"
                   >
                     <ImageLoading
-                      src={avatar}
+                      src={avatar || DEFAULT_AVATAR_SRC}
                       className="w-6 h-6 rounded-full"
                     />
                     <span className="text-[8px] font-medium">{username}</span>
@@ -119,9 +119,9 @@ const SidebarMB = ({ className, childClassName, ...props }) => {
                     >
                       Shop
                     </Link>
-                    <div className="flex gap-[5px]">
+                    <div className="flex gap-[5px] text-[6px]">
                       <span>{abbreviateNumber(zera)}</span>
-                      <IconCoin className="w-4" />
+                      <IconCoin className="w-2" />
                     </div>
                   </div>
                 </div>

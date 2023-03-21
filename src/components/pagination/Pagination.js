@@ -2,7 +2,14 @@ import { IconNext, IconPre } from "@/resources/icons";
 import React from "react";
 import ReactPaginate from "react-paginate";
 
-function Pagination({ items, onPageChange, itemsPerPage, ...props }) {
+function Pagination({
+  items,
+  onPageChange,
+  itemsPerPage,
+  marginPagesDisplayed = 3,
+  pageRangeDisplayed = 3,
+  ...props
+}) {
   const pageCount = Math.floor(items?.length / itemsPerPage) + 1;
 
   return (
@@ -19,8 +26,8 @@ function Pagination({ items, onPageChange, itemsPerPage, ...props }) {
           nextLabel={<IconNext />}
           breakLabel="..."
           onPageChange={onPageChange}
-          marginPagesDisplayed={3}
-          pageRangeDisplayed={3}
+          marginPagesDisplayed={marginPagesDisplayed}
+          pageRangeDisplayed={pageRangeDisplayed}
           pageCount={pageCount}
           renderOnZeroPageCount={null}
           disableInitialCallback={true}

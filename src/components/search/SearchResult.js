@@ -44,7 +44,7 @@ const SearchResult = ({ results }) => {
             id={e?.id}
             onClick={closeModal}
             slug={e?.slug}
-            superSlug={e?.superslug}
+            superslug={e?.superslug}
             className="h-[94px]"
           />
         ))}

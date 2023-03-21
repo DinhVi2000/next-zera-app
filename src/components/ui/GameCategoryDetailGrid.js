@@ -45,7 +45,7 @@ const GameCategoryDetailGrid = () => {
                   gridArea: i < 7 ? getArea(`g${i + 1}`) : "",
                 }}
                 slug={e?.slug}
-                superSlug={e?.superslug}
+                superslug={e?.superslug}
               />
             </li>
           ))}
