@@ -15,6 +15,7 @@ import ButtonLoading from "../loading/ButtonLoading";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
 import { STATUS } from "@/utils/constant";
 import { staticPaths } from "@/utils/$path";
+import PasswordRules from "../other/PasswordRules";
 
 const RegisterForm = () => {
   const {
@@ -24,10 +25,17 @@ const RegisterForm = () => {
   } = useForm({
     resolver: yupResolver(registerFormSchema),
   });
+
   const term = useWatch({
     control,
     name: "term",
   });
+
+  const passwordWacth = useWatch({
+    control,
+    name: "password",
+  });
+
   const [status, setStatus] = useState(STATUS.NOT_START);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -111,34 +119,7 @@ const RegisterForm = () => {
         />
       </div>
 
-      <div className="py-5 flex flex-col">
-        <span
-          className={`${
-            checkPassword?.includes("uppercase") ||
-            checkPassword?.includes("lowercase")
-              ? "text-pink-700"
-              : ""
-          }`}
-        >
-          o Upper and lowercase letters
-        </span>
-        <span
-          className={`${
-            checkPassword === "*At least 1 number" ? "text-pink-700" : ""
-          }`}
-        >
-          o At least 1 number
-        </span>
-        <span
-          className={`${
-            checkPassword?.includes("6") || checkPassword?.includes("15")
-              ? "text-pink-700"
-              : ""
-          }`}
-        >
-          o Min 6 – max 15 characters
-        </span>
-      </div>
+      <PasswordRules password={passwordWacth} />
 
       {/* terms checkbox */}
       <div className="mb-6">

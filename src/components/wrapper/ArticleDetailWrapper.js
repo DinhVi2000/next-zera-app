@@ -3,6 +3,11 @@ import { Fragment, memo } from "react";
 const { formatDate } = require("@/utils/helper");
 
 import ImageLoading from "@/components/loading/ImageLoading";
+import Breadcrumb from "@/components/ui/Breadcrumb";
+
+import { DocumentRenderer } from "@keystone-6/document-renderer";
+
+import { dynamicPaths, staticPaths } from "@/utils/$path";
 
 const ArticleDetailWrapper = ({ article }) => {
   const {
@@ -19,10 +24,6 @@ const ArticleDetailWrapper = ({ article }) => {
     {
       label: "Home",
       url: staticPaths.home,
-    },
-    {
-      label: "All Article Tags",
-      url: staticPaths.all_article_tags,
     },
     {
       label: "All Article Tags",
@@ -69,12 +70,6 @@ const ArticleDetailWrapper = ({ article }) => {
     </>
   );
 };
-
-import React from "react";
-import { DocumentRenderer } from "@keystone-6/document-renderer";
-import PreviousRouter from "../previousRouter/PreviousRouter";
-import Breadcrumb from "../ui/Breadcrumb";
-import { dynamicPaths, staticPaths } from "@/utils/$path";
 
 const ArticleDetailLoading = ({ article }) => {
   return (

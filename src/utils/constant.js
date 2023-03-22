@@ -1,4 +1,5 @@
 import DEFAULT_AVATAR from "@/../public/images/default-avatar.png";
+import { staticPaths } from "./$path";
 
 const DEFAULT_AVATAR_SRC = DEFAULT_AVATAR.src;
 
@@ -52,8 +53,10 @@ const VIEW_ALL_GAMES_TAB = {
 };
 
 const PUBLIC_PAGE_URL = {
-  LOGIN: "/login",
-  REGISTER: "/register",
+  LOGIN: staticPaths.login,
+  REGISTER: staticPaths.register,
+  FORGOT_PASSWPORD: staticPaths.forgot_password,
+  RESET_PASSWPORD: staticPaths.reset_password,
 };
 
 const PRIVATE_PAGE_URL = {

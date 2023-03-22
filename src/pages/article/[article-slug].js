@@ -41,7 +41,6 @@ const ArticleDetail = () => {
   return (
     <>
       <SEO title={article?.title} />
-
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
           <ArticleDetailWrapper article={article} />

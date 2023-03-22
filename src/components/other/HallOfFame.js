@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { useAuthContext } from "@/context/auth-context";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
@@ -24,16 +25,15 @@ const ITEM_PER_PAGE = 4;
 
 const HallOfFame = () => {
   const { hallOfFame } = useSelector(({ user }) => user) ?? {};
-  const { pathname } = useRouter();
 
   const matches = useMediaQuery("(max-width: 550px)");
 
   const { user_info, played_game, total_earned_zera, play_streak } =
     hallOfFame ?? {};
-
-  const { username, avatar, quote, zera, highest_playstreak } = user_info ?? {};
+  const { username, avatar, quote, highest_playstreak } = user_info ?? {};
   const { count, rows } = played_game ?? {};
 
+  const { pathname } = useRouter();
   const { currentItems, handlePageClick } = usePagination(ITEM_PER_PAGE, rows);
 
   const items = [
@@ -73,22 +73,28 @@ const HallOfFame = () => {
     },
   ];
 
-  const objs = document.getElementsByClassName("count-number");
-
   useEffect(() => {
-    if (!items || !objs) return;
-
-    for (let i = 0; i < objs.length; i++) {
-      animateValue(objs[i], 0, objs[i].innerText, 2000);
+    if (!user_info) return;
+    const count_node = document.getElementsByClassName("count-number");
+    const count_obj = {
+      total_earned_zera,
+      gamePlayed: parseInt(count),
+      highest_playstreak,
+      play_streak,
+    };
+    for (let i = 0; i < count_node.length; i++) {
+      animateValue(count_node[i], 0, Object.values(count_obj)[i], 2000);
     }
-  }, [user_info, objs]);
+  }, [user_info]);
 
   return (
     <div>
+      {/* sidebar mobile */}
       <SidebarMB
         className={"tbl-flex mb-4"}
         childClassName={"static-important"}
       />
+      {/* head */}
       <div
         className="text-white w-responsive bg-blur-800 border-[5px] border-violet-400 pt-2.5 rounded-[20px]
                      p-[62px] max-[550px]:p-[30px]"
@@ -117,7 +123,6 @@ const HallOfFame = () => {
             )}
 
             {/* item */}
-            {/* <div className="grid grid-cols-1 min-[1250px]:grid-cols-2 min-[1492px]:grid-cols-3 gap-[25px]"> */}
             <div className="flex flex-wrap w-full justify-center gap-[25px]">
               {items?.map(({ icon, value, desc, title }, i) => (
                 <div
@@ -127,9 +132,11 @@ const HallOfFame = () => {
                 >
                   <div className="w-full mb-[61px]">
                     {icon}
-                    <h2 className="count-number text-gradient-hof text-[28px] font-semibold">
-                      {value}
-                    </h2>
+                    {value && (
+                      <h2 className="count-number text-gradient-hof text-[28px] font-semibold">
+                        {value}
+                      </h2>
+                    )}
                   </div>
                   <div>
                     <h3 className="text-base font-bold">{title}</h3>
@@ -171,8 +178,8 @@ const HallOfFame = () => {
                           {game_detail?.title}
                         </p>
                       </div>
-                      <div className="flex max-[550px]:hidden items-center gap-4">
-                        <span className="count-number">{zera_earned}</span>
+                      <div className="flex items-center gap-4">
+                        <span>{zera_earned}</span>
                         <IconCoin className="w-[30px] h-[30px]" />
                       </div>
 

@@ -2,6 +2,8 @@ export const staticPaths = {
   home: "/",
   login: "/login",
   register: "/register",
+  forgot_password: "/forgot-password",
+  reset_password: "/auth/reset-password",
   term: "/term",
   policy: "/policy",
   all_article_category: "/article/categories",

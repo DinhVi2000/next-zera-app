@@ -2,20 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 
-import Head from "next/head";
-
 import MainLayout from "@/layouts/MainLayout";
 
-import { useToast } from "@chakra-ui/react";
-
-import { useDispatch } from "react-redux";
-
-import {
-  getHallOfFameByUsername,
-  setHallOfFame,
-} from "@/services/user.service";
-
-import { notifyErrorMessage } from "@/utils/helper";
+import { setHallOfFame } from "@/services/user.service";
 
 import HallOfFame from "@/components/other/HallOfFame";
 import { useAuthContext } from "@/context/auth-context";

@@ -8,7 +8,7 @@ import SidebarMB from "../responsive/SidebarMB";
 
 const GameTagDetailGrid = () => {
   const { gameDetailByTag } = useSelector(({ game }) => game) ?? {};
-  const { game_category, other_category } = gameDetailByTag ?? {};
+  const { allGameByTags, gameTag } = gameDetailByTag ?? {};
 
   return (
     <div className="grid-category-detail transition-all">
@@ -22,13 +22,13 @@ const GameTagDetailGrid = () => {
         }}
         className="text-white min-h-[94px] rounded-2xl flex items-center justify-center text-lg font-bold"
       >
-        {gameDetailByTag && gameDetailByTag[0]?.game_tag?.label}
+        {gameTag?.label}
       </div>
 
       {/* game */}
       <ul className="contents">
-        {gameDetailByTag?.length > 0 &&
-          gameDetailByTag?.map(({ game_detail }, i) => (
+        {allGameByTags?.length > 0 &&
+          allGameByTags?.map(({ game_detail }, i) => (
             <li key={i} className="contents">
               <GameItem
                 id={game_detail?.id}
@@ -62,7 +62,7 @@ const GameTagDetailGrid = () => {
           ))}
 
       {/* category */}
-      {other_category?.length > 0 &&
+      {/* {other_category?.length > 0 &&
         other_category.slice(0, 4)?.map((e, i) => (
           <GameCategory
             key={i}
@@ -76,9 +76,9 @@ const GameTagDetailGrid = () => {
             slug={e?.slug}
             superslug={e?.superslug}
           />
-        ))}
+        ))} */}
 
-      {!other_category &&
+      {/* {!other_category &&
         Array(4)
           .fill(0)
           .map((e, i) => (
@@ -88,7 +88,7 @@ const GameTagDetailGrid = () => {
                 gridArea: `c${i + 1} / c${i + 1} / c${i + 1} / c${i + 1}`,
               }}
             ></ItemLoading>
-          ))}
+          ))} */}
     </div>
   );
 };

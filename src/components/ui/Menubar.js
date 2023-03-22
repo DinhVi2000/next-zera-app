@@ -70,7 +70,7 @@ const Menubar = () => {
       bg_ref.current.classList?.add("opacity-100");
     });
 
-    get(apiURL.get.popular_game).then((data) => console.log("data", data));
+    // get(apiURL.get.popular_game).then((data) => console.log("data", data));
 
     return () => {
       document

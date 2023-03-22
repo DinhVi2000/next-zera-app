@@ -10,7 +10,7 @@ import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 
 import { useRouter } from "next/router";
 import { setHallOfFame } from "@/services/user.service";
-import { isValidPath } from "@/utils/helper";
+import { isEmpty, isValidPath } from "@/utils/helper";
 import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
 
@@ -29,7 +29,7 @@ const HallOfFamePage = () => {
         null,
         setHallOfFame
       )
-        .then(() => setIsValidPage(true))
+        .then((data) => setIsValidPage(!isEmpty(data)))
         .catch(() => setIsValidPage(false));
   }, [query]);
 
