@@ -117,7 +117,7 @@ const ModalEditProfile = () => {
             {payload?.tab === SHOP_TAB.AVATAR ? " Profile" : " Cover Page"}
           </div>
           <button onClick={handleCloseModal}>
-            <IconClose className="text-[#F472B6]" />
+            <IconClose className="text-[#F472B6] w-5 h-5" />
           </button>
         </div>
         <form
@@ -131,10 +131,7 @@ const ModalEditProfile = () => {
                   <div className="max-[990px]:flex max-[600px]:justify-between max-[990px]:justify-evenly max-[990px]:w-full max-[550px]:flex-col max-[550px]:items-center">
                     <ImageLoading
                       alt="avatar"
-                      src={
-                        checkAvatar ||
-                        "/avatar-1.svg"
-                      }
+                      src={checkAvatar || "/avatar-1.svg"}
                       className="rounded-[20px] h-[204px] w-[204px] object-cover"
                     />
 

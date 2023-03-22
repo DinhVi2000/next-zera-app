@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 import emptyImg from "../../../public/images/empty.png";
 
-function Empty({ className, ...props }) {
+function Empty({ className, children, ...props }) {
   return (
     <div
       {...props}
@@ -15,7 +15,7 @@ function Empty({ className, ...props }) {
         src={emptyImg}
         className="block mx-auto"
       />
-      <h3 className="text-xl font-bold">No data</h3>
+      <h3 className="text-xl font-bold">No {children ? children : "data"}</h3>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { MODAL_NAME } from "@/utils/constant";
@@ -40,7 +40,7 @@ const ModalConfirm = () => {
             REMINDER
           </div>
           <button onClick={handleCloseModal}>
-            <IconClose className="text-[#F472B6]" />
+            <IconClose className="text-[#F472B6] w-5 h-5" />
           </button>
         </div>
         <div className="text-[22px] flex-center flex-col">

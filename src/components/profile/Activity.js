@@ -1,16 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useEffect, useState } from "react";
-import { useToast } from "@chakra-ui/react";
-import { notifyErrorMessage } from "@/utils/helper";
-
-import { MODAL_NAME } from "@/utils/constant";
+import React from "react";
 import ListGameActivities from "./ListGameActivities";
 import GameItem from "../game/GameItem";
 import Link from "next/link";
 import { staticPaths } from "@/utils/$path";
 import { useAuthContext } from "@/context/auth-context";
 
-function Activities() {
+function Activities({ setInfoList, setIsOpenTab }) {
   const { userInfo } = useAuthContext();
 
   return (
@@ -49,22 +45,26 @@ function Activities() {
       <ListGameActivities
         listGame={userInfo?.recentlyPlayed}
         payload={"RECENT_GAMES"}
-        isModal={MODAL_NAME.VIEW_ALL_GAMES}
+        setInfoList={setInfoList}
+        setIsOpenTab={setIsOpenTab}
       />
       <ListGameActivities
         listGame={userInfo?.loved}
         payload={"LOVED_GAMES"}
-        isModal={MODAL_NAME.VIEW_ALL_GAMES}
+        setInfoList={setInfoList}
+        setIsOpenTab={setIsOpenTab}
       />
       <ListGameActivities
         listGame={userInfo?.playlist}
         payload={"PLAYLIST"}
-        isModal={MODAL_NAME.VIEW_ALL_GAMES}
+        setInfoList={setInfoList}
+        setIsOpenTab={setIsOpenTab}
       />
       <ListGameActivities
         listGame={userInfo?.purchaseHistory}
         payload={"PURCHASE_HISTORY"}
-        isModal={MODAL_NAME.VIEW_PURCHASE_HISTORY}
+        setInfoList={setInfoList}
+        setIsOpenTab={setIsOpenTab}
       />
     </div>
   );
