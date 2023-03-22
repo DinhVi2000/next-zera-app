@@ -45,6 +45,9 @@ import IconLogOut from "./log-out.svg";
 import IconProfile from "./profile.svg";
 import IconNext from "./arr-next.svg";
 import IconPre from "./arr-pre.svg";
+import IconTrash from "./trash.svg";
+import IconDelPlay from "./del-play.svg";
+import IconDelItem from "./del-item.svg";
 export { default as IconZoomIn } from "./zoom-in.svg";
 export { default as IconZoomOut } from "./zoom-out.svg";
 export { default as IconPlay } from "./play.svg";
@@ -54,6 +57,9 @@ export { default as IconTags } from "./tags.svg";
 export { default as IconCategories } from "./categories.svg";
 
 export {
+  IconDelPlay,
+  IconDelItem,
+  IconTrash,
   IconNext,
   IconPre,
   IconBack,

@@ -9,9 +9,13 @@ import SidebarMB from "@/components/responsive/SidebarMB";
 import Stats from "@/components/profile/Stats";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import { sleep } from "@/utils/helper";
+import ListGame from "@/components/profile/ListGame";
+import Playlist from "@/components/profile/Playlist";
 
 function Profile() {
   const [isValidPage, setIsValidPage] = useState();
+  const [infoList, setInfoList] = useState();
+  const [isOpenTab, setIsOpenTab] = useState(false);
 
   useEffect(() => {
     sleep(200).then(() => {
@@ -33,12 +37,33 @@ function Profile() {
             <div className="text-white">
               <InfoUser />
 
-              <div className="flex justify-between max-[1176px]:flex-col items-start mt-[50px] gap-x-[18px] max-[990px]:mt-5 w-full">
-                <div className="w-[40%] max-[1176px]:w-full max-[1176px]:flex max-[1176px]:justify-between max-[550px]:flex-col">
-                  <Stats />
-                  <Rewards />
-                </div>
-                <Activities />
+              <div className="mt-[50px] max-[990px]:mt-5 ">
+                {!isOpenTab ? (
+                  <div className="flex justify-between max-[1176px]:flex-col items-start gap-x-[18px] w-full">
+                    <div className="w-[40%] max-[1176px]:w-full max-[1176px]:flex max-[1176px]:justify-between max-[550px]:flex-col">
+                      <Stats />
+                      <Rewards />
+                    </div>
+                    <Activities
+                      setInfoList={setInfoList}
+                      setIsOpenTab={setIsOpenTab}
+                    />
+                  </div>
+                ) : (
+                  <>
+                    {infoList?.payload !== "PLAYLIST" ? (
+                      <ListGame
+                        setIsOpenTab={setIsOpenTab}
+                        infoList={infoList}
+                      />
+                    ) : (
+                      <Playlist
+                        setIsOpenTab={setIsOpenTab}
+                        infoList={infoList}
+                      />
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>

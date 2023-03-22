@@ -221,7 +221,7 @@ const getGameRecentlyPlayed = async () => {
       throw new Error(data?.message);
     }
 
-    return data?.data;
+    return data?.data?.rows;
   } catch (e) {
     throw e;
   }
@@ -242,18 +242,6 @@ const getHallOfFameByGameSlug = async (dispatch, slug, limit) => {
   }
 };
 
-const getRecentlyGames = async () => {
-  try {
-    const { data } = await http.get(`game/recently-played`);
-    if (!data.success) {
-      throw new Error(data?.message);
-    }
-    return data;
-  } catch (e) {
-    throw e;
-  }
-};
-
 const getLovedGames = async () => {
   try {
     const { data } = await http.get(`/game/loved`);
@@ -268,15 +256,84 @@ const getLovedGames = async () => {
   }
 };
 
-const getPlaylist = async () => {
+const createPlaylist = async (body) => {
   try {
-    const { data } = await http.get(`/game/playlist`);
+    const { data } = await http.post(`/game/playlist`, body);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getAllPlaylist = async (gameSlug) => {
+  try {
+    const { data } = await http.get(`/game/playlist?game_slug=${gameSlug}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+    return data?.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const deletePlaylist = async (id) => {
+  try {
+    const { data } = await http.delete(`/game/playlist/${id}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getAllGamePlaylist = async (id) => {
+  try {
+    const { data } = await http.get(`/game/playlist/${id}/item`);
 
     if (!data.success) {
       throw new Error(data?.message);
     }
 
     return data?.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const addGameToPlaylist = async (body) => {
+  try {
+    const { data } = await http.post(`/game/playlist/item`, body);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const deleteGamePlaylist = async (id) => {
+  try {
+    const { data } = await http.delete(`/game/playlist/item/${id}`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
   } catch (e) {
     throw e;
   }
@@ -299,20 +356,6 @@ const getMostPlayed = async () => {
 const addGameLove = async (params) => {
   try {
     const { data } = await http.post(`game/love`, params);
-
-    if (!data.success) {
-      throw new Error(data?.message);
-    }
-
-    return data;
-  } catch (e) {
-    throw e;
-  }
-};
-
-const addGamePlaylist = async (params) => {
-  try {
-    const { data } = await http.post(`game/add-playlist`, params);
 
     if (!data.success) {
       throw new Error(data?.message);
@@ -361,12 +404,15 @@ export {
   getGameRecentlyPlayed,
   getCategoryBySlug,
   getHallOfFameByGameSlug,
-  getRecentlyGames,
   getLovedGames,
-  getPlaylist,
+  createPlaylist,
+  getAllPlaylist,
+  getAllGamePlaylist,
+  deletePlaylist,
+  addGameToPlaylist,
+  deleteGamePlaylist,
   getMostPlayed,
   addGameLove,
-  addGamePlaylist,
   reportGame,
   getMessages,
 };

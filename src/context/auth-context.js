@@ -7,7 +7,7 @@ import {
   getGameRecentlyPlayed,
   getLovedGames,
   getMostPlayed,
-  getPlaylist,
+  getAllPlaylist,
 } from "@/services/game.service";
 import { notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
@@ -49,7 +49,7 @@ const userInfoFunctions = [
   },
   {
     key: "playlist",
-    callback: getPlaylist,
+    callback: getAllPlaylist,
   },
   {
     key: "purchaseHistory",
@@ -68,6 +68,7 @@ export const AuthContextProvider = ({ children }) => {
   const { call } = useApi();
 
   const [userInfo, setUserInfo] = useState();
+
   const [anonymousInfo, setAnonymousInfo] = useState();
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();

@@ -50,7 +50,7 @@ const ModalPurchaseHistory = () => {
             {toUpperCaseFirstLetter(tab?.replace("_", " "))}
           </div>
           <button onClick={handleCloseModal}>
-            <IconClose viewBox="0 0 35 35" className="filter-svg" />
+            <IconClose viewBox="0 0 35 35" className="filter-svg w-5 h-5" />
           </button>
         </div>
 

@@ -12,6 +12,8 @@ import ModalReport from "@/components/modal/ModalReport";
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 import ModalBuyTime from "@/components/modal/ModalBuyTime";
 import ModalUsersOnline from "@/components/modal/ModalUsersOnline";
+import ModalPlaylist from "@/components/modal/ModalPlaylist";
+import ModalDeletePlaylist from "@/components/modal/ModalDeletePlaylist";
 
 const ModalContext = createContext(null);
 
@@ -22,10 +24,12 @@ const Modal = {
   VIEW_PURCHASE_HISTORY: <ModalPurchaseHistory />,
   DAILY_BONUS: <ModalDailyBonus />,
   BUY: <ModalBuy />,
+  PLAYLIST: <ModalPlaylist />,
+  DELETE_PLAYLIST: <ModalDeletePlaylist />,
   CONFIRM: <ModalConfirm />,
   REPORT: <ModalReport />,
   BUYTIME: <ModalBuyTime />,
-  USERS_ONLINE_GAME: <ModalUsersOnline/>,
+  USERS_ONLINE_GAME: <ModalUsersOnline />,
 };
 
 export const useModalContext = () => {

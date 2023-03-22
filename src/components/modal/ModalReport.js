@@ -81,7 +81,7 @@ const ModalReport = () => {
       >
         <div className="flex justify-between w-full mb-3">
           <h4 className="text-3xl font-bold">Report</h4>
-          <IconClose onClick={handleCloseModal} />
+          <IconClose onClick={handleCloseModal} className="w-5 h-5" />
         </div>
 
         <form
