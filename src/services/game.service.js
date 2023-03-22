@@ -155,7 +155,7 @@ const getGamesByTagSlug = async (dispatch, tagSlug) => {
       throw new Error(data?.message);
     }
 
-    dispatch(setGameDetailByTag(data?.data?.rows));
+    dispatch(setGameDetailByTag(data.data));
 
     return data.data;
   } catch (e) {

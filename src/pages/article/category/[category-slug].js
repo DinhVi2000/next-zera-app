@@ -42,7 +42,11 @@ const ArticleCategory = () => {
 
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
-          <ArticleGrid articles={articles} articleInfo={articleInfo} />
+          <ArticleGrid
+            articles={articles}
+            articleInfo={articleInfo}
+            articleTags={[]}
+          />
         </MainLayout>
       </HandleNotFoundPage>
     </>

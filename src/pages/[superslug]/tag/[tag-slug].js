@@ -1,68 +1,72 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import React, { Fragment, memo, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+
 import GameItem from "@/components/game/GameItem";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import SEO from "@/components/other/SEO";
-import GameCategoryDetailGrid from "@/components/ui/GameCategoryDetailGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
 import GameTagDetailGrid from "@/components/ui/GameTagDetailGrid";
+
 import { useApi } from "@/hooks/useApi";
+
 import MainLayout from "@/layouts/MainLayout";
+
 import {
   getAllCategories,
   getAllGame,
-  getCategoryBySlug,
-  getGamesByTagSlug,
+  setGameDetailByTag,
 } from "@/services/game.service";
-import { isEmpty } from "lodash";
-import { useRouter } from "next/router";
-import React, { memo, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+import { apiURL } from "@/utils/$apiUrl";
+import { isValidPath } from "@/utils/helper";
 
 const CategoryDetail = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [seo, setSeo] = useState();
+
+  const { query } = router;
 
   const [isValidPage, setIsValidPage] = useState();
-  const [seo, setSeo] = useState();
 
   const { gameIndex } = useSelector(({ game }) => game) ?? {};
   const { games, categories } = gameIndex ?? {};
 
-  const { call } = useApi();
+  const { call, get } = useApi();
 
   const params = { page: 1, limit: 50 };
 
   useEffect(() => {
-    if (!router.query || isEmpty(router.query)) return;
-
-    if (Object.values(router.query).includes("undefined"))
-      return setIsValidPage(false);
-
-    getGamesByTagSlug(dispatch, router.query["tag-slug"])
-      .then((data) => {
-        const { game_category } = data ?? {};
-        setSeo({
-          title: game_category?.label,
-          description: game_category?.description,
+    if (isValidPath(query, setIsValidPage))
+      get(apiURL.get.games_by_tag(query["tag-slug"]), null, setGameDetailByTag)
+        .then((data) => {
+          const { allGameByTags, gameTag } = data ?? {};
+          setIsValidPage(
+            data &&
+              allGameByTags[0]?.game_detail?.superslug.value ===
+                query["superslug"]
+          );
+          setSeo({
+            title: gameTag.label,
+            description: gameTag.description,
+          });
+        })
+        .catch(() => {
+          setIsValidPage(false);
         });
-
-        setIsValidPage(
-          !!game_category &&
-            game_category?.superslug?.value === router.query["superslug"]
-        );
-      })
-      .catch(() => setIsValidPage(false));
 
     Promise.all([
       call(getAllGame(dispatch, params)),
       call(getAllCategories(dispatch, params)),
     ]);
-  }, [router.query]);
+  }, [query]);
 
   return (
-    <>
+    <Fragment>
       <SEO title={seo?.title} description={seo?.description} />
-      <HandleNotFoundPage isValidPage={true}>
+      <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
           <div className="w-min">
             <GameTagDetailGrid />
@@ -71,7 +75,7 @@ const CategoryDetail = () => {
           </div>
         </MainLayout>
       </HandleNotFoundPage>
-    </>
+    </Fragment>
   );
 };
 

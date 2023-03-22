@@ -21,15 +21,20 @@ const ArticlesTag = () => {
   const { query } = router;
 
   const [articles, setArticles] = useState();
+  const [articleTags, setArticleTags] = useState();
+  const [articleInfo, setArticleInfo] = useState();
 
   const [isValidPage, setIsValidPage] = useState();
 
   useEffect(() => {
     if (isValidPath(query, setIsValidPage))
       get(apiURL.get.articles_by_tag(query["tag-slug"]))
-        .then(({ rows }) => {
-          const articleList = rows?.map((e) => e?.article);
-          setArticles(articleList);
+        .then((data) => {
+          const { allArticleByTags, articleTag } = data ?? {};
+
+          setArticles(allArticleByTags.map((e) => e?.article));
+          setArticleTags(allArticleByTags.map((e) => e?.article_tags));
+          setArticleInfo(articleTag);
           setIsValidPage(true);
         })
         .catch(() => setIsValidPage(false));
@@ -40,7 +45,11 @@ const ArticlesTag = () => {
       <SEO title={"Articles"} />
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
-          <ArticleGrid articles={articles} />
+          <ArticleGrid
+            articleInfo={articleInfo}
+            articles={articles}
+            articleTags={articleTags}
+          />
         </MainLayout>
       </HandleNotFoundPage>
     </Fragment>

@@ -64,8 +64,8 @@ const userInfoFunctions = [
 export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const toast = useToast();
-  const dispatch = useDispatch();
-  const { call } = useApi();
+
+  const { socketClient, receiveZera } = useSocketContext();
 
   const [userInfo, setUserInfo] = useState();
 
@@ -74,8 +74,8 @@ export const AuthContextProvider = ({ children }) => {
   const [usernameAuth, setUsernameAuth] = useState();
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
+
   const { pathname } = router ?? {};
-  const { socketClient, receiveZera } = useSocketContext();
 
   const handleSetUserInfo = async () => {
     setVerifyStatus(STATUS.IN_PROGRESS);
@@ -135,8 +135,8 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logout = () => {
-    clearAuthenticatorData();
     router.push("/login");
+    clearAuthenticatorData();
   };
 
   const clearAuthenticatorData = () => {

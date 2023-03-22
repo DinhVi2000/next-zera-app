@@ -15,7 +15,7 @@ import { usePagination } from "@/hooks/usePagination";
 
 const ITEMS_PER_PAGE = 4;
 
-const ArticleGrid = ({ articleInfo, articles }) => {
+const ArticleGrid = ({ articleInfo, articles, articleTags }) => {
   const { currentItems, handlePageClick } = usePagination(
     ITEMS_PER_PAGE,
     articles
@@ -23,9 +23,10 @@ const ArticleGrid = ({ articleInfo, articles }) => {
 
   return (
     <div className="w-responsive h-full">
-      {/* title */}
       <div className="flex gap-4">
         <SidebarMB className={"tbl-flex left-0"} />
+
+        {/* title */}
         <div
           className="max-[990px]:ml-[94px] text-white overflow-hidden text-ellipsis min-h-[94px] max-h-[94px] w-full max-[550px]:max-w-[204px] max-w-[424px] rounded-2xl flex items-center justify-center text-lg font-bold px-6 py-3"
           style={{
@@ -42,7 +43,9 @@ const ArticleGrid = ({ articleInfo, articles }) => {
           {/* list */}
           <div className="min-h-[424px] gap-4 my-4 grid grid-cols-1 min-[1211px]:grid-cols-2 min-[1870px]:grid-cols-3">
             {currentItems?.length > 0 &&
-              currentItems?.map((e, i) => <ArticleItem key={i} item={e} />)}
+              currentItems?.map((e, i) => (
+                <ArticleItem key={i} item={e} tags={articleTags[i]} />
+              ))}
             <ArticleGridLoading articles={articles} />
           </div>
 
@@ -62,7 +65,7 @@ const ArticleGrid = ({ articleInfo, articles }) => {
   );
 };
 
-const ArticleItem = ({ item, ...props }) => {
+const ArticleItem = ({ item, tags, ...props }) => {
   const { slug, content, created_at, featured_image, title } = item ?? {};
 
   return (
@@ -72,6 +75,7 @@ const ArticleItem = ({ item, ...props }) => {
       className="bg-violet-gradient text-white min-h-[204px] max-h-[204px] rounded-2xl overflow-hidden border border-pink-500 "
     >
       <div className="h-full w-full flex">
+        {/* image */}
         <ImageLoading
           src={featured_image}
           alt={title}
@@ -79,15 +83,22 @@ const ArticleItem = ({ item, ...props }) => {
         />
         <div className="py-3 px-4 flex-1 w-[328px] flex flex-col h-full justify-between">
           <div>
+            {/* title */}
             <h2 className="text-base font-bold">{title}</h2>
 
             {/* tags */}
-            {/* <div className="flex gap-[5px]">
-              <div className="bg-white text-black text-sm my-1 px-2.5 font-semibold rounded-[20px]">
-                tag
-              </div>
-            </div> */}
+            <div className="flex gap-2 my-1">
+              {tags?.map((e, i) => (
+                <div
+                  key={i}
+                  className="bg-white text-black text-xs py-1 px-2 rounded-xl"
+                >
+                  {e?.label}
+                </div>
+              ))}
+            </div>
 
+            {/* description */}
             <span className="text-xs font-medium ">
               {
                 <DocumentRenderer
@@ -97,6 +108,8 @@ const ArticleItem = ({ item, ...props }) => {
               }
             </span>
           </div>
+
+          {/* datetime */}
           <span className="text-xs mt-1 self-end italic">
             {formatDate(created_at)}
           </span>

@@ -76,7 +76,7 @@ const LoginForm = ({ onSetIsSSOLogging }) => {
       </div>
 
       <div className="mb-5 text-right">
-        <Link href={staticPaths.home} className="text-violet-300">
+        <Link href={staticPaths.forgot_password} className="text-violet-300">
           Forgot the password ?
         </Link>
       </div>
