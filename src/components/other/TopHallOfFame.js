@@ -1,5 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import { useAuthContext } from "@/context/auth-context";
 import { IconCoin } from "@/resources/icons";
+import { dynamicPaths, staticPaths } from "@/utils/$path";
+import { DEFAULT_AVATAR_SRC } from "@/utils/constant";
 import { getArea } from "@/utils/helper";
 import Link from "next/link";
 import React from "react";
@@ -34,14 +37,22 @@ const Item = ({ item, ...props }) => {
   const { user, zera_earned } = item ?? {};
   const { avatar, username, quote } = user ?? {};
 
+  const { userInfo } = useAuthContext();
+
   if (zera_earned === 0) return;
 
   return (
-    <Link href={`/hall-of-fame/${username}`}>
+    <Link
+      href={
+        userInfo?.username === username
+          ? staticPaths.my_hall_of_fame
+          : dynamicPaths.hall_of_fame_by_username(username)
+      }
+    >
       <div className="bg-blur-600 p-2.5 rounded-[10px] flex justify-between cursor-pointer h-[84px] max-h-[84px] overflow-hidden">
         <div className="flex w-full">
           <ImageLoading
-            src={avatar}
+            src={avatar || DEFAULT_AVATAR_SRC}
             alt=""
             className="min-w-[62px] w-[62px] h-[62px] rounded-full object-cover"
           />
@@ -50,7 +61,10 @@ const Item = ({ item, ...props }) => {
             <h2 className="text-base font-bold overflow-hidden text-ellipsis w-full overflow-wrap-anywhere whitespace-normal ">
               {username}
             </h2>
-            <p className="text-xs font-medium overflow-wrap-anywhere whitespace-normal overflow-hidden text-ellipsis">
+            <p
+              className="text-xs font-medium overflow-wrap-anywhere whitespace-normal overflow-hidden text-ellipsis
+                         max-w-[210px] max-[1210px]:max-w-[100px]"
+            >
               {quote}
             </p>
           </div>

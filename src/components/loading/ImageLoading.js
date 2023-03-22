@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import React, { memo, useEffect, useRef, useState } from "react";
+
+import defaultImg from "@/../public/images/default.png";
 
 const ImageLoading = ({ src, alt, className, ...props }) => {
   const [loaded, setLoaded] = useState(false);
 
   const img_ref = useRef(null);
 
-  const handleLoadImage = () => {
+  const handleLoadImage = (e) => {
     setLoaded(true);
   };
 
@@ -23,7 +24,7 @@ const ImageLoading = ({ src, alt, className, ...props }) => {
         src={src}
         alt={alt}
         ref={img_ref}
-        onLoad={handleLoadImage}
+        onLoad={(e) => handleLoadImage(e)}
         className={loaded ? className : "hidden"}
         {...props}
       />

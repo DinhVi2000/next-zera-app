@@ -42,7 +42,7 @@ const GameTagDetailGrid = () => {
                       : "",
                 }}
                 slug={game_detail?.slug}
-                superSlug={game_detail?.superslug}
+                superslug={game_detail?.superslug}
               />
             </li>
           ))}

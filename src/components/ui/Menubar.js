@@ -6,7 +6,7 @@ import { useModalContext } from "@/context/modal-context";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 import { IconBack } from "@/resources/icons";
-import { GAMES_IMAGES, MODAL_NAME } from "@/utils/constant";
+import { GAMES_IMAGES, MODAL_NAME, STATUS } from "@/utils/constant";
 
 import { notifyErrorMessage, sleep } from "@/utils/helper";
 
@@ -24,28 +24,24 @@ import { getGamesByKeySearch } from "@/services/game.service";
 import { useAuthContext } from "@/context/auth-context";
 import { useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
+import { useApi } from "@/hooks/useApi";
+import { apiURL } from "@/utils/$apiUrl";
 
 const DURATION = 500;
-
-const SUGGESTS_SEARCH = [
-  ".io games",
-  "car games",
-  "game for girls",
-  "shooting games",
-  "motorbike games",
-  "po",
-];
 
 const Menubar = () => {
   const menubar_ref = useRef(null);
   const bg_ref = useRef(null);
 
   const toast = useToast();
+  const { get } = useApi();
 
   const { openModal } = useModalContext();
 
   const [searchValue, setSearchValue] = useState("");
   const [gamesResult, setGamesResult] = useState();
+  const [searchStatus, setSearchStatus] = useState(STATUS.NOT_START);
+  const [popularGames, setPopularGames] = useState();
 
   const { userInfo } = useAuthContext();
   const {
@@ -65,16 +61,6 @@ const Menubar = () => {
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
   };
 
-  const handleSearchGame = async () => {
-    setGamesResult(undefined);
-    try {
-      const response = (await getGamesByKeySearch(debouncedSearchTerm)) ?? {};
-      setGamesResult(response);
-    } catch (error) {
-      notifyErrorMessage(toast, error);
-    }
-  };
-
   useOnClickOutside(menubar_ref, handleCloseMenubar);
 
   useEffect(() => {
@@ -84,6 +70,8 @@ const Menubar = () => {
       bg_ref.current.classList?.add("opacity-100");
     });
 
+    get(apiURL.get.popular_game).then((data) => console.log("data", data));
+
     return () => {
       document
         .getElementsByTagName("body")[0]
@@ -92,8 +80,18 @@ const Menubar = () => {
   }, []);
 
   useEffect(() => {
-    if (!debouncedSearchTerm) return;
-    handleSearchGame();
+    if (!debouncedSearchTerm.trim()) return;
+    setGamesResult(undefined);
+    setSearchStatus(STATUS.IN_PROGRESS);
+    getGamesByKeySearch(debouncedSearchTerm)
+      .then((data) => {
+        setSearchStatus(STATUS.SUCCESS);
+        setGamesResult(data);
+      })
+      .catch((e) => {
+        setSearchStatus(STATUS.FAIL);
+        notifyErrorMessage(toast, e);
+      });
   }, [debouncedSearchTerm]);
 
   return (
@@ -103,80 +101,86 @@ const Menubar = () => {
                     transition-all opacity-100 translate-x-[-120%] duration-${DURATION}`}
         ref={menubar_ref}
       >
-        {/* searchbar */}
-        <SearchBar
-          searchValue={searchValue}
-          onChangeInput={handleChangeInput}
-          setSearchValue={setSearchValue}
-        />
+        <div className="relative w-full h-full">
+          {/* searchbar */}
+          <SearchBar
+            searchValue={searchValue}
+            onChangeInput={handleChangeInput}
+            setSearchValue={setSearchValue}
+            searchStatus={searchStatus}
+            setSearchStatus={setSearchStatus}
+          />
 
-        {/* search tab */}
-        {searchValue.trim() && <SearchResult results={gamesResult} />}
-        {!searchValue.trim() && (
-          <ScrollContainer>
-            <div className="flex gap-[10px] mt-4 mb-7 whitespace-nowrap ">
-              {categories?.map((e, i) => (
-                <SearchTab
-                  key={i}
-                  setSearchValue={(e) => {
-                    setGamesResult(undefined);
-                    setSearchValue(e);
-                  }}
-                  value={e?.label}
-                />
-              ))}
-            </div>
-          </ScrollContainer>
-        )}
+          {/* search tab */}
+          {searchValue.trim() && <SearchResult results={gamesResult} />}
+          {!searchValue.trim() && (
+            <section className="modal-scroll absolute h-full w-full top-0 py-[64px] overflow-y-scroll overflow-x-hidden">
+              <div className="search-tab-wrapper relative">
+                <ScrollContainer>
+                  <div className="flex gap-[10px] mt-4 mb-7  whitespace-nowrap ">
+                    {categories?.map((e, i) => (
+                      <SearchTab
+                        key={i}
+                        setSearchValue={(e) => {
+                          setGamesResult(undefined);
+                          setSearchValue(e);
+                        }}
+                        value={e?.label}
+                      />
+                    ))}
+                  </div>
+                </ScrollContainer>
+              </div>
 
+              <section className=" transition-all">
+                <Fragment>
+                  {/* popular */}
+                  <div className="text-white mb-7 transition-all">
+                    <p className="text-2xl font-bold mb-4">Popular this week</p>
+                    <div className="flex flex-wrap gap-4">
+                      {GAMES_IMAGES.slice(0, 6).map((e, i) => (
+                        <GameItem
+                          key={i}
+                          size={1}
+                          thumbnail={e}
+                          className="w-[94px] h-[94px]"
+                          slug={e?.slug}
+                          superslug={e?.superslug}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* recently */}
+                  <div className="text-white  transition-all">
+                    <p className="text-2xl font-bold mb-4">Recently played</p>
+                    <div className="flex flex-wrap gap-4">
+                      {userInfo?.recentlyPlayed?.rows?.map((e, i) => (
+                        <GameItem
+                          key={i}
+                          size={1}
+                          isRecently
+                          thumbnail={e?.thumbnail}
+                          title={e?.title}
+                          className="w-[94px] h-[94px]"
+                          slug={e?.slug}
+                          superslug={e?.superslug}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </Fragment>
+              </section>
+            </section>
+          )}
+        </div>
+        {/* back button */}
         <button
           className="bg-white rounded-full h-16 w-16 flex items-center justify-center absolute top-0 right-0 translate-x-[50%] translate-y-8 shadow-xxl hover:translate-y-7 transition-all"
           onClick={handleCloseMenubar}
         >
           <IconBack className="mr-1 w-5 text-violet-500" />
         </button>
-
-        <section className=" transition-all">
-          {!searchValue.trim() && (
-            <Fragment>
-              {/* popular */}
-              <div className="text-white mb-7 transition-all">
-                <p className="text-2xl font-bold mb-4">Popular this week</p>
-                <div className="flex flex-wrap gap-4">
-                  {GAMES_IMAGES.slice(0, 6).map((e, i) => (
-                    <GameItem
-                      key={i}
-                      size={1}
-                      thumbnail={e}
-                      className="w-[94px] h-[94px]"
-                      slug={e?.slug}
-                      superSlug={e?.superslug}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* recently */}
-              <div className="text-white  transition-all">
-                <p className="text-2xl font-bold mb-4">Recently played</p>
-                <div className="flex flex-wrap gap-4">
-                  {userInfo?.recentlyPlayed?.rows?.map((e, i) => (
-                    <GameItem
-                      key={i}
-                      size={1}
-                      isRecently
-                      thumbnail={e?.thumbnail}
-                      title={e?.title}
-                      className="w-[94px] h-[94px]"
-                      slug={e?.slug}
-                      superSlug={e?.superslug}
-                    />
-                  ))}
-                </div>
-              </div>
-            </Fragment>
-          )}
-        </section>
       </section>
 
       {/* background */}

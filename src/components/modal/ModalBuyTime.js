@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
@@ -19,25 +20,29 @@ import { useRouter } from "next/router";
 import { useSocketContext } from "@/context/socket-context";
 const ModalBuyTime = () => {
   const router = useRouter();
+  const toast = useToast();
+
   const [status, setStatus] = useState(STATUS.NOT_START);
   const [timeItems, setTimeItems] = useState([]);
   const [itemActive, setItemActive] = useState();
+
   const { setUserInfo, usernameAuth } = useAuthContext();
   const { openModal } = useModalContext();
   const { totalTimePlay, incrementTime } = useSocketContext();
-  const modalTimeRef = useRef(null);
-  const DURATION = 0;
-  const toast = useToast();
 
-  const handleCloseModal = useCallback(
-    () => {
-      if (totalTimePlay - incrementTime < 0 || totalTimePlay - incrementTime === 0) {
-        router.push("/");
-      }
-      sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
-    },
-    [incrementTime, totalTimePlay]
-  );
+  const modalTimeRef = useRef(null);
+
+  const DURATION = 150;
+
+  const handleCloseModal = () => {
+    sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
+    if (
+      totalTimePlay - incrementTime < 0 ||
+      totalTimePlay - incrementTime === 0
+    ) {
+      router.push("/");
+    }
+  };
 
   useEffect(() => {
     sleep(1).then(() => {
@@ -59,14 +64,18 @@ const ModalBuyTime = () => {
     }
   };
 
+  const getTimes = async () => {
+    const playtimeTtems = await getItemTime();
+    if (playtimeTtems) {
+      setTimeItems(playtimeTtems);
+      setItemActive(playtimeTtems.rows[0]);
+    }
+  };
+
   useEffect(() => {
-    const getTimes = async () => {
-      const playtimeTtems = await getItemTime();
-      if (playtimeTtems) {
-        setTimeItems(playtimeTtems);
-        setItemActive(playtimeTtems.rows[0]);
-      }
-    };
+    sleep(1).then(() =>
+      modalTimeRef.current.classList?.add("animation-open-modal")
+    );
     getTimes();
   }, []);
 
@@ -84,29 +93,32 @@ const ModalBuyTime = () => {
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modalTimeRef}
-        className="opacity-5 scale-90 w-fit h-fit daily-bonus p-4 pb-8"
+        className="opacity-5 scale-90 w-fit h-fit daily-bonus px-4 py-8 transition-all"
       >
         <div className="flex ">
           <h4 className="mx-auto">Buy Play Time</h4>
           <IconClose
-            className="cursor-pointer text-[#F472B6]"
-            onClick={() => handleCloseModal()}
+            className="cursor-pointer text-pink-400"
+            onClick={handleCloseModal}
           />
         </div>
-        <div className="grid grid-cols-3 gap-6 mt-10 w-full">
+        <div className="grid grid-cols-3 gap-4 mt-5 w-full">
           {timeItems?.rows &&
             timeItems.rows.map((e, i) => (
               <div
                 key={i}
-                className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item relative group"
+                className="overflow-hidden mx-auto w-[160px] h-[160px] daily-bonus__item relative group"
                 onClick={() => setItemActive(e)}
               >
-                <div className="daily-bonus__item-day">
-                  <span className="text-xs"> +{e.value} seconds</span>
+                {/* value */}
+                <div className="bg-pink-400 text-base px-5 py-2.5 text-center">
+                  +{e.value} s
                 </div>
-                <div className="daily-bonus__item-zera">
-                  <img className="w-16" src={e.url} />
-                </div>
+
+                {/* image */}
+                <img className="w-full h-full object-cover" src={e.url} />
+
+                {/* select bg */}
                 {itemActive.id === e.id && (
                   <div className=" bg-[#2b2a2a6d] w-full h-full absolute-center rounded-[20px]">
                     <IconCheckDaily className="absolute-center" />
@@ -114,10 +126,20 @@ const ModalBuyTime = () => {
                 )}
               </div>
             ))}
+
+          {!timeItems?.rows &&
+            Array(9)
+              .fill(0)
+              .map((e, i) => (
+                <div
+                  className="w-[160px] h-[160px] skeleton-shine rounded-[20px]"
+                  key={i}
+                ></div>
+              ))}
         </div>
         <button
           onClick={handleBuyTime}
-          className="mx-auto flex-center"
+          className="mx-auto text-base flex-center"
           disabled={status !== STATUS.NOT_START}
         >
           {status !== STATUS.NOT_START && <ButtonLoading isLoading />}

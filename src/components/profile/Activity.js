@@ -28,7 +28,7 @@ function Activities() {
               thumbnail={userInfo?.mostPlayed?.game_detail?.thumbnail}
               title={userInfo?.mostPlayed?.game_detail?.title}
               slug={userInfo?.mostPlayed?.game_detail?.slug}
-              superSlug={userInfo?.mostPlayed?.game_detail?.superslug}
+              superslug={userInfo?.mostPlayed?.game_detail?.superslug}
             ></GameItem>
           </div>
         </>

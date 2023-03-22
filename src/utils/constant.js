@@ -1,3 +1,7 @@
+import DEFAULT_AVATAR from "@/../public/images/default-avatar.png";
+
+const DEFAULT_AVATAR_SRC = DEFAULT_AVATAR.src;
+
 const IMAGE_URL =
   "https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80";
 
@@ -142,4 +146,5 @@ export {
   MESSAGE_MAX_LENGTH,
   SUPERSLUGS_CODES,
   HTTP_ERROR_CODE,
+  DEFAULT_AVATAR_SRC,
 };
