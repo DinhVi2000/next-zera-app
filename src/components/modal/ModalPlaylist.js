@@ -186,7 +186,7 @@ const ModalPlaylist = () => {
             autoComplete="off"
           >
             {errors?.name?.message && openInput && (
-              <p className="text-[#f82a2a] text-base h-4 leading-6 mt-0.5 mb-2 shadow-md">
+              <p className="text-[#f82a2a] text-base h-4 leading-6 mt-0.5 mb-2">
                 {errors?.name?.message}
               </p>
             )}

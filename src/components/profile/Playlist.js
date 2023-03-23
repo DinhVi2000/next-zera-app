@@ -124,7 +124,7 @@ function Playlist({ setIsOpenTab, infoList }) {
                                   thumbnail={e?.thumbnail}
                                   title={e?.title}
                                   slug={e?.slug}
-                                  superSlug={e?.superslug}
+                                  superslug={e?.superslug}
                                 ></GameItem>
                               </div>
                             ))}

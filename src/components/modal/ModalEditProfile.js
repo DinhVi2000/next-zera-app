@@ -109,7 +109,7 @@ const ModalEditProfile = () => {
     <BoxModal className="fixed h-[100vh] w-full z-50 text-white bg-[#00000073] flex-center backdrop-blur-sm">
       <div
         ref={modal_ref}
-        className={`duration-${DURATION} overflow-hidden transition-all opacity-5 scale-90 h-fit max-[990px]:h-fit w-fit max-[700px]:w-[90%] max-[350px]:w-full border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-t from-[#740B99] to-[#2F0652] px-[30px] pb-[20px]`}
+        className={`duration-${DURATION} overflow-hidden transition-all opacity-5 scale-90 h-fit max-[990px]:h-[70vh] w-fit max-[700px]:w-[90%] max-[350px]:w-full border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-t from-[#740B99] to-[#2F0652] px-[30px] pb-[20px]`}
       >
         <div className="flex items-center justify-center mb-[30px]">
           <div className="bg-pink-800 rounded-[20px] mx-auto py-[5px] px-2 text-[32px] text-center font-bold w-fit shadow-md shadow-[#F761D6] max-[400px]:text-2xl">
@@ -151,7 +151,7 @@ const ModalEditProfile = () => {
                         name="quote"
                         id="quote"
                         control={control}
-                        className="w-full h-[150px] rounded-[20px] p-2 px-3 box-border text-black edit-input bg-[95%_95%] focus-visible:outline-0"
+                        className="w-full h-[150px] rounded-[20px] p-2 px-3 box-border text-black edit-input bg-[95%_95%] focus-visible:outline-0 modal-scroll"
                         placeholder="User’s quote"
                       />
                     </div>
