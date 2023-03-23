@@ -1,21 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import React, {  useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
 
-import { MODAL_NAME, STATUS } from "@/utils/constant";
-import {
-  notifySuccessMessage,
-  sleep,
-} from "@/utils/helper";
+import { MODAL_NAME } from "@/utils/constant";
+import { sleep } from "@/utils/helper";
 import BoxModal from "./BoxModal";
-import { useToast } from "@chakra-ui/react";
-import ButtonLoading from "../loading/ButtonLoading";
 
 const ModalResetLogin = () => {
-  const toast = useToast();
-  const [status, setStatus] = useState(STATUS.NOT_START);
 
   const { logout } = useAuthContext();
   const modalTimeRef = useRef(null);
@@ -25,15 +18,6 @@ const ModalResetLogin = () => {
       modalTimeRef.current.classList?.add("animation-open-modal");
     });
   }, []);
-
-  useEffect(() => {
-    if (status === STATUS.SUCCESS) {
-      notifySuccessMessage(
-        toast,
-        "Congratulations! You have received bonus today"
-      );
-    }
-  }, [status]);
 
   const handleBackToLogin = () => {
     logout({ isResetLogin: true });
@@ -55,9 +39,7 @@ const ModalResetLogin = () => {
         <button
           onClick={handleBackToLogin}
           className="mx-auto text-[26px] font-semibold flex-center absolute p-4 bg-custom-two rounded-3xl shadow-custom-two top-[80%] left-[50%] -translate-x-1/2"
-          disabled={status !== STATUS.NOT_START}
         >
-          {status !== STATUS.NOT_START && <ButtonLoading isLoading />}
           Back to login
         </button>
       </div>
