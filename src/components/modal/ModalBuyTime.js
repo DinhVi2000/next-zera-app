@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
@@ -18,6 +19,7 @@ import ButtonLoading from "../loading/ButtonLoading";
 import { buyShopItem, getItemTime } from "@/services/shop.service";
 import { useRouter } from "next/router";
 import { useSocketContext } from "@/context/socket-context";
+import ImageLoading from "../loading/ImageLoading";
 const ModalBuyTime = () => {
   const router = useRouter();
   const toast = useToast();
@@ -116,7 +118,11 @@ const ModalBuyTime = () => {
                 </div>
 
                 {/* image */}
-                <img className="w-full h-full object-cover" src={e.url} />
+                <ImageLoading
+                  className="w-full h-full object-cover"
+                  src={e.url}
+                  alt=""
+                />
 
                 {/* select bg */}
                 {itemActive.id === e.id && (

@@ -11,7 +11,7 @@ import {
   getMessages,
 } from "@/services/game.service";
 import { useRouter } from "next/router";
-import { isEmpty, isValidPath } from "@/utils/helper";
+import { isValidPath } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";

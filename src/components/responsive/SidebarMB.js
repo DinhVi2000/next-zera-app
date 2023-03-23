@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 import { abbreviateNumber } from "@/utils/helper";
 import { staticPaths } from "@/utils/$path";
 
-const SidebarMB = ({ className, childClassName, ...props }) => {
+const SidebarMB = ({ className, childClassName }) => {
   const ref = useRef();
   const menu_ref = useRef();
 

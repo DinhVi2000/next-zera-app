@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/display-name */
 /* eslint-disable @next/next/no-img-element */
 import React, {
@@ -29,12 +30,7 @@ import logo from "../../../public/images/logo.png";
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
 
-import {
-  CLASS_NAME_BY_PATH,
-  MODAL_NAME,
-  SHOP_TAB,
-  STATUS,
-} from "@/utils/constant";
+import { MODAL_NAME, SHOP_TAB, STATUS } from "@/utils/constant";
 
 import Link from "next/link";
 
@@ -88,8 +84,6 @@ const SideBar = () => {
   const dispatch = useDispatch();
   const { openModal } = useModalContext();
   const { userInfo, verifyStatus } = useAuthContext();
-  const router = useRouter();
-  const { pathname } = router ?? {};
 
   const { zera } = userInfo ?? {};
 
@@ -266,7 +260,7 @@ export default memo(SideBar);
 
 const UserInfo = () => {
   const { userInfo } = useAuthContext();
-  const { username, avatar, zera } = userInfo ?? {};
+  const { username, avatar } = userInfo ?? {};
 
   const ref = useRef();
   const menu_ref = useRef();
@@ -291,10 +285,7 @@ const UserInfo = () => {
         <div className="cursor-pointer">
           <div className="flex-center flex-col border-t-[2px] border-t-[#C4B5FD] pt-2">
             <ImageLoading
-              src={
-                avatar ||
-                "/avatar-1.svg"
-              }
+              src={avatar || "/avatar-1.svg"}
               alt=""
               className="object-cover w-[94px] h-[94px] rounded-[20px]"
             />

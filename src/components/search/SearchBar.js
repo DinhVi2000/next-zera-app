@@ -7,7 +7,6 @@ const SearchBar = ({
   setSearchValue,
   onChangeInput,
   searchStatus,
-  setSearchStatus,
 }) => {
   return (
     <div className="pr-8 relative w-full max-w-[650px] mr-10 z-50">

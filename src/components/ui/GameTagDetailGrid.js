@@ -2,7 +2,6 @@ import React, { memo } from "react";
 
 import { useSelector } from "react-redux";
 
-import GameCategory from "@/components/game/GameCategory";
 import GameItem from "@/components/game/GameItem";
 import SidebarMB from "../responsive/SidebarMB";
 

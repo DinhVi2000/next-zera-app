@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo } from "react";
 
 import { useSelector } from "react-redux";
 
@@ -16,7 +16,7 @@ import ImageLoading from "@/components/loading/ImageLoading";
 
 import { getArea, getRandom } from "@/utils/helper";
 
-import { ADS_IMAGES, GAMES_IMAGES } from "@/utils/constant";
+import { GAMES_IMAGES } from "@/utils/constant";
 import { useMediaQuery } from "@chakra-ui/react";
 
 const GameDetailGrid = () => {

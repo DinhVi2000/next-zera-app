@@ -11,13 +11,10 @@ import {
 } from "@/services/game.service";
 import { notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { useApi } from "@/hooks/useApi";
 import { useRouter } from "next/router";
 import {
   PRIVATE_PAGE_URL,
   PUBLIC_PAGE_URL,
-  SOCKET_EVENT,
   STATUS,
 } from "@/utils/constant";
 import { signInAnonymously } from "firebase/auth";

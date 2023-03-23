@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   createContext,
   useCallback,
@@ -16,7 +17,7 @@ export const useSocketContext = () => {
   if (!socketContext) {
     throw new Error(
       "useSocketContext() can only be used inside of <SocketContextProvider />, " +
-      "please declare it at a higher level."
+        "please declare it at a higher level."
     );
   }
   const { socketProvider } = socketContext;
@@ -79,6 +80,7 @@ export const SocketContextProvider = ({ children }) => {
         }
         setMessageSocket(data);
       });
+      socketClient.on(SOCKET_EVENT.TIME_GAME, () => {});
       socketClient.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
         if (!data) return;
         setUsersInRoom(data.users);
@@ -90,43 +92,58 @@ export const SocketContextProvider = ({ children }) => {
     }
   }, [socketClient]);
 
-  const playGame = useCallback(({ room_id, user_id, is_anonymous }) => {
-    socketClient.emit(SOCKET_EVENT.PLAY_GAME, {
-      user_id,
-      room_id,
-      is_anonymous,
-    });
-  }, [socketClient]);
+  const playGame = useCallback(
+    ({ room_id, user_id, is_anonymous }) => {
+      socketClient.emit(SOCKET_EVENT.PLAY_GAME, {
+        user_id,
+        room_id,
+        is_anonymous,
+      });
+    },
+    [socketClient]
+  );
 
-  const stopGame = useCallback(({ room_id, user_id, is_anonymous }) => {
-    socketClient.emit(SOCKET_EVENT.STOP_GAME, {
-      user_id,
-      room_id,
-      is_anonymous,
-    });
-  }, [socketClient]);
+  const stopGame = useCallback(
+    ({ room_id, user_id, is_anonymous }) => {
+      socketClient.emit(SOCKET_EVENT.STOP_GAME, {
+        user_id,
+        room_id,
+        is_anonymous,
+      });
+    },
+    [socketClient]
+  );
 
-  const leaveGame = useCallback(({ room_id, user_id, is_anonymous }) => {
-    socketClient.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
-      user_id,
-      room_id,
-      is_anonymous,
-    });
-  }, [socketClient]);
+  const leaveGame = useCallback(
+    ({ room_id, user_id, is_anonymous }) => {
+      socketClient.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
+        user_id,
+        room_id,
+        is_anonymous,
+      });
+    },
+    [socketClient]
+  );
 
-  const userLogin = useCallback(({ username }) => {
-    if (!socketClient) return;
-    socketClient.emit(SOCKET_EVENT.USER_LOGIN, { username });
-  }, [socketClient]);
+  const userLogin = useCallback(
+    ({ username }) => {
+      if (!socketClient) return;
+      socketClient.emit(SOCKET_EVENT.USER_LOGIN, { username });
+    },
+    [socketClient]
+  );
 
-  const userLogout = useCallback(({ username }) => {
-    if (!socketClient) return;
-    socketClient.emit(SOCKET_EVENT.USER_LOGOUT, { username });
-  }, [socketClient]);
+  const userLogout = useCallback(
+    ({ username }) => {
+      if (!socketClient) return;
+      socketClient.emit(SOCKET_EVENT.USER_LOGOUT, { username });
+    },
+    [socketClient]
+  );
 
   useEffect(() => {
     if (!socketClient) return;
-    socketClient.on('connect', () => {
+    socketClient.on("connect", () => {
       listenAllEvent();
     });
   }, [socketClient, listenAllEvent]);
@@ -141,7 +158,9 @@ export const SocketContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    isCountDown === true && incrementTime === totalTimePlay ? setShowModalBuyTime(true) : setShowModalBuyTime(false);
+    isCountDown === true && incrementTime === totalTimePlay
+      ? setShowModalBuyTime(true)
+      : setShowModalBuyTime(false);
   }, [incrementTime]);
 
   const socketProvider = useMemo(

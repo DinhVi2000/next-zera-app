@@ -5,10 +5,6 @@ import GameCategory from "@/components/game/GameCategory";
 
 import { inRange } from "@/utils/helper";
 
-import newsImg from "@/../public/images/news.avif";
-
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setCategoryDetail } from "@/services/game.service";
 

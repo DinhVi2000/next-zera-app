@@ -39,7 +39,7 @@ function Profile() {
 
               <div className="mt-[50px] max-[990px]:mt-5 ">
                 {!isOpenTab ? (
-                  <div className="flex justify-between max-[1176px]:flex-col items-start gap-x-[18px] w-full">
+                  <div className="flex justify-between max-[1176px]:flex-col items-start gap-x-[18px] w-full max-[1178px]:pt-5 max-[790px]:pt-9 max-[650px]:pt-2">
                     <div className="w-[40%] max-[1176px]:w-full max-[1176px]:flex max-[1176px]:justify-between max-[550px]:flex-col">
                       <Stats />
                       <Rewards />

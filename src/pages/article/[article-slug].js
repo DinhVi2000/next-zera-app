@@ -1,15 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
-import Head from "next/head";
-
 import ArticleDetailWrapper from "@/components/wrapper/ArticleDetailWrapper";
 
 import MainLayout from "@/layouts/MainLayout";
-
-import { getArticleBySlug } from "@/services/article.service";
-
-import { isEmpty } from "lodash";
 
 import { useRouter } from "next/router";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";

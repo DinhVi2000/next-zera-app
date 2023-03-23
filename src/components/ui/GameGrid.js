@@ -1,8 +1,6 @@
-import React, { memo, useEffect, useRef } from "react";
+import React, { memo } from "react";
 
 import GameItem from "@/components/game/GameItem";
-import { getRandom } from "@/utils/helper";
-import { GAMES_IMAGES } from "@/utils/constant";
 import SidebarMB from "../responsive/SidebarMB";
 
 const GameGrid = ({ games }) => {

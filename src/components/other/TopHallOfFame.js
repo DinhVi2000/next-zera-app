@@ -33,7 +33,7 @@ const TopHallOfFame = ({ area, ...props }) => {
 
 export default TopHallOfFame;
 
-const Item = ({ item, ...props }) => {
+const Item = ({ item }) => {
   const { user, zera_earned } = item ?? {};
   const { avatar, username, quote } = user ?? {};
 

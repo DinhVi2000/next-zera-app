@@ -90,6 +90,7 @@ const getArticlesByTagSlug = async (slug) => {
 };
 
 export {
+  getArticlesByTagSlug,
   getAllArticleCategory,
   getAllArticleTag,
   getArticleBySlug,

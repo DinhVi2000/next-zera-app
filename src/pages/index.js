@@ -2,18 +2,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import Head from "next/head";
-
 import MainLayout from "@/layouts/MainLayout";
 
 import GameGrid from "@/components/ui/GameGrid";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
-import ArticleCategoryGrid from "@/components/ui/ArticleCategoryGrid";
 
 import { getAllCategories, getAllGame } from "@/services/game.service";
 
 import { useApi } from "@/hooks/useApi";
-import { getAllArticleCategory } from "@/services/article.service";
 import SEO from "@/components/other/SEO";
 import { useAuthContext } from "@/context/auth-context";
 import { MODAL_NAME, STATUS } from "@/utils/constant";
@@ -23,7 +19,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const { call } = useApi();
 
-  const { openModal, closeModal } = useModalContext();
+  const { openModal } = useModalContext();
   const { userInfo, verifyStatus } = useAuthContext();
 
   const { gameIndex } = useSelector(({ game }) => game) ?? {};

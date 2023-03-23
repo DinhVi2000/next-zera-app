@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { dynamicPaths } from "@/utils/$path";
 import {
-  categoryUrl,
   formatDate,
   gameDetailUrl,
   getArea,
