@@ -730,9 +730,16 @@
       "bc bc .  "
       "bc bc .  "
       "bc bc .  "
-      ".  .  .  ";
+      "gi gi gi "
+      "gi gi gi "
+      "gi gi gi "
+      "gi gi gi "
+      "hof hof hof "
+      "hof hof hof "
+      "hof hof hof "
+      "hof hof hof ";
     grid-template-columns: repeat(3, 94px);
-    grid-template-rows: repeat(10, 94px);
+    grid-template-rows: repeat(18, 94px);
   }
 
   .grid-category-detail {
@@ -780,3 +787,24 @@
     display: flex;
   }
 }
+
+// searchbar responsive
+.search-grid{
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(6, 94px);
+  align-content: baseline;
+
+  @media (max-width: 670px) {
+    grid-template-columns: repeat(5, 94px);
+  }
+
+  @media (max-width: 570px) {
+    grid-template-columns: repeat(4, 94px);
+  }
+
+  @media (max-width: 450px) {
+    grid-template-columns: repeat(3, 94px);
+  }
+}
+

@@ -18,7 +18,7 @@ const SearchResult = ({ results }) => {
       <NoData results={results} />
       {/* list */}
       <div
-        className="modal-scroll grid grid-cols-[repeat(6,94px)] grid-rows-[repeat(5,94px)] gap-4 absolute top-0 bottom-[-62px] py-[120px] max-w-[644px]
+        className="search-grid modal-scroll absolute top-0 bottom-[-62px] py-[110px] max-w-[644px]
                    overflow-y-scroll overflow-x-hidden"
       >
         {category?.map((e, i) => (

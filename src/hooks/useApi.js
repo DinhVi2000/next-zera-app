@@ -27,17 +27,6 @@ export const useApi = () => {
       notifyErrorMessage(toast, e);
       throw e;
     }
-    // http
-    //   .get(url, config)
-    //   .then(({ data }) => {
-    //     if (!data?.success) throw new Error(data?.message);
-    //     console.log("data :", data);
-    //     return data;
-    //   })
-    //   .catch((e) => {
-    //     notifyErrorMessage(toast, e);
-    //     throw e;
-    //   });
   };
 
   const post = async (url, formData, config, callback = null) => {

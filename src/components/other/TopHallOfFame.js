@@ -16,7 +16,7 @@ const TopHallOfFame = ({ area, ...props }) => {
   return (
     <div
       style={{ gridArea: getArea(area) }}
-      className="mb-hidden modal-scroll bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] text-white overflow-x-hidden overflow-y-auto relative"
+      className="modal-scroll bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] text-white overflow-x-hidden overflow-y-auto relative"
       {...props}
     >
       <div className="text-[28px] font-semibold bg-black py-2.5 text-center top-0 sticky">

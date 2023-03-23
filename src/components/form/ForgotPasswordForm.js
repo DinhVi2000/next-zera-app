@@ -70,7 +70,7 @@ const ForgotPasswordForm = () => {
       <button
         disabled={status === STATUS.SUCCESS}
         type="submit"
-        className="mt-3 text-base rounded-[20px] bg-linear-violet-300 w-full py-3 flex items-center justify-center"
+        className="mt-4 text-base rounded-[20px] bg-linear-violet-300 w-full py-3 flex items-center justify-center"
       >
         <ButtonLoading isLoading={status === STATUS.IN_PROGRESS} />
         Forgot password

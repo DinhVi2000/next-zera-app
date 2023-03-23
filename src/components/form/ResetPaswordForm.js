@@ -44,9 +44,10 @@ const ResetPasswordForm = () => {
     if (!isValid) return;
     const { password } = data;
 
-    post(apiURL.post.new_password, { password, token }).then(() =>
-      notifySuccessMessage(toast, message)
-    );
+    post(apiURL.post.new_password, { password, token }).then(() => {
+      notifySuccessMessage(toast, message);
+      router.push(staticPaths.login);
+    });
   };
 
   return (
@@ -97,6 +98,7 @@ const ResetPasswordForm = () => {
 
       <button
         type="submit"
+        disabled={status === STATUS.IN_PROGRESS}
         className="text-base rounded-[20px] bg-linear-violet-300 w-full py-3 flex items-center justify-center"
       >
         <ButtonLoading isLoading={status === STATUS.IN_PROGRESS} />
