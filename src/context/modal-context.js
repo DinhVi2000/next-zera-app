@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 import Menubar from "@/components/ui/Menubar";
@@ -33,7 +34,7 @@ const Modal = {
   REPORT: <ModalReport />,
   BUYTIME: <ModalBuyTime />,
   USERS_ONLINE_GAME: <ModalUsersOnline />,
-  RESET_LOGIN: <ModalResetLogin/>,
+  RESET_LOGIN: <ModalResetLogin />,
 };
 
 export const useModalContext = () => {
@@ -80,7 +81,10 @@ export const ModalContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (!socketClient && !usernameAuth) return;
-    if (userLoginData.username === usernameAuth && userLoginData.socket_id === socketClient.id) {
+    if (
+      userLoginData.username === usernameAuth &&
+      userLoginData.socket_id === socketClient.id
+    ) {
       openModal(MODAL_NAME.RESET_LOGIN);
     }
   }, [userLoginData]);

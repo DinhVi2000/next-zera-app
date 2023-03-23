@@ -123,8 +123,6 @@ const CLASS_NAME_BY_PATH = {
   "/": "tbl-hidden mb-hidden",
 };
 
-const PATH_NOT_HIDDEN_SIDEBAR = {};
-
 const SUPERSLUGS_CODES = {
   GAME: "game",
   ARTICLE: "article",

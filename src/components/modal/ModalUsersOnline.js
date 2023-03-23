@@ -1,48 +1,30 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useCallback, useEffect, useRef } from "react";
 import { useModalContext } from "@/context/modal-context";
-import { MODAL_NAME, STATUS } from "@/utils/constant";
-import {
-  notifySuccessMessage,
-  sleep,
-} from "@/utils/helper";
+import { MODAL_NAME } from "@/utils/constant";
+import { sleep } from "@/utils/helper";
 import BoxModal from "./BoxModal";
 import { IconClose } from "@/resources/icons";
-import { useToast } from "@chakra-ui/react";
 import { useSocketContext } from "@/context/socket-context";
 import Link from "next/link";
 import { useAuthContext } from "@/context/auth-context";
+import ImageLoading from "../loading/ImageLoading";
 
 const ModalUsersOnline = () => {
-
-  const [status, setStatus] = useState(STATUS.NOT_START);
   const { usersInRoom } = useSocketContext();
   const { openModal } = useModalContext();
   const modalTimeRef = useRef(null);
   const DURATION = 0;
-  const toast = useToast();
   const { userInfo } = useAuthContext();
-  const handleCloseModal = useCallback(
-    () => {
-      sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
-    },
-    []
-  );
+  const handleCloseModal = useCallback(() => {
+    sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
+  }, []);
 
   useEffect(() => {
     sleep(1).then(() => {
       modalTimeRef.current.classList?.add("animation-open-modal");
     });
   }, []);
-
-  useEffect(() => {
-    if (status === STATUS.SUCCESS) {
-      handleCloseModal();
-      notifySuccessMessage(
-        toast,
-        "Congratulations! You have received bonus today"
-      );
-    }
-  }, [status]);
 
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
@@ -73,7 +55,8 @@ const ModalUsersOnline = () => {
                       <span className="text-xs"> {user.username} </span>
                     </div>
                     <div className="overflow-hidden w-full h-[calc(100%-2rem)] p-2 rounded-xl">
-                      <img
+                      <ImageLoading
+                        alt=""
                         className="w-full h-full object-cover rounded-xl"
                         src={user?.avatar ?? "/avatar-1.svg"}
                       />

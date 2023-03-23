@@ -6,7 +6,6 @@ import React from "react";
 import ImageLoading from "../loading/ImageLoading";
 
 const GameCategory = ({
-  id,
   index,
   label,
   thumbnail,

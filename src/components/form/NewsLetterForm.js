@@ -16,7 +16,7 @@ const NewsLetterForm = () => {
     // mode: "onChange",
   });
 
-  const onSubmit = async (formData) => {
+  const onSubmit = async () => {
     if (!isValid || isSubmitSuccessful) return;
   };
 

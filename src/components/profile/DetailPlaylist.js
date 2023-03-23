@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useModalContext } from "@/context/modal-context";
 import {
   IconClose,
@@ -106,7 +107,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
                 className="rounded-[10px] cursor-pointer px-2 hover:bg-[#DB2777] flex items-center h-[46px] w-full"
                 onClick={() => {
                   setPayload({ currentInfo, setIsDetail, setStatus }),
-                    openModal(MODAL_NAME.DELETE_PLAYLIST);
+                  openModal(MODAL_NAME.DELETE_PLAYLIST);
                 }}
               >
                 <IconDelPlay className="mr-2" />

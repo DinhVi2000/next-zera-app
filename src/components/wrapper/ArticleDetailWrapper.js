@@ -11,7 +11,6 @@ import { dynamicPaths, staticPaths } from "@/utils/$path";
 
 const ArticleDetailWrapper = ({ article }) => {
   const {
-    id,
     content,
     created_at,
     featured_image,

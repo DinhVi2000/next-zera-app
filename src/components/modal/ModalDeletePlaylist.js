@@ -43,7 +43,7 @@ const ModalDeletePlaylist = () => {
             return { ...prev, playlist: data };
           })
         ),
-          openModal(MODAL_NAME.NONE);
+        openModal(MODAL_NAME.NONE);
         payload?.setIsDetail(false);
         payload?.setStatus(STATUS.SUCCESS);
       }

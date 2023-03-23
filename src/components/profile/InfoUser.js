@@ -1,4 +1,8 @@
-import { IconCoin, IconPlus, IconEdit } from "@/resources/icons";
+import {
+  IconEdit,
+  IconArrUp,
+  IconArrDown,
+} from "@/resources/icons";
 import { Tooltip } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 
@@ -20,6 +24,7 @@ function InfoUser() {
 
   const [categories, setCategories] = useState([]);
   const [itemsInventory, setItemsInventory] = useState([]);
+  const [showMore, setShowMore] = useState(false);
 
   const getTabInventory = async () => {
     const { data } = await getCategoriesInventory();
@@ -83,10 +88,7 @@ function InfoUser() {
           >
             <ImageLoading
               alt=""
-              src={
-                avatar ||
-                "/avatar-1.svg"
-              }
+              src={avatar || "/avatar-1.svg"}
               className="w-[204px] h-[204px] object-cover rounded-[20px]"
             />
 
@@ -97,22 +99,52 @@ function InfoUser() {
             </Tooltip>
           </div>
 
-          <div className="flex justify-between max-[650px]:flex-col max-[650px]:flex-center flex-1 max-[650px]:flex-[0] w-[80%]">
-            <div>
+          <div
+            className={`flex justify-between max-[650px]:flex-col max-[650px]:flex-center flex-1 max-[650px]:flex-[0] w-[80%] relative max-[1221px]:top-5 max-[1178px]:top-10 max-[990px]:top-5 ${
+              showMore
+                ? "max-[790px]:top-10 max-[650px]:top-0 "
+                : "max-[790px]:top-1"
+            }`}
+          >
+            <div className="relative">
               <div className="w-auto max-[650px]:text-center max-[650px]:w-auto">
                 <p className="font-semibold text-[28px]">{username}</p>
               </div>
-              <div
-                className="w-auto group cursor-pointer relative max-[650px]:text-center"
-                onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
-              >
-                <p className="font-medium overflow-hidden text-ellipsis whitespace-nowrap w-[500px] max-[1194px]:w-[300px] max-[1194px]:w-[200px] max-[650px]:text-[unset] max-[650px]:whitespace-normal max-[650px]:w-[100%] max-[650px]:px-10">
+              <div className="relative w-auto group cursor-pointer top-0 max-[650px]:text-center ">
+                <p
+                  onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
+                  className={`font-medium max-[650px]:w-[100%] max-[650px]:px-10 ${
+                    showMore
+                      ? "max-[650px]:h-fit text-[unset] whitespace-normal w-[700px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[350px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
+                      : "max-[650px]:h-[30px] overflow-hidden text-ellipsis whitespace-nowrap w-[500px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[350px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
+                  }`}
+                >
                   {quote}
+                  <IconEdit
+                    viewBox="0 0 42 42"
+                    className="absolute top-[-2%] right-[-25px] group-hover:block hidden"
+                  />
                 </p>
-                <IconEdit
-                  viewBox="0 0 42 42"
-                  className="absolute top-[-10%] right-[-35px] group-hover:block hidden"
-                />
+                <span
+                  className={`inline-block text-[#fc3c9c] font-semibold text-left w-fit mx-auto ${
+                    showMore
+                      ? "absolute top-11 max-[1220px]:top-16 max-[1178px]:top-[90px] max-[990px]:top-[65px] max-[790px]:top-[90px] max-[650px]:static"
+                      : ""
+                  }`}
+                  onClick={() => setShowMore((value) => !value)}
+                >
+                  {!showMore ? (
+                    <span className="flex-center font-semibold">
+                      Show more
+                      <IconArrDown className="ml-1 w-3 h-3" />
+                    </span>
+                  ) : (
+                    <span className="flex-center font-semibold">
+                      Show less
+                      <IconArrUp className="ml-1 w-3 h-3" />
+                    </span>
+                  )}
+                </span>
               </div>
             </div>
             <div className="max-[650px]:self-end justify-self-end">

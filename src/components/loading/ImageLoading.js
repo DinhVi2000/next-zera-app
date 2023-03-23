@@ -1,14 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { memo, useEffect, useRef, useState } from "react";
 
-import defaultImg from "@/../public/images/default.png";
-
 const ImageLoading = ({ src, alt, className, ...props }) => {
   const [loaded, setLoaded] = useState(false);
 
   const img_ref = useRef(null);
 
-  const handleLoadImage = (e) => {
+  const handleLoadImage = () => {
     setLoaded(true);
   };
 

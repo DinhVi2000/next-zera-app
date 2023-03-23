@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useRef, useState } from "react";
 
@@ -27,7 +28,6 @@ const ModalBuy = () => {
   const { setSocketStatus } = useSocketContext();
   const modal_ref = useRef(null);
   const DURATION = 200;
-  const [itemShop, setItemShop] = useState(payload?.item);
   const [loading, setLoading] = useState(STATUS.NOT_START);
 
   const handleCloseModal = () => {
@@ -46,7 +46,7 @@ const ModalBuy = () => {
       setLoading(STATUS.IN_PROGRESS);
 
       const res = await buyShopItem({
-        item: parseInt(itemShop.id),
+        item: parseInt(payload?.item?.id),
       });
 
       if (res.success) {
@@ -100,16 +100,16 @@ const ModalBuy = () => {
           <div className="gradient-radius">
             <img
               alt=""
-              src={itemShop?.url}
+              src={payload?.item?.url}
               className={`w-[204px] h-[204px] object-cover rounded-[20px] ${
                 payload?.tab === "Cover Pages" ? "w-[441px]" : ""
               }`}
             />
           </div>
-          <p className="font-bold text-base mt-3 mb-2">{itemShop?.name}</p>
+          <p className="font-bold text-base mt-3 mb-2">{payload?.item?.name}</p>
           <div className="flex-center flex-col ">
             <div className="flex font-bold mt-4 mb-5">
-              {itemShop?.price}
+              {payload?.item?.price}
               <IconCoin22 className="ml-2" />
             </div>
             <div className="flex mb-4">

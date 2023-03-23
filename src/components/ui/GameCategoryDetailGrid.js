@@ -1,8 +1,6 @@
 import React from "react";
 
-import { GAMES_IMAGES } from "@/utils/constant";
-
-import { getArea, getRandom } from "@/utils/helper";
+import { getArea } from "@/utils/helper";
 
 import { useSelector } from "react-redux";
 

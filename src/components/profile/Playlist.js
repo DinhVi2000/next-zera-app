@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable indent */
 import { IconArrowRight, IconPre } from "@/resources/icons";
 import { notifyErrorMessage, toUpperCaseFirstLetter } from "@/utils/helper";

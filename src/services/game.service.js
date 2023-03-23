@@ -3,7 +3,6 @@
 // eslint-disable-next-line quotes
 import { http } from "@/utils/http";
 import { createSlice } from "@reduxjs/toolkit";
-import { setRecentlyPlayedGames } from "./user.service";
 
 // Game slice
 const game = createSlice({

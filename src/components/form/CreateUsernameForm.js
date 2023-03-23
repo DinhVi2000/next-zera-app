@@ -6,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import InputHook from "../custom/InputHook";
 
 import { useAuthContext } from "@/context/auth-context";
-import { useApi } from "@/hooks/useApi";
 import { updateUsername } from "@/services/user.service";
 import ButtonLoading from "../loading/ButtonLoading";
 import { notifyErrorMessage } from "@/utils/helper";
@@ -15,7 +14,7 @@ import { useRouter } from "next/router";
 import { createUsernameFormSchema } from "@/validators/create-username.validator";
 
 const CreateUsernameForm = () => {
-  const { login, setUsernameAuth } = useAuthContext();
+  const { setUsernameAuth } = useAuthContext();
 
   const toast = useToast();
   const router = useRouter();

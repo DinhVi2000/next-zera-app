@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import { useAuthContext } from "@/context/auth-context";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { usePagination } from "@/hooks/usePagination";
 import {
   IconCoin,
@@ -15,7 +13,7 @@ import { DEFAULT_AVATAR_SRC } from "@/utils/constant";
 import { animateValue } from "@/utils/helper";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, memo, useEffect, useMemo } from "react";
+import React, { Fragment, memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ImageLoading from "../loading/ImageLoading";
 import Pagination from "../pagination/Pagination";
@@ -104,7 +102,7 @@ const HallOfFame = () => {
 
         {/* content */}
         <div
-          className="border-[5px] border-pink-500 bg-gradient-hof rounded-[30px] 
+          className="border-[5px] border-pink-500 bg-gradient-hof rounded-[30px]
                      p-16 max-[550px]:p-5 max-[660px]:p-6"
         >
           <div className="flex items-center max-[1541px]:flex-col gap-20">
@@ -192,7 +190,7 @@ const HallOfFame = () => {
                       {/* mb */}
                       <div className="mb-block px-2">
                         <p
-                          className="text-left w-16 h-12 
+                          className="text-left w-16 h-12
                                      web-line-clamp-2 web-box-orient-vertical web-box overflow-hidden"
                         >
                           {game_detail?.title}

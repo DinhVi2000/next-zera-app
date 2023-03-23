@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable indent */
 import { useModalContext } from "@/context/modal-context";
 import { getUserReward } from "@/services/user.service";

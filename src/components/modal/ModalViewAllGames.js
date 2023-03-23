@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { MODAL_NAME, VIEW_ALL_GAMES_TAB } from "@/utils/constant";
@@ -17,7 +17,6 @@ const ModalViewAllGames = () => {
   const { openModal, payload } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 0;
-  const [tab, setTab] = useState(payload?.payload);
 
   const handleCloseModal = () => {
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
@@ -56,7 +55,7 @@ const ModalViewAllGames = () => {
       >
         {tabs?.map(({ title, tabName }, i) => (
           <>
-            {tabName === tab && (
+            {tabName === payload?.payload && (
               <>
                 <div
                   className="flex items-center justify-center mb-[30px]"

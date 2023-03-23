@@ -5,7 +5,6 @@ import MainLayout from "@/layouts/MainLayout";
 
 import SEO from "@/components/other/SEO";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
-import PreviousRouter from "@/components/previousRouter/PreviousRouter";
 
 import { getAllGameTagBySuperslug } from "@/services/game.service";
 

@@ -48,6 +48,8 @@ import IconPre from "./arr-pre.svg";
 import IconTrash from "./trash.svg";
 import IconDelPlay from "./del-play.svg";
 import IconDelItem from "./del-item.svg";
+import IconArrUp from "./arr-up.svg";
+import IconArrDown from "./arr-down.svg";
 export { default as IconZoomIn } from "./zoom-in.svg";
 export { default as IconZoomOut } from "./zoom-out.svg";
 export { default as IconPlay } from "./play.svg";
@@ -57,6 +59,8 @@ export { default as IconTags } from "./tags.svg";
 export { default as IconCategories } from "./categories.svg";
 
 export {
+  IconArrUp,
+  IconArrDown,
   IconDelPlay,
   IconDelItem,
   IconTrash,

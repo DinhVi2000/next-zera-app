@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useSocketContext } from "@/context/socket-context";
-import { IconBack, IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
+import { IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
 import GameScreenBar from "./GameScreenBar";

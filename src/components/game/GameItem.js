@@ -12,7 +12,6 @@ import { dynamicPaths } from "@/utils/$path";
 const MAX_WITDH = 314;
 
 const GameItem = ({
-  id,
   index,
   thumbnail,
   area,

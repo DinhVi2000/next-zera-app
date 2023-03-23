@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 
 import { IconHeart } from "@/resources/icons";
@@ -51,7 +52,7 @@ function AddLove() {
 
   useEffect(() => {
     if (userInfo?.loved && info?.id) {
-      setIsLoved(!!userInfo?.loved?.find((e) => e?.id == info?.id));
+      setIsLoved(!!userInfo?.loved?.find((e) => e?.id === info?.id));
     }
   }, [info]);
 

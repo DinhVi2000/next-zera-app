@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 
 import { useAuthContext } from "@/context/auth-context";

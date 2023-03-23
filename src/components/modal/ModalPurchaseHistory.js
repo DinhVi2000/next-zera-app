@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 import { MODAL_NAME } from "@/utils/constant";
@@ -22,7 +22,6 @@ const ModalPurchaseHistory = () => {
   const { openModal, payload } = useModalContext();
   const modal_ref = useRef(null);
   const DURATION = 0;
-  const [tab, setTab] = useState(payload?.payload);
 
   const handleCloseModal = () => {
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
@@ -47,7 +46,7 @@ const ModalPurchaseHistory = () => {
       >
         <div className="flex items-center justify-center mb-[30px]">
           <div className="text-center text-[40px] mx-auto mt-[27px] font-bold max-[500px]:text-2xl">
-            {toUpperCaseFirstLetter(tab?.replace("_", " "))}
+            {toUpperCaseFirstLetter(payload?.payload?.replace("_", " "))}
           </div>
           <button onClick={handleCloseModal}>
             <IconClose viewBox="0 0 35 35" className="filter-svg w-5 h-5" />
