@@ -36,7 +36,7 @@ const ModalResetLogin = () => {
   }, [status]);
 
   const handleBackToLogin = () => {
-    logout();
+    logout({ isResetLogin: true });
     openModal(MODAL_NAME.NONE);
   };
 
