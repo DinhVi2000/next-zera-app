@@ -19,12 +19,15 @@ $ npm install
 
 ### Configuration
 
--- config in file src/config/lcl.json
+-- config in file src/envs/${env}.json
 
-### Run the App
+if run in local, env is "lcl"
+
+change api url, chat server url, firebase, facebook,... to your configuration
+
+### Run the App in development mode
 
 Once you have your setup ready, run:
-
 With yarn:
 
     $ yarn dev
@@ -32,3 +35,14 @@ With yarn:
 With npm:
 
     $ npm run dev
+
+### Build and deploy
+With yarn:
+
+    $ yarn build:${env}
+    $ yarn start:${env}
+
+With npm:
+
+    $ npm run build:${env}
+    $ npm run start:${env}
