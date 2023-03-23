@@ -27,7 +27,6 @@ const verifySSOToken = async (params) => {
     if (!data.success) {
       throw new Error(data?.message);
     }
-
     return data;
   } catch (e) {
     throw e;

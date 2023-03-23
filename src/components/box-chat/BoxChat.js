@@ -42,6 +42,7 @@ function BoxChat({ area }) {
     listenAllEvent,
     showModalBuyTime,
     usersInRoom,
+    setIncrementTime,
   } = useSocketContext();
   const toast = useToast();
   const handleSendMessage = (e) => {
@@ -119,6 +120,7 @@ function BoxChat({ area }) {
 
   useEffect(() => {
     return () => {
+      setIncrementTime(0);
       setIsCountDown(false);
       leaveGame({
         user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),

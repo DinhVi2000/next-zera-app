@@ -65,8 +65,6 @@ export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const toast = useToast();
 
-  const { socketClient, receiveZera } = useSocketContext();
-
   const [userInfo, setUserInfo] = useState();
 
   const [anonymousInfo, setAnonymousInfo] = useState();
@@ -76,6 +74,7 @@ export const AuthContextProvider = ({ children }) => {
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
 
   const { pathname } = router ?? {};
+  const { socketClient, receiveZera, userLogin, userLogout } = useSocketContext();
 
   const handleSetUserInfo = async () => {
     setVerifyStatus(STATUS.IN_PROGRESS);
@@ -127,7 +126,7 @@ export const AuthContextProvider = ({ children }) => {
 
       setToken(token);
       setUsernameAuth(username);
-
+      userLogin({ username });
       router.push("/");
     } catch (error) {
       notifyErrorMessage(toast, error);
@@ -135,6 +134,8 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const logout = () => {
+    userLogout({ username: usernameAuth });
+    clearAuthenticatorData();
     router.push("/login");
     clearAuthenticatorData();
   };
@@ -168,21 +169,6 @@ export const AuthContextProvider = ({ children }) => {
     () => Object.values(PRIVATE_PAGE_URL).includes(pathname),
     [pathname]
   );
-
-  const remainingTime = (data) => {
-    if (data) {
-      setUserInfo((prev) => ({ ...prev, playtime: data.remainingTime }));
-    }
-  };
-
-  useEffect(() => {
-    if (!socketClient) return;
-    socketClient.on(SOCKET_EVENT.TIME_GAME, remainingTime);
-    return () => {
-      if (!socketClient) return;
-      socketClient.off(SOCKET_EVENT.TIME_GAME);
-    };
-  }, [socketClient]);
 
   useEffect(() => {
     if (receiveZera > 0) {
@@ -219,6 +205,14 @@ export const AuthContextProvider = ({ children }) => {
     if (isPrivatePath && !isLogged) router.push("/login");
     else setIsAuthenticationPage(false);
   }, [pathname]);
+
+  /**
+   * Handle emit login/logout when refresh page
+   */
+  useEffect(() => {
+    if (!socketClient?.id || !usernameAuth) return;
+    userLogin({ username: usernameAuth });
+  }, [socketClient?.id]);
 
   const authProvider = useMemo(
     () => ({
