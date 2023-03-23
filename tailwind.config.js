@@ -24,9 +24,6 @@ module.exports = {
     // colors: colors,
     extend: {
       colors,
-      boxShadow: {
-        game: "rgba(0, 0, 0, 0.24) 0px 6px 12px 0px;",
-      },
     },
   },
   plugins: [],
