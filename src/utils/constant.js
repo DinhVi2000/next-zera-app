@@ -31,6 +31,7 @@ const MODAL_NAME = {
   NONE: "NONE",
   BUYTIME: "BUYTIME",
   USERS_ONLINE_GAME: "USERS_ONLINE_GAME",
+  RESET_LOGIN: "RESET_LOGIN",
 };
 
 const SHOP_TAB = {
@@ -99,6 +100,9 @@ const SOCKET_EVENT = {
   STOP_GAME: "stopGame",
   PLAY_GAME: "playGame",
   TIME_GAME: "timeGame",
+  USER_LOGIN: 'userLogin',
+  LOGGED_IN_USER: 'loggedInUser',
+  USER_LOGOUT: 'userLogout',
 };
 
 const PLAYTIME_CATEGORY = "Playtimes";

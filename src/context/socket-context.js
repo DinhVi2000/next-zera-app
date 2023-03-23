@@ -34,6 +34,7 @@ export const SocketContextProvider = ({ children }) => {
   const [showModalBuyTime, setShowModalBuyTime] = useState(false);
   const [usersInRoom, setUsersInRoom] = useState({});
   const [receiveZera, setReceiveZera] = useState(0);
+  const [userLoginData, setUserLoginData] = useState({});
 
   const connectSocket = () => {
     const socket = io(config.SERVER_CHAT);
@@ -78,11 +79,13 @@ export const SocketContextProvider = ({ children }) => {
         }
         setMessageSocket(data);
       });
-      socketClient.on(SOCKET_EVENT.TIME_GAME, (data) => {
-      });
       socketClient.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
         if (!data) return;
         setUsersInRoom(data.users);
+      });
+      socketClient.on(SOCKET_EVENT.LOGGED_IN_USER, (data) => {
+        if (!data) return;
+        setUserLoginData(data);
       });
     }
   }, [socketClient]);
@@ -109,6 +112,16 @@ export const SocketContextProvider = ({ children }) => {
       room_id,
       is_anonymous,
     });
+  }, [socketClient]);
+
+  const userLogin = useCallback(({ username }) => {
+    if (!socketClient) return;
+    socketClient.emit(SOCKET_EVENT.USER_LOGIN, { username });
+  }, [socketClient]);
+
+  const userLogout = useCallback(({ username }) => {
+    if (!socketClient) return;
+    socketClient.emit(SOCKET_EVENT.USER_LOGOUT, { username });
   }, [socketClient]);
 
   useEffect(() => {
@@ -157,6 +170,9 @@ export const SocketContextProvider = ({ children }) => {
       usersInRoom,
       receiveZera,
       setReceiveZera,
+      userLogin,
+      userLoginData,
+      userLogout,
     }),
     [
       socketStatus,
@@ -178,6 +194,9 @@ export const SocketContextProvider = ({ children }) => {
       usersInRoom,
       receiveZera,
       setReceiveZera,
+      userLogin,
+      userLoginData,
+      userLogout,
     ]
   );
 
