@@ -159,7 +159,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
                         thumbnail={e?.thumbnail}
                         title={e?.title}
                         slug={e?.slug}
-                        superSlug={e?.superslug}
+                        superslug={e?.superslug}
                       ></GameItem>
                       {showDelItem && (
                         <div className="absolute left-0 top-0 w-[94px] h-full bg-[#00000083] z-10 rounded-[15px]">

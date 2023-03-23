@@ -29,7 +29,7 @@ function Profile() {
 
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
-          <div className="w-responsive">
+          <div className="w-full">
             <SidebarMB
               className={"tbl-flex"}
               childClassName={"static-important mb-5"}

@@ -63,12 +63,17 @@
 }
 .modal-scroll::-webkit-scrollbar {
   width: 0;
+  height: 0;
 }
 .responsive-grid {
   display: grid;
   grid-gap: 16px;
   grid-template-columns: repeat(auto-fill, 94px);
   grid-template-rows: repeat(1, 94px);
+  @media (max-width: 696px) {
+    width: 650px;
+    overflow-x: scroll;
+  }
 }
 
 .count-down {
