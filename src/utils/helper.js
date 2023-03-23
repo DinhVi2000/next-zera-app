@@ -195,6 +195,10 @@ function animateValue(obj, start, end, duration) {
   window.requestAnimationFrame(step);
 }
 
+const toggleScroll = () => {
+  document.getElementsByTagName("body")[0].classList.toggle("overflow-hidden");
+};
+
 export {
   animateValue,
   articleCategoryUrl,
@@ -213,4 +217,5 @@ export {
   getBetweenTwoDate,
   toUpperCaseFirstLetter,
   isValidPath,
+  toggleScroll,
 };

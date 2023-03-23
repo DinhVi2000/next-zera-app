@@ -10,12 +10,12 @@ import {
   IconLeftWing,
   IconRightWing,
 } from "@/resources/icons";
-import { dynamicPaths } from "@/utils/$path";
+import { dynamicPaths, staticPaths } from "@/utils/$path";
 import { DEFAULT_AVATAR_SRC } from "@/utils/constant";
 import { animateValue } from "@/utils/helper";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { Fragment, memo, useEffect } from "react";
+import React, { Fragment, memo, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import ImageLoading from "../loading/ImageLoading";
 import Pagination from "../pagination/Pagination";
@@ -25,8 +25,6 @@ const ITEM_PER_PAGE = 4;
 
 const HallOfFame = () => {
   const { hallOfFame } = useSelector(({ user }) => user) ?? {};
-
-  const matches = useMediaQuery("(max-width: 550px)");
 
   const { user_info, played_game, total_earned_zera, play_streak } =
     hallOfFame ?? {};
@@ -105,10 +103,13 @@ const HallOfFame = () => {
         </div>
 
         {/* content */}
-        <div className="border-[5px] border-pink-500 bg-gradient-hof rounded-[30px] p-16 max-[550px]:p-5">
+        <div
+          className="border-[5px] border-pink-500 bg-gradient-hof rounded-[30px] 
+                     p-16 max-[550px]:p-5 max-[660px]:p-6"
+        >
           <div className="flex items-center max-[1541px]:flex-col gap-20">
             {/* avatar */}
-            {pathname !== "/hall-of-fame" && (
+            {pathname !== staticPaths.my_hall_of_fame && (
               <div className="w-full max-w-[204px] h-full  max-[991px]:mx-auto">
                 <ImageLoading
                   src={avatar || DEFAULT_AVATAR_SRC}
@@ -118,7 +119,7 @@ const HallOfFame = () => {
                 <h2 className="text-center font-bold text-base mt-2">
                   {username}
                 </h2>
-                <p className="text-[12px]">{quote}</p>
+                <p className="text-[13px] text-center">{quote}</p>
               </div>
             )}
 
@@ -147,15 +148,18 @@ const HallOfFame = () => {
             </div>
           </div>
 
+          {/* TOP GAME PLAYED */}
           <div className="flex justify-center">
-            {/* top played */}
             <div className="max-w-[845px] w-full text-center">
               <h1 className="text-[28px] font-semibold py-6">
                 Top game played
               </h1>
 
               {/* list */}
-              <div className="w-full h-[501px] min-[1492px]:h-[243px] grid grid-cols-1 min-[1492px]:grid-cols-2 gap-x-5 gap-y-[15px]">
+              <div
+                className="w-full h-[501px] min-[1492px]:h-[243px]
+                           grid gap-x-5 gap-y-[15px] content-baseline grid-cols-1 min-[1492px]:grid-cols-2 "
+              >
                 {currentItems?.map(({ game_detail, zera_earned }, i) => (
                   <Link
                     href={dynamicPaths.game_by_slug(
@@ -178,16 +182,23 @@ const HallOfFame = () => {
                           {game_detail?.title}
                         </p>
                       </div>
-                      <div className="flex items-center gap-4">
+
+                      {/* pc */}
+                      <div className="mb-hidden flex items-center gap-4">
                         <span>{zera_earned}</span>
                         <IconCoin className="w-[30px] h-[30px]" />
                       </div>
 
                       {/* mb */}
-                      <div className="hidden max-[550px]:block">
-                        <p className="text-left">{game_detail?.title}</p>
+                      <div className="mb-block px-2">
+                        <p
+                          className="text-left w-16 h-12 
+                                     web-line-clamp-2 web-box-orient-vertical web-box overflow-hidden"
+                        >
+                          {game_detail?.title}
+                        </p>
                         <div className="flex-center gap-2">
-                          <span className="count-number">{zera_earned}</span>
+                          <span>{zera_earned}</span>
                           <IconCoin className="w-[30px] h-[30px]" />
                         </div>
                       </div>
@@ -203,8 +214,6 @@ const HallOfFame = () => {
                 items={rows}
                 itemsPerPage={ITEM_PER_PAGE}
                 onPageChange={handlePageClick}
-                marginPagesDisplayed={matches ? 1 : 3}
-                pageRangeDisplayed={matches ? 2 : 3}
               />
             </div>
           </div>
