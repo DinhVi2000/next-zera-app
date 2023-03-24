@@ -2,14 +2,13 @@
 import React, { useEffect, useRef } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { useAuthContext } from "@/context/auth-context";
-
+import { useRouter } from "next/router";
 import { MODAL_NAME } from "@/utils/constant";
 import { sleep } from "@/utils/helper";
 import BoxModal from "./BoxModal";
 
 const ModalResetLogin = () => {
-  const { logout } = useAuthContext();
+  const router = useRouter();
   const modalTimeRef = useRef(null);
   const { openModal } = useModalContext();
   useEffect(() => {
@@ -20,11 +19,11 @@ const ModalResetLogin = () => {
     });
   }, []);
 
-  const handleBackToLogin = () => {
-    logout({ isResetLogin: true });
+  const handleBackToHome = () => {
     modalTimeRef.current.classList?.remove("animation-open-modal");
     document.body.style.overflow = "auto";
     document.body.style.height = "auto";
+    router.replace('/');
     openModal(MODAL_NAME.NONE);
   };
 
@@ -45,10 +44,10 @@ const ModalResetLogin = () => {
           </h3>
         </div>
         <button
-          onClick={handleBackToLogin}
+          onClick={handleBackToHome}
           className="mx-auto text-[26px] font-semibold flex-center absolute p-4 bg-custom-two rounded-3xl shadow-custom-two top-[80%] left-[50%] -translate-x-1/2"
         >
-          Back to login
+          Back to home
         </button>
       </div>
     </BoxModal>
