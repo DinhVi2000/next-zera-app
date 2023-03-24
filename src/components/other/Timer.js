@@ -25,7 +25,7 @@ const Timer = () => {
     return getTimeRemaining(totalTimePlay);
   });
   /**
-   *  Login anonymous if user not sigin
+   *  Login anonymous if user not sign in
    */
   useEffect(() => {
     const handleLogin = async () => {
@@ -50,7 +50,7 @@ const Timer = () => {
   }, [anonymousInfo, socketClient, usernameAuth, socketStatus]);
 
   /**
-   * Get user info if user sigin
+   * Get user info if user sign in
    */
   useEffect(() => {
     const fetchUserData = async () => {

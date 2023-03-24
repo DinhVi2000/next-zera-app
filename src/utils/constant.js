@@ -123,6 +123,8 @@ const CLASS_NAME_BY_PATH = {
   "/": "tbl-hidden mb-hidden",
 };
 
+const MAX_SECOND_LIMIT_CHAT = 59; // start with 0 -> 59;
+const MAX_LIMIT_MESSAGE = 5;
 const SUPERSLUGS_CODES = {
   GAME: "game",
   ARTICLE: "article",
@@ -135,6 +137,8 @@ const HTTP_ERROR_CODE = {
 };
 
 export {
+  MAX_SECOND_LIMIT_CHAT,
+  MAX_LIMIT_MESSAGE,
   ADS_IMAGES,
   COUNTDOWN_DEADLINE,
   CLASS_NAME_BY_PATH,
