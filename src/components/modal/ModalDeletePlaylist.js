@@ -22,7 +22,9 @@ const ModalDeletePlaylist = () => {
   const DURATION = 200;
 
   const handleCloseModal = () => {
-    modal_ref?.current?.classList?.remove("animation-open-modal");
+    modal_ref.current.classList?.remove("animation-open-modal");
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
   };
 
@@ -30,7 +32,9 @@ const ModalDeletePlaylist = () => {
 
   useEffect(() => {
     sleep(1).then(() => {
-      modal_ref?.current?.classList?.add("animation-open-modal");
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+      modal_ref.current.classList?.add("animation-open-modal");
     });
   }, []);
 
@@ -43,7 +47,7 @@ const ModalDeletePlaylist = () => {
             return { ...prev, playlist: data };
           })
         ),
-        openModal(MODAL_NAME.NONE);
+          openModal(MODAL_NAME.NONE);
         payload?.setIsDetail(false);
         payload?.setStatus(STATUS.SUCCESS);
       }

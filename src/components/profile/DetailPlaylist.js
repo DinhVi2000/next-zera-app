@@ -19,7 +19,7 @@ import GameItem from "../game/GameItem";
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { notifyErrorMessage } from "@/utils/helper";
-import { useToast } from "@chakra-ui/react";
+import { Tooltip, useToast } from "@chakra-ui/react";
 import { useAuthContext } from "@/context/auth-context";
 
 function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
@@ -81,16 +81,21 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
   return (
     <div>
       {/* TITLE */}
-      <div className="rounded-t-[20px] bg-[#EC4899] py-[16px] px-[16px] text-[28px] font-bold relative flex items-center justify-between">
+      <div className="rounded-t-[20px] bg-[#EC4899] p-[16px] max-[612px]:px-[5px] text-[28px] font-bold relative flex items-center justify-between">
         <div
-          className="flex-center text-2xl cursor-pointer"
+          className="flex-center text-2xl cursor-pointer max-[1184px]:text-xl max-[612px]:text-base"
           onClick={() => setIsDetail(false)}
         >
           <IconPre className="mr-1" />
           Back
         </div>
-        <div className="absolute-center">
-          Playlist games / {currentInfo?.name}
+        <div className="absolute-center flex-center max-[1184px]:text-xl max-[612px]:text-base">
+          Playlist games
+          <Tooltip label={currentInfo?.name}>
+            <p className="w-[210px] max-[732px]:w-[120px] max-[612px]:w-[40px] overflow-hidden text-ellipsis whitespace-nowrap">
+              /{currentInfo?.name}
+            </p>
+          </Tooltip>
         </div>
 
         <div className="relative">
@@ -107,7 +112,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
                 className="rounded-[10px] cursor-pointer px-2 hover:bg-[#DB2777] flex items-center h-[46px] w-full"
                 onClick={() => {
                   setPayload({ currentInfo, setIsDetail, setStatus }),
-                  openModal(MODAL_NAME.DELETE_PLAYLIST);
+                    openModal(MODAL_NAME.DELETE_PLAYLIST);
                 }}
               >
                 <IconDelPlay className="mr-2" />
@@ -133,13 +138,13 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
       <div>
         {loading ? (
           <div className="p-5">
-            <div className="grid grid-cols-10">
+            <div className="grid grid-cols-10 gap-x-5">
               {Array(6)
                 .fill(0)
                 ?.map((e, i) => (
                   <div
                     key={i}
-                    className="skeleton-shine w-[94px] h-[94px] rounded-[15px] opacity-40"
+                    className="skeleton-shine  w-[94px] h-[94px] rounded-[15px] opacity-40"
                   ></div>
                 ))}
             </div>

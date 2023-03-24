@@ -57,7 +57,7 @@ const GameItem = ({
         ></ImageLoading>
         <div
           className="absolute text-white bottom-0 text-center w-full font-bold opacity-0 translate-y-0
-                     group-hover:opacity-100 group-hover:translate-y-[-8px] transition-all duration-300"
+                     group-hover:opacity-100 group-hover:translate-y-[-8px] transition-all duration-300 text-shadow"
         >
           <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis w-full text-white px-2">
             {title || "Games"}

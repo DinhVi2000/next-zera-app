@@ -32,11 +32,15 @@ const ModalBuy = () => {
 
   const handleCloseModal = () => {
     modal_ref.current.classList?.remove("animation-open-modal");
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
   };
 
   useEffect(() => {
     sleep(1).then(() => {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
       modal_ref.current.classList?.add("animation-open-modal");
     });
   }, []);
@@ -86,7 +90,7 @@ const ModalBuy = () => {
     <BoxModal className="fixed h-[100vh] w-full z-[60] text-white bg-[#00000073] flex-center">
       <div
         ref={modal_ref}
-        className={`duration-${DURATION} transition-all opacity-5 scale-90 h-fit min-w-[540px] w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-b from-[#570426] to-[#270010] px-[30px] pb-[20px] max-[550px]:min-w-full`}
+        className={`duration-${DURATION} transition-all opacity-5 scale-90 h-fit min-w-[540px] w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-b from-[#570426] to-[#270010] px-[30px] pb-[20px] max-[576px]:min-w-[90%] max-[576px]:w-[90%] max-[576px]:h-[60vh] overflow-y-scroll vyngu`}
       >
         <div className="flex items-center justify-center mb-[30px]">
           <div className="bg-pink-800 rounded-[10px] mx-auto py-[5px] text-[28px] text-center font-bold w-[109px] border-[2px] border-[#EC4899]">
