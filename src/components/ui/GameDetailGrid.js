@@ -55,18 +55,13 @@ const GameDetailGrid = () => {
 
         {/* loading  */}
         {!gamesRelate &&
-          Array(50)
+          Array(20)
             .fill(0)
             ?.map((e, i) => (
-              <GameItem
+              <div
                 key={i}
-                id={i}
-                index={i}
-                thumbnail={getRandom(GAMES_IMAGES)}
-                title={`game ${i}`}
-                slug={e?.slug}
-                superslug={e?.superslug}
-              ></GameItem>
+                className="w-[94px] h-[94px] skeleton-shine rounded-2xl"
+              ></div>
             ))}
       </div>
     </div>

@@ -25,6 +25,7 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useRouter } from "next/router";
 import { abbreviateNumber } from "@/utils/helper";
 import { staticPaths } from "@/utils/$path";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const SidebarMB = ({ className, childClassName }) => {
   const ref = useRef();
@@ -32,6 +33,8 @@ const SidebarMB = ({ className, childClassName }) => {
 
   const { userInfo } = useAuthContext();
   const { openModal } = useModalContext();
+
+  const isMatchTabletMobile = useMediaQuery("(max-width: 990px)");
 
   useOnClickOutside(menu_ref, (e) => {
     const touch = document.getElementById("touch");
@@ -128,7 +131,7 @@ const SidebarMB = ({ className, childClassName }) => {
               )}
 
               {/* countdown */}
-              <Timer />
+              {isMatchTabletMobile && <Timer />}
             </div>
           </div>
         </div>

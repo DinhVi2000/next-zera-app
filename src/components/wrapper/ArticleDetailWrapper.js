@@ -1,6 +1,6 @@
 import { Fragment, memo } from "react";
 
-const { formatDate } = require("@/utils/helper");
+const { formatDate, parseTagLabel, insertAt } = require("@/utils/helper");
 
 import ImageLoading from "@/components/loading/ImageLoading";
 import Breadcrumb from "@/components/ui/Breadcrumb";
@@ -8,6 +8,7 @@ import Breadcrumb from "@/components/ui/Breadcrumb";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 
 import { dynamicPaths, staticPaths } from "@/utils/$path";
+import { useAuthContext } from "@/context/auth-context";
 
 const ArticleDetailWrapper = ({ article }) => {
   const {
@@ -19,20 +20,27 @@ const ArticleDetailWrapper = ({ article }) => {
     slug,
   } = article ?? {};
 
-  const breadcrumbsData = [
+  let breadcrumbsData = [
     {
       label: "Home",
       url: staticPaths.home,
-    },
-    {
-      label: "All Article Tags",
-      url: staticPaths.all_article_tags,
+      disable: false,
     },
     {
       label: title,
       url: dynamicPaths.article_by_slug(slug),
+      disable: true,
     },
   ];
+
+  const { prevRoute } = useAuthContext();
+
+  if (prevRoute && prevRoute !== "")
+    insertAt(breadcrumbsData, 1, {
+      label: parseTagLabel(prevRoute),
+      url: prevRoute,
+      disable: false,
+    });
 
   return (
     <>
@@ -47,12 +55,12 @@ const ArticleDetailWrapper = ({ article }) => {
               <p className="text-xs mb-2">{formatDate(created_at)}</p>
               <p className="mb-5">{seo_description}</p>
 
-              <p className="text-white">
+              <div className="text-white">
                 <DocumentRenderer
                   document={JSON.parse(content)}
                   className="whitespace-nowrap overflow-hidden text-ellipsis"
                 />
-              </p>
+              </div>
 
               {featured_image && (
                 <ImageLoading

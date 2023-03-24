@@ -269,9 +269,12 @@ const createPlaylist = async (body) => {
   }
 };
 
-const getAllPlaylist = async (gameSlug) => {
+const getAllPlaylist = async (game_slug) => {
   try {
-    const { data } = await http.get(`/game/playlist?game_slug=${gameSlug}`);
+    const { data } = await http.get(
+      `/game/playlist`,
+      game_slug && { params: { game_slug } }
+    );
 
     if (!data.success) {
       throw new Error(data?.message);

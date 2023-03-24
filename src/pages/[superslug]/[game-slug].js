@@ -35,22 +35,22 @@ const GameDetail = () => {
 
   useEffect(() => {
     setIsValidPage();
-    if (isValidPath(query, setIsValidPage))
-      getGameDetailBySlug(dispatch, router.query["game-slug"])
-        .then((data) => {
-          setIsValidPage(
-            !!data && data?.superslug?.value === router.query["superslug"]
-          );
+    if (!isValidPath(query, setIsValidPage)) return;
+    getGameDetailBySlug(dispatch, router.query["game-slug"])
+      .then((data) => {
+        setIsValidPage(
+          !!data && data?.superslug?.value === router.query["superslug"]
+        );
 
-          const { seo_title, seo_description } = data ?? {};
-          setSeo({ seo_title, seo_description });
-          const { game_category } = data ?? {};
-          if (!game_category?.slug) return;
-          getGameByCategorySlug(dispatch, game_category?.slug);
+        const { seo_title, seo_description } = data ?? {};
+        setSeo({ seo_title, seo_description });
+        const { game_category } = data ?? {};
+        if (!game_category?.slug) return;
+        getGameByCategorySlug(dispatch, game_category?.slug);
 
-          getMessages(dispatch, game_category?.id);
-        })
-        .catch(() => setIsValidPage(false));
+        getMessages(dispatch, game_category?.id);
+      })
+      .catch(() => setIsValidPage(false));
 
     Promise.all([
       call(getAllCategories(dispatch)),

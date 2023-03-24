@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { loginWithEmail } from "@/services/auth.service";
 import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
 import {
@@ -9,16 +16,18 @@ import {
   getMostPlayed,
   getAllPlaylist,
 } from "@/services/game.service";
+
 import { notifyErrorMessage } from "@/utils/helper";
+
 import { useToast } from "@chakra-ui/react";
+
 import { useRouter } from "next/router";
-import {
-  PRIVATE_PAGE_URL,
-  PUBLIC_PAGE_URL,
-  STATUS,
-} from "@/utils/constant";
+
+import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
+
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
+
 import { useSocketContext } from "./socket-context";
 
 const AuthContext = createContext(null);
@@ -27,7 +36,7 @@ export const useAuthContext = () => {
   const authContext = useContext(AuthContext);
   if (!authContext) {
     throw new Error(
-      "useWeb3Context() can only be used inside of <Web3ContextProvider />, " +
+      "useAuthContext() can only be used inside of <AuthContextProvider />, " +
         "please declare it at a higher level."
     );
   }
@@ -63,15 +72,19 @@ export const AuthContextProvider = ({ children }) => {
   const toast = useToast();
 
   const [userInfo, setUserInfo] = useState();
-
   const [anonymousInfo, setAnonymousInfo] = useState();
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
+
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
 
+  const prevRoute = useRef();
+  const currentRoute = useRef();
+
   const { pathname } = router ?? {};
-  const { socketClient, receiveZera, userLogin, userLogout } = useSocketContext();
+  const { socketClient, receiveZera, userLogin, userLogout } =
+    useSocketContext();
 
   const handleSetUserInfo = async () => {
     setVerifyStatus(STATUS.IN_PROGRESS);
@@ -117,12 +130,16 @@ export const AuthContextProvider = ({ children }) => {
       } = await loginWithEmail(formData);
 
       localStorage.setItem("accessToken", token);
-      if (!username) return router.push("/create-username");
+      setToken(token);
+
+      if (!username) {
+        router.push("/create-username");
+        return;
+      }
 
       localStorage.setItem("username", username);
-
-      setToken(token);
       setUsernameAuth(username);
+
       userLogin({ username });
       router.push("/");
     } catch (error) {
@@ -149,14 +166,18 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const loginWithAnonymously = async () => {
-    try {
-      const { user } = (await signInAnonymously(auth)) ?? {};
-      const { uid } = user ?? {};
+    signInAnonymously(auth)
+      .then((data) => {
+        const { user } = data ?? {};
+        const { uid } = user ?? {};
+        uid && setAnonymousInfo((prev) => ({ ...prev, ...user }));
+      })
+      .catch((e) => notifyErrorMessage(toast, e));
+  };
 
-      if (uid) setAnonymousInfo((prev) => ({ ...prev, ...user }));
-    } catch (error) {
-      notifyErrorMessage(toast, error);
-    }
+  const handleRouteChange = (url) => {
+    prevRoute.current = currentRoute.current;
+    currentRoute.current = url;
   };
 
   const isAuthnrPath = useMemo(
@@ -183,12 +204,19 @@ export const AuthContextProvider = ({ children }) => {
 
     setToken(accessToken || "");
     setUsernameAuth(username || "");
+
+    // on route change
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
   }, []);
 
   useEffect(() => {
     if (token && usernameAuth && !isAuthnrPath) {
       setIsAuthenticationPage(false);
-      Promise.all([verifyAccessToken()]);
+      verifyAccessToken();
     }
   }, [token, usernameAuth, pathname]);
 
@@ -220,6 +248,7 @@ export const AuthContextProvider = ({ children }) => {
       logout,
       userInfo,
       usernameAuth,
+      prevRoute: prevRoute.current,
       setToken,
       setUserInfo,
       setAnonymousInfo,
@@ -235,6 +264,7 @@ export const AuthContextProvider = ({ children }) => {
       logout,
       userInfo,
       usernameAuth,
+      prevRoute,
       setToken,
       setUserInfo,
       setAnonymousInfo,

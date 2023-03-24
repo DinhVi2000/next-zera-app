@@ -54,6 +54,7 @@ import {
 import { getAllCategories } from "@/services/game.service";
 import { useDispatch } from "react-redux";
 import { dynamicPaths, staticPaths } from "@/utils/$path";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const ALL_MENU_NODE = [
   {
@@ -80,14 +81,18 @@ const ALL_MENU_NODE = [
 
 const SideBar = () => {
   const toast = useToast();
-  const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
+
+  const [categories, setCategories] = useState([]);
+
+  const content_ref = useRef();
+
   const { openModal } = useModalContext();
   const { userInfo, verifyStatus } = useAuthContext();
 
   const { zera } = userInfo ?? {};
 
-  const content_ref = useRef();
+  const isMatchPC = useMediaQuery("(min-width: 990px)");
 
   const handleToggleContent = () => {
     // content_ref.current.classList.toggle("py-3");
@@ -229,7 +234,7 @@ const SideBar = () => {
           )}
 
           {/* countdown */}
-          <Timer />
+          {isMatchPC && <Timer />}
         </div>
       </div>
 

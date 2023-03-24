@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import GameCategoryDescription from "@/components/game/GameCategoryDescription";
 import GameItem from "@/components/game/GameItem";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import SEO from "@/components/other/SEO";
@@ -67,6 +68,7 @@ const CategoryDetail = () => {
             <GameCategoryDetailGrid />
             <GameGrid games={games} />
             <GameCategoryGrid categories={categories} />
+            <GameCategoryDescription />
           </div>
         </MainLayout>
       </HandleNotFoundPage>

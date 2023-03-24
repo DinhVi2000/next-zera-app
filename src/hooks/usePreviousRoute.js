@@ -1,14 +1,23 @@
 import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export const usePreviousRoute = () => {
-  const ref = useRef();
-
   const router = useRouter();
-  if (ref.current) localStorage?.setItem("previousRoute", ref.current);
 
-  router.events?.on("routeChangeStart", () => {
-    ref.current = router.asPath;
-  });
-  return ref.current;
+  let prevRoute;
+  let currentRoute;
+
+  useEffect(() => {
+    const handleRouteChange = (url, { shallow }) => {
+      prevRoute = currentRoute;
+      currentRoute = url;
+    };
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, []);
+
+  return { prevRoute, currentRoute };
 };

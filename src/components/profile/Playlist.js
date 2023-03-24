@@ -18,7 +18,6 @@ function Playlist({ setIsOpenTab, infoList }) {
   const { payload } = infoList;
   const [playlist, setPlaylist] = useState([]);
   const [currentInfo, setCurrentInfo] = useState();
-  console.log("currentInfo :", currentInfo);
   const [isDetail, setIsDetail] = useState(false);
   const [status, setStatus] = useState(STATUS.NOT_START);
 
