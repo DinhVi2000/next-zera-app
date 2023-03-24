@@ -8,13 +8,14 @@ import ModalDailyBonus from "@/components/modal/ModalDailyBonus";
 import ModalBuy from "@/components/modal/ModalBuy";
 import ModalConfirm from "@/components/modal/ModalConfirm";
 import ModalReport from "@/components/modal/ModalReport";
-
-import { MODAL_NAME, STATUS } from "@/utils/constant";
 import ModalBuyTime from "@/components/modal/ModalBuyTime";
 import ModalUsersOnline from "@/components/modal/ModalUsersOnline";
 import ModalPlaylist from "@/components/modal/ModalPlaylist";
 import ModalDeletePlaylist from "@/components/modal/ModalDeletePlaylist";
 import ModalResetLogin from "@/components/modal/ModalResetLogin";
+
+import { MODAL_NAME, STATUS } from "@/utils/constant";
+
 import { useSocketContext } from "./socket-context";
 import { useAuthContext } from "./auth-context";
 
@@ -39,7 +40,7 @@ export const useModalContext = () => {
   const modalContext = useContext(ModalContext);
   if (!modalContext) {
     throw new Error(
-      "useWeb3Context() can only be used inside of <Web3ContextProvider />, " +
+      "useModalContext() can only be used inside of <ModalContextProvider />, " +
         "please declare it at a higher level."
     );
   }

@@ -12,6 +12,7 @@ import Empty from "../empty/Empty";
 import SidebarMB from "../responsive/SidebarMB";
 import PaginatedItems from "../pagination/Pagination";
 import { usePagination } from "@/hooks/usePagination";
+import { dynamicPaths } from "@/utils/$path";
 
 const ITEMS_PER_PAGE = 4;
 
@@ -89,12 +90,11 @@ const ArticleItem = ({ item, tags, ...props }) => {
             {/* tags */}
             <div className="flex gap-2 my-1">
               {tags?.map((e, i) => (
-                <div
-                  key={i}
-                  className="bg-white text-black text-xs py-1 px-2 rounded-xl"
-                >
-                  {e?.label}
-                </div>
+                <Link key={i} href={dynamicPaths.article_by_tag(e?.slug)}>
+                  <div className="bg-white text-black text-xs py-1 px-2 rounded-xl">
+                    {e?.label}
+                  </div>
+                </Link>
               ))}
             </div>
 

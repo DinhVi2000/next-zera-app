@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useSocketContext } from "@/context/socket-context";
 import { IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
+import { getArea } from "@/utils/helper";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
 import GameScreenBar from "./GameScreenBar";
@@ -21,7 +21,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
 
     if (gameScreenClassList?.contains("full-screen")) {
       gameScreenClassList.remove("full-screen");
-      gameScreenClassList.add("rounded-2xl");
+      gameScreenClassList.add("max-[550px]:rounded-2xl");
     }
     bg_mb_ref.current.classList.remove("hidden-imp");
     back_tab_mb_ref.current.classList.toggle("hidden-imp");
@@ -33,7 +33,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
 
     bg_mb_ref.current.classList.toggle("hidden-imp");
     back_tab_mb_ref.current.classList.toggle("hidden-imp");
-    game_screen_ref.current?.classList?.remove("rounded-2xl");
+    game_screen_ref.current?.classList?.remove("max-[550px]:rounded-2xl");
     game_screen_ref.current?.classList?.add("full-screen");
     // document.requestFullscreen();
   };
@@ -66,9 +66,9 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   return (
     <div
       style={{
-        gridArea: "gs / gs / gs / gs",
+        gridArea: getArea("gs"),
       }}
-      className="h-full flex flex-col bg-white transition-all rounded-2xl overflow-hidden relative"
+      className={`h-full flex flex-col bg-white transition-all max-[550px]:rounded-2xl overflow-hidden relative`}
       ref={game_screen_ref}
     >
       <iframe

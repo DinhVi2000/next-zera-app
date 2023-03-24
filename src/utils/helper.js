@@ -199,6 +199,16 @@ const toggleScroll = () => {
   document.getElementsByTagName("body")[0].classList.toggle("overflow-hidden");
 };
 
+const parseTagLabel = (tagSlug) => {
+  return toUpperCaseFirstLetter(
+    tagSlug?.split("/")?.slice(-1)[0]?.replaceAll("-", " ") || ""
+  );
+};
+
+const insertAt = (array, index, ...elementsArray) => {
+  array.splice(index, 0, ...elementsArray);
+};
+
 export {
   animateValue,
   articleCategoryUrl,
@@ -215,7 +225,9 @@ export {
   notifySuccessMessage,
   sleep,
   getBetweenTwoDate,
+  parseTagLabel,
   toUpperCaseFirstLetter,
   isValidPath,
+  insertAt,
   toggleScroll,
 };

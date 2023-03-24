@@ -62,7 +62,7 @@ const HallOfFame = () => {
       title: "Highest Playstreak",
       desc: (
         <span>
-          Playstreak: <span className="count-number">{play_streak || 0}</span>{" "}
+          Playstreak: <span className="count-number">{play_streak || 1}</span>{" "}
           days
         </span>
       ),

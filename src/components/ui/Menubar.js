@@ -98,7 +98,7 @@ const Menubar = () => {
         ref={menubar_ref}
       >
         <div className="relative w-full h-full">
-          {/ searchbar /}
+          {/* searchbar */}
           <SearchBar
             searchValue={searchValue}
             onChangeInput={handleChangeInput}
@@ -107,7 +107,7 @@ const Menubar = () => {
             setSearchStatus={setSearchStatus}
           />
 
-          {/ content /}
+          {/* content */}
           {searchValue.trim() && <SearchResult results={gamesResult} />}
           {!searchValue.trim() && (
             <section className="modal-scroll absolute h-full w-full top-0 py-[64px] overflow-y-scroll overflow-x-hidden">
@@ -124,7 +124,7 @@ const Menubar = () => {
           )}
         </div>
 
-        {/ back button /}
+        {/* back button */}
         <button
           className="bg-white rounded-full h-16 w-16 flex items-center justify-center absolute top-0 right-0 translate-x-[50%] translate-y-8 shadow-xxl hover:translate-y-7 transition-all"
           onClick={handleCloseMenubar}
@@ -133,7 +133,7 @@ const Menubar = () => {
         </button>
       </section>
 
-      {/ background /}
+      {/* background */}
       <div
         className="bg-blur-500 h-full backdrop-blur-[5px] w-full min-h-[100vh] fixed overflow-hidden z-40 opacity-100 transition-all"
         ref={bg_ref}
@@ -148,7 +148,7 @@ const PopularGameGrid = memo(function Component({ list }) {
       <p className="text-2xl font-bold mb-4">Popular this week</p>
       <ScrollContainer>
         <div className="flex mt-2 px-2 gap-4">
-          {/ grid /}
+          {/* grid */}
           {list?.map(({ game_detail }, i) => (
             <GameItem
               key={i}
@@ -161,7 +161,7 @@ const PopularGameGrid = memo(function Component({ list }) {
             />
           ))}
 
-          {/ loading /}
+          {/* loading */}
           {!list &&
             Array(6)
               .fill(0)
@@ -186,7 +186,7 @@ const RecentlyGameGrid = memo(function Component() {
     <div className="text-white  transition-all">
       <p className="text-2xl font-bold mb-4">Recently played</p>
       <div className="flex flex-wrap gap-4">
-        {/ list /}
+        {/* list */}
         {recentlyPlayed?.map((e, i) => (
           <GameItem
             key={i}
@@ -200,7 +200,7 @@ const RecentlyGameGrid = memo(function Component() {
           />
         ))}
 
-        {/ loading /}
+        {/* loading */}
         {!recentlyPlayed &&
           Array(6)
             .fill(0)
