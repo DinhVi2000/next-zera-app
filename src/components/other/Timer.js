@@ -4,8 +4,9 @@ import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 import { useAuthContext } from "@/context/auth-context";
 import { getTimeRemaining } from "@/utils/common";
 import { getUserAnonymous, getUserInfo } from "@/services/user.service";
-import { SOCKET_EVENT, STATUS } from "@/utils/constant";
+import { MODAL_NAME, SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { useSocketContext } from "@/context/socket-context";
+import { useModalContext } from "@/context/modal-context";
 
 const Timer = () => {
   const timeIntervalId = useRef(null);
@@ -18,7 +19,7 @@ const Timer = () => {
     socketStatus,
     setIncrementTime,
   } = useSocketContext();
-
+  const { openModal } = useModalContext();
   const [userData, setUserData] = useState();
   const [remainingTime, setRemainingTime] = useState(() => {
     return getTimeRemaining(totalTimePlay);
@@ -83,11 +84,12 @@ const Timer = () => {
     let timeDes = 0;
     timeIntervalId.current = setInterval(() => {
       timeDes++;
-      const time = getTimeRemaining(
-        Number(totalTimePlay) - timeDes > 0
-          ? Number(totalTimePlay) - timeDes
-          : 0
-      );
+      const checkTime = Number(totalTimePlay) - timeDes > 0 ? Number(totalTimePlay) - timeDes : 0;
+      const time = getTimeRemaining(checkTime);
+      if (Number(totalTimePlay) - timeDes === 0 || Number(totalTimePlay) - timeDes === -1) {
+        openModal(MODAL_NAME.BUYTIME);
+        clearInterval(timeIntervalId.current);
+      }
       setRemainingTime(time);
       setIncrementTime(timeDes);
     }, 1000);

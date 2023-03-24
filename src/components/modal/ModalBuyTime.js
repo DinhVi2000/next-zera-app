@@ -12,10 +12,9 @@ import {
   sleep,
 } from "@/utils/helper";
 import BoxModal from "./BoxModal";
-import { IconCheckDaily, IconClose } from "@/resources/icons";
+import { IconClose, IconCoin22 } from "@/resources/icons";
 import { getUserInfo } from "@/services/user.service";
 import { useToast } from "@chakra-ui/react";
-import ButtonLoading from "../loading/ButtonLoading";
 import { buyShopItem, getItemTime } from "@/services/shop.service";
 import { useRouter } from "next/router";
 import { useSocketContext } from "@/context/socket-context";
@@ -26,24 +25,16 @@ const ModalBuyTime = () => {
 
   const [status, setStatus] = useState(STATUS.NOT_START);
   const [timeItems, setTimeItems] = useState([]);
-  const [itemActive, setItemActive] = useState();
-
   const { setUserInfo, usernameAuth } = useAuthContext();
   const { openModal } = useModalContext();
-  const { totalTimePlay, incrementTime } = useSocketContext();
-
+  const { stopGame } = useSocketContext();
   const modalTimeRef = useRef(null);
 
   const DURATION = 150;
 
   const handleCloseModal = () => {
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
-    if (
-      totalTimePlay - incrementTime < 0 ||
-      totalTimePlay - incrementTime === 0
-    ) {
-      router.push("/");
-    }
+    router.push("/");
   };
 
   useEffect(() => {
@@ -52,10 +43,10 @@ const ModalBuyTime = () => {
     });
   }, []);
 
-  const handleBuyTime = async () => {
+  const handleBuyTime = async (id) => {
     try {
       await buyShopItem({
-        item: parseInt(itemActive.id),
+        item: parseInt(id),
       });
       const { data } = await getUserInfo(usernameAuth);
       setUserInfo(data);
@@ -70,7 +61,6 @@ const ModalBuyTime = () => {
     const playtimeTtems = await getItemTime();
     if (playtimeTtems) {
       setTimeItems(playtimeTtems);
-      setItemActive(playtimeTtems.rows[0]);
     }
   };
 
@@ -91,6 +81,10 @@ const ModalBuyTime = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    stopGame();
+  }, []);
+
   return (
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
@@ -100,7 +94,7 @@ const ModalBuyTime = () => {
         <div className="flex ">
           <h4 className="mx-auto">Buy Play Time</h4>
           <IconClose
-            className="cursor-pointer text-pink-400"
+            className="cursor-pointer text-pink-400 w-5"
             onClick={handleCloseModal}
           />
         </div>
@@ -109,12 +103,11 @@ const ModalBuyTime = () => {
             timeItems.rows.map((e, i) => (
               <div
                 key={i}
-                className="overflow-hidden mx-auto w-[160px] h-[160px] daily-bonus__item relative group"
-                onClick={() => setItemActive(e)}
+                className="overflow-hidden mx-auto w-[190px] h-[190px] daily-bonus__item relative group"
               >
                 {/* value */}
-                <div className="bg-pink-400 text-base px-5 py-2.5 text-center">
-                  +{e.value} s
+                <div className="bg-pink-400 text-base px-5 py-2.5 text-center flex justify-center">
+                  +{e.value}s / {e.price} <IconCoin22 />
                 </div>
 
                 {/* image */}
@@ -125,11 +118,13 @@ const ModalBuyTime = () => {
                 />
 
                 {/* select bg */}
-                {itemActive.id === e.id && (
-                  <div className=" bg-[#2b2a2a6d] w-full h-full absolute-center rounded-[20px]">
-                    <IconCheckDaily className="absolute-center" />
+                <div className=" w-full h-full absolute-center rounded-[20px]">
+                  <div className="py-2 px-4 bg-pink-400 rounded-full absolute top-0 left-1/2 -translate-x-1/2 shadow-custom-one group-hover:top-1/2 group-hover:opacity-100 transition-all opacity-0 duration-300 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+                    onClick={() => handleBuyTime(e.id)}
+                  >
+                    Buy
                   </div>
-                )}
+                </div>
               </div>
             ))}
 
@@ -143,14 +138,6 @@ const ModalBuyTime = () => {
                 ></div>
               ))}
         </div>
-        <button
-          onClick={handleBuyTime}
-          className="mx-auto text-base flex-center"
-          disabled={status !== STATUS.NOT_START}
-        >
-          {status !== STATUS.NOT_START && <ButtonLoading isLoading />}
-          Buy
-        </button>
       </div>
     </BoxModal>
   );
