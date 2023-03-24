@@ -33,6 +33,8 @@ const ModalBuyTime = () => {
   const DURATION = 150;
 
   const handleCloseModal = () => {
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
     router.push("/");
   };
@@ -65,9 +67,11 @@ const ModalBuyTime = () => {
   };
 
   useEffect(() => {
-    sleep(1).then(() =>
-      modalTimeRef.current.classList?.add("animation-open-modal")
-    );
+    sleep(1).then(() => {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+      modalTimeRef.current.classList?.add("animation-open-modal");
+    });
     getTimes();
   }, []);
 

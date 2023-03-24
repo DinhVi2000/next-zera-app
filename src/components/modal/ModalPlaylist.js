@@ -53,7 +53,9 @@ const ModalPlaylist = () => {
   const DURATION = 200;
 
   const handleCloseModal = () => {
-    modal_ref?.current?.classList?.remove("animation-open-modal");
+    modal_ref.current.classList?.remove("animation-open-modal");
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
   };
 
@@ -61,7 +63,9 @@ const ModalPlaylist = () => {
 
   useEffect(() => {
     sleep(1).then(() => {
-      modal_ref?.current?.classList?.add("animation-open-modal");
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
+      modal_ref.current.classList?.add("animation-open-modal");
     });
   }, []);
 
@@ -241,7 +245,21 @@ const ModalPlaylist = () => {
                       {e?.name}
                       <div className="flex h-full">
                         <div className="flex-center p-3">
-                          <Tooltip label="Add Playlist">
+                          {e?.is_added ? (
+                            <Tooltip label="Remove from playlist">
+                              <div onClick={() => handleAddPlaylist(e)}>
+                                <IconPlusNoRounded className="w-6 h-6 mr-3 cursor-pointer text-[#30fa30]" />
+                              </div>
+                            </Tooltip>
+                          ) : (
+                            <Tooltip label="Add to playlist">
+                              <div onClick={() => handleAddPlaylist(e)}>
+                                <IconPlusNoRounded className="w-6 h-6 mr-3 cursor-pointer text-white" />
+                              </div>
+                            </Tooltip>
+                          )}
+
+                          {/* <Tooltip label="Add Playlist">
                             <div onClick={() => handleAddPlaylist(e)}>
                               <IconPlusNoRounded
                                 className={`w-6 h-6 mr-3 cursor-pointer ${
@@ -250,7 +268,7 @@ const ModalPlaylist = () => {
                           `}
                               />
                             </div>
-                          </Tooltip>
+                          </Tooltip> */}
                           {idSelected === e?.id ? (
                             <Tooltip label="Cancel">
                               <div onClick={() => setIdSelected("")}>

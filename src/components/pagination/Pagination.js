@@ -12,7 +12,7 @@ function Pagination({
   // pageRangeDisplayed = 3,
   ...props
 }) {
-  const pageCount = Math.floor(items?.length / itemsPerPage) + 1;
+  const pageCount = Math.ceil(items?.length / itemsPerPage);
 
   const isMatchPC = useMediaQuery("(min-width: 990px)");
   const isMatchTablet = useMediaQuery(

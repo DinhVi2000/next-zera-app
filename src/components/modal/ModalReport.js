@@ -33,6 +33,9 @@ const ModalReport = () => {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const handleCloseModal = () => {
+    modal_ref.current.classList?.remove("animation-open-modal");
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
   };
 
@@ -40,6 +43,8 @@ const ModalReport = () => {
 
   useEffect(() => {
     sleep(1).then(() => {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
       modal_ref.current.classList?.add("animation-open-modal");
     });
   }, []);

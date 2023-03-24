@@ -24,11 +24,16 @@ const ModalDailyBonus = () => {
   const toast = useToast();
 
   const handleCloseModal = () => {
+    modal_ref.current.classList?.remove("animation-open-modal");
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
   };
 
   useEffect(() => {
     sleep(1).then(() => {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
       modal_ref.current.classList?.add("animation-open-modal");
     });
   }, []);
@@ -62,7 +67,7 @@ const ModalDailyBonus = () => {
     <BoxModal className="fixed h-[100vh] w-full z-[80] text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modal_ref}
-        className="opacity-5 scale-90 w-fit h-fit daily-bonus p-4 pb-8 max-[454px]:w-full max-[454px]:px-1"
+        className="opacity-5 scale-90 w-fit h-fit max-[576px]:w-[90%] max-[576px]:h-[70vh] max-[576px]:overflow-y-scroll modal-scroll daily-bonus p-4 pb-8 max-[454px]:px-1"
       >
         <div className="flex ">
           <h4 className="mx-auto">Daily Gift</h4>
@@ -71,7 +76,7 @@ const ModalDailyBonus = () => {
             onClick={handleCloseModal}
           />
         </div>
-        <div className="grid grid-cols-3 gap-6 mt-10 max-[454px]:mt-3  w-full max-[454px]:gap-3 max-[400px]:gap-1">
+        <div className="grid grid-cols-3 gap-6 mt-10 max-[454px]:mt-3 w-full max-[454px]:gap-3 max-[400px]:gap-1">
           {Array(6)
             .fill(0)
             .map((e, i) => (
@@ -84,7 +89,7 @@ const ModalDailyBonus = () => {
                 </div>
                 <div className="daily-bonus__item-zera">
                   <p>+{i + 1 > 3 ? i + 2 : i + 1}</p>
-                  <IconCoinDaily />
+                  <IconCoinDaily className="w-16 h-16" />
                 </div>
                 {i + 1 < userInfo?.playstreak && (
                   <div className=" bg-[#2b2a2a6d] w-full h-full absolute-center rounded-[20px]">
@@ -104,7 +109,7 @@ const ModalDailyBonus = () => {
           </div>
           <div className="daily-bonus__item-zera w-fit mx-auto">
             <p>+10</p>
-            <IconCoinDaily />
+            <IconCoinDaily className="w-16 h-16" />
           </div>
           {userInfo?.playstreak >= 7 && (
             <div className="border-[3px] border-[#fcff36] bg-[#fcff3644] w-full h-full absolute-center rounded-[20px]"></div>

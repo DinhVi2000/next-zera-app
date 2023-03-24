@@ -26,7 +26,7 @@ const ResetPasswordForm = () => {
     resolver: yupResolver(resetPasswordFormSchema),
   });
 
-  const passwordWacth = useWatch({
+  const passwordWatch = useWatch({
     control,
     name: "password",
   });
@@ -75,7 +75,7 @@ const ResetPasswordForm = () => {
         />
       </div>
 
-      <PasswordRules password={passwordWacth} />
+      <PasswordRules password={passwordWatch} />
 
       {/* confirm password field */}
       <div className="mb-5">

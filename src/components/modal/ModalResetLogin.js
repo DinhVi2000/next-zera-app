@@ -9,18 +9,22 @@ import { sleep } from "@/utils/helper";
 import BoxModal from "./BoxModal";
 
 const ModalResetLogin = () => {
-
   const { logout } = useAuthContext();
   const modalTimeRef = useRef(null);
   const { openModal } = useModalContext();
   useEffect(() => {
     sleep(1).then(() => {
+      document.body.style.overflow = "hidden";
+      document.body.style.height = "100%";
       modalTimeRef.current.classList?.add("animation-open-modal");
     });
   }, []);
 
   const handleBackToLogin = () => {
     logout({ isResetLogin: true });
+    modalTimeRef.current.classList?.remove("animation-open-modal");
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
     openModal(MODAL_NAME.NONE);
   };
 
@@ -34,7 +38,11 @@ const ModalResetLogin = () => {
           <h4 className="mx-auto font-semibold text-3xl">Notify Session</h4>
         </div>
         <div className="flex justify-center items-center my-4">
-          <h3 className="text-[22px]"> The account is already logged in on another device, please login again!</h3>
+          <h3 className="text-[22px]">
+            {" "}
+            The account is already logged in on another device, please login
+            again!
+          </h3>
         </div>
         <button
           onClick={handleBackToLogin}
