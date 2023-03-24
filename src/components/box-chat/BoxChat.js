@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useState, memo, useEffect } from "react";
-
+import moment from "moment";
 import Image from "next/image";
 
 import ava from "@/../public/images/ava1.png";
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "@/services/game.service";
 import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
-import { MESSAGE_MAX_LENGTH, MODAL_NAME } from "@/utils/constant";
+import { MAX_LIMIT_MESSAGE, MESSAGE_MAX_LENGTH, MODAL_NAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useToast } from "@chakra-ui/react";
 import { notifyErrorMessage } from "@/utils/helper";
@@ -23,6 +23,10 @@ function BoxChat({ area }) {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
   const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
+  const [limitChat, setLimitChat] = useState({
+    lastTime: moment().startOf('minute').minutes(),
+    limitMessage: 0,
+  });
   const roomCurrent = info?.id || 0;
   const inputRef = useRef();
   const refScroll = useRef();
@@ -47,6 +51,7 @@ function BoxChat({ area }) {
   const toast = useToast();
   const handleSendMessage = (e) => {
     e.preventDefault();
+    const minuteNow = moment().startOf('minute').minutes();
     if (!inputRef.current.value.trim()) {
       notifyErrorMessage(toast, {
         message: "Please enter message before send!",
@@ -59,6 +64,16 @@ function BoxChat({ area }) {
       });
       return;
     }
+    if (limitChat.lastTime === minuteNow) {
+      if (limitChat.limitMessage === MAX_LIMIT_MESSAGE) {
+        notifyErrorMessage(toast, {
+          message: 'You have exceeded the limit of messages sent in 1 minute',
+        });
+        return;
+      }
+    } else {
+      setLimitChat({ lastTime: minuteNow, limitMessage: 0 });
+    }
     sendMessage({
       socket_id: socketClient.id,
       msg: inputRef.current.value,
@@ -66,6 +81,7 @@ function BoxChat({ area }) {
       room_id: roomCurrent,
       is_anonymous: !userInfo,
     });
+    setLimitChat(prev => ({ lastTime: minuteNow, limitMessage: prev.limitMessage + 1 }));
     e.target.reset();
   };
 
