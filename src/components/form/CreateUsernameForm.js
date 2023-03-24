@@ -12,6 +12,7 @@ import { notifyErrorMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { createUsernameFormSchema } from "@/validators/create-username.validator";
+import { PREFIX_USERNAME } from "@/utils/constant";
 
 const CreateUsernameForm = () => {
   const { setUsernameAuth } = useAuthContext();
@@ -44,7 +45,7 @@ const CreateUsernameForm = () => {
       const { username } = formData ?? {};
 
       setUsernameAuth(username);
-      localStorage.setItem("username", username);
+      localStorage.setItem("username", username.charAt(0) === PREFIX_USERNAME ? username : `${PREFIX_USERNAME}${username}`);
 
       router.push("/");
     } catch (error) {
