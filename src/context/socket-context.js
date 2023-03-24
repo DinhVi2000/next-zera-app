@@ -103,16 +103,9 @@ export const SocketContextProvider = ({ children }) => {
     [socketClient]
   );
 
-  const stopGame = useCallback(
-    ({ room_id, user_id, is_anonymous }) => {
-      socketClient.emit(SOCKET_EVENT.STOP_GAME, {
-        user_id,
-        room_id,
-        is_anonymous,
-      });
-    },
-    [socketClient]
-  );
+  const stopGame = useCallback(() => {
+    socketClient.emit(SOCKET_EVENT.STOP_GAME);
+  }, [socketClient]);
 
   const leaveGame = useCallback(
     ({ room_id, user_id, is_anonymous }) => {
