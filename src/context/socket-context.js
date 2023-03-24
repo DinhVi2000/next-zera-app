@@ -70,16 +70,8 @@ export const SocketContextProvider = ({ children }) => {
     },
     [socketClient, isConnected]
   );
-
   const listenAllEvent = useCallback(() => {
     if (socketClient) {
-      socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
-        if (!data) return;
-        if (data?.zera) {
-          setReceiveZera(data.zera);
-        }
-        setMessageSocket(data);
-      });
       socketClient.on(SOCKET_EVENT.TIME_GAME, () => {});
       socketClient.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
         if (!data) return;
@@ -91,6 +83,22 @@ export const SocketContextProvider = ({ children }) => {
       });
     }
   }, [socketClient]);
+
+  const handleReceiveMessage = (data) => {
+    if (!data) return;
+    if (data?.zera) {
+      setReceiveZera(data.zera);
+    }
+    setMessageSocket(data);
+  };
+
+  const listenMessageChange = useCallback(
+    () => {
+      socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, handleReceiveMessage);
+    },
+    [socketClient]
+  );
+
 
   const playGame = useCallback(
     ({ room_id, user_id, is_anonymous }) => {
@@ -138,6 +146,7 @@ export const SocketContextProvider = ({ children }) => {
     if (!socketClient) return;
     socketClient.on("connect", () => {
       listenAllEvent();
+      listenMessageChange();
     });
   }, [socketClient, listenAllEvent]);
 
@@ -185,6 +194,7 @@ export const SocketContextProvider = ({ children }) => {
       userLogin,
       userLoginData,
       userLogout,
+      listenMessageChange,
     }),
     [
       socketStatus,
@@ -209,6 +219,7 @@ export const SocketContextProvider = ({ children }) => {
       userLogin,
       userLoginData,
       userLogout,
+      listenMessageChange,
     ]
   );
 

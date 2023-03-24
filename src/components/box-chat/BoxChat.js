@@ -43,7 +43,6 @@ function BoxChat({ area }) {
     playGame,
     stopGame,
     leaveGame,
-    listenAllEvent,
     showModalBuyTime,
     usersInRoom,
     setIncrementTime,
@@ -84,10 +83,6 @@ function BoxChat({ area }) {
     setLimitChat(prev => ({ lastTime: minuteNow, limitMessage: prev.limitMessage + 1 }));
     e.target.reset();
   };
-
-  useEffect(() => {
-    listenAllEvent();
-  }, []);
   // Get all message of game
   useEffect(() => {
     const fetchMessages = async () => {
