@@ -4,7 +4,7 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
 
-import HallOfFame from "@/components/other/HallOfFame";
+import HallOfFame from "@/components/hall-of-fame/HallOfFame";
 import SEO from "@/components/other/SEO";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 

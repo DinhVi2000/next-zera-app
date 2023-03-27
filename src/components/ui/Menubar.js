@@ -116,7 +116,7 @@ const Menubar = () => {
                 setGamesResult={setGamesResult}
                 setSearchValue={setSearchValue}
               />
-              <section className=" transition-all">
+              <section className="transition-all">
                 <PopularGameGrid list={popularGames} />
                 <RecentlyGameGrid />
               </section>

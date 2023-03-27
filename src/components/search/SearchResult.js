@@ -25,6 +25,7 @@ const SearchResult = ({ results }) => {
           <GameCategory
             key={i}
             id={e?.id}
+            onClick={closeModal}
             label={e?.label}
             thumbnail={e?.thumbnail}
             slug={e?.slug}

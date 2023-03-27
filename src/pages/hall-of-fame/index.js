@@ -6,7 +6,7 @@ import MainLayout from "@/layouts/MainLayout";
 
 import { setHallOfFame } from "@/services/user.service";
 
-import HallOfFame from "@/components/other/HallOfFame";
+import HallOfFame from "@/components/hall-of-fame/HallOfFame";
 import { useAuthContext } from "@/context/auth-context";
 import SEO from "@/components/other/SEO";
 import { STATUS } from "@/utils/constant";

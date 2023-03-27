@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
 
@@ -22,13 +22,12 @@ const ArticleTags = () => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <SEO title="Game tags" />
-
       <MainLayout>
         <ArticleTagsWrapper tags={tags} />
       </MainLayout>
-    </>
+    </Fragment>
   );
 };
 

@@ -165,9 +165,9 @@ const UserMenu = forwardRef(function UserMenuComponent(props, ref) {
         <div
           className="flex gap-2.5 items-center cursor-pointer border-[1px] border-b-violet-800 border-transparent pb-3 px-3
         text-violet-300 hover:text-violet-700 transition-all"
-          onClick={() => router.push("/hall-of-fame")}
+          onClick={() => router.push(staticPaths.achievements)}
         >
-          <IconCup className="w-[18px] h-[18px]" /> <span>Hall of Fame</span>
+          <IconCup className="w-[18px] h-[18px]" /> <span>Achievements</span>
         </div>
         <div
           className="flex gap-2.5 items-center pt-3 px-3 cursor-pointer text-white

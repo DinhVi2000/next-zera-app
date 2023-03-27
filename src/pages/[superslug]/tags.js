@@ -14,6 +14,7 @@ import Link from "next/link";
 import { dynamicPaths, staticPaths } from "@/utils/$path";
 import { hasNoValueUndefined } from "@/utils/helper";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import TagLoading from "@/components/loading/TagLoading";
 
 const CategoryTags = () => {
   const router = useRouter();
@@ -80,6 +81,8 @@ const GameTagsWrapper = memo(function GameTagsWrapperComponent({
               </div>
             </Link>
           ))}
+
+          <TagLoading list={tags} />
         </div>
       </div>
     </div>

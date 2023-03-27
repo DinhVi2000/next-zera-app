@@ -128,7 +128,18 @@ const HTTP_ERROR_CODE = {
   UN_AUTHORIZATION: [401],
 };
 
-const PREFIX_USERNAME = '@';
+const PREFIX_USERNAME = "@";
+const HALL_OF_FAME_TAB = [
+  { label: "ZERA", value: "ZERA" },
+  {
+    label: "Game played",
+    value: "GAME_PLAYED",
+  },
+  {
+    label: "Playstreak",
+    value: "PLAYSTREAK",
+  },
+];
 
 export {
   MAX_SECOND_LIMIT_CHAT,
@@ -150,6 +161,7 @@ export {
   MESSAGE_MAX_LENGTH,
   SUPERSLUGS_CODES,
   HTTP_ERROR_CODE,
+  HALL_OF_FAME_TAB,
   DEFAULT_AVATAR_SRC,
   PREFIX_USERNAME,
 };

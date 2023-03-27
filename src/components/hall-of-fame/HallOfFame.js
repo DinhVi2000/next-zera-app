@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { Fragment, memo, useEffect } from "react";
 import { useSelector } from "react-redux";
+import Empty from "../empty/Empty";
 import ImageLoading from "../loading/ImageLoading";
 import Pagination from "../pagination/Pagination";
 import SidebarMB from "../responsive/SidebarMB";
@@ -131,7 +132,7 @@ const HallOfFame = () => {
                 >
                   <div className="w-full mb-[61px]">
                     {icon}
-                    {value && (
+                    {value !== null && (
                       <h2 className="count-number text-gradient-hof text-[28px] font-semibold">
                         {value}
                       </h2>
@@ -154,58 +155,63 @@ const HallOfFame = () => {
               </h1>
 
               {/* list */}
-              <div
-                className="w-full h-[501px] min-[1492px]:h-[243px]
+              {currentItems?.length > 0 && currentItems && (
+                <div
+                  className="w-full h-[501px] min-[1492px]:h-[243px]
                            grid gap-x-5 gap-y-[15px] content-baseline grid-cols-1 min-[1492px]:grid-cols-2 "
-              >
-                {currentItems?.map(({ game_detail, zera_earned }, i) => (
-                  <Link
-                    href={dynamicPaths.game_by_slug(
-                      game_detail?.superslug?.value,
-                      game_detail?.slug
-                    )}
-                    key={i}
-                  >
-                    <div
-                      className="bg-gradient-tgp max-h-[114px] overflow-hidden w-full rounded-[20px] p-[10px] text-base font-bold
-                      flex items-center justify-between"
+                >
+                  {currentItems?.map(({ game_detail, zera_earned }, i) => (
+                    <Link
+                      href={dynamicPaths.game_by_slug(
+                        game_detail?.superslug?.value,
+                        game_detail?.slug
+                      )}
+                      key={i}
                     >
-                      <div className="flex items-center gap-2.5">
-                        <ImageLoading
-                          src={game_detail?.thumbnail}
-                          alt=""
-                          className="w-[94px] h-[94px] min-w-[94px] object-cover rounded-2xl"
-                        />
-                        <p className=" max-[550px]:hidden">
-                          {game_detail?.title}
-                        </p>
-                      </div>
+                      <div
+                        className="bg-gradient-tgp max-h-[114px] overflow-hidden w-full rounded-[20px] p-[10px] text-base font-bold
+                      flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <ImageLoading
+                            src={game_detail?.thumbnail}
+                            alt=""
+                            className="w-[94px] h-[94px] min-w-[94px] object-cover rounded-2xl"
+                          />
+                          <p className=" max-[550px]:hidden">
+                            {game_detail?.title}
+                          </p>
+                        </div>
 
-                      {/* pc */}
-                      <div className="mb-hidden flex items-center gap-4">
-                        <span>{zera_earned}</span>
-                        <IconCoin className="w-[30px] h-[30px]" />
-                      </div>
-
-                      {/* mb */}
-                      <div className="mb-block px-2">
-                        <p
-                          className="text-left w-16 h-12
-                                     web-line-clamp-2 web-box-orient-vertical web-box overflow-hidden"
-                        >
-                          {game_detail?.title}
-                        </p>
-                        <div className="flex-center gap-2">
+                        {/* pc */}
+                        <div className="mb-hidden flex items-center gap-4">
                           <span>{zera_earned}</span>
                           <IconCoin className="w-[30px] h-[30px]" />
                         </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
 
-                <LoadingWrapper data={rows} />
-              </div>
+                        {/* mb */}
+                        <div className="mb-block px-2">
+                          <p
+                            className="text-left w-16 h-12
+                                     web-line-clamp-2 web-box-orient-vertical web-box overflow-hidden"
+                          >
+                            {game_detail?.title}
+                          </p>
+                          <div className="flex-center gap-2">
+                            <span>{zera_earned}</span>
+                            <IconCoin className="w-[30px] h-[30px]" />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+
+                  <LoadingWrapper data={rows} />
+                </div>
+              )}
+              {currentItems?.length === 0 && <Empty className="pt-10 pb-24" />}
+
+              {/* empty */}
 
               {/* pagination */}
               <Pagination
