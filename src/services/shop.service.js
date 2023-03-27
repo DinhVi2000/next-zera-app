@@ -24,8 +24,8 @@ export const getItemByCategory = async (params) => {
 
 export const getItemTime = async () => {
   try {
-    const itemCategries = await getCategoriesShop();
-    const category = itemCategries.data.find(
+    const itemCategories = await getCategoriesShop();
+    const category = itemCategories.data.find(
       (category) => category.name.trim() === PLAYTIME_CATEGORY
     );
     const { data } = await getItemByCategory(category?.id);
@@ -36,9 +36,9 @@ export const getItemTime = async () => {
   }
 };
 
-export const buyShopItem = async (params) => {
+export const buyShopItem = async (body) => {
   try {
-    const { data } = await http.post("/shops/buy", params);
+    const { data } = await http.post("/shops/buy", body);
     return data;
   } catch (e) {
     throw e;
