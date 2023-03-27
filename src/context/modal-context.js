@@ -53,7 +53,8 @@ export const ModalContextProvider = ({ children }) => {
   const [modal, setModal] = useState(MODAL_NAME.NONE);
   const [status, setStatus] = useState(STATUS.NOT_START);
   const { socketClient, userLoginData } = useSocketContext();
-  const { usernameAuth } = useAuthContext();
+  const { usernameAuth, logout } = useAuthContext();
+
   // TODO: Only let the effect call fn once when mound, the rest only setState when status === success
   // vd: const [status, setStatus] = useState(STATUS.INIT);
 
@@ -84,6 +85,7 @@ export const ModalContextProvider = ({ children }) => {
       userLoginData.username === usernameAuth &&
       userLoginData.socket_id === socketClient.id
     ) {
+      logout();
       openModal(MODAL_NAME.RESET_LOGIN);
     }
   }, [userLoginData]);

@@ -109,7 +109,7 @@ function InfoUser() {
               <div className="relative w-auto group cursor-pointer top-0 max-[650px]:text-center ">
                 <p
                   onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
-                  className={`font-medium max-[650px]:w-[100%] max-[650px]:px-10 bg-black ${
+                  className={`font-medium max-[650px]:w-[100%] max-[650px]:px-10 ${
                     showMore
                       ? "max-[650px]:h-fit text-[unset] whitespace-normal w-[700px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[350px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
                       : "max-[650px]:h-[30px] overflow-hidden text-ellipsis whitespace-nowrap w-[500px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[350px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"

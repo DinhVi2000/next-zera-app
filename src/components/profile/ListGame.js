@@ -26,7 +26,7 @@ function ListGame({ setIsOpenTab, infoList }) {
   );
 
   return (
-    <div className="bg-[#00000080] rounded-[20px] max-[730px]:w-[90%]">
+    <div className="bg-[#00000080] rounded-[20px]">
       <>
         {/* TITLE */}
         <div className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold relative max-[730px]:w-full">
@@ -39,7 +39,7 @@ function ListGame({ setIsOpenTab, infoList }) {
             <IconPre className="mr-1" />
             Back
           </div>
-          <div className="absolute-center">
+          <div className="absolute-center max-[459px]:text-base">
             {toUpperCaseFirstLetter(payload)?.replace("_", " ")}
           </div>
         </div>
@@ -119,12 +119,12 @@ function ListGame({ setIsOpenTab, infoList }) {
         ) : (
           <div>
             {listGame?.length ? (
-              <div className="p-[45px] grid grid-cols-3 min-[600px]:grid-cols-10 gap-4 overflow-auto max-h-[500px]">
+              <div className="p-[45px] max-[730px]:p-2 grid grid-cols-10 max-[1294px]:grid-cols-9 max-[1194px]:grid-cols-8 max-[1102px]:grid-cols-7 max-[795px]:grid-cols-5 max-[591px]:grid-cols-4 max-[459px]:grid-cols-2 max-[459px]:px-1  gap-4 overflow-auto max-h-[500px] modal-scroll">
                 {listGame?.map((e, i) => (
                   <div key={i}>
                     <GameItem
                       className={`relative rounded-2xl cursor-pointer select-none group w-[94px] h-[94px]
-                        hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl`}
+                        hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl mx-auto`}
                       key={e?.id}
                       id={e?.id}
                       index={i}

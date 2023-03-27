@@ -147,11 +147,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const logout = ({ isResetLogin = false }) => {
-    if (!isResetLogin) {
-      userLogout({ username: usernameAuth });
-    }
-    clearAuthenticatorData();
+  const logout = () => {
     router.push("/login");
     clearAuthenticatorData();
   };
