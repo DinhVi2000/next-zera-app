@@ -10,6 +10,7 @@ import { useModalContext } from "@/context/modal-context";
 
 const Timer = () => {
   const timeIntervalId = useRef(null);
+  const timeDes = useRef(0);
   const { usernameAuth, anonymousInfo } = useAuthContext();
   const {
     isCountDown,
@@ -80,22 +81,31 @@ const Timer = () => {
    */
   useEffect(() => {
     if (!isCountDown) return;
-
-    let timeDes = 0;
+    if (Number(totalTimePlay) === 0) {
+      openModal(MODAL_NAME.BUYTIME);
+      return;
+    }
     timeIntervalId.current = setInterval(() => {
-      timeDes++;
-      const checkTime = Number(totalTimePlay) - timeDes > 0 ? Number(totalTimePlay) - timeDes : 0;
+      timeDes.current++;
+      const checkTimeRemaining = Number(totalTimePlay) - timeDes.current;
+      const checkTime = checkTimeRemaining > 0 ? checkTimeRemaining : 0;
       const time = getTimeRemaining(checkTime);
-      if (Number(totalTimePlay) - timeDes === 0 || Number(totalTimePlay) - timeDes === -1) {
+      if (checkTimeRemaining <= 0) {
         openModal(MODAL_NAME.BUYTIME);
         clearInterval(timeIntervalId.current);
       }
       setRemainingTime(time);
-      setIncrementTime(timeDes);
+      setIncrementTime(timeDes.current);
     }, 1000);
 
     return () => {
       clearInterval(timeIntervalId.current);
+      if (!userData) return;
+      setUserData(prev => {
+        const timeDown = timeDes.current;
+        timeDes.current = 0;
+        return { ...prev, playtime: prev.playtime - timeDown };
+      });
     };
   }, [isCountDown]);
 
