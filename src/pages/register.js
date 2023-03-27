@@ -26,7 +26,9 @@ const Register = () => {
                        max-[600px]:px-6 max-[600px]:w-[400px] max-[480px]:w-[350px]"
         >
           <div>
-            <Image src={logo} alt="logo" className="mx-auto"></Image>
+            <Link href={"/"}>
+              <Image src={logo} alt="logo" className="mx-auto"></Image>
+            </Link>
           </div>
           <RegisterForm />
 
