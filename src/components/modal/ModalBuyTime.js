@@ -93,54 +93,58 @@ const ModalBuyTime = () => {
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modalTimeRef}
-        className="opacity-5 scale-90 w-fit h-fit daily-bonus px-4 py-8 transition-all"
+        className="opacity-5 scale-90 md:w-fit md:h-fit daily-bonus md:px-4 px-1 py-8 transition-all w-[340px]"
       >
-        <div className="flex ">
+        <div className="flex">
           <h4 className="mx-auto">Buy Play Time</h4>
           <IconClose
             className="cursor-pointer text-pink-400 w-5"
             onClick={handleCloseModal}
           />
         </div>
-        <div className="grid grid-cols-3 gap-4 mt-5 w-full">
-          {timeItems?.rows &&
-            timeItems.rows.map((e, i) => (
-              <div
-                key={i}
-                className="overflow-hidden mx-auto w-[190px] h-[190px] daily-bonus__item relative group"
-              >
-                {/* value */}
-                <div className="bg-pink-400 text-base px-5 py-2.5 text-center flex justify-center">
-                  +{e.value}s / {e.price} <IconCoin22 />
-                </div>
+        <div className="overflow-y-auto max-h-[436px] md:max-h-[500px] md:m-4 mt-5">
+          <div className="grid md:grid-cols-3 md:gap-4 grid-cols-2 gap-2 md:mx-2 md:w-[600px] w-[310px] ml-[6px]">
+            {timeItems?.rows &&
+              timeItems.rows.map((e, i) => (
+                <div
+                  key={i}
+                  className="overflow-hidden mx-auto  md:w-[190px] daily-bonus__item relative group"
+                >
+                  {/* value */}
+                  <div className="bg-pink-400 text-base px-5 py-2.5 text-center flex justify-center md:flex-row flex-col">
+                    <p> +{e.value}s</p>
+                    <p className="hidden md:block mx-1"> / </p>
+                    <p className="flex justify-center items-center"> <strong className="mr-1">{e.price} </strong> <IconCoin22 /></p>
+                  </div>
 
-                {/* image */}
-                <ImageLoading
-                  className="w-full h-full object-cover"
-                  src={e.url}
-                  alt=""
-                />
+                  {/* image */}
+                  <ImageLoading
+                    className="object-cover"
+                    src={e.url}
+                    alt=""
+                  />
 
-                {/* select bg */}
-                <div className=" w-full h-full absolute-center rounded-[20px]">
-                  <div className="py-2 px-4 bg-pink-400 rounded-full absolute top-0 left-1/2 -translate-x-1/2 shadow-custom-one group-hover:top-1/2 group-hover:opacity-100 transition-all opacity-0 duration-300 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
-                    onClick={() => handleBuyTime(e.id)}
-                  >
-                    Buy
+                  {/* select bg */}
+                  <div className=" w-full h-full absolute-center rounded-[20px]">
+                    <div className="py-2 px-4 bg-pink-400 rounded-full absolute top-0 left-1/2 -translate-x-1/2 shadow-custom-one group-hover:top-1/2 group-hover:opacity-100 transition-all opacity-0 duration-300 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+                      onClick={() => handleBuyTime(e.id)}
+                    >
+                      Buy
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-
-          {!timeItems?.rows &&
-            Array(9)
-              .fill(0)
-              .map((e, i) => (
-                <div
-                  className="w-[160px] h-[160px] skeleton-shine rounded-[20px]"
-                  key={i}
-                ></div>
               ))}
+
+            {!timeItems?.rows &&
+              Array(9)
+                .fill(0)
+                .map((e, i) => (
+                  <div
+                    className="w-[160px] h-[160px] skeleton-shine rounded-[20px]"
+                    key={i}
+                  ></div>
+                ))}
+          </div>
         </div>
       </div>
     </BoxModal>
