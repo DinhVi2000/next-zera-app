@@ -2,15 +2,25 @@
 import React, { useEffect, useRef } from "react";
 
 import { useModalContext } from "@/context/modal-context";
-import { useRouter } from "next/router";
 import { MODAL_NAME } from "@/utils/constant";
 import { sleep } from "@/utils/helper";
 import BoxModal from "./BoxModal";
+
+import { useRouter } from "next/router";
+import { IconArrowLeft } from "@/resources/icons";
 
 const ModalResetLogin = () => {
   const router = useRouter();
   const modalTimeRef = useRef(null);
   const { openModal } = useModalContext();
+
+  const handleCloseModal = () => {
+    modalTimeRef.current.classList?.remove("animation-open-modal");
+    document.body.style.overflow = "auto";
+    document.body.style.height = "auto";
+    sleep(200).then(() => openModal(MODAL_NAME.NONE));
+  };
+
   useEffect(() => {
     sleep(1).then(() => {
       document.body.style.overflow = "hidden";
@@ -23,32 +33,37 @@ const ModalResetLogin = () => {
     modalTimeRef.current.classList?.remove("animation-open-modal");
     document.body.style.overflow = "auto";
     document.body.style.height = "auto";
-    router.replace('/');
+    router.replace("/");
     openModal(MODAL_NAME.NONE);
   };
 
   return (
-    <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
+    <BoxModal className="fixed h-[100vh] max-[597px]:h-[60vh] w-full z-50 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modalTimeRef}
-        className="opacity-5 rounded-3xl scale-90 w-fit h-fit px-4 py-8 transition-all border-[5px] border-solid border-[#f265e4] relative bg-custom-one shadow-custom-one"
+        className="max-[597px]:w-[80%] opacity-5 rounded-3xl scale-90 max-w-[540px] w-fit h-fit px-6 pb-10 pt-6 max-[597px]:px-1 transition-all border-[5px] border-solid border-[#F472B6] relative bg-black bg-reset"
       >
-        <div className="flex ">
-          <h4 className="mx-auto font-semibold text-3xl">Notify Session</h4>
-        </div>
-        <div className="flex justify-center items-center my-4">
-          <h3 className="text-[22px]">
-            {" "}
-            The account is already logged in on another device, please login
-            again!
+        <div className="flex justify-center items-center my-8 mx-8">
+          <h3 className="text-[28px] font-bold text-center max-[597px]:text-[22px]">
+            <span className="text-[#EC4899]"> Your account </span>has been
+            logged in on another device!
           </h3>
         </div>
-        <button
-          onClick={handleBackToHome}
-          className="mx-auto text-[26px] font-semibold flex-center absolute p-4 bg-custom-two rounded-3xl shadow-custom-two top-[80%] left-[50%] -translate-x-1/2"
-        >
-          Back to home
-        </button>
+        <div className="flex-center max-[597px]:flex-col-reverse">
+          <button
+            onClick={handleBackToHome}
+            className="mx-auto text-base max-[597px]:text-sm font-semibold flex-center hover:text-[#4d4448] group"
+          >
+            <IconArrowLeft className="text-white group-hover:text-[#EC4899] w-3 h-3" />
+            Back to Homepage
+          </button>
+          <button
+            onClick={handleCloseModal}
+            className="mx-auto text-[20px] max-[597px]:text-base max-[597px]:mb-4 font-semibold flex-center p-3 rounded-3xl bg-[#DB2777] border-[3px] border-[#DB2777] hover:bg-[#00000000]"
+          >
+            Please login again!
+          </button>
+        </div>
       </div>
     </BoxModal>
   );

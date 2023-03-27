@@ -111,7 +111,7 @@ const Shop = () => {
               className="absolute z-50 left-5 top-[10px] flex items-center justify-self-start max-[990.9px]:top-[160px] max-[550px]:top-[230px]"
               onClick={() => router.back()}
             >
-              <IconArrowLeft />
+              <IconArrowLeft className="text-[#F472B6]" />
               <span className="ml-2 text-[#EC4899] text-lg font-semibold">
                 Back
               </span>
