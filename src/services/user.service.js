@@ -209,6 +209,19 @@ const getShareToEarn = async () => {
   }
 };
 
+const postNewsletter = async (body) => {
+  try {
+    const { data } = await http.post("users/newsletter", body);
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getUserInfo,
   getHallOfFameByUsername,
@@ -224,5 +237,6 @@ export {
   getUserReward,
   getUserAnonymous,
   getShareToEarn,
+  postNewsletter,
 };
 export default reducer;

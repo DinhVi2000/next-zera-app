@@ -46,14 +46,17 @@ function ListGame({ setIsOpenTab, infoList }) {
 
         {/* BODY */}
         {payload === "PURCHASE_HISTORY" ? (
-          <div className="px-[45px] py-5 max-[1718px]:px-[20px] max-[730px]:w-full max-[730px]:px-[5px]">
+          <div className="px-[45px] py-5 max-[1718px]:px-[20px] max-[730px]:w-full max-[730px]:px-[15px]">
             <>
               {listGame?.avatar?.length > 0 && (
                 <div className="flex flex-col">
                   <span className="font-bold text-2xl mb-3">Avatars</span>
                   <div className="grid grid-cols-4 max-[1140px]:grid-cols-3 max-[730px]:grid-cols-2 gap-x-9 max-[1718px]:gap-x-2">
                     {paginationAvatar?.currentItems?.map((e, i) => (
-                      <div className="flex items-center justify-start" key={i}>
+                      <div
+                        className="flex items-center justify-start mx-auto"
+                        key={i}
+                      >
                         <ImageLoading
                           className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
                           src={e?.url}
@@ -85,7 +88,7 @@ function ListGame({ setIsOpenTab, infoList }) {
                   <div className="grid grid-cols-4 max-[1500px]:grid-cols-3 max-[1200px]:grid-cols-2 gap-x-9 max-[1718px]:gap-x-2">
                     {paginationCover?.currentItems?.map((e, i) => (
                       <div
-                        className="flex items-center justify-center max-[768px]:justify-start"
+                        className="flex items-center justify-center max-[768px]:justify-start mx-auto"
                         key={i}
                       >
                         <ImageLoading
