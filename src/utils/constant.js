@@ -130,20 +130,26 @@ const HTTP_ERROR_CODE = {
 
 const PREFIX_USERNAME = "@";
 const HALL_OF_FAME_TAB = [
-  { label: "ZERA", value: "ZERA" },
+  { label: "ZERA", value: "zera" },
   {
-    label: "Game played",
-    value: "GAME_PLAYED",
+    label: "Games played",
+    value: "games_played",
   },
   {
     label: "Playstreak",
-    value: "PLAYSTREAK",
+    value: "playstreak",
   },
 ];
 const STATUS_PLAY_GAME = {
-  PLAY: 'PLAY',
-  STOP: 'STOP',
-  NONE: 'NONE',
+  PLAY: "PLAY",
+  STOP: "STOP",
+  NONE: "NONE",
+};
+
+const QUANTITY_BY_TAB = {
+  zera: (e) => parseFloat(e?.total_earned_zera),
+  games_played: (e) => e?.total_games_played,
+  playstreak: (e) => e?.streak,
 };
 
 export {
@@ -170,4 +176,5 @@ export {
   DEFAULT_AVATAR_SRC,
   PREFIX_USERNAME,
   STATUS_PLAY_GAME,
+  QUANTITY_BY_TAB,
 };

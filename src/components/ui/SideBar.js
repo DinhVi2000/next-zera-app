@@ -170,6 +170,17 @@ const SideBar = () => {
             </Link>
           ))}
 
+          <Link href={staticPaths.achievements}>
+            <div className="flex gap-x-2 items-center font-bold cursor-pointer">
+              <div className="w-12">
+                <IconConsole className="w-8 h-8 mx-auto" />
+              </div>
+              <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
+                Achievements
+              </span>
+            </div>
+          </Link>
+
           <p className="w-[90%] mx-auto bg-[#ffcde980] pt-[1px]"></p>
 
           {/* menu items all */}
@@ -330,9 +341,9 @@ const UserMenu = forwardRef((props, ref) => {
         <div
           className="flex gap-2.5 items-center cursor-pointer border-[1px] border-b-violet-800 border-transparent pb-3 px-3
         text-violet-300 hover:text-violet-700 transition-all"
-          onClick={() => router.push(staticPaths.achievements)}
+          onClick={() => router.push(staticPaths.my_hall_of_fame)}
         >
-          <IconCup className="w-[18px] h-[18px]" /> <span>Achievements</span>
+          <IconCup className="w-[18px] h-[18px]" /> <span>Hall of fame</span>
         </div>
         <div
           className="flex gap-2.5 items-center pt-3 px-3 cursor-pointer

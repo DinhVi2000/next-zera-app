@@ -10,15 +10,23 @@ const user = createSlice({
   name: "user",
   initialState: {
     info: null,
-    hallOfFame: null,
+    achievement: null,
+    hallOfFame: {
+      zera: null,
+      games_played: null,
+      playstreak: null,
+    },
     recentlyPlayedGames: null,
   },
   reducers: {
     setInfo: (state, action) => {
       state.info = { ...action.payload };
     },
+    setAchievement: (state, action) => {
+      state.achievement = { ...action.payload };
+    },
     setHallOfFame: (state, action) => {
-      state.hallOfFame = { ...action.payload };
+      state.hallOfFame = { ...state.hallOfFame, ...action.payload };
     },
     setRecentlyPlayedGames: (state, action) => {
       state.recentlyPlayedGames = action.payload;
@@ -27,7 +35,12 @@ const user = createSlice({
 });
 
 const { actions, reducer } = user;
-export const { setInfo, setHallOfFame, setRecentlyPlayedGames } = actions;
+export const {
+  setInfo,
+  setAchievement,
+  setHallOfFame,
+  setRecentlyPlayedGames,
+} = actions;
 
 const getUserInfo = async (username) => {
   try {
@@ -70,7 +83,7 @@ const getHallOfFameByUsername = async (dispatch, username) => {
     const { data } = await http.get(`/hall-of-fames/${username}`);
     if (!data.success) throw new Error(data?.message);
 
-    dispatch(setHallOfFame(data.data));
+    dispatch(setAchievement(data.data));
 
     return data.data;
   } catch (e) {

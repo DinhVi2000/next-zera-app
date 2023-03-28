@@ -807,3 +807,17 @@
     grid-template-columns: repeat(3, 94px);
   }
 }
+
+
+@media (max-width: 1210px)
+{
+  .max-\[1210px\]\:order-1 {
+    order: 1;
+  }
+  .max-\[1210px\]\:order-2 {
+    order: 2;
+  }
+  .max-\[1210px\]\:order-3 {
+    order: 3;
+  }
+}
