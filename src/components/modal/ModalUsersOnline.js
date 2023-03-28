@@ -35,7 +35,7 @@ const ModalUsersOnline = () => {
     <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modalTimeRef}
-        className="opacity-5 scale-90 w-fit h-fit daily-bonus p-4 pb-8"
+        className="opacity-5 scale-90 md:w-fit md:h-fit  daily-bonus p-4 pb-8 transition-all w-[340px]"
       >
         <div className="flex ">
           <h4 className="mx-auto">Users online</h4>
@@ -46,29 +46,31 @@ const ModalUsersOnline = () => {
         </div>
 
         {usersInRoom?.rows && usersInRoom.rows.length > 1 ? (
-          <div className="grid grid-cols-3 gap-6 mt-10 w-full">
-            {usersInRoom.rows
-              .filter((userF) => userF.id !== userInfo?.id)
-              .map((user, i) => (
-                <Link
-                  href={`/hall-of-fame/${user.username}`}
-                  key={i}
-                  target="_blank"
-                >
-                  <div className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item group">
-                    <div className="flex justify-center p-1 border-b-[1px] border-[#fff]">
-                      <span className="text-xs"> {user.username} </span>
+          <div className="overflow-y-auto max-h-[436px] md:max-h-[500px] md:m-4 mt-5">
+            <div className="grid md:grid-cols-3 grid-cols-2 gap-2 md:gap-6 w-full">
+              {usersInRoom.rows
+                .filter((userF) => userF.id !== userInfo?.id)
+                .map((user, i) => (
+                  <Link
+                    href={`/hall-of-fame/${user.username}`}
+                    key={i}
+                    target="_blank"
+                  >
+                    <div className="w-[132.72px] h-[135.7px] mx-auto daily-bonus__item group">
+                      <div className="flex justify-center p-1 border-b-[1px] border-[#fff]">
+                        <span className="text-xs"> {user.username} </span>
+                      </div>
+                      <div className="overflow-hidden w-full h-[calc(100%-2rem)] p-2 rounded-xl">
+                        <ImageLoading
+                          alt=""
+                          className="w-full h-full object-cover rounded-xl"
+                          src={user?.avatar?.url ?? "/avatar-1.svg"}
+                        />
+                      </div>
                     </div>
-                    <div className="overflow-hidden w-full h-[calc(100%-2rem)] p-2 rounded-xl">
-                      <ImageLoading
-                        alt=""
-                        className="w-full h-full object-cover rounded-xl"
-                        src={user?.avatar ?? "/avatar-1.svg"}
-                      />
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+            </div>
           </div>
         ) : (
           <div className="flex justify-center items-center">
