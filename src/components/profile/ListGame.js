@@ -3,25 +3,43 @@ import { usePagination } from "@/hooks/usePagination";
 import { IconCoin22, IconPre } from "@/resources/icons";
 import { getBetweenTwoDate, toUpperCaseFirstLetter } from "@/utils/helper";
 import { useMediaQuery } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import Empty from "../empty/Empty";
 import GameItem from "../game/GameItem";
 import ImageLoading from "../loading/ImageLoading";
 import Pagination from "../pagination/Pagination";
 
 function ListGame({ setIsOpenTab, infoList }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
+
   const { payload, listGame } = infoList;
 
   const matchesAvatar = useMediaQuery("(max-width: 1140px)");
+  const matchesAvatarThan730 = useMediaQuery("(max-width: 730px)");
   const matchesCoverThan1500 = useMediaQuery("(max-width: 1500px)");
   const matchesCoverThan1200 = useMediaQuery("(max-width: 1200px)");
+  const matchesCoverThan992 = useMediaQuery("(max-width: 992px)");
 
   const paginationAvatar = usePagination(
-    matchesAvatar[0] ? 9 : 8,
+    matchesAvatarThan730[0]
+      ? 4
+      : matchesCoverThan992[0]
+      ? 6
+      : matchesAvatar[0]
+      ? 9
+      : 8,
     listGame?.avatar
   );
   const paginationCover = usePagination(
-    matchesCoverThan1200[0] ? 8 : matchesCoverThan1500[0] ? 9 : 8,
+    matchesCoverThan992[0]
+      ? 4
+      : matchesCoverThan1200[0]
+      ? 8
+      : matchesCoverThan1500[0]
+      ? 9
+      : 8,
     listGame?.cover
   );
 
@@ -29,7 +47,7 @@ function ListGame({ setIsOpenTab, infoList }) {
     <div className="bg-[#00000080] rounded-[20px]">
       <>
         {/* TITLE */}
-        <div className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold relative max-[730px]:w-full">
+        <div className="rounded-t-[20px] bg-[#EC4899] py-[16px] pl-[16px] text-[28px] font-bold relative max-[730px]:w-full max-[500px]:flex max-[500px]:justify-between">
           <div
             className="flex items-center text-2xl cursor-pointer"
             onClick={() => {
@@ -39,7 +57,7 @@ function ListGame({ setIsOpenTab, infoList }) {
             <IconPre className="mr-1" />
             Back
           </div>
-          <div className="absolute-center max-[459px]:text-base">
+          <div className="absolute top-[50%] left-[50%] min-[500px]:translate-x-[-50%] min-[500px]:translate-y-[-50%] max-[500px]:static max-[500px]:pr-[16px]">
             {toUpperCaseFirstLetter(payload)?.replace("_", " ")}
           </div>
         </div>
@@ -50,8 +68,10 @@ function ListGame({ setIsOpenTab, infoList }) {
             <>
               {listGame?.avatar?.length > 0 && (
                 <div className="flex flex-col">
-                  <span className="font-bold text-2xl mb-3">Avatars</span>
-                  <div className="grid grid-cols-4 max-[1140px]:grid-cols-3 max-[730px]:grid-cols-2 gap-x-9 max-[1718px]:gap-x-2">
+                  <span className="font-bold text-3xl mb-3 max-[992px]:text-center">
+                    Avatars
+                  </span>
+                  <div className="grid grid-cols-4 max-[1140px]:grid-cols-3 max-[730px]:grid-cols-2 max-[493px]:grid-cols-1 gap-x-9 max-[1718px]:gap-x-2">
                     {paginationAvatar?.currentItems?.map((e, i) => (
                       <div
                         className="flex items-center justify-start mx-auto"
@@ -82,10 +102,10 @@ function ListGame({ setIsOpenTab, infoList }) {
             <>
               {listGame?.cover?.length > 0 && (
                 <div className="flex flex-col">
-                  <span className="font-bold text-2xl mb-3 mt-5">
+                  <span className="font-bold text-3xl mb-3 mt-6 max-[992px]:text-center">
                     Cover pages
                   </span>
-                  <div className="grid grid-cols-4 max-[1500px]:grid-cols-3 max-[1200px]:grid-cols-2 gap-x-9 max-[1718px]:gap-x-2">
+                  <div className="grid grid-cols-4 max-[1500px]:grid-cols-3 max-[1200px]:grid-cols-2 gap-x-9 max-[1718px]:gap-x-2 max-[676px]:grid-cols-1">
                     {paginationCover?.currentItems?.map((e, i) => (
                       <div
                         className="flex items-center justify-center max-[768px]:justify-start mx-auto"
