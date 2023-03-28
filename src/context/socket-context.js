@@ -7,9 +7,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import { SOCKET_EVENT, STATUS } from "@/utils/constant";
-import { io } from "socket.io-client";
-import { config } from "@/envs";
+import { SOCKET_EVENT, STATUS, STATUS_PLAY_GAME } from "@/utils/constant";
+import { socket } from "@/configs/socket";
 const SocketContext = createContext(null);
 
 export const useSocketContext = () => {
@@ -17,7 +16,7 @@ export const useSocketContext = () => {
   if (!socketContext) {
     throw new Error(
       "useSocketContext() can only be used inside of <SocketContextProvider />, " +
-        "please declare it at a higher level."
+      "please declare it at a higher level."
     );
   }
   const { socketProvider } = socketContext;
@@ -26,41 +25,30 @@ export const useSocketContext = () => {
 
 export const SocketContextProvider = ({ children }) => {
   const [socketStatus, setSocketStatus] = useState(STATUS.INIT);
-  const [isCountDown, setIsCountDown] = useState(false);
-  const [socketClient, setSocketClient] = useState();
+  const [isCountDown, setIsCountDown] = useState({ status: STATUS_PLAY_GAME.NONE });
+  const [socketClient, setSocketClient] = useState(socket);
   const [totalTimePlay, setTotalTimePlay] = useState(0);
   const [incrementTime, setIncrementTime] = useState(0);
-  const [isConnected, setIsConnected] = useState(false);
   const [messageSocket, setMessageSocket] = useState({});
   const [showModalBuyTime, setShowModalBuyTime] = useState(false);
   const [usersInRoom, setUsersInRoom] = useState({});
   const [receiveZera, setReceiveZera] = useState(0);
   const [userLoginData, setUserLoginData] = useState({});
 
-  const connectSocket = () => {
-    const socket = io(config.SERVER_CHAT);
-    setSocketClient(socket);
-    setIsConnected(true);
-  };
-
-  const disconnect = () => isConnected && socketClient.disconnect();
-
   const joinRoom = useCallback(
     ({ room_id, user_id, is_anonymous }) => {
-      if (!isConnected) return;
-      socketClient.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
+      socket.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
         user_id,
         room_id,
         is_anonymous,
       });
     },
-    [socketClient, isConnected]
+    []
   );
 
   const sendMessage = useCallback(
     ({ room_id, user_id, msg, socket_id, is_anonymous }) => {
-      if (!isConnected) return;
-      socketClient.emit(SOCKET_EVENT.SEND_MESSAGE, {
+      socket.emit(SOCKET_EVENT.SEND_MESSAGE, {
         room_id,
         user_id,
         msg,
@@ -68,102 +56,112 @@ export const SocketContextProvider = ({ children }) => {
         is_anonymous,
       });
     },
-    [socketClient, isConnected]
+    []
   );
-  const listenAllEvent = useCallback(() => {
-    if (socketClient) {
-      socketClient.on(SOCKET_EVENT.TIME_GAME, () => {});
-      socketClient.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
-        if (!data) return;
-        setUsersInRoom(data.users);
-      });
-      socketClient.on(SOCKET_EVENT.LOGGED_IN_USER, (data) => {
-        if (!data) return;
-        setUserLoginData(data);
-      });
-    }
-  }, [socketClient]);
-
-  const handleReceiveMessage = (data) => {
-    if (!data) return;
-    if (data?.zera) {
-      setReceiveZera(data.zera);
-    }
-    setMessageSocket(data);
-  };
-
-  const listenMessageChange = useCallback(
-    () => {
-      socketClient.on(SOCKET_EVENT.LISTEN_MESSAGE, handleReceiveMessage);
-    },
-    [socketClient]
-  );
-
 
   const playGame = useCallback(
     ({ room_id, user_id, is_anonymous }) => {
-      socketClient.emit(SOCKET_EVENT.PLAY_GAME, {
+      socket.emit(SOCKET_EVENT.PLAY_GAME, {
         user_id,
         room_id,
         is_anonymous,
       });
     },
-    [socketClient]
+    []
   );
 
-  const stopGame = useCallback(() => {
-    socketClient.emit(SOCKET_EVENT.STOP_GAME);
-  }, [socketClient]);
+  const stopGame = useCallback(
+    () => {
+      socket.emit(SOCKET_EVENT.STOP_GAME);
+    },
+    []
+  );
 
   const leaveGame = useCallback(
     ({ room_id, user_id, is_anonymous }) => {
-      socketClient.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
+      socket.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
         user_id,
         room_id,
         is_anonymous,
       });
     },
-    [socketClient]
+    []
   );
 
   const userLogin = useCallback(
     ({ username }) => {
-      if (!socketClient) return;
-      socketClient.emit(SOCKET_EVENT.USER_LOGIN, { username });
+      socket.emit(SOCKET_EVENT.USER_LOGIN, { username });
     },
-    [socketClient]
+    []
   );
 
   const userLogout = useCallback(
     ({ username }) => {
-      if (!socketClient) return;
-      socketClient.emit(SOCKET_EVENT.USER_LOGOUT, { username });
+      socket.emit(SOCKET_EVENT.USER_LOGOUT, { username });
     },
-    [socketClient]
+    [socket]
   );
 
+  /**
+   * Listen user login
+   */
   useEffect(() => {
-    if (!socketClient) return;
-    socketClient.on("connect", () => {
-      listenAllEvent();
-      listenMessageChange();
-    });
-  }, [socketClient, listenAllEvent]);
+    const onUserLogin = (data) => {
+      if (!data) return;
+      setUserLoginData(data);
+    };
 
-  useEffect(() => {
-    if (!isConnected) {
-      connectSocket();
-    }
+    socket.on(SOCKET_EVENT.LOGGED_IN_USER, onUserLogin);
     return () => {
-      disconnect();
+      socket.off(SOCKET_EVENT.LOGGED_IN_USER);
     };
   }, []);
 
+  /**
+   * Listen user join room
+   */
   useEffect(() => {
-    isCountDown === true && incrementTime === totalTimePlay
+    const onUserJoinRoomEvent = (data) => {
+      if (!data) return;
+      setUsersInRoom(data.users);
+    };
+    socket.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, onUserJoinRoomEvent);
+    return () => {
+      socket.off(SOCKET_EVENT.LIST_USERS_JOIN_ROOM);
+    };
+  }, []);
+
+  /**
+   * Listen message change
+   */
+  useEffect(() => {
+    function onMessageEvent(data) {
+      if (data?.user) {
+        setReceiveZera(data.user.zera);
+      }
+      setMessageSocket(data);
+    }
+    socket.on(SOCKET_EVENT.LISTEN_MESSAGE, onMessageEvent);
+    return () => {
+      socket.off(SOCKET_EVENT.LISTEN_MESSAGE, onMessageEvent);
+    };
+  }, []);
+
+  /**
+   *  Open modal buy time when playing game and has been timeout
+   */
+  useEffect(() => {
+    isCountDown.status === STATUS_PLAY_GAME.PLAY && incrementTime === totalTimePlay
       ? setShowModalBuyTime(true)
       : setShowModalBuyTime(false);
   }, [incrementTime]);
+
+  useEffect(() => {
+    socket.connect();
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const socketProvider = useMemo(
     () => ({
@@ -177,13 +175,11 @@ export const SocketContextProvider = ({ children }) => {
       setTotalTimePlay,
       joinRoom,
       sendMessage,
-      isConnected,
       messageSocket,
       setMessageSocket,
       stopGame,
       playGame,
       leaveGame,
-      listenAllEvent,
       setIncrementTime,
       incrementTime,
       showModalBuyTime,
@@ -194,21 +190,18 @@ export const SocketContextProvider = ({ children }) => {
       userLogin,
       userLoginData,
       userLogout,
-      listenMessageChange,
     }),
     [
       socketStatus,
       isCountDown,
       socketClient,
       totalTimePlay,
-      isConnected,
       messageSocket,
       joinRoom,
       sendMessage,
       stopGame,
       playGame,
       leaveGame,
-      listenAllEvent,
       setIncrementTime,
       incrementTime,
       showModalBuyTime,
@@ -219,7 +212,6 @@ export const SocketContextProvider = ({ children }) => {
       userLogin,
       userLoginData,
       userLogout,
-      listenMessageChange,
     ]
   );
 

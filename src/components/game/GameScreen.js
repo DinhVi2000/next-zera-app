@@ -1,5 +1,6 @@
 import { useSocketContext } from "@/context/socket-context";
 import { IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
+import { STATUS_PLAY_GAME } from "@/utils/constant";
 import { getArea } from "@/utils/helper";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
@@ -39,7 +40,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   };
 
   const handlePlaying = () => {
-    setIsCountDown(true);
+    setIsCountDown({ status: STATUS_PLAY_GAME.PLAY });
   };
 
   // handle zoom out
@@ -53,7 +54,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > game_screen_ref.current?.clientHeight) {
-        setIsCountDown(false);
+        setIsCountDown({ status: STATUS_PLAY_GAME.STOP });
       }
     };
     window.addEventListener("scroll", handleScroll);
@@ -108,7 +109,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
       </div>
 
       {/* bg before play */}
-      {!isCountDown && (
+      {(isCountDown.status === STATUS_PLAY_GAME.NONE || isCountDown.status === STATUS_PLAY_GAME.STOP) && (
         <div className="w-full h-full bg-blur-800 absolute top-0 flex-center">
           <button
             className="text-base text-white rounded-[20px] bg-linear-violet-300 py-3 px-10 w-[220px]

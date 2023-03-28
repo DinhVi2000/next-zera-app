@@ -188,7 +188,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (receiveZera > 0) {
-      setUserInfo((prev) => ({ ...prev, zera: receiveZera + prev.zera }));
+      setUserInfo((prev) => ({ ...prev, zera: receiveZera }));
     }
   }, [receiveZera]);
 

@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "@/services/game.service";
 import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
-import { MAX_LIMIT_MESSAGE, MESSAGE_MAX_LENGTH, MODAL_NAME } from "@/utils/constant";
+import { MAX_LIMIT_MESSAGE, MESSAGE_MAX_LENGTH, MODAL_NAME, STATUS_PLAY_GAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useToast } from "@chakra-ui/react";
 import { notifyErrorMessage } from "@/utils/helper";
@@ -102,18 +102,23 @@ function BoxChat({ area }) {
   // Effect start caculator time play
   useEffect(() => {
     if (userInfo || anonymousInfo) {
-      if (isCountDown) {
-        playGame({
-          user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
-          room_id: roomCurrent,
-          is_anonymous: !userInfo,
-        });
-      } else if (!isCountDown) {
-        stopGame({
-          user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
-          room_id: roomCurrent,
-          is_anonymous: !userInfo,
-        });
+      switch (isCountDown.status) {
+        case STATUS_PLAY_GAME.PLAY:
+          playGame({
+            user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+            room_id: roomCurrent,
+            is_anonymous: !userInfo,
+          });
+          break;
+        case STATUS_PLAY_GAME.STOP:
+          stopGame({
+            user_id: !userInfo ? anonymousInfo.uid : Number(userInfo?.id),
+            room_id: roomCurrent,
+            is_anonymous: !userInfo,
+          });
+          break;
+        default:
+          break;
       }
     }
   }, [isCountDown, userInfo?.id]);
@@ -127,12 +132,12 @@ function BoxChat({ area }) {
         is_anonymous: !userInfo,
       });
     }
-  }, [userInfo, anonymousInfo]);
+  }, [anonymousInfo]);
 
   useEffect(() => {
     return () => {
       setIncrementTime(0);
-      setIsCountDown(false);
+      setIsCountDown({ status: STATUS_PLAY_GAME.NONE });
       leaveGame({
         user_id: !userInfo ? anonymousInfo?.uid : Number(userInfo?.id),
         room_id: roomCurrent,
@@ -140,6 +145,7 @@ function BoxChat({ area }) {
       });
     };
   }, []);
+
   useEffect(() => {
     showModalBuyTime
       ? openModal(MODAL_NAME.BUYTIME)
@@ -240,23 +246,23 @@ const MessageItem = ({ msg }) => {
       <div
         className={`w-full flex ${!msg.is_message ? "justify-center" : (Number(userInfo?.id) === msg.user_id ? "justify-end pr-1" : "justify-start")}`}
       >
-        <div className={ `flex flex-col my-[3px] ${(Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start") }`} >
+        <div className={`flex flex-col my-[3px] ${(Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start")}`} >
           {
             msg.is_message &&
-            (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${ (Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "") }`}>
-                {
-                  msg?.user?.avatar ? <ImageLoading
-                    alt=""
-                    src={msg?.user?.avatar}
-                    className="w-4 h-4 rounded-full"
-                    /> : <Image src="/avatar-1.svg" alt="Image default" width="16" height="16" className="w-4 h-4 rounded-full" />
-                }
-                <div className="w-fit max-w-[150px] break-words">
-                  {msg?.user?.username}
-                </div>
-              </div>)
+            (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${(Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "")}`}>
+              {
+                msg?.user?.avatar ? <ImageLoading
+                  alt=""
+                  src={msg?.user?.avatar}
+                  className="w-4 h-4 rounded-full"
+                /> : <Image src="/avatar-1.svg" alt="Image default" width="16" height="16" className="w-4 h-4 rounded-full" />
+              }
+              <div className="w-fit max-w-[150px] break-words">
+                {msg?.user?.username}
+              </div>
+            </div>)
           }
-          <div className={ `rounded-md max-w-[150px] w-fit items-end ${ !msg.is_message ? "text-[#fff] text-[10px] max-w-full" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none") }`}>
+          <div className={`rounded-md max-w-[150px] w-fit items-end ${!msg.is_message ? "text-[#fff] text-[10px] max-w-full" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none")}`}>
             {
               !msg.is_message ? (Number(userInfo?.id) === msg.user_id ? (msg?.message).replace(`Player ${msg.user.username}`, 'You') : msg?.message) : msg?.message
             }

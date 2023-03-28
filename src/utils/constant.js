@@ -140,6 +140,11 @@ const HALL_OF_FAME_TAB = [
     value: "PLAYSTREAK",
   },
 ];
+const STATUS_PLAY_GAME = {
+  PLAY: 'PLAY',
+  STOP: 'STOP',
+  NONE: 'NONE',
+};
 
 export {
   MAX_SECOND_LIMIT_CHAT,
@@ -164,4 +169,5 @@ export {
   HALL_OF_FAME_TAB,
   DEFAULT_AVATAR_SRC,
   PREFIX_USERNAME,
+  STATUS_PLAY_GAME,
 };
