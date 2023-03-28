@@ -171,7 +171,7 @@
   .grid-category-detail {
     --gridTemplateColumns: 12;
     grid-template-areas:
-      "ct ct ct ct .  .  .  .  .  c1 c1 . "
+      "ct ct ct ct .  .  .  .  .  .  c1 c1 "
       "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 c2 c2 "
       "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 c3 c3 "
       "g6 g6 g7 g7 g8 g8 .  .  .  .  c4 c4 "
@@ -262,7 +262,7 @@
   .grid-category-detail {
     --gridTemplateColumns: 10;
     grid-template-areas:
-      "ct ct ct ct . . .  c1 c1 ."
+      "ct ct ct ct . . . . c1 c1 "
       "g1 g1 g2 g2 g3 g3 g4 g4 c2 c2"
       "g1 g1 g2 g2 g3 g3 g4 g4 c3 c3"
       "g5 g5 g6 g6 g7 g7 g8 g8 c4 c4"
@@ -417,12 +417,12 @@
   .grid-category-detail {
     --gridTemplateColumns: 7;
     grid-template-areas:
-      "ct ct ct .  .  c1 c1"
+      "ct ct ct .  c1 c1 ."
       "g1 g1 g2 g2 g3 g3 ."
       "g1 g1 g2 g2 g3 g3 ."
       "g5 g5 g6 g6 c2 c2 ."
       "g5 g5 g6 g6 c3 c3 ."
-      "g4 g7 g8 c4 .  .  .";
+      "g4 g7 g8 .  c4 c4 .";
 
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(5, 94px);
@@ -789,7 +789,7 @@
 }
 
 // searchbar responsive
-.search-grid{
+.search-grid {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(6, 94px);
@@ -807,4 +807,3 @@
     grid-template-columns: repeat(3, 94px);
   }
 }
-
