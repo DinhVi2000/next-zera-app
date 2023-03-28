@@ -45,8 +45,7 @@ const Shop = () => {
   const checkItems = sortShop !== "all" ? itemsSort : itemsShop;
   const { currentItems, handlePageClick } = usePagination(
     displayItems,
-    checkItems,
-    sortShop
+    checkItems
   );
 
   const getItem = async (idCategory) => {

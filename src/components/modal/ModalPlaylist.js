@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import { createPlaylistFormSchema } from "@/validators/create-playlist";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector } from "react-redux";
+import ButtonLoading from "../loading/ButtonLoading";
 
 const ModalPlaylist = () => {
   const {
@@ -47,7 +48,7 @@ const ModalPlaylist = () => {
   const [allPlaylist, setAllPlaylist] = useState([]);
   const [status, setStatus] = useState(STATUS.NOT_START);
   const [idSelected, setIdSelected] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState();
 
   const modal_ref = useRef(null);
   const DURATION = 200;
@@ -71,10 +72,9 @@ const ModalPlaylist = () => {
 
   const getPlaylist = async () => {
     try {
-      setLoading(true);
       const data = await getAllPlaylist(info?.slug);
       setAllPlaylist(data);
-      setLoading(false);
+      setStatus(STATUS.INIT);
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
@@ -126,6 +126,7 @@ const ModalPlaylist = () => {
   const handleAddPlaylist = async (e) => {
     try {
       setStatus(STATUS.IN_PROGRESS);
+      setLoading(e?.id);
       const formData = {
         playlist_id: e?.id,
         game_detail_id: info?.id,
@@ -137,6 +138,7 @@ const ModalPlaylist = () => {
           const playlistItem = res?.find((e) => e?.game_detail_id === info?.id);
           const data = await deleteGamePlaylist(playlistItem?.id);
           if (data.success) {
+            setLoading();
             setStatus(STATUS.SUCCESS);
           }
         } catch (e) {
@@ -144,9 +146,10 @@ const ModalPlaylist = () => {
           notifyErrorMessage(toast, e);
         }
       } else {
-        const data = await addGameToPlaylist(formData);
+        const res = await addGameToPlaylist(formData);
 
-        if (data?.success) {
+        if (res.success) {
+          setLoading();
           setStatus(STATUS.SUCCESS);
         }
       }
@@ -229,12 +232,12 @@ const ModalPlaylist = () => {
             </div>
           </form>
 
-          {!loading ? (
+          {status !== STATUS.NOT_START ? (
             <>
               {allPlaylist?.length > 0 ? (
                 <div
                   className={`pb-1 overflow-y-scroll overflow-x-hidden modal-scroll w-full ${
-                    openInput ? "h-[270px]" : "h-[300px]"
+                    openInput ? "h-[240px]" : "h-[300px]"
                   }`}
                 >
                   {allPlaylist?.map((e, i) => (
@@ -247,28 +250,36 @@ const ModalPlaylist = () => {
                         <div className="flex-center p-3">
                           {e?.is_added ? (
                             <Tooltip label="Remove from playlist">
-                              <div onClick={() => handleAddPlaylist(e)}>
-                                <IconPlusNoRounded className="w-6 h-6 mr-3 cursor-pointer text-[#30fa30]" />
-                              </div>
+                              <button
+                                onClick={() => handleAddPlaylist(e)}
+                                disabled={loading === e?.id}
+                              >
+                                {loading === e?.id ? (
+                                  <div className="mr-3 flex-center">
+                                    <ButtonLoading isLoading />
+                                  </div>
+                                ) : (
+                                  <IconPlusNoRounded className="w-6 h-6 mr-3 cursor-pointer text-[#30fa30]" />
+                                )}
+                              </button>
                             </Tooltip>
                           ) : (
                             <Tooltip label="Add to playlist">
-                              <div onClick={() => handleAddPlaylist(e)}>
-                                <IconPlusNoRounded className="w-6 h-6 mr-3 cursor-pointer text-white" />
-                              </div>
+                              <button
+                                onClick={() => handleAddPlaylist(e)}
+                                disabled={loading === e?.id}
+                              >
+                                {loading === e?.id ? (
+                                  <div className="mr-3 flex-center">
+                                    <ButtonLoading isLoading />
+                                  </div>
+                                ) : (
+                                  <IconPlusNoRounded className="w-6 h-6 mr-3 cursor-pointer text-white" />
+                                )}
+                              </button>
                             </Tooltip>
                           )}
 
-                          {/* <Tooltip label="Add Playlist">
-                            <div onClick={() => handleAddPlaylist(e)}>
-                              <IconPlusNoRounded
-                                className={`w-6 h-6 mr-3 cursor-pointer ${
-                                  e?.is_added ? "text-[#30fa30]" : "text-white"
-                                }
-                          `}
-                              />
-                            </div>
-                          </Tooltip> */}
                           {idSelected === e?.id ? (
                             <Tooltip label="Cancel">
                               <div onClick={() => setIdSelected("")}>
