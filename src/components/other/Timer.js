@@ -4,7 +4,7 @@ import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 import { useAuthContext } from "@/context/auth-context";
 import { getTimeRemaining } from "@/utils/common";
 import { getUserAnonymous, getUserInfo } from "@/services/user.service";
-import { MODAL_NAME, SOCKET_EVENT, STATUS } from "@/utils/constant";
+import { MODAL_NAME, SOCKET_EVENT, STATUS, STATUS_PLAY_GAME } from "@/utils/constant";
 import { useSocketContext } from "@/context/socket-context";
 import { useModalContext } from "@/context/modal-context";
 
@@ -80,23 +80,38 @@ const Timer = () => {
    *  Countdown time play
    */
   useEffect(() => {
-    if (!isCountDown) return;
+    if (isCountDown?.status === STATUS_PLAY_GAME.NONE) return;
     if (Number(totalTimePlay) === 0) {
       openModal(MODAL_NAME.BUYTIME);
       return;
     }
-    timeIntervalId.current = setInterval(() => {
-      timeDes.current++;
-      const checkTimeRemaining = Number(totalTimePlay) - timeDes.current;
-      const checkTime = checkTimeRemaining > 0 ? checkTimeRemaining : 0;
-      const time = getTimeRemaining(checkTime);
-      if (checkTimeRemaining <= 0) {
-        openModal(MODAL_NAME.BUYTIME);
+    switch (isCountDown.status) {
+      case STATUS_PLAY_GAME.PLAY:
+        timeIntervalId.current = setInterval(() => {
+          timeDes.current++;
+          const checkTimeRemaining = Number(totalTimePlay) - timeDes.current;
+          const checkTime = checkTimeRemaining > 0 ? checkTimeRemaining : 0;
+          const time = getTimeRemaining(checkTime);
+          if (checkTimeRemaining <= 0) {
+            openModal(MODAL_NAME.BUYTIME);
+            clearInterval(timeIntervalId.current);
+          }
+          setRemainingTime(time);
+          setIncrementTime(timeDes.current);
+        }, 1000);
+        break;
+      case STATUS_PLAY_GAME.STOP:
         clearInterval(timeIntervalId.current);
-      }
-      setRemainingTime(time);
-      setIncrementTime(timeDes.current);
-    }, 1000);
+        if (!userData) break;
+        setUserData(prev => {
+          const timeDown = timeDes.current;
+          timeDes.current = 0;
+          return { ...prev, playtime: prev.playtime - timeDown };
+        });
+        break;
+      default:
+        break;
+    }
 
     return () => {
       clearInterval(timeIntervalId.current);
