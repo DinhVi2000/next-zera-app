@@ -73,7 +73,7 @@
   .grid-category-detail {
     --gridTemplateColumns: 15;
     grid-template-areas:
-      "ct ct ct ct .  .  .  c1 c1 c2 c2 c3 c3 c4 c4"
+      "ct ct ct ct .  .  c1 c1 c2 c2 c3 c3 c4 c4 ."
       "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 ."
       "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 ."
       "g8 g8 .  .  .  .  .  .  .  .  .  .  .  .  ."
@@ -87,9 +87,9 @@
   .game-detail-grid {
     --gridTemplateColumns: 15;
     grid-template-areas:
-      "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
-      "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
-      "ads1 gs gs gs gs gs gs gs bc bc . . . . . "
+      "ads1 gs gs gs gs gs gs gs bc bc bc . . . . "
+      "ads1 gs gs gs gs gs gs gs bc bc bc . . . . "
+      "ads1 gs gs gs gs gs gs gs bc bc bc . . . . "
       "ads1 gs gs gs gs gs gs gs ads2 ads2 . . . . . "
       "ads1 gs gs gs gs gs gs gs ads2 ads2 . . . . . "
       "ads1 ste ste ste ste raf raf ads3 ads2 ads2 . . . . . "
@@ -140,9 +140,9 @@
   .game-detail-grid {
     --gridTemplateColumns: 12;
     grid-template-areas:
-      "ads1 gs gs gs gs gs gs gs bc bc . ."
-      "ads1 gs gs gs gs gs gs gs bc bc . ."
-      "ads1 gs gs gs gs gs gs gs bc bc . ."
+      "ads1 gs gs gs gs gs gs gs bc bc bc ."
+      "ads1 gs gs gs gs gs gs gs bc bc bc ."
+      "ads1 gs gs gs gs gs gs gs bc bc bc ."
       "ads1 gs gs gs gs gs gs gs ads2 ads2 . ."
       "ads1 gs gs gs gs gs gs gs ads2 ads2 . ."
       "ads1 ste ste ste ste raf raf ads3 ads2 ads2 . ."
@@ -171,10 +171,10 @@
   .grid-category-detail {
     --gridTemplateColumns: 12;
     grid-template-areas:
-      "ct ct ct ct .  .  .  .  .  .  c1 c1 "
-      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 c2 c2 "
-      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 c3 c3 "
-      "g6 g6 g7 g7 g8 g8 .  .  .  .  c4 c4 "
+      "ct ct ct ct c1 c1 c2 c2 c3 c3 c4 c4 "
+      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 .  .  "
+      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 .  .  "
+      "g6 g6 g7 g7 g8 g8 .  .  .  .  .  .  "
       "g6 g6 g7 g7 g8 g8 .  .  .  .  .  .  "
       ".  .  .  .  .  .  .  .  .  .  .  .  "
       ".  .  .  .  .  .  .  .  .  .  .  .  ";
@@ -225,14 +225,14 @@
   .game-detail-grid {
     --gridTemplateColumns: 10;
     grid-template-areas:
-      "ads1 gs gs gs gs gs gs gs bc bc "
-      "ads1 gs gs gs gs gs gs gs bc bc "
-      "ads1 gs gs gs gs gs gs gs bc bc "
+      "ads1 gs gs gs gs gs gs gs raf raf "
+      "ads1 gs gs gs gs gs gs gs ads3 . "
+      "ads1 gs gs gs gs gs gs gs . . "
       "ads1 gs gs gs gs gs gs gs ads2 ads2 "
       "ads1 gs gs gs gs gs gs gs ads2 ads2 "
-      "ads1 ste ste ste ste raf raf ads3 ads2 ads2 "
-      "ads1 ads4 ads4 ads4 ads4 ads4 ads4 ads4 .  . "
-      ".  .  .  .  .  .  .   .   .   .   "
+      "ads1 ste ste ste ste bc bc bc ads2 ads2 "
+      ".  .  .  .  .  bc bc bc   .   .   "
+      "ads4 ads4 ads4 ads4 ads4 bc bc bc .  . "
       ".  .  gi gi gi gi hof hof hof hof "
       ".  .  gi gi gi gi hof hof hof hof "
       ".  .  gi gi gi gi hof hof hof hof "
@@ -262,11 +262,11 @@
   .grid-category-detail {
     --gridTemplateColumns: 10;
     grid-template-areas:
-      "ct ct ct ct . . . . c1 c1 "
+      "ct ct ct ct g3 g3 . . c1 c1"
       "g1 g1 g2 g2 g3 g3 g4 g4 c2 c2"
-      "g1 g1 g2 g2 g3 g3 g4 g4 c3 c3"
+      "g1 g1 g2 g2 g7 g7 g4 g4 c3 c3"
       "g5 g5 g6 g6 g7 g7 g8 g8 c4 c4"
-      "g5 g5 g6 g6 g7 g7 g8 g8 .  ."
+      "g5 g5 g6 g6 .  .  g8 g8 .  ."
       ".  .  .  .  .  .  .  .  .  .";
 
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
@@ -318,11 +318,11 @@
       "ads1 gs gs gs gs gs gs gs ."
       "ads1 gs gs gs gs gs gs gs ."
       "ads1 gs gs gs gs gs gs gs ."
-      "ads1 ste ste ste ste raf raf ads3 ."
-      "ads1 ads4 ads4 ads4 ads4 ads4 ads4 ads4 . "
-      "bc bc .  .  .  .  .  .  ."
-      "bc bc gi gi gi hof hof hof hof  "
-      "bc bc gi gi gi hof hof hof hof  "
+      "ads1 ste ste ste ste bc bc bc ."
+      "ads1 ads4 ads4 ads4 ads4 bc bc bc . "
+      "raf  raf ads3  .  .  bc bc bc  ."
+      ".  . gi gi gi hof hof hof hof  "
+      ".  . gi gi gi hof hof hof hof  "
       ".  .  gi gi gi hof hof hof hof  "
       ".  .  gi gi gi hof hof hof hof  "
       ".  .  gi gi gi hof hof hof hof  ";
@@ -402,9 +402,9 @@
       " gs gs gs gs gs gs gs "
       "ads1 ads2 ste ste ste raf ads3"
       "ads1 ads4 ads4 ads4 ads4 ads4 ads4 "
-      "bc bc .  .  .  .  . "
-      "bc bc .  .  .  .  . "
-      "bc bc .  .  .  .  . "
+      "bc bc bc  .  .  .  . "
+      "bc bc bc  .  .  .  . "
+      "bc bc bc  .  .  .  . "
       ".  gi gi gi hof hof hof "
       ".  gi gi gi hof hof hof "
       ".  gi gi gi hof hof hof "
@@ -487,9 +487,9 @@
       " gs gs gs gs gs gs gs "
       "ads1 ads2 ste ste ste raf ads3"
       "ads1 ads4 ads4 ads4 ads4 ads4 ads4 "
-      "bc bc .  .  .  .  . "
-      "bc bc .  .  .  .  . "
-      "bc bc .  .  .  .  . "
+      "bc bc bc  .  .  .  . "
+      "bc bc bc  .  .  .  . "
+      "bc bc bc  .  .  .  . "
       ".  gi gi gi hof hof hof "
       ".  gi gi gi hof hof hof "
       ".  gi gi gi hof hof hof "
@@ -567,9 +567,9 @@
       " gs gs gs gs gs gs "
       "ads1 ads2 ste ste ste raf "
       "ads1 ads4 ads4 ads4 ads4 ads4"
-      "bc bc .  .  .  ads3  "
-      "bc bc .  .  .  .  "
-      "bc bc .  .  .  .  "
+      "bc bc bc  .  .  ads3  "
+      "bc bc bc  .  .  .  "
+      "bc bc bc  .  .  .  "
       "gi gi gi hof hof hof "
       "gi gi gi hof hof hof "
       "gi gi gi hof hof hof "
@@ -652,9 +652,9 @@
       " gs gs gs gs gs  "
       "ads1 ste ste ste raf "
       "ads1 ads4 ads4 ads4 ads4"
-      "bc bc ads2 .  ads3  "
-      "bc bc .   .  .  "
-      "bc bc .   .  .  "
+      "bc bc bc ads2  ads3  "
+      "bc bc bc   .  .  "
+      "bc bc bc   .  .  "
       "gi gi hof hof hof "
       "gi gi hof hof hof "
       "gi gi hof hof hof "
@@ -727,9 +727,9 @@
       "gsb gsb gsb"
       "ste ste ste"
       "raf raf ads1"
-      "bc bc .  "
-      "bc bc .  "
-      "bc bc .  "
+      "bc bc bc  "
+      "bc bc bc  "
+      "bc bc bc  "
       "gi gi gi "
       "gi gi gi "
       "gi gi gi "

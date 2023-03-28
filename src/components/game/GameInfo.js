@@ -21,12 +21,11 @@ const GameInfo = ({ area, ...props }) => {
     title,
     game_detail_tags,
   } = info ?? {};
-  console.log("game_detail_tags :", game_detail_tags);
 
   return (
     <div
       style={{ gridArea: getArea(area) }}
-      className="bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] p-6 text-white overflow-auto"
+      className="bg-[#18181899] border-[2px] border-pink-600 rounded-[10px] p-6 text-white overflow-auto modal-scroll"
       {...props}
     >
       {!info ? (
