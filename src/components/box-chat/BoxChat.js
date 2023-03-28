@@ -180,7 +180,7 @@ function BoxChat({ area }) {
             <div className="flex">
               {
                 Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? usersInRoom.rows.slice(0, 3).map((user) => {
-                  return <ImageLoading key={user.id} alt="user" src={user?.avatar ?? '/avatar-1.svg'} className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full" />;
+                  return <ImageLoading key={user.id} alt="user" src={user?.avatar?.url ?? '/avatar-1.svg'} className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full" />;
                 }) : <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
               }
             </div>
