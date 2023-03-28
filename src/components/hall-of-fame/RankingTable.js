@@ -1,0 +1,94 @@
+import { usePagination } from "@/hooks/usePagination";
+import { IconSortDown } from "@/resources/icons";
+import { setHallOfFame } from "@/services/user.service";
+import { QUANTITY_BY_TAB } from "@/utils/constant";
+import React, { memo, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Pagination from "../pagination/Pagination";
+
+const ITEM_PER_PAGE = 10;
+
+const RankingTable = ({ className, tab: { value, label }, ...props }) => {
+  const dispatch = useDispatch();
+
+  const { hallOfFame } = useSelector(({ user }) => user) ?? {};
+
+  const [isReverse, setIsReverse] = useState(false);
+
+  const listSlice = useMemo(
+    () => hallOfFame[value]?.slice(3, hallOfFame[value]?.length),
+    [hallOfFame[value]]
+  );
+
+  const { currentItems, handlePageClick } = usePagination(
+    ITEM_PER_PAGE,
+    listSlice
+  );
+
+  const hanldeReverseItems = () => {
+    setIsReverse((prev) => !prev);
+
+    let itemsReverse = {};
+    itemsReverse[value] = hallOfFame[value].slice().reverse();
+    dispatch(setHallOfFame({ ...hallOfFame, ...itemsReverse }));
+  };
+
+  return (
+    <div className={`${className} w-full max-w-[1000px] mx-auto`} {...props}>
+      {/* head */}
+      <header>
+        <div className="w-full flex justify-between px-[66px] relative mb-5">
+          <span className="text-base text-pink-400 font-medium">Place</span>
+          <span className="text-base text-pink-400 font-medium absolute left-1/2 -translate-x-1/2">
+            Username
+          </span>
+
+          {/* reverse */}
+          <span
+            className="text-base text-pink-400 font-medium cursor-pointer"
+            onClick={hanldeReverseItems}
+          >
+            <span className="mr-1.5">{label}</span>
+            <IconSortDown
+              className={`w-3 h-2 inline-block ${isReverse && "rotate-180"}`}
+            />
+          </span>
+        </div>
+      </header>
+
+      {/* items */}
+      <section>
+        <div className="flex flex-col gap-[5px]">
+          {currentItems?.map((e, i) => (
+            <RankingItem
+              key={i}
+              place={e?.rank}
+              user={e?.user}
+              quantity={QUANTITY_BY_TAB[value](e)}
+            />
+          ))}
+        </div>
+        {/* pagination */}
+        <Pagination
+          items={hallOfFame[value]}
+          itemsPerPage={ITEM_PER_PAGE}
+          onPageChange={handlePageClick}
+        />
+      </section>
+    </div>
+  );
+};
+
+export default RankingTable;
+
+const RankingItem = memo(function Component({ place, user, quantity }) {
+  const { username } = user ?? {};
+
+  return (
+    <div className="bg-[#83184380] w-full relative flex justify-between rounded-[10px] py-[15px] px-20 ">
+      <span>{place}</span>
+      <span className="absolute left-1/2 -translate-x-1/2 ">{username}</span>
+      <span>{quantity}</span>
+    </div>
+  );
+});

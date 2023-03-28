@@ -4,13 +4,13 @@ import React, { Fragment, useEffect, useState } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
 
-import HallOfFame from "@/components/hall-of-fame/HallOfFame";
+import AchievementWrapper from "@/components/achievements/AchievementWrapper";
 import SEO from "@/components/other/SEO";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 
 import { useRouter } from "next/router";
 
-import { setHallOfFame } from "@/services/user.service";
+import { setAchievement, setHallOfFame } from "@/services/user.service";
 
 import { isEmpty, isValidPath } from "@/utils/helper";
 
@@ -31,7 +31,7 @@ const HallOfFamePage = () => {
       get(
         apiURL.get.hall_of_fame_by_username(query?.username),
         null,
-        setHallOfFame
+        setAchievement
       )
         .then((data) => setIsValidPage(!isEmpty(data)))
         .catch(() => setIsValidPage(false));
@@ -42,7 +42,7 @@ const HallOfFamePage = () => {
       <SEO title={`Hall of fame - ${query?.username}`} />
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
-          <HallOfFame></HallOfFame>
+          <AchievementWrapper></AchievementWrapper>
         </MainLayout>
       </HandleNotFoundPage>
     </Fragment>

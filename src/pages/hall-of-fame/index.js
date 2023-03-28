@@ -1,47 +1,50 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
-
-import MainLayout from "@/layouts/MainLayout";
-
-import { setHallOfFame } from "@/services/user.service";
-
-import HallOfFame from "@/components/hall-of-fame/HallOfFame";
-import { useAuthContext } from "@/context/auth-context";
 import SEO from "@/components/other/SEO";
-import { STATUS } from "@/utils/constant";
+import HallOfFameWrapper from "@/components/hall-of-fame/HallOfFameWrapper";
+import MainLayout from "@/layouts/MainLayout";
+import React, { Fragment, useEffect, useState } from "react";
 import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
+import { HALL_OF_FAME_TAB } from "@/utils/constant";
+import { useDispatch } from "react-redux";
+import { setHallOfFame } from "@/services/user.service";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
-import { Fragment } from "react";
 
-const MyHallOfFamePage = () => {
+const AchievementsPage = () => {
+  const dispatch = useDispatch();
+
   const { get } = useApi();
-  const { userInfo, verifyStatus } = useAuthContext();
 
   const [isValidPage, setIsValidPage] = useState();
 
   useEffect(() => {
-    if (verifyStatus === STATUS.SUCCESS)
-      get(
-        apiURL.get.hall_of_fame_by_username(userInfo?.username),
-        null,
-        setHallOfFame
+    Promise.all(
+      HALL_OF_FAME_TAB.map(({ value }, i) =>
+        get(apiURL.get.my_hall_of_fame, {
+          params: {
+            sort: value,
+            filter: "high_to_low",
+          },
+        }).then((data) => {
+          let item = {};
+          item[value] = data;
+          dispatch(setHallOfFame(item));
+        })
       )
-        .then(() => setIsValidPage(true))
-        .catch(() => setIsValidPage(false));
-  }, [verifyStatus]);
+    )
+      .then(() => setIsValidPage(true))
+      .catch(() => setIsValidPage(false));
+  }, []);
 
   return (
     <Fragment>
-      <SEO title={"My Hall Of Fame"} />
+      <SEO title={"Hall of fame"} />
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
-          <HallOfFame />
+          <HallOfFameWrapper />
         </MainLayout>
       </HandleNotFoundPage>
     </Fragment>
   );
 };
 
-export default MyHallOfFamePage;
+export default AchievementsPage;

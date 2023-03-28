@@ -7,7 +7,9 @@ export const apiURL = {
     article_by_slug: (slug) => `/article/detail/${slug}`,
     games_by_tag: (tagSlug) => `/game/tag/${tagSlug}`,
     hall_of_fame_by_username: (username) => `/hall-of-fames/${username}`,
+    my_hall_of_fame: "/hall-of-fames",
     popular_game: "/game/popular-game",
+    my_achievement: "/achievement",
   },
   post: {
     forgot_password: "/users/forgot-password",
