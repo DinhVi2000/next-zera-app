@@ -222,6 +222,19 @@ const postNewsletter = async (body) => {
   }
 };
 
+const contact = async () => {
+  try {
+    const { data } = await http.get("/contacts");
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    return data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
   getUserInfo,
   getHallOfFameByUsername,
@@ -238,5 +251,6 @@ export {
   getUserAnonymous,
   getShareToEarn,
   postNewsletter,
+  contact,
 };
 export default reducer;
