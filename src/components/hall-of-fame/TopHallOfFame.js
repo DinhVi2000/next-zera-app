@@ -42,39 +42,31 @@ const Item = ({ item }) => {
   if (zera_earned === 0) return;
 
   return (
-    <Link
-      href={
-        userInfo?.username === username
-          ? staticPaths.my_hall_of_fame
-          : dynamicPaths.hall_of_fame_by_username(username)
-      }
-    >
-      <div className="bg-blur-600 p-2.5 rounded-[10px] flex justify-between cursor-pointer h-[84px] max-h-[84px] overflow-hidden">
-        <div className="flex w-full">
-          <ImageLoading
-            src={avatar || DEFAULT_AVATAR_SRC}
-            alt=""
-            className="min-w-[62px] w-[62px] h-[62px] rounded-full object-cover"
-          />
-          {/* user info */}
-          <div className="px-2.5 w-full flex-1">
-            <h2 className="text-base font-bold overflow-hidden text-ellipsis w-full overflow-wrap-anywhere whitespace-normal ">
-              {username}
-            </h2>
-            <p
-              className="text-xs font-medium overflow-wrap-anywhere whitespace-normal overflow-hidden text-ellipsis
+    <div className="bg-blur-600 p-2.5 rounded-[10px] flex justify-between cursor-pointer h-[84px] max-h-[84px] overflow-hidden">
+      <div className="flex w-full">
+        <ImageLoading
+          src={avatar || DEFAULT_AVATAR_SRC}
+          alt=""
+          className="min-w-[62px] w-[62px] h-[62px] rounded-full object-cover"
+        />
+        {/* user info */}
+        <div className="px-2.5 w-full flex-1">
+          <h2 className="text-base font-bold overflow-hidden text-ellipsis w-full overflow-wrap-anywhere whitespace-normal ">
+            {username}
+          </h2>
+          <p
+            className="text-xs font-medium overflow-wrap-anywhere whitespace-normal overflow-hidden text-ellipsis
                          max-w-[210px] max-[1210px]:max-w-[100px]"
-            >
-              {quote}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-1 pl-1.5 border-transparent border-l-white  border-[1px] min-w-20 w-20 max-w-20 justify-end">
-          <span className="text-sm font-bold">{zera_earned}</span>
-          <IconCoin className="w-[18px]" />
+          >
+            {quote}
+          </p>
         </div>
       </div>
-    </Link>
+
+      <div className="flex items-center gap-1 pl-1.5 border-transparent border-l-white  border-[1px] min-w-20 w-20 max-w-20 justify-end">
+        <span className="text-sm font-bold">{zera_earned}</span>
+        <IconCoin className="w-[18px]" />
+      </div>
+    </div>
   );
 };
