@@ -7,7 +7,7 @@ import Ads from "@/components/other/Ads";
 import BoxChat from "@/components/box-chat/BoxChat";
 import GameScreenBar from "@/components/game/GameScreenBar";
 import GameInfo from "@/components/game/GameInfo";
-import TopHallOfFame from "@/components/other/TopHallOfFame";
+import TopHallOfFame from "@/components/hall-of-fame/TopHallOfFame";
 import ShareToEarn from "@/components/other/ShareToEarn";
 import ReferAFriend from "@/components/other/ReferAFriend";
 import GameScreen from "@/components/game/GameScreen";

@@ -25,11 +25,9 @@ const Register = () => {
           className="bg-[#000000b3] rounded-[30px] px-[60px] pt-5 pb-12 my-10 relative overflow-hidden
                        max-[600px]:px-6 max-[600px]:w-[400px] max-[480px]:w-[350px]"
         >
-          <div>
-            <Link href={"/"}>
-              <Image src={logo} alt="logo" className="mx-auto"></Image>
-            </Link>
-          </div>
+          <Link href={staticPaths.home}>
+            <Image src={logo} alt="logo" className="mx-auto"></Image>
+          </Link>
           <RegisterForm />
 
           <p className="text-center my-[10px] text-white">or sign in with</p>

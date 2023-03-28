@@ -8,6 +8,7 @@ export const staticPaths = {
   policy: "/policy",
   all_article_category: "/article/categories",
   all_article_tags: "/article/tags",
+  achievements: "/achievements",
   my_hall_of_fame: "/hall-of-fame",
 };
 

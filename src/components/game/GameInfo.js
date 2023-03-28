@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { dynamicPaths } from "@/utils/$path";
-import {
-  formatDate,
-  gameDetailUrl,
-  getArea,
-} from "@/utils/helper";
+import { formatDate, gameDetailUrl, getArea } from "@/utils/helper";
 import Link from "next/link";
 import React, { memo } from "react";
+import ScrollContainer from "react-indiana-drag-scroll";
 import { useSelector } from "react-redux";
 
 const GameInfo = ({ area, ...props }) => {
@@ -22,7 +19,9 @@ const GameInfo = ({ area, ...props }) => {
     slug,
     trailer_url,
     title,
+    game_detail_tags,
   } = info ?? {};
+  console.log("game_detail_tags :", game_detail_tags);
 
   return (
     <div
@@ -53,12 +52,30 @@ const GameInfo = ({ area, ...props }) => {
             /<Link href={gameDetailUrl(superslug?.value, slug)}> {title}</Link>
           </div>
 
-          <h2 className="text-[28px] font-semibold leading-[25px]">{title}</h2>
+          <h2 className="text-[28px] font-semibold leading-[30px]">{title}</h2>
           {created_at && (
-            <p className="text-pink-300 mb-3 text-sm">
-              {formatDate(created_at)}
+            <p className="text-white text-[10px] mb-3 italic">
+              Posted date: {formatDate(created_at)}
             </p>
           )}
+
+          <ScrollContainer>
+            <div className="flex whitespace-nowrap gap-2 w-full mb-2">
+              {game_detail_tags?.map((e, i) => (
+                <Link
+                  href={dynamicPaths.game_by_tag(
+                    e?.game_tag?.superslug?.value,
+                    e?.game_tag?.slug
+                  )}
+                  key={i}
+                >
+                  <div className="bg-white flex items-center text-black text-sm rounded-[20px] px-4 h-6">
+                    {e?.game_tag?.label}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </ScrollContainer>
 
           {developer && (
             <div className="mb-[30px]">
@@ -70,7 +87,7 @@ const GameInfo = ({ area, ...props }) => {
             </div>
           )}
 
-          <p className="text-base font-bold mb-[26px]">
+          <p className="text-base font-bold">
             {love_count || 0} {love_count > 1 ? "players" : "player"} loved this
             game
           </p>

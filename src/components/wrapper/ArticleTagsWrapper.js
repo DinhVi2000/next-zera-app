@@ -1,7 +1,11 @@
 import Breadcrumb from "../ui/Breadcrumb";
 
-const { dynamicPaths, staticPaths } = require("@/utils/$path");
-const { default: Link } = require("next/link");
+import { dynamicPaths, staticPaths } from "@/utils/$path";
+
+import Link from "next/link";
+
+import { getRandom } from "@/utils/helper";
+import TagLoading from "../loading/TagLoading";
 
 const ArticleTagsWrapper = ({ tags }) => {
   const breadcrumbsData = [
@@ -33,6 +37,8 @@ const ArticleTagsWrapper = ({ tags }) => {
                 </div>
               </Link>
             ))}
+
+          <TagLoading list={tags} />
         </div>
       </div>
     </div>

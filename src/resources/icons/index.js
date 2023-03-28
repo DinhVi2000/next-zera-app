@@ -57,6 +57,11 @@ export { default as IconBackXs } from "./back-xs.svg";
 export { default as IconCheck } from "./check.svg";
 export { default as IconTags } from "./tags.svg";
 export { default as IconCategories } from "./categories.svg";
+export { default as IconRank } from "./rank.svg";
+export { default as IconGoldMedal } from "./gold-medal.svg";
+export { default as IconSilverMedal } from "./silver-medal.svg";
+export { default as IconBronzeMedal } from "./bronze-medal.svg";
+export { default as IconSortDown } from "./sort-down.svg";
 
 export {
   IconArrUp,

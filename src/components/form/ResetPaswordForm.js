@@ -10,12 +10,18 @@ import ButtonLoading from "../loading/ButtonLoading";
 import { resetPasswordFormSchema } from "@/validators/reset-password.validator";
 import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
-import PasswordRules from "../other/PasswordRules";
 import { STATUS } from "@/utils/constant";
 import { notifySuccessMessage } from "@/utils/helper";
 import { useToast } from "@chakra-ui/react";
 import Link from "next/link";
 import { staticPaths } from "@/utils/$path";
+import {
+  hasLeastOneLowercase,
+  hasLeastOneNumber,
+  hasLeastOneUppercase,
+  inRange6to15,
+} from "@/utils/regex";
+import Rules from "../other/Rules";
 
 const ResetPasswordForm = () => {
   const {
@@ -39,6 +45,21 @@ const ResetPasswordForm = () => {
   const { token } = query ?? {};
 
   const message = "Your password has been changed successfully";
+
+  const rules = [
+    {
+      label: "o Upper and lowercase letters",
+      regex: [hasLeastOneLowercase, hasLeastOneUppercase],
+    },
+    {
+      label: "o At least 1 number",
+      regex: [hasLeastOneNumber],
+    },
+    {
+      label: "o Min 6 – max 15 characters",
+      regex: [inRange6to15],
+    },
+  ];
 
   const onSubmit = async (data) => {
     if (!isValid) return;
@@ -75,7 +96,7 @@ const ResetPasswordForm = () => {
         />
       </div>
 
-      <PasswordRules password={passwordWatch} />
+      <Rules field={passwordWatch} rules={rules} />
 
       {/* confirm password field */}
       <div className="mb-5">

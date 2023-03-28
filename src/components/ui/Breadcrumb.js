@@ -13,7 +13,7 @@ const Breadcrumb = ({ list, ...props }) => {
     <div className="" {...props}>
       {list?.map(({ label, url, disable }, i) => (
         <span
-          className="cursor-default"
+          className="cursor-pointer"
           key={i}
           onClick={() => handlePushToUrlRoute(url, disable)}
         >

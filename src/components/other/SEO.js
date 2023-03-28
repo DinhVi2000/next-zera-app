@@ -4,7 +4,7 @@ import React from "react";
 const SEO = ({ title, description }) => {
   return (
     <Head>
-      <title>{title}</title>
+      <title>{title || "Online Games on Zera"}</title>
       <meta name="description" content={description} />
       <meta
         name="viewport"
