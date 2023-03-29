@@ -32,7 +32,7 @@ const ArticlesTag = () => {
         .then((data) => {
           const { allArticleByTags, articleTag } = data ?? {};
 
-          setArticles(allArticleByTags.map((e) => e?.article));
+          setArticles(allArticleByTags);
           setArticleTags(allArticleByTags.map((e) => e?.article_tags));
           setArticleInfo(articleTag);
           setIsValidPage(true);

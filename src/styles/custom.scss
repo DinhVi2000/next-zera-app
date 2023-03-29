@@ -533,6 +533,18 @@
   display: -webkit-box;
 }
 
+.absolute-imp{
+  position: absolute !important;
+}
+
+.fixed-imp{
+  position: fixed !important;
+}
+
+.z-60{
+  z-index: 60;
+}
+
 .bg-reset {
   background-image: url(../../public/images/reset-login.png);
   background-repeat: no-repeat;

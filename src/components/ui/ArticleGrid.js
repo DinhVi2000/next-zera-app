@@ -13,6 +13,7 @@ import SidebarMB from "../responsive/SidebarMB";
 import PaginatedItems from "../pagination/Pagination";
 import { usePagination } from "@/hooks/usePagination";
 import { dynamicPaths } from "@/utils/$path";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 const ITEMS_PER_PAGE = 4;
 
@@ -88,15 +89,17 @@ const ArticleItem = ({ item, tags, ...props }) => {
             <h2 className="text-base font-bold">{title}</h2>
 
             {/* tags */}
-            <div className="flex gap-2 my-1">
-              {tags?.map((e, i) => (
-                <Link key={i} href={dynamicPaths.article_by_tag(e?.slug)}>
-                  <div className="bg-white text-black text-xs py-1 px-2 rounded-xl">
-                    {e?.label}
-                  </div>
-                </Link>
-              ))}
-            </div>
+            <ScrollContainer>
+              <div className="flex gap-2 my-1 whitespace-nowrap">
+                {tags?.map((e, i) => (
+                  <Link key={i} href={dynamicPaths.article_by_tag(e?.slug)}>
+                    <div className="bg-white text-black text-xs py-1 px-2 rounded-xl">
+                      {e?.label}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </ScrollContainer>
 
             {/* description */}
             <span className="text-xs font-medium ">

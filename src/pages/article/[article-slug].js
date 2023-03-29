@@ -16,7 +16,7 @@ const ArticleDetail = () => {
   const router = useRouter();
   const { get } = useApi();
 
-  const { query, asPath } = router;
+  const { query } = router;
 
   const [article, setArticle] = useState();
 
