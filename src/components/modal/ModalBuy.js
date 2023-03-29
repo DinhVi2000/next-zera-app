@@ -93,8 +93,8 @@ const ModalBuy = () => {
         className={`duration-${DURATION} transition-all opacity-5 scale-90 h-fit min-w-[540px] w-fit border-[5px] border-[#F472B6] rounded-[30px] flex flex-col bg-gradient-to-b from-[#570426] to-[#270010] px-[30px] pb-[20px] max-[576px]:min-w-[90%] max-[576px]:w-[90%] max-[576px]:h-[60vh] overflow-y-scroll modal-scroll`}
       >
         <div className="flex items-center justify-center mb-[30px]">
-          <div className="bg-pink-800 rounded-[10px] mx-auto py-[5px] text-[28px] text-center font-bold w-[109px] border-[2px] border-[#EC4899]">
-            BUY
+          <div className="bg-pink-800 rounded-[10px] mx-auto py-[5px] px-3 text-[28px] text-center font-bold w-fit border-[2px] border-[#EC4899]">
+            {payload?.tab}
           </div>
           <button onClick={handleCloseModal}>
             <IconClose className="text-[#F472B6] w-5 h-5" />

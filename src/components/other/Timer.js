@@ -4,9 +4,15 @@ import React, { Fragment, memo, useEffect, useRef, useState } from "react";
 import { useAuthContext } from "@/context/auth-context";
 import { getTimeRemaining } from "@/utils/common";
 import { getUserAnonymous, getUserInfo } from "@/services/user.service";
-import { MODAL_NAME, SOCKET_EVENT, STATUS, STATUS_PLAY_GAME } from "@/utils/constant";
+import {
+  MODAL_NAME,
+  SOCKET_EVENT,
+  STATUS,
+  STATUS_PLAY_GAME,
+} from "@/utils/constant";
 import { useSocketContext } from "@/context/socket-context";
 import { useModalContext } from "@/context/modal-context";
+import Link from "next/link";
 
 const Timer = () => {
   const timeIntervalId = useRef(null);
@@ -103,7 +109,7 @@ const Timer = () => {
       case STATUS_PLAY_GAME.STOP:
         clearInterval(timeIntervalId.current);
         if (!userData) break;
-        setUserData(prev => {
+        setUserData((prev) => {
           const timeDown = timeDes.current;
           timeDes.current = 0;
           return { ...prev, playtime: prev.playtime - timeDown };
@@ -116,7 +122,7 @@ const Timer = () => {
     return () => {
       clearInterval(timeIntervalId.current);
       if (!userData) return;
-      setUserData(prev => {
+      setUserData((prev) => {
         const timeDown = timeDes.current;
         timeDes.current = 0;
         return { ...prev, playtime: prev.playtime - timeDown };
@@ -126,14 +132,21 @@ const Timer = () => {
 
   return (
     <Fragment>
-      <div className="tbl-hidden mb-hidden font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base">
+      <div className="tbl-hidden mb-hidden font-numberic bg-pink-700 px-8 py-1.5 rounded-[10px] text-center count-down text-base relative group cursor-pointer hover:bg-[#53011c]">
         {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
+        <Link href={"/shop#playtimes"}>
+          <div className="absolute-center text-sm font-semibold w-[90%] h-[70%] hidden group-hover:flex items-center justify-center bg-gradient-to-t from-[#3D0CA5] to-[#DE22CB] rounded-[20px]">
+            Purchase more time
+          </div>
+        </Link>
       </div>
 
       {/* mobile */}
-      <div className="tbl-flex mb-flex font-numberic bg-pink-700 rounded-[5px] text-center count-down text-[8px] h-5 flex-center">
-        {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
-      </div>
+      <Link href={"/shop#playtimes"}>
+        <div className="tbl-flex mb-flex font-numberic bg-pink-700 rounded-[5px] text-center count-down text-[8px] h-5 flex-center">
+          {remainingTime.hours}:{remainingTime.minutes}:{remainingTime.seconds}
+        </div>
+      </Link>
     </Fragment>
   );
 };

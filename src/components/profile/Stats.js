@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/auth-context";
 import { Tooltip, useToast } from "@chakra-ui/react";
-import { IconCopy } from "@/resources/icons";
-import { statsUser } from '@/services/user.service';
-import { getBetweenTwoDate, notifyErrorMessage } from '@/utils/helper';
+import { IconCopy, IconPlus } from "@/resources/icons";
+import { statsUser } from "@/services/user.service";
+import { getBetweenTwoDate, notifyErrorMessage } from "@/utils/helper";
+import Link from "next/link";
 
 function Stats() {
   const { userInfo } = useAuthContext();
@@ -34,9 +35,14 @@ function Stats() {
         Stats
       </h4>
       <div className="pl-[28px] text-[28px] max-[1176px]:text-[20px] max-[400px]:text-[16px]">
-        <p className="mt-[34px] max-[1176px]:mt-[15px] flex items-center cursor-pointer">
-          { Math.floor(userInfo?.playtime / 60) } minutes left
-        </p>
+        <Tooltip label="Purchase more playtime">
+          <Link href={"/shop#playtimes"}>
+            <div className="mt-[34px] max-[1176px]:mt-[15px] flex items-center cursor-pointer">
+              {Math.floor(userInfo?.playtime / 60)} minutes left
+              <IconPlus className="w-9 h-9 ml-4" />
+            </div>
+          </Link>
+        </Tooltip>
         <p className="mt-[34px] max-[1176px]:mt-[15px]">
           Playstreak: {userInfo?.playstreak} days
         </p>

@@ -29,6 +29,7 @@ import Empty from "@/components/empty/Empty";
 
 const Shop = () => {
   const router = useRouter();
+
   const { status, setStatus } = useModalContext();
   const { setSocketStatus } = useSocketContext();
   const toast = useToast();
@@ -64,6 +65,7 @@ const Shop = () => {
 
   const getTabShop = async () => {
     const { data } = await getCategoriesShop();
+    console.log("data :", data);
     setCategories(data);
   };
 
@@ -76,11 +78,20 @@ const Shop = () => {
     // TODO: Only let the effect call fn once when mound, the rest only setState when status === success, limit rerender call api many times
     //  vd: (status === STATUS.SUCCESS || status === STATUS.INIT) && getItem(idCategory);
     getItem(idCategory);
-  }, [status, idCategory]);
+  }, [status, idCategory, tab]);
 
   useEffect(() => {
     if (categories) {
       setIdCategory(categories[0]?.id);
+    }
+    if (router.asPath?.includes("cover")) {
+      const cover = categories?.find((e) => e?.name === SHOP_TAB.COVER_PAGE);
+      setTab(SHOP_TAB.COVER_PAGE);
+      setIdCategory(cover?.id);
+    } else if (router.asPath?.includes('playtimes')) {
+      const playtimes = categories?.find((e) => e?.name === SHOP_TAB.PLAYTIMES);
+      setTab(SHOP_TAB.PLAYTIMES);
+      setIdCategory(playtimes?.id);
     }
   }, [categories]);
 
@@ -99,6 +110,14 @@ const Shop = () => {
     setSortShop("all");
   }, [tab]);
 
+  const handleTabCategories = (category) => {
+    setTab(category?.name);
+    setIdCategory(category?.id);
+    if (router.asPath?.includes("#")) {
+      router.replace("/shop");
+    }
+  };
+
   return (
     <>
       <SEO title={"Shop"} />
@@ -107,7 +126,7 @@ const Shop = () => {
         <div className="min-[1352px]:min-w-[1100px] max-[990.9px]:max-w-[900px] max-[990.9px]:w-full">
           <div className="text-white min-[990.9px]:bg-blur-800 min-[990.9px]:border-[5px] min-[990.9px]:border-violet-400 max-[1320px]:px-[30px] max-[990.9px]:p-0 p-[62px] pt-2.5 rounded-[20px] relative">
             <button
-              className="absolute z-50 left-5 top-[10px] flex items-center justify-self-start max-[990.9px]:top-[160px] max-[550px]:top-[230px]"
+              className="absolute z-50 left-5 top-[10px] flex items-center justify-self-start max-[990.9px]:top-[160px] max-[550px]:top-[230px] max-[380px]:top-[204px]"
               onClick={() => router.back()}
             >
               <IconArrowLeft className="text-[#F472B6] w-3 h-3" />
@@ -133,10 +152,7 @@ const Shop = () => {
                 ?.map((category, i) => (
                   <div
                     key={i}
-                    onClick={() => {
-                      setTab(category?.name);
-                      setIdCategory(category?.id);
-                    }}
+                    onClick={() => handleTabCategories(category)}
                     className={`${
                       category?.name === tab
                         ? "bg-pink-800 text-white border border-pink-500"
@@ -147,13 +163,19 @@ const Shop = () => {
                   </div>
                 ))}
 
-              <div className="absolute z-50 right-0 top-[-13px] max-[990.9px]:top-[70px] max-[990.9px]:right-[30px] max-[550px]:top-[130px]">
+              <div
+                className={`absolute z-50 right-0 top-[-13px] max-[990.9px]:top-[70px] max-[990.9px]:right-[30px] ${
+                  tab === SHOP_TAB.PLAYTIMES
+                    ? "max-[550px]:top-[67px]"
+                    : "max-[550px]:top-[130px]"
+                }`}
+              >
                 <Zera />
               </div>
             </div>
 
             {/* content */}
-            <div className="pt-[18px] px-[54px] pb-[26px] border-[5px] border-pink-500 bg-[#5b21b666] max-[550px]:bg-[#1c0147c4] rounded-[30px] max-[400px]:rounded-[20px] min-h-[400px] max-[1140px]:px-5 max-[990.9px]:pt-[30px]">
+            <div className="pt-[18px] px-[54px] pb-[26px] border-[5px] border-pink-500 bg-[#5b21b666] max-[550px]:bg-[#1c0147c4] rounded-[30px] max-[400px]:rounded-[20px] min-h-[400px] max-[1140px]:px-5 max-[990.9px]:pt-[30px] max-[380px]:pt-[40px]">
               {/* checkbox */}
               {tab !== SHOP_TAB.PLAYTIMES && (
                 <div className="flex gap-4 justify-end max-[990.9px]:justify-start max-[550px]:justify-end mb-[26px] max-[550px]:mb-[100px]">
@@ -202,7 +224,7 @@ const Shop = () => {
                                 className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
                                 key={i}
                               >
-                                <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                                <div className="skeleton-shine w-[204px] h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
                                 <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
                                 <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
                               </div>
@@ -234,7 +256,7 @@ const Shop = () => {
                                 className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between w-full max-[700px]:w-full"
                                 key={i}
                               >
-                                <div className="skeleton-shine w-[314px] h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
+                                <div className="skeleton-shine w-[446px] h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
                                 <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
                                 <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
                               </div>
@@ -245,8 +267,8 @@ const Shop = () => {
                   ) : tab === SHOP_TAB.PLAYTIMES ? (
                     <>
                       {isLoading ? (
-                        <>
-                          <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
+                        <div className="flex-center h-full">
+                          <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full max-[990.9px]:mt-[50px]">
                             {currentItems?.map((e, i) => (
                               <PlayTimeItem tab={tab} item={e} key={i} />
                             ))}
@@ -256,28 +278,30 @@ const Shop = () => {
                             itemsPerPage={8}
                             items={checkItems}
                           />
-                        </>
+                        </div>
                       ) : (
-                        <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full">
-                          {Array(6)
-                            .fill(0)
-                            .map((e, i) => (
-                              <div
-                                className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
-                                key={i}
-                              >
-                                <div className="skeleton-shine w-full h-[204px] rounded-[20px] max-[990.9px]:w-full mx-auto"></div>
-                                <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
-                                <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
-                              </div>
-                            ))}
+                        <div className="flex-center h-full">
+                          <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full max-[990.9px]:mt-[50px]">
+                            {Array(6)
+                              .fill(0)
+                              .map((e, i) => (
+                                <div
+                                  className="bg-pink-900 border border-pink-400 rounded-[30px] p-2.5 h-[286px] flex flex-col justify-between"
+                                  key={i}
+                                >
+                                  <div className="skeleton-shine w-[204px] h-[204px] rounded-[20px] mx-auto"></div>
+                                  <div className="skeleton-shine w-[80%] h-[24px] rounded-[7px] max-[990.9px]:w-[60%]"></div>
+                                  <div className="skeleton-shine w-[50%] h-[24px] rounded-[7px] max-[990.9px]:w-[40%]"></div>
+                                </div>
+                              ))}
+                          </div>
                         </div>
                       )}
                     </>
                   ) : null}
                 </>
               ) : (
-                <Empty />
+                <Empty className="w-full" />
               )}
             </div>
           </div>

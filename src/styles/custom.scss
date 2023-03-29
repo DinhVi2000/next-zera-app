@@ -1,7 +1,7 @@
 .shadow-xxl {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.shadow-title{
+.shadow-title {
   box-shadow: inset -3px -4px 0px rgba(0, 0, 0, 0.25);
 }
 
@@ -213,6 +213,7 @@
     }
     @media (max-width: 576px) {
       margin-top: 0;
+      height: 45px;
     }
   }
   &__item {
@@ -235,6 +236,9 @@
         inset 8.34375px 2.08594px 8.34375px rgba(255, 255, 255, 0.25);
       @media (max-width: 454px) {
         font-size: 26px;
+      }
+      @media (max-width: 576px) {
+        height: 40px;
       }
     }
     &-zera {
@@ -261,6 +265,10 @@
       }
       border-radius: inherit;
       border-radius: 20.8594px;
+      @media (max-width: 576px) {
+        height: fit-content;
+        padding: 10px 0;
+      }
     }
   }
   button {
@@ -282,7 +290,7 @@
     transform: translate(-50%, 0);
     @media (max-width: 576px) {
       position: static;
-      margin: 20px auto 0;
+      margin: 10px auto 0;
       transform: translate(0, 0);
     }
   }

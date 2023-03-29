@@ -22,6 +22,10 @@ function Playlist({ setIsOpenTab, infoList }) {
   const [status, setStatus] = useState(STATUS.NOT_START);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
+
+  useEffect(() => {
     if (currentInfo) {
       setIsDetail((value) => !value);
     }
@@ -97,7 +101,7 @@ function Playlist({ setIsOpenTab, infoList }) {
 
           {/* BODY */}
           <div>
-            <div className="pt-[45px] px-[45px] pb-[20px]">
+            <div className="pt-[45px] px-[45px] pb-[20px] max-[500px]:p-5">
               <div>
                 {playlist?.length > 0 ? (
                   <>
@@ -113,28 +117,31 @@ function Playlist({ setIsOpenTab, infoList }) {
                             <IconArrowRight className="ml-[5px] mb-[2px]" />
                           </p>
                         </div>
-                        {e?.data?.length > 0 ? (
-                          <div className="p-3 px-1 grid grid-cols-3 min-[600px]:grid-cols-10 gap-4 overflow-auto max-h-[500px]">
-                            {e?.data?.map((e, i) => (
-                              <div key={i}>
-                                <GameItem
-                                  className={`relative rounded-2xl cursor-pointer select-none group w-[94px] h-[94px]
+
+                        <div className="max-[1300px]:w-[830px] max-[1180px]:w-[700px] max-[1026px]:w-[650px] max-[990px]:w-full modal-scroll overflow-x-auto">
+                          {e?.data?.length > 0 ? (
+                            <div className="p-3 px-1 grid grid-cols-10 gap-x-4 max-[1300px]:gap-x-8 max-h-[500px] w-fit max-[1300px]:w-[990px]">
+                              {e?.data?.slice(0, 10)?.map((e, i) => (
+                                <div key={i}>
+                                  <GameItem
+                                    className={`relative rounded-2xl cursor-pointer select-none group w-[94px] h-[94px]
                         hover:translate-y-[-2px] hover:scale-105 transition-all hover:shadow-xl`}
-                                  id={e?.id}
-                                  index={i}
-                                  thumbnail={e?.thumbnail}
-                                  title={e?.title}
-                                  slug={e?.slug}
-                                  superslug={e?.superslug}
-                                ></GameItem>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="h-[130px]">
-                            <Empty />
-                          </div>
-                        )}
+                                    id={e?.id}
+                                    index={i}
+                                    thumbnail={e?.thumbnail}
+                                    title={e?.title}
+                                    slug={e?.slug}
+                                    superslug={e?.superslug}
+                                  ></GameItem>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="h-[130px]">
+                              <Empty />
+                            </div>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </>
