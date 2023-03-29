@@ -267,7 +267,7 @@ const Shop = () => {
                   ) : tab === SHOP_TAB.PLAYTIMES ? (
                     <>
                       {isLoading ? (
-                        <div className="flex-center h-full">
+                        <div className="h-full">
                           <div className="grid grid-cols-4 justify-center gap-4 max-[1220px]:grid-cols-3 max-[750px]:grid-cols-2 max-[550px]:grid-cols-1 max-[750px]:w-[92%] mx-auto max-[784px]:w-full max-[990.9px]:mt-[50px]">
                             {currentItems?.map((e, i) => (
                               <PlayTimeItem tab={tab} item={e} key={i} />
