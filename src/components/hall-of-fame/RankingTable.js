@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 
 import { QUANTITY_BY_TAB } from "@/utils/constant";
 
@@ -12,7 +12,7 @@ import { IconSortDown } from "@/resources/icons";
 
 import { setHallOfFame } from "@/services/user.service";
 
-import { abbreviateNumber } from "@/utils/helper";
+import { abbreviateNumber, sleep } from "@/utils/helper";
 import { Tooltip } from "@chakra-ui/react";
 import Link from "next/link";
 import { dynamicPaths } from "@/utils/$path";

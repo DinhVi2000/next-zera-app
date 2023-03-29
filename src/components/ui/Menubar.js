@@ -22,9 +22,10 @@ import { getGamesByKeySearch } from "@/services/game.service";
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { useDebounce } from "@/hooks/useDebounced";
-import { useSelector } from "react-redux";
-import { useToast } from "@chakra-ui/react";
 import { useApi } from "@/hooks/useApi";
+
+import { useToast } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 import { apiURL } from "@/utils/$apiUrl";
 
@@ -93,7 +94,7 @@ const Menubar = () => {
   return (
     <Fragment>
       <section
-        className={`h-full max-w-[684px] w-full px-5 py-8 bg-[#c4b5fd80] fixed z-50 
+        className={`h-full max-w-[684px] w-full px-5 py-8 bg-[#c4b5fd80] fixed z-60 
                     transition-all opacity-100 translate-x-[-120%] duration-${DURATION}`}
         ref={menubar_ref}
       >

@@ -76,183 +76,191 @@ const ALL_MENU_NODE = [
   },
 ];
 
-const SideBar = () => {
-  const { get } = useApi();
+const SideBar = forwardRef(
+  ({ className = "tbl-hidden mb-hidden", shopClassName, ...props }, ref) => {
+    const { get } = useApi();
 
-  const { gameIndex } = useSelector(({ game }) => game) ?? {};
+    const { gameIndex } = useSelector(({ game }) => game) ?? {};
 
-  const content_ref = useRef();
+    const content_ref = useRef();
 
-  const { openModal } = useModalContext();
-  const { userInfo, verifyStatus } = useAuthContext();
+    const { openModal } = useModalContext();
+    const { userInfo, verifyStatus } = useAuthContext();
 
-  const { zera } = userInfo ?? {};
+    const { zera } = userInfo ?? {};
 
-  const isMatchPC = useMediaQuery("(min-width: 990px)");
+    const isMatchPC = useMediaQuery("(min-width: 990px)");
 
-  const handleToggleContent = () => {
-    content_ref.current.classList.toggle("h-[242px]");
-  };
+    const handleToggleContent = () => {
+      content_ref.current.classList.toggle("h-[242px]");
+    };
 
-  useEffect(() => {
-    get(apiURL.get.all_game_categories, null, setCategoriesAtGameIndex);
-  }, []);
+    useEffect(() => {
+      get(apiURL.get.all_game_categories, null, setCategoriesAtGameIndex);
+    }, []);
 
-  const userInfoStatus = useMemo(
-    () =>
-      !localStorage.getItem("accessToken")
-        ? USER_STATUS.NOT_LOGGED
-        : [STATUS.NOT_START, STATUS.IN_PROGRESS].includes(verifyStatus)
-        ? USER_STATUS.VERIFYING
-        : STATUS.SUCCESS
-        ? USER_STATUS.VERIFY_SUCCESS
-        : USER_STATUS.VERIFY_FAIL,
-    [verifyStatus]
-  );
+    const userInfoStatus = useMemo(
+      () =>
+        !localStorage.getItem("accessToken")
+          ? USER_STATUS.NOT_LOGGED
+          : [STATUS.NOT_START, STATUS.IN_PROGRESS].includes(verifyStatus)
+          ? USER_STATUS.VERIFYING
+          : STATUS.SUCCESS
+          ? USER_STATUS.VERIFY_SUCCESS
+          : USER_STATUS.VERIFY_FAIL,
+      [verifyStatus]
+    );
 
-  return (
-    <div
-      className={`sticky top-[16px] z-10 min-w-[204px] max-w-[204px] h-fit tbl-hidden mb-hidden`}
-    >
-      <div className="bg-blur-500 rounded-2xl px-4 pt-2.5 pb-[14px] h-fit">
-        {/* head */}
-        <div className="px-3 pb-[2px]">
-          <Link href={staticPaths.home}>
-            <Image
-              src={logo}
-              alt=""
-              width={134}
-              height={72}
-              className="mx-auto"
-            />
-          </Link>
+    return (
+      <div
+        className={`sticky top-[16px] z-10 min-w-[204px] max-w-[204px] h-fit ${className}`}
+        {...props}
+        ref={ref}
+      >
+        <div className="bg-blur-500 rounded-2xl px-4 pt-2.5 pb-[14px] h-fit">
+          {/* head */}
+          <div className="px-3 pb-[2px]">
+            <Link href={staticPaths.home}>
+              <Image
+                src={logo}
+                alt=""
+                width={134}
+                height={72}
+                className="mx-auto"
+              />
+            </Link>
 
-          <div className="flex gap-2.5 justify-between items-center cursor-pointer px-5">
-            <div onClick={handleToggleContent}>
-              <IconMenu className="w-[42px] text-violet-300"></IconMenu>
-            </div>
-            <div
-              onClick={() => {
-                openModal(MODAL_NAME.MENUBAR);
-              }}
-            >
-              <IconSearchViolet300></IconSearchViolet300>
+            <div className="flex gap-2.5 justify-between items-center cursor-pointer px-5">
+              <div onClick={handleToggleContent}>
+                <IconMenu className="w-[42px] text-violet-300"></IconMenu>
+              </div>
+              <div
+                onClick={() => {
+                  openModal(MODAL_NAME.MENUBAR);
+                }}
+              >
+                <IconSearchViolet300></IconSearchViolet300>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* menu items */}
-        <div
-          ref={content_ref}
-          className="h-0 text-violet-300 text-sm px-2 flex flex-col overflow-y-auto gap-5 transition-all w-auto modal-scroll"
-          id="menu_item"
-        >
-          {gameIndex?.categories?.map((e, i) => (
-            <Link href={categoryUrl(e?.superslug?.value, e?.slug)} key={i}>
+          {/* menu items */}
+          <div
+            ref={content_ref}
+            className="h-0 text-violet-300 text-sm px-2 flex flex-col overflow-y-auto gap-5 transition-all w-auto modal-scroll"
+            id="menu_item"
+          >
+            {gameIndex?.categories?.map((e, i) => (
+              <Link href={categoryUrl(e?.superslug?.value, e?.slug)} key={i}>
+                <div className="flex gap-x-2 items-center font-bold cursor-pointer">
+                  <div className="w-12">
+                    {e?.icon ? (
+                      <ImageLoading
+                        src={e?.icon}
+                        alt=""
+                        className="w-8 h-8 object-cover mx-auto"
+                      />
+                    ) : (
+                      <IconConsole className="w-8 h-8 mx-auto" />
+                    )}
+                  </div>
+                  <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
+                    {e?.label}
+                  </span>
+                </div>
+              </Link>
+            ))}
+
+            <Link href={staticPaths.my_hall_of_fame}>
               <div className="flex gap-x-2 items-center font-bold cursor-pointer">
                 <div className="w-12">
-                  {e?.icon ? (
-                    <ImageLoading
-                      src={e?.icon}
-                      alt=""
-                      className="w-8 h-8 object-cover mx-auto"
-                    />
-                  ) : (
-                    <IconConsole className="w-8 h-8 mx-auto" />
-                  )}
+                  <IconConsole className="w-8 h-8 mx-auto" />
                 </div>
                 <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
-                  {e?.label}
+                  Hall of fame
                 </span>
               </div>
             </Link>
-          ))}
 
-          <Link href={staticPaths.my_hall_of_fame}>
-            <div className="flex gap-x-2 items-center font-bold cursor-pointer">
-              <div className="w-12">
-                <IconConsole className="w-8 h-8 mx-auto" />
-              </div>
-              <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
-                Hall of fame
-              </span>
-            </div>
-          </Link>
+            <p className="w-[90%] mx-auto bg-[#ffcde980] pt-[1px]"></p>
 
-          <p className="w-[90%] mx-auto bg-[#ffcde980] pt-[1px]"></p>
+            {/* menu items all */}
+            {ALL_MENU_NODE.map(({ icon, title, href }, i) => (
+              <Link href={href} key={i}>
+                <div className="flex gap-x-2 items-center font-bold cursor-pointer">
+                  <div className="w-12">{icon}</div>
+                  <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
+                    {title}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
 
-          {/* menu items all */}
-          {ALL_MENU_NODE.map(({ icon, title, href }, i) => (
-            <Link href={href} key={i}>
-              <div className="flex gap-x-2 items-center font-bold cursor-pointer">
-                <div className="w-12">{icon}</div>
-                <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
-                  {title}
-                </span>
-              </div>
-            </Link>
-          ))}
+          {/* user info */}
+          <div className="text-white text-base mt-2">
+            {userInfoStatus === USER_STATUS.NOT_LOGGED && (
+              <Fragment>
+                <div className="flex flex-col items-center gap-2 mt-3 mb-4 pt-0.5">
+                  <Link
+                    href={staticPaths.login}
+                    className="btn-login text-base text-white font-semibold rounded-[10px] py-[5px] px-[30px] mx-auto"
+                  >
+                    Login
+                  </Link>
+                  <Link href={staticPaths.register} className="text-violet-400">
+                    Register
+                  </Link>
+                  <button
+                    className="bg-pink-800 text-[16px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-fit mx-auto block"
+                    onClick={() => {
+                      openModal(MODAL_NAME.CONFIRM);
+                    }}
+                  >
+                    Shop
+                  </button>
+                </div>
+              </Fragment>
+            )}
+
+            {userInfoStatus === USER_STATUS.VERIFY_SUCCESS && (
+              <UserInfo></UserInfo>
+            )}
+
+            {[USER_STATUS.VERIFYING, USER_STATUS.VERIFY_FAIL].includes(
+              userInfoStatus
+            ) && <UserInfoLoading />}
+
+            {/* countdown */}
+            {isMatchPC && <Timer />}
+          </div>
         </div>
 
-        {/* user info */}
-        <div className="text-white text-base mt-2">
-          {userInfoStatus === USER_STATUS.NOT_LOGGED && (
-            <Fragment>
-              <div className="flex flex-col items-center gap-2 mt-3 mb-4 pt-0.5">
-                <Link
-                  href={staticPaths.login}
-                  className="btn-login text-base text-white font-semibold rounded-[10px] py-[5px] px-[30px] mx-auto"
-                >
-                  Login
-                </Link>
-                <Link href={staticPaths.register} className="text-violet-400">
-                  Register
-                </Link>
-                <button
-                  className="bg-pink-800 text-[16px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-fit mx-auto block"
-                  onClick={() => {
-                    openModal(MODAL_NAME.CONFIRM);
-                  }}
-                >
+        {/* SHOP */}
+        {userInfo && (
+          <div
+            className={`bg-blur-500 rounded-2xl py-2 h-fit mt-4 text-white pr-1 ${shopClassName}`}
+          >
+            <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 py-1 w-[70%] mx-auto gap-2">
+              <span className="font-extrabold text-[16px]">
+                {abbreviateNumber(zera)}
+              </span>
+              <IconCoin className="w-5" />
+            </div>
+            <ShopSidebar></ShopSidebar>
+            <div className="w-full">
+              <Link href={"/shop"}>
+                <button className="bg-pink-800 text-[10px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-[40%] mx-auto block mt-2">
                   Shop
                 </button>
-              </div>
-            </Fragment>
-          )}
-
-          {userInfoStatus === USER_STATUS.VERIFY_SUCCESS ? (
-            <UserInfo></UserInfo>
-          ) : (
-            <UserInfoLoading />
-          )}
-
-          {/* countdown */}
-          {isMatchPC && <Timer />}
-        </div>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* SHOP */}
-      {userInfo && (
-        <div className="bg-blur-500 rounded-2xl py-2 h-fit mt-4 text-white pr-1">
-          <div className="flex-center border-b-[2px] border-b-[#C4B5FD] mb-2 px-4 py-1 w-[70%] mx-auto gap-2">
-            <span className="font-extrabold text-[16px]">
-              {abbreviateNumber(zera)}
-            </span>
-            <IconCoin className="w-5" />
-          </div>
-          <ShopSidebar></ShopSidebar>
-          <div className="w-full">
-            <Link href={"/shop"}>
-              <button className="bg-pink-800 text-[10px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-[40%] mx-auto block mt-2">
-                Shop
-              </button>
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default memo(SideBar);
 
