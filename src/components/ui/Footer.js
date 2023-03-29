@@ -13,8 +13,11 @@ import logo_lg from "../../../public/images/logo_lg.png";
 import Link from "next/link";
 import NewsLetterForm from "../form/NewsLetterForm";
 import { contact } from "@/services/user.service";
+import { notifyErrorMessage } from "@/utils/helper";
+import { useToast } from "@chakra-ui/react";
 
 const Footer = () => {
+  const toast = useToast();
   const [contacts, setContacts] = useState([]);
 
   const icon = [
@@ -28,7 +31,9 @@ const Footer = () => {
     try {
       const { data } = await contact();
       setContacts(data);
-    } catch (e) {}
+    } catch (e) {
+      notifyErrorMessage(toast, e);
+    }
   };
 
   useEffect(() => {
