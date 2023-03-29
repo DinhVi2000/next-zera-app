@@ -13,7 +13,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMessages } from "@/services/game.service";
 import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
-import { MAX_LIMIT_MESSAGE, MESSAGE_MAX_LENGTH, MODAL_NAME, STATUS_PLAY_GAME } from "@/utils/constant";
+import {
+  MAX_LIMIT_MESSAGE,
+  MESSAGE_MAX_LENGTH,
+  MODAL_NAME,
+  STATUS_PLAY_GAME,
+} from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useToast } from "@chakra-ui/react";
 import { notifyErrorMessage } from "@/utils/helper";
@@ -24,7 +29,7 @@ function BoxChat({ area }) {
   const dispatch = useDispatch();
   const [messages, setMessages] = useState([]);
   const [limitChat, setLimitChat] = useState({
-    lastTime: moment().startOf('minute').minutes(),
+    lastTime: moment().startOf("minute").minutes(),
     limitMessage: 0,
   });
   const roomCurrent = info?.id || 0;
@@ -50,7 +55,7 @@ function BoxChat({ area }) {
   const toast = useToast();
   const handleSendMessage = (e) => {
     e.preventDefault();
-    const minuteNow = moment().startOf('minute').minutes();
+    const minuteNow = moment().startOf("minute").minutes();
     if (!inputRef.current.value.trim()) {
       notifyErrorMessage(toast, {
         message: "Please enter message before send!",
@@ -66,7 +71,7 @@ function BoxChat({ area }) {
     if (limitChat.lastTime === minuteNow) {
       if (limitChat.limitMessage === MAX_LIMIT_MESSAGE) {
         notifyErrorMessage(toast, {
-          message: 'You have exceeded the limit of messages sent in 1 minute',
+          message: "You have exceeded the limit of messages sent in 1 minute",
         });
         return;
       }
@@ -80,7 +85,10 @@ function BoxChat({ area }) {
       room_id: roomCurrent,
       is_anonymous: !userInfo,
     });
-    setLimitChat(prev => ({ lastTime: minuteNow, limitMessage: prev.limitMessage + 1 }));
+    setLimitChat((prev) => ({
+      lastTime: minuteNow,
+      limitMessage: prev.limitMessage + 1,
+    }));
     e.target.reset();
   };
   // Get all message of game
@@ -184,11 +192,20 @@ function BoxChat({ area }) {
             onClick={() => openModal(MODAL_NAME.USERS_ONLINE_GAME)}
           >
             <div className="flex">
-              {
-                Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? usersInRoom.rows.slice(0, 3).map((user) => {
-                  return <ImageLoading key={user.id} alt="user" src={user?.avatar?.url ?? '/avatar-1.svg'} className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full" />;
-                }) : <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
-              }
+              {Object.keys(usersInRoom).length > 0 && usersInRoom?.rows ? (
+                usersInRoom.rows.slice(0, 3).map((user) => {
+                  return (
+                    <ImageLoading
+                      key={user.id}
+                      alt="user"
+                      src={user?.avatar?.url ?? "/avatar-1.svg"}
+                      className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full"
+                    />
+                  );
+                })
+              ) : (
+                <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+              )}
             </div>
             {usersInRoom?.count && usersInRoom?.count > 3 && (
               <p className="text-[12px]">
@@ -223,7 +240,7 @@ function BoxChat({ area }) {
             ref={inputRef}
             disabled={!userInfo}
             placeholder="Say something..."
-            className="bg-transparent text-[10px] w-[126px] border-b-[1px] border-b-[#00000033] focus:border-b-white"
+            className="bg-transparent text-base w-[90%] border-b-[1px] border-b-[#00000033] focus:border-b-white"
           />
           <div className="relative group">
             <button type="submit" disabled={!userInfo}>
@@ -244,28 +261,59 @@ const MessageItem = ({ msg }) => {
   return (
     <div>
       <div
-        className={`w-full flex ${!msg.is_message ? "justify-center" : (Number(userInfo?.id) === msg.user_id ? "justify-end pr-1" : "justify-start")}`}
+        className={`w-full flex ${
+          !msg.is_message
+            ? "justify-center"
+            : Number(userInfo?.id) === msg.user_id
+            ? "justify-end pr-1"
+            : "justify-start"
+        }`}
       >
-        <div className={`flex flex-col my-[3px] ${(Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start")}`} >
-          {
-            msg.is_message &&
-            (<div className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${(Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : "")}`}>
-              {
-                msg?.user?.avatar ? <ImageLoading
+        <div
+          className={`flex flex-col my-[3px] ${
+            Number(userInfo?.id) === msg.user_id ? "items-end" : "items-start"
+          }`}
+        >
+          {msg.is_message && (
+            <div
+              className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${
+                Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : ""
+              }`}
+            >
+              {msg?.user?.avatar ? (
+                <ImageLoading
                   alt=""
                   src={msg?.user?.avatar}
                   className="w-4 h-4 rounded-full"
-                /> : <Image src="/avatar-1.svg" alt="Image default" width="16" height="16" className="w-4 h-4 rounded-full" />
-              }
-              <div className="w-fit max-w-[150px] break-words">
+                />
+              ) : (
+                <Image
+                  src="/avatar-1.svg"
+                  alt="Image default"
+                  width="16"
+                  height="16"
+                  className="w-4 h-4 rounded-full"
+                />
+              )}
+              <div className="w-fit max-w-[150px] break-words text-sm">
                 {msg?.user?.username}
               </div>
-            </div>)
-          }
-          <div className={`rounded-md max-w-[150px] w-fit items-end ${!msg.is_message ? "text-[#fff] text-[10px] max-w-full" : (Number(userInfo?.id) === msg.user_id ? "bg-[#EC4899] p-1 rounded-br-none" : "bg-[#8B5CF6] p-1 rounded-tl-none")}`}>
-            {
-              !msg.is_message ? (Number(userInfo?.id) === msg.user_id ? (msg?.message).replace(`Player ${msg.user.username}`, 'You') : msg?.message) : msg?.message
-            }
+            </div>
+          )}
+          <div
+            className={`rounded-md max-w-[150px] w-fit items-end ${
+              !msg.is_message
+                ? "text-[#fff] text-[12px] max-w-full"
+                : Number(userInfo?.id) === msg.user_id
+                ? "bg-[#EC4899] p-1 rounded-br-none text-base"
+                : "bg-[#8B5CF6] p-1 rounded-tl-none text-base"
+            }`}
+          >
+            {!msg.is_message
+              ? Number(userInfo?.id) === msg.user_id
+                ? (msg?.message).replace(`Player ${msg.user.username}`, "You")
+                : msg?.message
+              : msg?.message}
           </div>
         </div>
       </div>

@@ -39,6 +39,10 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
   useOnClickOutside(modal_ref, handleCloseModal);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0 });
+  }, []);
+
+  useEffect(() => {
     if (!currentInfo?.name && status === STATUS.SUCCESS) {
       setIsDetail(false);
     }
@@ -90,7 +94,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
           Back
         </div>
         <div className="absolute-center flex-center max-[1184px]:text-xl max-[612px]:text-base">
-          Playlist games
+          Playlist
           <Tooltip label={currentInfo?.name}>
             <p className="w-[210px] max-[732px]:w-[120px] max-[612px]:w-[40px] overflow-hidden text-ellipsis whitespace-nowrap">
               /{currentInfo?.name}
@@ -144,7 +148,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
                 ?.map((e, i) => (
                   <div
                     key={i}
-                    className="skeleton-shine  w-[94px] h-[94px] rounded-[15px] opacity-40"
+                    className="skeleton-shine w-[94px] h-[94px] rounded-[15px] opacity-40"
                   ></div>
                 ))}
             </div>
@@ -153,7 +157,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
           <>
             {listGame?.length > 0 ? (
               <>
-                <div className="p-[45px] grid grid-cols-3 min-[600px]:grid-cols-10 gap-4 overflow-auto max-h-[500px]">
+                <div className="p-[45px] max-[500px]:p-5 max-[600px]:justify-center flex flex-wrap gap-4 overflow-auto max-h-[500px] modal-scroll">
                   {listGame?.map((e, i) => (
                     <div key={i} className="relative">
                       <GameItem

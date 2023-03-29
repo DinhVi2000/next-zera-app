@@ -49,7 +49,9 @@ const ModalDailyBonus = () => {
         setStatus(STATUS.SUCCESS);
       }
     } catch (e) {
+      setStatus(STATUS.FAIL);
       notifyErrorMessage(toast, e);
+      handleCloseModal();
     }
   };
 
@@ -67,7 +69,7 @@ const ModalDailyBonus = () => {
     <BoxModal className="fixed h-[100vh] w-full z-[80] text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modal_ref}
-        className="opacity-5 scale-90 w-fit h-fit max-[576px]:w-[90%] max-[576px]:h-[70vh] max-[576px]:overflow-y-scroll modal-scroll daily-bonus p-4 pb-8 max-[454px]:px-1"
+        className="opacity-5 scale-90 w-fit h-fit max-[576px]:w-[90%] max-[576px]:h-[70vh] max-[576px]:overflow-y-scroll modal-scroll daily-bonus p-4 pb-8 max-[454px]:px-1 max-[576px]:p-2"
       >
         <div className="flex ">
           <h4 className="mx-auto">Daily Gift</h4>
@@ -76,7 +78,7 @@ const ModalDailyBonus = () => {
             onClick={handleCloseModal}
           />
         </div>
-        <div className="grid grid-cols-3 gap-6 mt-10 max-[454px]:mt-3 w-full max-[454px]:gap-3 max-[400px]:gap-1">
+        <div className="grid grid-cols-3 gap-6 mt-10 max-[454px]:mt-2 w-full max-[454px]:gap-3 max-[400px]:gap-1">
           {Array(6)
             .fill(0)
             .map((e, i) => (
@@ -89,7 +91,7 @@ const ModalDailyBonus = () => {
                 </div>
                 <div className="daily-bonus__item-zera">
                   <p>+{i + 1 > 3 ? i + 2 : i + 1}</p>
-                  <IconCoinDaily className="w-16 h-16" />
+                  <IconCoinDaily className="w-16 h-16 max-[576px]:w-10 max-[576px]:h-10" />
                 </div>
                 {i + 1 < userInfo?.playstreak && (
                   <div className=" bg-[#2b2a2a6d] w-full h-full absolute-center rounded-[20px]">
@@ -102,14 +104,14 @@ const ModalDailyBonus = () => {
               </div>
             ))}
         </div>
-        <div className="w-full h-[135.7px] mx-auto daily-bonus__item relative group mt-6">
+        <div className="w-full h-[135.7px] max-[576px]:h-[100px] mx-auto daily-bonus__item relative group mt-6 max-[576px]:mt-2">
           <div className=" daily-bonus__item-day">
             Day&nbsp;
             {userInfo?.playstreak >= 8 ? userInfo?.playstreak : "7"}
           </div>
           <div className="daily-bonus__item-zera w-fit mx-auto">
             <p>+10</p>
-            <IconCoinDaily className="w-16 h-16" />
+            <IconCoinDaily className="w-16 h-16 max-[576px]:w-10 max-[576px]:h-10" />
           </div>
           {userInfo?.playstreak >= 7 && (
             <div className="border-[3px] border-[#fcff36] bg-[#fcff3644] w-full h-full absolute-center rounded-[20px]"></div>

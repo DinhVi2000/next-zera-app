@@ -77,15 +77,15 @@ function InfoUser() {
             </div>
           </div>
         </Tooltip>
-        <div className="pl-[42px] max-[860px]:pl-3 flex items-end rounded-[20px] mt-[-100px] max-[650px]:flex-col max-[650px]:items-center">
+        <div className="pl-[42px] max-[1210px]:pl-0 max-[860px]:pl-3 flex items-end rounded-[20px] mt-[-100px] max-[650px]:flex-col max-[650px]:items-center">
           <div
-            className="group w-[204px] rounded-[20px] cursor-pointer relative z-10 mr-4"
+            className="group w-[204px] rounded-[20px] cursor-pointer relative z-10 mr-4 max-[881px]:mr-1"
             onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
           >
             <ImageLoading
               alt=""
               src={avatar || "/avatar-1.svg"}
-              className="w-[204px] h-[204px] object-cover rounded-[20px]"
+              className="min-w-[204px] w-[204px] h-[204px] object-cover rounded-[20px]"
             />
 
             <Tooltip label="Update avatar" aria-label="A tooltip">
@@ -96,9 +96,9 @@ function InfoUser() {
           </div>
 
           <div
-            className={`flex justify-between max-[650px]:flex-col max-[650px]:flex-center flex-1 max-[650px]:flex-[0] w-[80%] relative max-[1221px]:top-5 max-[1178px]:top-10 max-[990px]:top-5 ${
-              showMore
-                ? "max-[790px]:top-10 max-[650px]:top-0 "
+            className={`flex justify-between max-[650px]:flex-col max-[650px]:flex-center flex-1 max-[650px]:flex-[0] w-[80%] relative max-[1221px]:top-3 max-[990px]:top-5 ${
+              showMore && quote?.length > 0
+                ? "max-[1178px]:top-10 max-[790px]:top-10 max-[650px]:top-0 "
                 : "max-[790px]:top-1"
             }`}
           >
@@ -111,8 +111,8 @@ function InfoUser() {
                   onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
                   className={`font-medium max-[650px]:w-[100%] max-[650px]:px-10 ${
                     showMore
-                      ? "max-[650px]:h-fit text-[unset] whitespace-normal w-[700px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[350px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
-                      : "max-[650px]:h-[30px] overflow-hidden text-ellipsis whitespace-nowrap w-[500px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[350px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
+                      ? "max-[650px]:h-fit text-[unset] whitespace-normal w-[700px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[250px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
+                      : "max-[650px]:h-[30px] overflow-hidden text-ellipsis whitespace-nowrap w-[500px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[250px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
                   }`}
                 >
                   {quote}

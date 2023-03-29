@@ -234,7 +234,7 @@ const ModalEditProfile = () => {
                         <Empty />
                       </div>
                       <Link
-                        href={"/shop"}
+                        href={"/shop#cover"}
                         onClick={handleCloseModal}
                         className="w-fit self-center"
                       >
