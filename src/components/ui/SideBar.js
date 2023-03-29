@@ -6,11 +6,14 @@ import React, {
   Fragment,
   memo,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
 
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 import {
   IconCategories,
@@ -24,37 +27,31 @@ import {
   IconSearchViolet300,
   IconTags,
 } from "@/resources/icons";
-
-import logo from "../../../public/images/logo.png";
+import logo from "@/../public/images/logo.png";
 
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
 
-import { MODAL_NAME, SHOP_TAB, STATUS } from "@/utils/constant";
-
-import Link from "next/link";
+import { useSelector } from "react-redux";
 
 import ImageLoading from "@/components/loading/ImageLoading";
 import ButtonLoading from "@/components/loading/ButtonLoading";
 import Timer from "@/components/other/Timer";
 
-import { Tooltip, useToast } from "@chakra-ui/react";
+import { Tooltip } from "@chakra-ui/react";
 
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
-import { useRouter } from "next/router";
-
 import { getItemByCategory } from "@/services/shop.service";
+import { setCategoriesAtGameIndex } from "@/services/game.service";
 
-import {
-  abbreviateNumber,
-  categoryUrl,
-  notifyErrorMessage,
-} from "@/utils/helper";
-import { getAllCategories } from "@/services/game.service";
-import { useDispatch } from "react-redux";
+import { MODAL_NAME, SHOP_TAB, STATUS, USER_STATUS } from "@/utils/constant";
+import { abbreviateNumber, categoryUrl } from "@/utils/helper";
 import { dynamicPaths, staticPaths } from "@/utils/$path";
+import { apiURL } from "@/utils/$apiUrl";
+
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useApi } from "@/hooks/useApi";
 
 const ALL_MENU_NODE = [
   {
@@ -80,10 +77,9 @@ const ALL_MENU_NODE = [
 ];
 
 const SideBar = () => {
-  const toast = useToast();
-  const dispatch = useDispatch();
+  const { get } = useApi();
 
-  const [categories, setCategories] = useState([]);
+  const { gameIndex } = useSelector(({ game }) => game) ?? {};
 
   const content_ref = useRef();
 
@@ -95,22 +91,24 @@ const SideBar = () => {
   const isMatchPC = useMediaQuery("(min-width: 990px)");
 
   const handleToggleContent = () => {
-    // content_ref.current.classList.toggle("py-3");
     content_ref.current.classList.toggle("h-[242px]");
   };
 
-  const getAllCategoriesGame = async () => {
-    try {
-      const { data } = await getAllCategories(dispatch);
-      setCategories(data);
-    } catch (e) {
-      notifyErrorMessage(toast, e);
-    }
-  };
-
   useEffect(() => {
-    getAllCategoriesGame();
+    get(apiURL.get.all_game_categories, null, setCategoriesAtGameIndex);
   }, []);
+
+  const userInfoStatus = useMemo(
+    () =>
+      !localStorage.getItem("accessToken")
+        ? USER_STATUS.NOT_LOGGED
+        : [STATUS.NOT_START, STATUS.IN_PROGRESS].includes(verifyStatus)
+        ? USER_STATUS.VERIFYING
+        : STATUS.SUCCESS
+        ? USER_STATUS.VERIFY_SUCCESS
+        : USER_STATUS.VERIFY_FAIL,
+    [verifyStatus]
+  );
 
   return (
     <div
@@ -149,7 +147,7 @@ const SideBar = () => {
           className="h-0 text-violet-300 text-sm px-2 flex flex-col overflow-y-auto gap-5 transition-all w-auto modal-scroll"
           id="menu_item"
         >
-          {categories?.map((e, i) => (
+          {gameIndex?.categories?.map((e, i) => (
             <Link href={categoryUrl(e?.superslug?.value, e?.slug)} key={i}>
               <div className="flex gap-x-2 items-center font-bold cursor-pointer">
                 <div className="w-12">
@@ -170,13 +168,13 @@ const SideBar = () => {
             </Link>
           ))}
 
-          <Link href={staticPaths.achievements}>
+          <Link href={staticPaths.my_hall_of_fame}>
             <div className="flex gap-x-2 items-center font-bold cursor-pointer">
               <div className="w-12">
                 <IconConsole className="w-8 h-8 mx-auto" />
               </div>
               <span className="text-ellipsis overflow-hidden whitespace-nowrap w-[80%]">
-                Achievements
+                Hall of fame
               </span>
             </div>
           </Link>
@@ -198,7 +196,7 @@ const SideBar = () => {
 
         {/* user info */}
         <div className="text-white text-base mt-2">
-          {!userInfo && (
+          {userInfoStatus === USER_STATUS.NOT_LOGGED && (
             <Fragment>
               <div className="flex flex-col items-center gap-2 mt-3 mb-4 pt-0.5">
                 <Link
@@ -222,26 +220,10 @@ const SideBar = () => {
             </Fragment>
           )}
 
-          {userInfo && (
-            <>
-              {verifyStatus === STATUS.SUCCESS ? (
-                <UserInfo></UserInfo>
-              ) : (
-                <div className="h-fit">
-                  {/* SIDEBAR LOADING */}
-                  <div className="relative">
-                    <div className="flex-center flex-col border-t-[2px] border-t-[#C4B5FD] pt-2">
-                      <ImageLoading
-                        alt=""
-                        className="w-[94px] h-[94px] rounded-[20px]"
-                      />
-                      <span className="my-2 flex-center skeleton-shine h-[10px] w-[94px] rounded-[10px]"></span>
-                    </div>
-                    <UserMenu />
-                  </div>
-                </div>
-              )}
-            </>
+          {userInfoStatus === USER_STATUS.VERIFY_SUCCESS ? (
+            <UserInfo></UserInfo>
+          ) : (
+            <UserInfoLoading />
           )}
 
           {/* countdown */}
@@ -273,6 +255,20 @@ const SideBar = () => {
 };
 
 export default memo(SideBar);
+
+const UserInfoLoading = memo(function Component() {
+  return (
+    <div className="h-fit">
+      <div className="relative">
+        <div className="flex-center flex-col border-t-[2px] border-t-[#C4B5FD] pt-2">
+          <ImageLoading alt="" className="w-[94px] h-[94px] rounded-[20px]" />
+          <span className="my-2 flex-center skeleton-shine h-[10px] w-[94px] rounded-[10px]"></span>
+        </div>
+        <UserMenu />
+      </div>
+    </div>
+  );
+});
 
 const UserInfo = () => {
   const { userInfo } = useAuthContext();
@@ -341,9 +337,10 @@ const UserMenu = forwardRef((props, ref) => {
         <div
           className="flex gap-2.5 items-center cursor-pointer border-[1px] border-b-violet-800 border-transparent pb-3 px-3
         text-violet-300 hover:text-violet-700 transition-all"
-          onClick={() => router.push(staticPaths.my_hall_of_fame)}
+          onClick={() => router.push(staticPaths.achievements)}
         >
-          <IconCup className="w-[18px] h-[18px]" /> <span>Hall of fame</span>
+          <IconCup className="w-[18px] h-[18px]" />
+          <span>Achievements</span>
         </div>
         <div
           className="flex gap-2.5 items-center pt-3 px-3 cursor-pointer

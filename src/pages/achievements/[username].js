@@ -29,7 +29,7 @@ const HallOfFamePage = () => {
   useEffect(() => {
     if (isValidPath(query, setIsValidPage))
       get(
-        apiURL.get.hall_of_fame_by_username(query?.username),
+        apiURL.get.achievements_by_username(query?.username),
         null,
         setAchievement
       )
@@ -39,7 +39,7 @@ const HallOfFamePage = () => {
 
   return (
     <Fragment>
-      <SEO title={`Hall of fame - ${query?.username}`} />
+      <SEO title={`Achievements - ${query?.username}`} />
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
           <AchievementWrapper></AchievementWrapper>

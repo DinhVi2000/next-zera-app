@@ -73,15 +73,12 @@
   .grid-category-detail {
     --gridTemplateColumns: 15;
     grid-template-areas:
-      "ct ct ct ct .  .  c1 c1 c2 c2 c3 c3 c4 c4 ."
-      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 ."
-      "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 ."
-      "g8 g8 .  .  .  .  .  .  .  .  .  .  .  .  ."
-      "g8 g8 .  .  .  .  .  .  .  .  .  .  .  .  ."
-      ".  .  .  .  .  .  .  .  .  .  .  .  .  .  ."
+      "ct ct ct ct g1 g2 c1 c1 c2 c2 c3 c3 c4 c4 ."
+      "g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 g8 g8 .  .  ."
+      "g3 g3 g4 g4 g5 g5 g6 g6 g7 g7 g8 g8 .  .  ."
       ".  .  .  .  .  .  .  .  .  .  .  .  .  .  .";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
-    grid-template-rows: repeat(5, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
   }
 
   .game-detail-grid {
@@ -176,10 +173,9 @@
       "g1 g1 g2 g2 g3 g3 g4 g4 g5 g5 .  .  "
       "g6 g6 g7 g7 g8 g8 .  .  .  .  .  .  "
       "g6 g6 g7 g7 g8 g8 .  .  .  .  .  .  "
-      ".  .  .  .  .  .  .  .  .  .  .  .  "
       ".  .  .  .  .  .  .  .  .  .  .  .  ";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
-    grid-template-rows: repeat(5, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
   }
 
   .grid-category {
@@ -262,15 +258,12 @@
   .grid-category-detail {
     --gridTemplateColumns: 10;
     grid-template-areas:
-      "ct ct ct ct g3 g3 . . c1 c1"
-      "g1 g1 g2 g2 g3 g3 g4 g4 c2 c2"
-      "g1 g1 g2 g2 g7 g7 g4 g4 c3 c3"
-      "g5 g5 g6 g6 g7 g7 g8 g8 c4 c4"
-      "g5 g5 g6 g6 .  .  g8 g8 .  ."
+      "ct ct ct ct g1 g2 c1 c1 c2 c2"
+      "c3 c3 c4 c4 g3 g4 g5 g6 g7 g8"
       ".  .  .  .  .  .  .  .  .  .";
 
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
-    grid-template-rows: repeat(5, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
   }
 
   .grid-responsive {
@@ -333,14 +326,13 @@
   .grid-category-detail {
     --gridTemplateColumns: 9;
     grid-template-areas:
-      "ct ct ct ct c4 c4 c1 c1 g8"
-      "g1 g1 g2 g2 g3 g3 g4 g4 ."
-      "g1 g1 g2 g2 g3 g3 g4 g4 ."
-      "g5 g5 g6 g6 g7 g7 c2 c2 ."
-      "g5 g5 g6 g6 g7 g7 c3 c3 ."
-      ". .  .  .  .  .  .  .  .";
+      "ct ct ct ct c4 c4 c1 c1 g1"
+      "c2 c2 g2 g2 g3 g3 g4 g4 g5"
+      "c3 c3 g2 g2 g3 g3 g4 g4 g6"
+      "g8 g8 .  .  .  .  .  .  ."
+      "g8 g8 .  .  .  .  .  .  .";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
-    grid-template-rows: repeat(5, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
   }
 
   .grid-category {
@@ -417,12 +409,9 @@
   .grid-category-detail {
     --gridTemplateColumns: 7;
     grid-template-areas:
-      "ct ct ct .  c1 c1 ."
-      "g1 g1 g2 g2 g3 g3 ."
-      "g1 g1 g2 g2 g3 g3 ."
-      "g5 g5 g6 g6 c2 c2 ."
-      "g5 g5 g6 g6 c3 c3 ."
-      "g4 g7 g8 .  c4 c4 .";
+      "ct ct ct g1 c1 c1 g2"
+      "c2 c2 c4 c4 g3 g4 g5"
+      "c3 c3 g6 g7 g8 .  .";
 
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(5, 94px);
@@ -502,14 +491,12 @@
   .grid-category-detail {
     --gridTemplateColumns: 7;
     grid-template-areas:
-      ".  ct ct ct g1 . "
-      "c1 c1 g2 g2 g3 . "
-      "c4 c4 g2 g2 g4 . "
-      "g6 g7  c2 c2 g5 . "
-      ".  .  c3 c3 . . "
-      ".  .  .  . . .  ";
+      ".  ct ct ct c1 c1"
+      "c2 c2 c3 c3 c4 c4"
+      "g1 g2 g3 g4 g5 g6"
+      "g7 g8 .  .  .  . ";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
-    grid-template-rows: repeat(5, 94px);
+    grid-template-rows: repeat(auto-fill, 94px);
   }
 
   .grid-responsive {
@@ -819,5 +806,29 @@
   }
   .max-\[1210px\]\:order-3 {
     order: 3;
+  }
+}
+
+@media (max-width: 551px) {
+  .max-\[551px\]\:zoom-70{
+    zoom: 0.7;
+  }
+
+  .max-\[551px\]\:zoom-50{
+    zoom: 0.5 !important;
+  }
+
+  .max-\[551px\]\:grid-col-start-span-2{
+    grid-column-start: span 2 !important;
+  }
+}
+
+@media (max-width: 661px) {
+  .max-\[661px\]\:zoom-70{
+    zoom: 0.7;
+  }
+
+  .max-\[661px\]\:zoom-50{
+    zoom: 0.5;
   }
 }

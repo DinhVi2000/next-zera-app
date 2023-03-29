@@ -45,7 +45,7 @@ const GameScreenBar = ({
   return (
     <div
       style={{ gridArea: getArea(area) }}
-      className={`${className} bg-[#373737] text-white py-2.5 px-5 flex items-center justify-between `}
+      className={`${className} bg-[#373737] text-white py-2.5 pl-2.5 pr-5 flex items-center justify-between `}
       {...props}
     >
       <div className="flex items-center gap-2.5">

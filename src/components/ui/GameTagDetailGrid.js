@@ -10,16 +10,18 @@ const GameTagDetailGrid = () => {
   const { allGameByTags, gameTag } = gameDetailByTag ?? {};
 
   return (
-    <div className="grid-category-detail transition-all">
+    <div className="grid-responsive grid gap-4 transition-all">
       <SidebarMB className={"tbl-flex mb-flex"} />
 
       <div
         style={{
-          gridArea: "ct / ct / ct / ct",
+          // gridArea: "ct / ct / ct / ct",
+          gridRowStart: "span 1",
+          gridColumnStart: "span 3",
           background:
             "linear-gradient(180deg, #C4B5FD 0%, #979BFF 0.01%, #EF36C6 100%)",
         }}
-        className="text-white min-h-[94px] rounded-2xl flex items-center justify-center text-lg font-bold"
+        className="text-white min-h-[94px] max-[551px]:grid-col-start-span-2 rounded-2xl flex items-center justify-center text-lg font-bold"
       >
         {gameTag?.label}
       </div>
@@ -34,12 +36,12 @@ const GameTagDetailGrid = () => {
                 index={i}
                 thumbnail={game_detail?.thumbnail}
                 title={game_detail?.title}
-                style={{
-                  gridArea:
-                    i < 8
-                      ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}`
-                      : "",
-                }}
+                // style={{
+                //   gridArea:
+                //     i < 8
+                //       ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}`
+                //       : "",
+                // }}
                 slug={game_detail?.slug}
                 superslug={game_detail?.superslug}
               />
@@ -53,41 +55,12 @@ const GameTagDetailGrid = () => {
           .map((e, i) => (
             <ItemLoading
               key={i}
-              style={{
-                gridArea:
-                  i < 8 ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}` : "",
-              }}
+              // style={{
+              //   gridArea:
+              //     i < 8 ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}` : "",
+              // }}
             ></ItemLoading>
           ))}
-
-      {/* category */}
-      {/* {other_category?.length > 0 &&
-        other_category.slice(0, 4)?.map((e, i) => (
-          <GameCategory
-            key={i}
-            id={e?.id}
-            index={i + 7}
-            label={e?.label}
-            thumbnail={e?.thumbnail}
-            style={{
-              gridArea: `c${i + 1} / c${i + 1} / c${i + 1} / c${i + 1}`,
-            }}
-            slug={e?.slug}
-            superslug={e?.superslug}
-          />
-        ))} */}
-
-      {/* {!other_category &&
-        Array(4)
-          .fill(0)
-          .map((e, i) => (
-            <ItemLoading
-              key={i}
-              style={{
-                gridArea: `c${i + 1} / c${i + 1} / c${i + 1} / c${i + 1}`,
-              }}
-            ></ItemLoading>
-          ))} */}
     </div>
   );
 };
