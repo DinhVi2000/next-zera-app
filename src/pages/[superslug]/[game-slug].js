@@ -66,7 +66,9 @@ const GameDetail = () => {
   }, [router.query]);
 
   const title = {
-    true: `${seo?.seo_title?.toUpperCase()} - Play ${seo?.seo_title}`,
+    true:
+      seo?.seo_title &&
+      `${seo?.seo_title?.toUpperCase()} - Play ${seo?.seo_title}`,
     false: "404 not found",
   };
 

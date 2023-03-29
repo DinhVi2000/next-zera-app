@@ -1,10 +1,21 @@
-import { usePagination } from "@/hooks/usePagination";
-import { IconSortDown } from "@/resources/icons";
-import { setHallOfFame } from "@/services/user.service";
-import { QUANTITY_BY_TAB } from "@/utils/constant";
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useMemo, useState } from "react";
+
+import { QUANTITY_BY_TAB } from "@/utils/constant";
+
+import Pagination from "@/components/pagination/Pagination";
+
+import { usePagination } from "@/hooks/usePagination";
 import { useDispatch, useSelector } from "react-redux";
-import Pagination from "../pagination/Pagination";
+
+import { IconSortDown } from "@/resources/icons";
+
+import { setHallOfFame } from "@/services/user.service";
+
+import { abbreviateNumber } from "@/utils/helper";
+import { Tooltip } from "@chakra-ui/react";
+import Link from "next/link";
+import { dynamicPaths } from "@/utils/$path";
 
 const ITEM_PER_PAGE = 10;
 
@@ -37,13 +48,13 @@ const RankingTable = ({ className, tab: { value, label }, ...props }) => {
     <div className={`${className} w-full max-w-[1000px] mx-auto`} {...props}>
       {/* head */}
       <header>
-        <div className="w-full flex justify-between px-[66px] relative mb-5">
+        <div className="w-full flex justify-between relative mb-5 px-[66px] max-[551px]:px-0">
           <span className="text-base text-pink-400 font-medium">Place</span>
           <span className="text-base text-pink-400 font-medium absolute left-1/2 -translate-x-1/2">
             Username
           </span>
 
-          {/* reverse */}
+          {/* reverse button */}
           <span
             className="text-base text-pink-400 font-medium cursor-pointer"
             onClick={hanldeReverseItems}
@@ -85,10 +96,19 @@ const RankingItem = memo(function Component({ place, user, quantity }) {
   const { username } = user ?? {};
 
   return (
-    <div className="bg-[#83184380] w-full relative flex justify-between rounded-[10px] py-[15px] px-20 ">
-      <span>{place}</span>
-      <span className="absolute left-1/2 -translate-x-1/2 ">{username}</span>
-      <span>{quantity}</span>
-    </div>
+    <Link href={dynamicPaths.achievements_by_username(username)}>
+      <div
+        className="bg-[#83184380] w-full relative flex justify-between rounded-[10px]
+                    py-[15px] px-20 max-[551px]:px-3"
+      >
+        <span>{place}</span>
+        <span className="absolute left-1/2 -translate-x-1/2 hover:underline-offset-1 hover:underline hover:text-pink-500">
+          {username}
+        </span>
+        <Tooltip label={quantity > 999 && quantity} placement="top">
+          <span>{abbreviateNumber(quantity)}</span>
+        </Tooltip>
+      </div>
+    </Link>
   );
 });

@@ -15,16 +15,17 @@ const GameCategoryDetailGrid = () => {
   const { game_detail, label } = game_category ?? {};
 
   return (
-    <div className="grid-category-detail transition-all">
+    <div className="grid-responsive grid gap-4 transition-all">
       <SidebarMB className={"tbl-flex mb-flex"} />
 
       <header
         style={{
-          gridArea: "ct / ct / ct / ct",
+          gridRowStart: "span 1",
+          gridColumnStart: "span 3",
           background:
             "linear-gradient(180deg, #C4B5FD 0%, #979BFF 0.01%, #EF36C6 100%)",
         }}
-        className="text-white min-h-[94px] rounded-2xl flex items-center justify-center text-lg font-bold"
+        className="text-white min-h-[94px] max-[551px]:grid-col-start-span-2 rounded-2xl flex items-center justify-center text-lg font-bold"
       >
         {label}
       </header>
@@ -39,9 +40,9 @@ const GameCategoryDetailGrid = () => {
                 index={i}
                 thumbnail={e?.thumbnail}
                 title={e?.title}
-                style={{
-                  gridArea: i < 7 ? getArea(`g${i + 1}`) : "",
-                }}
+                // style={{
+                //   gridArea: i < 7 ? getArea(`g${i + 1}`) : "",
+                // }}
                 slug={e?.slug}
                 superslug={e?.superslug}
               />
@@ -55,10 +56,10 @@ const GameCategoryDetailGrid = () => {
           .map((e, i) => (
             <ItemLoading
               key={i}
-              style={{
-                gridArea:
-                  i < 8 ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}` : "",
-              }}
+              // style={{
+              //   gridArea:
+              //     i < 8 ? `g${i + 1} / g${i + 1} / g${i + 1} / g${i + 1}` : "",
+              // }}
             ></ItemLoading>
           ))}
 
@@ -72,7 +73,9 @@ const GameCategoryDetailGrid = () => {
             label={e?.label}
             thumbnail={e?.thumbnail}
             style={{
-              gridArea: `c${i + 1} / c${i + 1} / c${i + 1} / c${i + 1}`,
+              gridRowStart: "span 1",
+              gridColumnStart: "span 2",
+              // gridArea: `c${i + 1} / c${i + 1} / c${i + 1} / c${i + 1}`,
             }}
             slug={e?.slug}
             superslug={e?.superslug}

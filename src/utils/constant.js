@@ -56,7 +56,7 @@ const PUBLIC_PAGE_URL = {
 
 const PRIVATE_PAGE_URL = {
   SHOP: "/shop",
-  MY_HALL_OF_FAME: "/hall-of-fame",
+  MY_HALL_OF_FAME: "/achievements",
 };
 
 const COUNTDOWN_DEADLINE = "11/20/2023 20:00:00";
@@ -99,22 +99,6 @@ const SOCKET_EVENT = {
 
 const PLAYTIME_CATEGORY = "Playtimes";
 
-const CLASS_NAME_BY_PATH = {
-  "/[superslug]/[game-slug]": "tbl-hidden mb-hidden",
-  "/[superslug]/category/[category-slug]": "tbl-hidden mb-hidden",
-  "/article/category/[category-slug]": "tbl-hidden mb-hidden",
-  "/article/tag/[tag-slug]": "tbl-hidden mb-hidden",
-  "/article/[article-slug]": "tbl-hidden mb-hidden",
-  "/profile": "tbl-hidden mb-hidden",
-  "/about": "tbl-hidden mb-hidden",
-  "/policy": "tbl-hidden mb-hidden",
-  "/terms": "tbl-hidden mb-hidden",
-  "/shop": "tbl-hidden mb-hidden",
-  "/hall-of-fame/[username]": "tbl-hidden mb-hidden",
-  "/hall-of-fame": "tbl-hidden mb-hidden",
-  "/": "tbl-hidden mb-hidden",
-};
-
 const MAX_SECOND_LIMIT_CHAT = 59; // start with 0 -> 59;
 const MAX_LIMIT_MESSAGE = 5;
 const SUPERSLUGS_CODES = {
@@ -145,6 +129,12 @@ const STATUS_PLAY_GAME = {
   STOP: "STOP",
   NONE: "NONE",
 };
+const USER_STATUS = {
+  NOT_LOGGED: "NOT_LOGGED",
+  VERIFYING: "VERIFYING",
+  VERIFY_SUCCESS: "VERIFY_SUCCESS",
+  VERIFY_FAIL: "VERIFY_FAIL",
+};
 
 const QUANTITY_BY_TAB = {
   zera: (e) => parseFloat(e?.total_earned_zera),
@@ -157,7 +147,6 @@ export {
   MAX_LIMIT_MESSAGE,
   ADS_IMAGES,
   COUNTDOWN_DEADLINE,
-  CLASS_NAME_BY_PATH,
   FACEBOOK_SIGN_IN_ERROR,
   GAMES_IMAGES,
   IMAGE_URL,
@@ -177,4 +166,5 @@ export {
   PREFIX_USERNAME,
   STATUS_PLAY_GAME,
   QUANTITY_BY_TAB,
+  USER_STATUS,
 };

@@ -28,9 +28,7 @@ const Footer = () => {
     try {
       const { data } = await contact();
       setContacts(data);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   useEffect(() => {
