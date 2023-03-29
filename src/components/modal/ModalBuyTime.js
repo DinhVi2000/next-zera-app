@@ -112,7 +112,7 @@ const ModalBuyTime = () => {
                 >
                   {/* value */}
                   <div className="bg-pink-400 text-base px-5 py-2.5 text-center flex justify-center flex-col">
-                    <p> +{e.name}</p>
+                    <p>{e.name}</p>
                     <p className="flex justify-center items-center"> <strong className="mr-1">{e.price} </strong> <IconCoin22 /></p>
                   </div>
 
