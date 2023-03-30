@@ -69,7 +69,7 @@ const ModalDailyBonus = () => {
     <BoxModal className="fixed h-[100vh] w-full z-[80] text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modal_ref}
-        className="opacity-5 scale-90 w-fit h-fit max-[576px]:w-[90%] max-[576px]:h-[70vh] max-[576px]:overflow-y-scroll modal-scroll daily-bonus p-4 pb-8 max-[454px]:px-1 max-[576px]:p-2"
+        className="opacity-5 scale-90 w-fit h-fit max-[576px]:w-[90%] max-[576px]:h-fit max-[576px]:max-h-[70vh] max-[576px]:overflow-y-scroll modal-scroll daily-bonus p-4 pb-8 max-[454px]:px-1 max-[576px]:p-2"
       >
         <div className="flex ">
           <h4 className="mx-auto">Daily Gift</h4>
