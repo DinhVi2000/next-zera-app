@@ -11,5 +11,5 @@ export const newLetterFormSchema = yup.object({
     .string()
     .trim()
     .required("*Please enter your name")
-    .max(15, "*Must be less than 30 characters long"),
+    .max(30, "*Must be less than 30 characters long"),
 });

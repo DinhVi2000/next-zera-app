@@ -90,7 +90,7 @@ const ModalBuyTime = () => {
   }, []);
 
   return (
-    <BoxModal className="fixed h-[100vh] w-full z-20 text-white bg-[#00000073] backdrop-blur-sm flex-center">
+    <BoxModal className="fixed h-[100vh] w-full z-50 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
         ref={modalTimeRef}
         className="opacity-5 scale-90 md:w-fit md:h-fit daily-bonus md:px-4 px-1 py-8 transition-all w-[340px]"

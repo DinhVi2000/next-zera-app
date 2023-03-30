@@ -199,12 +199,12 @@ function BoxChat({ area }) {
                       key={user.id}
                       alt="user"
                       src={user?.avatar?.url ?? "/avatar-1.svg"}
-                      className="first:m-0 w-5 h-5 mr-[-10px]  rounded-full"
+                      className="first:m-0 w-8 h-8 mr-[-10px] rounded-full"
                     />
                   );
                 })
               ) : (
-                <Image alt="user" src={ava} className="w-[22px] mr-[-10px]" />
+                <Image alt="user" src={ava} className="w-[32px] mr-[-10px]" />
               )}
             </div>
             {usersInRoom?.count && usersInRoom?.count > 3 && (
@@ -284,7 +284,7 @@ const MessageItem = ({ msg }) => {
                 <ImageLoading
                   alt=""
                   src={msg?.user?.avatar}
-                  className="w-4 h-4 rounded-full"
+                  className="w-8 h-8 rounded-full"
                 />
               ) : (
                 <Image
@@ -292,7 +292,7 @@ const MessageItem = ({ msg }) => {
                   alt="Image default"
                   width="16"
                   height="16"
-                  className="w-4 h-4 rounded-full"
+                  className="w-8 h-8 rounded-full"
                 />
               )}
               <div className="w-fit max-w-[150px] break-words text-sm">
