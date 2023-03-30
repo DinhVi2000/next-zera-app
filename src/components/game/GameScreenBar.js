@@ -12,7 +12,6 @@ import Report from "./screenbar/Report";
 import { MODAL_NAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
-import { useSocketContext } from "@/context/socket-context";
 import { getTimeRemaining } from "@/utils/common";
 
 const GameScreenBar = ({
@@ -29,11 +28,7 @@ const GameScreenBar = ({
   const { userInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
-  const { incrementTime } = useSocketContext();
   const [remainingTime, setRemainingTime] = useState(getTimeRemaining(0));
-  useEffect(() => {
-    setRemainingTime(getTimeRemaining(incrementTime));
-  }, [incrementTime]);
 
   const handleOpenReport = () => {
     if (!userInfo) {

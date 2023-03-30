@@ -18,7 +18,6 @@ import { IconArrowLeft } from "@/resources/icons";
 import { getCategoriesShop, getItemByCategory } from "@/services/shop.service";
 
 import { notifyErrorMessage } from "@/utils/helper";
-import { useSocketContext } from "@/context/socket-context";
 import SEO from "@/components/other/SEO";
 import Zera from "@/components/zera/Zera";
 import SidebarMB from "@/components/responsive/SidebarMB";
@@ -31,7 +30,6 @@ const Shop = () => {
   const router = useRouter();
 
   const { status, setStatus } = useModalContext();
-  const { setSocketStatus } = useSocketContext();
   const toast = useToast();
 
   const [idCategory, setIdCategory] = useState("");
@@ -56,7 +54,6 @@ const Shop = () => {
       if (!data) return;
       setItemsShop(data?.rows);
       setStatus(STATUS.NOT_START);
-      setSocketStatus(STATUS.NOT_START);
       setIsLoading(true);
     } catch (e) {
       notifyErrorMessage(toast, e);

@@ -17,15 +17,20 @@ import { Fragment } from "react";
 
 const MyHallOfFamePage = () => {
   const { get } = useApi();
-  const { verifyStatus } = useAuthContext();
-
   const [isValidPage, setIsValidPage] = useState();
 
+  const { userInfo, verifyStatus } = useAuthContext();
+
   useEffect(() => {
-    if (verifyStatus === STATUS.SUCCESS)
-      get(apiURL.get.my_achievement, null, setAchievement)
+    if (verifyStatus === STATUS.SUCCESS) {
+      get(
+        apiURL.get.achievements_by_username(userInfo?.username),
+        null,
+        setAchievement
+      )
         .then(() => setIsValidPage(true))
         .catch(() => setIsValidPage(false));
+    }
   }, [verifyStatus]);
 
   return (

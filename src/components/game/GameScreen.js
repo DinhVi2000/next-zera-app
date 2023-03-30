@@ -1,19 +1,20 @@
 import { useSocketContext } from "@/context/socket-context";
 import { IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
-import { STATUS_PLAY_GAME } from "@/utils/constant";
+import { SOCKET_EVENT, STATUS_PLAY_GAME } from "@/utils/constant";
 import { getArea } from "@/utils/helper";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
 import GameScreenBar from "./GameScreenBar";
 
 const GameScreen = ({ thumbnail, play_url, title }) => {
-  const { setIsCountDown, isCountDown } = useSocketContext();
-
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
   const back_tab_mb_ref = useRef();
 
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const { socketCLI } = useSocketContext();
 
   // handle zoom out
   const handleToggleZoomOutGameScreen = () => {
@@ -39,8 +40,10 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     // document.requestFullscreen();
   };
 
-  const handlePlaying = () => {
-    setIsCountDown({ status: STATUS_PLAY_GAME.PLAY });
+  const handlePlayGame = () => {
+    if (!socketCLI) return;
+    socketCLI.emit(SOCKET_EVENT.PLAY_GAME);
+    setIsPlaying(true);
   };
 
   // handle zoom out
@@ -51,18 +54,6 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   }, []);
 
   //handle stop/play game
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > game_screen_ref.current?.clientHeight) {
-        setIsCountDown({ status: STATUS_PLAY_GAME.STOP });
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <div
@@ -91,7 +82,6 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
         onZoomInGameScreen={handleToggleZoomInGameScreen}
         onZoomOutGameScreen={handleToggleZoomOutGameScreen}
       />
-
       {/* show this when full screen */}
       {/* back tab  */}
       <div
@@ -107,20 +97,18 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
           <IconLogo className="w-6 h-5" />
         </div>
       </div>
-
       {/* bg before play */}
-      {(isCountDown.status === STATUS_PLAY_GAME.NONE || isCountDown.status === STATUS_PLAY_GAME.STOP) && (
+      {!isPlaying && (
         <div className="w-full h-full bg-blur-800 absolute top-0 flex-center">
           <button
             className="text-base text-white rounded-[20px] bg-linear-violet-300 py-3 px-10 w-[220px]
                         transition-all hover:scale-105"
-            onClick={handlePlaying}
+            onClick={handlePlayGame}
           >
             Play
           </button>
         </div>
       )}
-
       {/* bg mb */}
       <div
         className="absolute w-full h-full mb-block bg_game-screen-mb"

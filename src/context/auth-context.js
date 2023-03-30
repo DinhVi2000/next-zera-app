@@ -27,8 +27,6 @@ import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 
-import { useSocketContext } from "./socket-context";
-
 const AuthContext = createContext(null);
 
 export const useAuthContext = () => {
@@ -78,8 +76,6 @@ export const AuthContextProvider = ({ children }) => {
   const currentRoute = useRef();
 
   const { pathname } = router ?? {};
-  const { socketClient, receiveZera, userLogin, userLogout } =
-    useSocketContext();
 
   const handleSetUserInfo = async () => {
     setVerifyStatus(STATUS.IN_PROGRESS);
@@ -135,7 +131,6 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem("username", username);
       setUsernameAuth(username);
 
-      userLogin({ username });
       router.push("/");
     } catch (error) {
       notifyErrorMessage(toast, error);
@@ -182,12 +177,6 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    if (receiveZera > 0) {
-      setUserInfo((prev) => ({ ...prev, zera: receiveZera }));
-    }
-  }, [receiveZera]);
-
-  useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const username = localStorage.getItem("username");
 
@@ -227,10 +216,6 @@ export const AuthContextProvider = ({ children }) => {
   /**
    * Handle emit login/logout when refresh page
    */
-  useEffect(() => {
-    if (!socketClient?.id || !usernameAuth) return;
-    userLogin({ username: usernameAuth });
-  }, [socketClient?.id]);
 
   const authProvider = useMemo(
     () => ({

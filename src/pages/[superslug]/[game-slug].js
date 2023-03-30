@@ -17,6 +17,7 @@ import { useApi } from "@/hooks/useApi";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import SEO from "@/components/other/SEO";
 import { getAllAdvertisements } from "@/services/advertisements.service";
+import { useSocketContext } from "@/context/socket-context";
 
 const HALL_OF_FAME_LIMIT = 10;
 
@@ -32,6 +33,14 @@ const GameDetail = () => {
 
   const { categories } =
     useSelector(({ game: { gameIndex } }) => gameIndex) ?? {};
+
+  const { setConnect } = useSocketContext();
+
+  useEffect(() => {
+    setConnect(true);
+
+    return () => setConnect(false);
+  }, []);
 
   useEffect(() => {
     setIsValidPage();

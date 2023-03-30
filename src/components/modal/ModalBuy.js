@@ -17,7 +17,6 @@ import { useToast } from "@chakra-ui/react";
 import { buyShopItem } from "@/services/shop.service";
 import { useAuthContext } from "@/context/auth-context";
 import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
-import { useSocketContext } from "@/context/socket-context";
 import ButtonLoading from "../loading/ButtonLoading";
 
 const ModalBuy = () => {
@@ -25,7 +24,7 @@ const ModalBuy = () => {
   const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
   const { zera } = userInfo || {};
   const { openModal, payload, setStatus } = useModalContext();
-  const { setSocketStatus } = useSocketContext();
+  const setSocketStatus = null;
   const modal_ref = useRef(null);
   const DURATION = 200;
   const [loading, setLoading] = useState(STATUS.NOT_START);
