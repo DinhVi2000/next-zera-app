@@ -79,11 +79,11 @@ function ListGame({ setIsOpenTab, infoList }) {
                       >
                         <ImageLoading
                           className="w-[94px] h-[94px] object-cover rounded-[20px] mb-[25px]"
-                          src={e?.url}
+                          src={e?.item_info?.url}
                         />
                         <div className="p-2 px-4">
                           <div className="font-semibold text-xl flex">
-                            {e?.price} <IconCoin22 />
+                            {e?.item_info?.price} <IconCoin22 />
                           </div>
                           <div>{getBetweenTwoDate(e?.created_at)}</div>
                         </div>
@@ -113,13 +113,16 @@ function ListGame({ setIsOpenTab, infoList }) {
                       >
                         <ImageLoading
                           className="w-[204px] h-[94px] object-cover rounded-[20px] mb-[25px]"
-                          src={e?.url}
+                          src={e?.item_info?.url}
                         />
                         <div className="p-2 px-4 max-[1718px]:px-2">
                           <div className="font-semibold text-xl flex">
-                            {e?.price} <IconCoin22 className="ml-2" />
+                            {e?.item_info?.price}{" "}
+                            <IconCoin22 className="ml-2" />
                           </div>
-                          <div>{getBetweenTwoDate(e?.created_at)}</div>
+                          <div>
+                            {getBetweenTwoDate(e?.created_at)}
+                          </div>
                         </div>
                       </div>
                     ))}

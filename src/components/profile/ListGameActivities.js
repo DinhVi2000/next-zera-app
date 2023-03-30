@@ -47,7 +47,7 @@ function ListGameActivities({ payload, listGame, setInfoList, setIsOpenTab }) {
                             >
                               <ImageLoading
                                 alt=""
-                                src={e?.url}
+                                src={e?.item_info?.url}
                                 className="w-full h-full rounded-[10px] object-cover"
                               />
                             </div>
@@ -62,7 +62,7 @@ function ListGameActivities({ payload, listGame, setInfoList, setIsOpenTab }) {
                           >
                             <ImageLoading
                               alt=""
-                              src={e?.url}
+                              src={e?.item_info?.url}
                               className="w-full h-full rounded-[10px] object-cover"
                             />
                           </div>
