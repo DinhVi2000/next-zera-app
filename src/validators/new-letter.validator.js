@@ -6,7 +6,7 @@ export const newLetterFormSchema = yup.object({
     .trim()
     .required("*Please enter your email")
     .email("*Please enter a valid email")
-    .max(30, "*Must be less than 30 characters long"),
+    .max(64, "*Must be less than 64 characters long"),
   name: yup
     .string()
     .trim()
