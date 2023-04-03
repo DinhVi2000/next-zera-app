@@ -17,7 +17,6 @@ import { getUserInfo } from "@/services/user.service";
 import { useToast } from "@chakra-ui/react";
 import { buyShopItem, getItemTime } from "@/services/shop.service";
 import { useRouter } from "next/router";
-import { useSocketContext } from "@/context/socket-context";
 import ImageLoading from "../loading/ImageLoading";
 const ModalBuyTime = () => {
   const router = useRouter();
@@ -27,7 +26,6 @@ const ModalBuyTime = () => {
   const [timeItems, setTimeItems] = useState([]);
   const { setUserInfo, usernameAuth } = useAuthContext();
   const { openModal } = useModalContext();
-  const { stopGame } = useSocketContext();
   const modalTimeRef = useRef(null);
 
   const DURATION = 150;
@@ -85,10 +83,6 @@ const ModalBuyTime = () => {
     }
   }, [status]);
 
-  useEffect(() => {
-    stopGame();
-  }, []);
-
   return (
     <BoxModal className="fixed h-[100vh] w-full z-50 text-white bg-[#00000073] backdrop-blur-sm flex-center">
       <div
@@ -112,20 +106,21 @@ const ModalBuyTime = () => {
                 >
                   {/* value */}
                   <div className="bg-pink-400 text-base px-5 py-2.5 text-center flex justify-center flex-col">
-                    <p>{e.name}</p>
-                    <p className="flex justify-center items-center"> <strong className="mr-1">{e.price} </strong> <IconCoin22 /></p>
+                    <p> +{e.name}</p>
+                    <p className="flex justify-center items-center">
+                      {" "}
+                      <strong className="mr-1">{e.price} </strong>{" "}
+                      <IconCoin22 />
+                    </p>
                   </div>
 
                   {/* image */}
-                  <ImageLoading
-                    className="object-cover"
-                    src={e.url}
-                    alt=""
-                  />
+                  <ImageLoading className="object-cover" src={e.url} alt="" />
 
                   {/* select bg */}
                   <div className=" w-full h-full absolute-center rounded-[20px]">
-                    <div className="py-2 px-4 bg-pink-400 rounded-full absolute top-0 left-1/2 -translate-x-1/2 shadow-custom-one group-hover:top-1/2 group-hover:opacity-100 transition-all opacity-0 duration-300 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+                    <div
+                      className="py-2 px-4 bg-pink-400 rounded-full absolute top-0 left-1/2 -translate-x-1/2 shadow-custom-one group-hover:top-1/2 group-hover:opacity-100 transition-all opacity-0 duration-300 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
                       onClick={() => handleBuyTime(e.id)}
                     >
                       Buy

@@ -16,7 +16,6 @@ import ModalResetLogin from "@/components/modal/ModalResetLogin";
 
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 
-import { useSocketContext } from "./socket-context";
 import { useAuthContext } from "./auth-context";
 
 const ModalContext = createContext(null);
@@ -52,7 +51,6 @@ export const ModalContextProvider = ({ children }) => {
   const [payload, setPayload] = useState();
   const [modal, setModal] = useState(MODAL_NAME.NONE);
   const [status, setStatus] = useState(STATUS.NOT_START);
-  const { socketClient, userLoginData } = useSocketContext();
   const { usernameAuth, logout } = useAuthContext();
 
   // TODO: Only let the effect call fn once when mound, the rest only setState when status === success
@@ -79,16 +77,6 @@ export const ModalContextProvider = ({ children }) => {
     [modal, status, payload]
   );
 
-  useEffect(() => {
-    if (!socketClient && !usernameAuth) return;
-    if (
-      userLoginData.username === usernameAuth &&
-      userLoginData.socket_id === socketClient.id
-    ) {
-      logout();
-      openModal(MODAL_NAME.RESET_LOGIN);
-    }
-  }, [userLoginData]);
   return (
     <ModalContext.Provider value={{ modalProvider }}>
       {Modal[modal]}

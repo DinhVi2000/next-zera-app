@@ -13,14 +13,12 @@ import { useRouter } from "next/router";
 import { useToast } from "@chakra-ui/react";
 import { useAuthContext } from "@/context/auth-context";
 import { notifyErrorMessage } from "@/utils/helper";
-import { useSocketContext } from "@/context/socket-context";
 
 const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
   const router = useRouter();
   const toast = useToast();
 
   const { setToken, setUsernameAuth } = useAuthContext();
-  const { userLogin } = useSocketContext();
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -49,7 +47,6 @@ const GoogleLoginButton = ({ onSetIsSSOLogging }) => {
       if (username) {
         setUsernameAuth(username);
         localStorage.setItem("username", username);
-        userLogin({ username });
       }
 
       if (!username) return router.push("/create-username");

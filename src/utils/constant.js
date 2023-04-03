@@ -81,20 +81,22 @@ const ADS_IMAGES = [
 ];
 
 const SOCKET_EVENT = {
-  USER_JOIN_ROOM: "joinRoom",
-  USER_EMIT_REWARD: "emitReward",
   LISTEN_MESSAGE: "message",
-  SEND_MESSAGE: "chatMessage",
-  USER_LEAVE_ROOM: "leaveRoom",
-  SOCKET_ERROR: "error",
-  ANONYMOUS_LOGIN: "loginAnonymous",
   LIST_USERS_JOIN_ROOM: "roomUsers",
-  STOP_GAME: "stopGame",
+  USER_JOIN_ROOM: "joinRoom",
+  USER_LEAVE_ROOM: "leaveRoom",
   PLAY_GAME: "playGame",
-  TIME_GAME: "timeGame",
+  ANONYMOUS_LOGIN: "loginAnonymous",
+  USER_DUPLICATE_LOGIN: "duplicateLogin",
+
+  USER_EMIT_REWARD: "emitReward",
   USER_LOGIN: "userLogin",
-  LOGGED_IN_USER: "loggedInUser",
   USER_LOGOUT: "userLogout",
+  LOGGED_IN_USER: "loggedInUser",
+  STOP_GAME: "stopGame",
+  SEND_MESSAGE: "chatMessage",
+  SOCKET_ERROR: "error",
+  TIME_GAME: "timeGame",
 };
 
 const PLAYTIME_CATEGORY = "Playtimes";

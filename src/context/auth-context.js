@@ -26,8 +26,8 @@ import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
 
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
-
-import { useSocketContext } from "./socket-context";
+import { useApi } from "@/hooks/useApi";
+import { apiURL } from "@/utils/$apiUrl";
 
 const AuthContext = createContext(null);
 
@@ -65,6 +65,7 @@ const userInfoFunctions = [
 export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const toast = useToast();
+  const { get } = useApi();
 
   const [userInfo, setUserInfo] = useState();
   const [anonymousInfo, setAnonymousInfo] = useState();
@@ -78,8 +79,6 @@ export const AuthContextProvider = ({ children }) => {
   const currentRoute = useRef();
 
   const { pathname } = router ?? {};
-  const { socketClient, receiveZera, userLogin, userLogout } =
-    useSocketContext();
 
   const handleSetUserInfo = async () => {
     setVerifyStatus(STATUS.IN_PROGRESS);
@@ -135,7 +134,6 @@ export const AuthContextProvider = ({ children }) => {
       localStorage.setItem("username", username);
       setUsernameAuth(username);
 
-      userLogin({ username });
       router.push("/");
     } catch (error) {
       notifyErrorMessage(toast, error);
@@ -153,6 +151,7 @@ export const AuthContextProvider = ({ children }) => {
 
     setToken("");
     setUsernameAuth("");
+    setAnonymousInfo();
     setUserInfo();
   };
 
@@ -162,6 +161,11 @@ export const AuthContextProvider = ({ children }) => {
         const { user } = data ?? {};
         const { uid } = user ?? {};
         uid && setAnonymousInfo((prev) => ({ ...prev, ...user }));
+
+        return get(apiURL.get.get_anonymous_info(uid));
+      })
+      .then((data) => {
+        setAnonymousInfo((prev) => ({ ...prev, ...data }));
       })
       .catch((e) => notifyErrorMessage(toast, e));
   };
@@ -182,16 +186,10 @@ export const AuthContextProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    if (receiveZera > 0) {
-      setUserInfo((prev) => ({ ...prev, zera: receiveZera }));
-    }
-  }, [receiveZera]);
-
-  useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     const username = localStorage.getItem("username");
 
-    if (!accessToken || !username) loginWithAnonymously();
+    if ((!accessToken || !username) && !isAuthnrPath) loginWithAnonymously();
 
     setToken(accessToken || "");
     setUsernameAuth(username || "");
@@ -227,10 +225,6 @@ export const AuthContextProvider = ({ children }) => {
   /**
    * Handle emit login/logout when refresh page
    */
-  useEffect(() => {
-    if (!socketClient?.id || !usernameAuth) return;
-    userLogin({ username: usernameAuth });
-  }, [socketClient?.id]);
 
   const authProvider = useMemo(
     () => ({

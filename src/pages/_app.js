@@ -15,13 +15,13 @@ export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <ChakraProvider>
-        <SocketContextProvider>
-          <AuthContextProvider>
+        <AuthContextProvider>
+          <SocketContextProvider>
             <ModalContextProvider>
               <Component {...pageProps} />
             </ModalContextProvider>
-          </AuthContextProvider>
-        </SocketContextProvider>
+          </SocketContextProvider>
+        </AuthContextProvider>
       </ChakraProvider>
     </Provider>
   );

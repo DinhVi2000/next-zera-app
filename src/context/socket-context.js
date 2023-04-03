@@ -1,14 +1,33 @@
+/* eslint-disable indent */
+/* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
+
 import { SOCKET_EVENT, STATUS, STATUS_PLAY_GAME } from "@/utils/constant";
-import { socket } from "@/configs/socket";
+
+// import { socket } from "@/configs/socket";
+
+import { config } from "@/envs";
+import { io } from "socket.io-client";
+import { useAuthContext } from "./auth-context";
+import { getTimeRemaining } from "@/utils/common";
+
+const DEFAULT_TIME = {
+  days: "00",
+  hours: "01",
+  isTimeOut: false,
+  minutes: "00",
+  seconds: "00",
+  time: 3600000,
+};
+
 const SocketContext = createContext(null);
 
 export const useSocketContext = () => {
@@ -16,7 +35,7 @@ export const useSocketContext = () => {
   if (!socketContext) {
     throw new Error(
       "useSocketContext() can only be used inside of <SocketContextProvider />, " +
-      "please declare it at a higher level."
+        "please declare it at a higher level."
     );
   }
   const { socketProvider } = socketContext;
@@ -24,194 +43,148 @@ export const useSocketContext = () => {
 };
 
 export const SocketContextProvider = ({ children }) => {
-  const [socketStatus, setSocketStatus] = useState(STATUS.INIT);
-  const [isCountDown, setIsCountDown] = useState({ status: STATUS_PLAY_GAME.NONE });
-  const [socketClient, setSocketClient] = useState(socket);
-  const [totalTimePlay, setTotalTimePlay] = useState(0);
-  const [incrementTime, setIncrementTime] = useState(0);
-  const [messageSocket, setMessageSocket] = useState({});
-  const [showModalBuyTime, setShowModalBuyTime] = useState(false);
-  const [usersInRoom, setUsersInRoom] = useState({});
-  const [receiveZera, setReceiveZera] = useState(0);
-  const [userLoginData, setUserLoginData] = useState({});
+  const [socketCLI, setSocketCLI] = useState();
 
-  const joinRoom = useCallback(
-    ({ room_id, user_id, is_anonymous }) => {
-      socket.emit(SOCKET_EVENT.USER_JOIN_ROOM, {
-        user_id,
-        room_id,
-        is_anonymous,
-      });
-    },
-    []
-  );
+  const [connect, setConnect] = useState(false);
+  const [sendMessageStatus, setSendMessageStatus] = useState(STATUS.NOT_START);
+  const [newMessage, setNewMessage] = useState();
+  const [systemMessage, setSystemMessage] = useState();
 
-  const sendMessage = useCallback(
-    ({ room_id, user_id, msg, socket_id, is_anonymous }) => {
-      socket.emit(SOCKET_EVENT.SEND_MESSAGE, {
-        room_id,
-        user_id,
-        msg,
-        socket_id,
-        is_anonymous,
-      });
-    },
-    []
-  );
+  const [isCountdown, setIsCountdown] = useState(false);
+  const [countdownStatus, setCountdownStatus] = useState(STATUS.INIT);
+  const [isLogged, setIsLogged] = useState(false);
 
-  const playGame = useCallback(
-    ({ room_id, user_id, is_anonymous }) => {
-      socket.emit(SOCKET_EVENT.PLAY_GAME, {
-        user_id,
-        room_id,
-        is_anonymous,
-      });
-    },
-    []
-  );
+  const {
+    anonymousInfo,
+    setAnonymousInfo,
+    userInfo,
+    setUserInfo,
+    verifyStatus,
+  } = useAuthContext();
 
-  const stopGame = useCallback(
-    () => {
-      socket.emit(SOCKET_EVENT.STOP_GAME);
-    },
-    []
-  );
+  const [remainingTime, setRemainingTime] = useState(DEFAULT_TIME);
 
-  const leaveGame = useCallback(
-    ({ room_id, user_id, is_anonymous }) => {
-      socket.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
-        user_id,
-        room_id,
-        is_anonymous,
-      });
-    },
-    []
-  );
+  const timeInterval = useRef();
+  const timeDes = useRef(0);
 
-  const userLogin = useCallback(
-    ({ username }) => {
-      socket.emit(SOCKET_EVENT.USER_LOGIN, { username });
-    },
-    []
-  );
+  const resetState = () => {
+    setIsLogged(false);
+    setIsCountdown(false);
+    setCountdownStatus(STATUS.INIT);
+    timeDes.current = 0;
+  };
 
-  const userLogout = useCallback(
-    ({ username }) => {
-      socket.emit(SOCKET_EVENT.USER_LOGOUT, { username });
-    },
-    [socket]
-  );
-
-  /**
-   * Listen user login
-   */
   useEffect(() => {
-    const onUserLogin = (data) => {
-      if (!data) return;
-      setUserLoginData(data);
-    };
-
-    socket.on(SOCKET_EVENT.LOGGED_IN_USER, onUserLogin);
-    return () => {
-      socket.off(SOCKET_EVENT.LOGGED_IN_USER);
-    };
-  }, []);
-
-  /**
-   * Listen user join room
-   */
-  useEffect(() => {
-    const onUserJoinRoomEvent = (data) => {
-      if (!data) return;
-      setUsersInRoom(data.users);
-    };
-    socket.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, onUserJoinRoomEvent);
-    return () => {
-      socket.off(SOCKET_EVENT.LIST_USERS_JOIN_ROOM);
-    };
-  }, []);
-
-  /**
-   * Listen message change
-   */
-  useEffect(() => {
-    function onMessageEvent(data) {
-      if (data?.user) {
-        setReceiveZera(data.user.zera);
-      }
-      setMessageSocket(data);
+    if (connect) {
+      const socket = io(config.SERVER_CHAT);
+      setSocketCLI(socket);
     }
-    socket.on(SOCKET_EVENT.LISTEN_MESSAGE, onMessageEvent);
-    return () => {
-      socket.off(SOCKET_EVENT.LISTEN_MESSAGE, onMessageEvent);
-    };
-  }, []);
 
-  /**
-   *  Open modal buy time when playing game and has been timeout
-   */
-  useEffect(() => {
-    isCountDown.status === STATUS_PLAY_GAME.PLAY && incrementTime === totalTimePlay
-      ? setShowModalBuyTime(true)
-      : setShowModalBuyTime(false);
-  }, [incrementTime]);
+    // return () => {
+    //   socketCLI.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
+    //   });
+    // };
+
+    if (!connect && socketCLI) {
+      socketCLI.disconnect();
+      resetState();
+    }
+  }, [connect]);
 
   useEffect(() => {
-    socket.connect();
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+    if (!socketCLI) return;
+
+    socketCLI.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {});
+
+    socketCLI.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
+      if (!data) return;
+
+      if (data.is_message) {
+        setSendMessageStatus(STATUS.SUCCESS);
+        setNewMessage(data);
+      } else {
+        setSystemMessage(data);
+      }
+    });
+
+    // socketCLI.on(SOCKET_EVENT.USER_DUPLICATE_LOGIN, ({is_duplicate_login})=>{
+    // })
+
+    // socketCLI.on(SOCKET_EVENT.ANONYMOUS_LOGIN, () => {});
+  }, [socketCLI]);
+
+  // anonymous login
+  useEffect(() => {
+    if (!socketCLI || !anonymousInfo || isLogged) return;
+    const { uid } = anonymousInfo ?? {};
+
+    socketCLI.emit(SOCKET_EVENT.ANONYMOUS_LOGIN, { anonymous_id: uid });
+    setIsLogged(true);
+  }, [socketCLI, anonymousInfo]);
+
+  // countdown
+  useEffect(() => {
+    setRemainingTime(() =>
+      getTimeRemaining(userInfo?.playtime || anonymousInfo?.playtime)
+    );
+  }, [anonymousInfo?.playtime, userInfo?.playtime]);
+
+  useEffect(() => {
+    if (!isCountdown || countdownStatus === STATUS.IN_PROGRESS) return;
+
+    setCountdownStatus(STATUS.IN_PROGRESS);
+
+    timeInterval.current = setInterval(() => {
+      timeDes.current += 1;
+      const checkTimeRemaining =
+        (+(userInfo?.playtime || anonymousInfo?.playtime) || 0) -
+        timeDes.current;
+      const checkTime = checkTimeRemaining > 0 ? checkTimeRemaining : 0;
+      if (checkTimeRemaining <= 0) clearInterval(timeInterval.current);
+      const time = getTimeRemaining(checkTime);
+
+      setRemainingTime(time);
+      userInfo?.playtime
+        ? setUserInfo((prev) => ({ ...prev, playtime: checkTimeRemaining }))
+        : setAnonymousInfo((prev) => ({
+            ...prev,
+            playtime: checkTimeRemaining,
+          }));
+    }, 1000);
+  }, [anonymousInfo?.playtime, userInfo?.playtime, isCountdown]);
 
   const socketProvider = useMemo(
     () => ({
-      socketStatus,
-      setSocketStatus,
-      isCountDown,
-      setIsCountDown,
-      socketClient,
-      setSocketClient,
-      totalTimePlay,
-      setTotalTimePlay,
-      joinRoom,
-      sendMessage,
-      messageSocket,
-      setMessageSocket,
-      stopGame,
-      playGame,
-      leaveGame,
-      setIncrementTime,
-      incrementTime,
-      showModalBuyTime,
-      setShowModalBuyTime,
-      usersInRoom,
-      receiveZera,
-      setReceiveZera,
-      userLogin,
-      userLoginData,
-      userLogout,
+      socketCLI,
+      setConnect,
+      sendMessageStatus,
+      setSendMessageStatus,
+      systemMessage,
+      setSystemMessage,
+      newMessage,
+      setNewMessage,
+      isCountdown,
+      setIsCountdown,
+      remainingTime,
+      setRemainingTime,
+      timeInterval,
+      timeDes,
     }),
     [
-      socketStatus,
-      isCountDown,
-      socketClient,
-      totalTimePlay,
-      messageSocket,
-      joinRoom,
-      sendMessage,
-      stopGame,
-      playGame,
-      leaveGame,
-      setIncrementTime,
-      incrementTime,
-      showModalBuyTime,
-      setShowModalBuyTime,
-      usersInRoom,
-      receiveZera,
-      setReceiveZera,
-      userLogin,
-      userLoginData,
-      userLogout,
+      socketCLI,
+      setConnect,
+      sendMessageStatus,
+      setSendMessageStatus,
+      systemMessage,
+      setSystemMessage,
+      newMessage,
+      setNewMessage,
+      isCountdown,
+      setIsCountdown,
+      remainingTime,
+      setRemainingTime,
+      timeInterval,
+      timeDes,
     ]
   );
 

@@ -99,17 +99,16 @@ const SideBar = forwardRef(
       get(apiURL.get.all_game_categories, null, setCategoriesAtGameIndex);
     }, []);
 
-    const userInfoStatus = useMemo(
-      () =>
-        !localStorage.getItem("accessToken")
-          ? USER_STATUS.NOT_LOGGED
-          : [STATUS.NOT_START, STATUS.IN_PROGRESS].includes(verifyStatus)
-          ? USER_STATUS.VERIFYING
-          : STATUS.SUCCESS
-          ? USER_STATUS.VERIFY_SUCCESS
-          : USER_STATUS.VERIFY_FAIL,
-      [verifyStatus]
-    );
+    const userInfoStatus = useMemo(() => {
+      if (typeof window === "undefined") return;
+      return !localStorage.getItem("accessToken")
+        ? USER_STATUS.NOT_LOGGED
+        : [STATUS.NOT_START, STATUS.IN_PROGRESS].includes(verifyStatus)
+        ? USER_STATUS.VERIFYING
+        : STATUS.SUCCESS
+        ? USER_STATUS.VERIFY_SUCCESS
+        : USER_STATUS.VERIFY_FAIL;
+    }, [verifyStatus]);
 
     return (
       <div
@@ -310,7 +309,7 @@ const UserInfo = () => {
               className="object-cover w-[94px] h-[94px] rounded-[20px]"
             />
             <Tooltip label={username} aria-label="A tooltip">
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis flex-1 w-[90%]">
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis text-center flex-1 w-[90%]">
                 {username}
               </span>
             </Tooltip>

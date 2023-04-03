@@ -3,6 +3,7 @@ export const apiURL = {
     all_article_tag: "/article/tag",
     all_article_by_category: "/article/category",
     all_game_categories: "/game/categories",
+    all_messages_by_room_id: (room_id) => `/game/${room_id}/messages`,
     articles_by_tag: (tagSlug) => `/article/tag/${tagSlug}`,
     articles_by_category: (categorySlug) => `/article/category/${categorySlug}`,
     article_by_slug: (slug) => `/article/detail/${slug}`,
@@ -10,8 +11,9 @@ export const apiURL = {
     games_by_tag: (tagSlug) => `/game/tag/${tagSlug}`,
     hall_of_fame_by_username: (username) => `/hall-of-fames/${username}`,
     my_hall_of_fame: "/hall-of-fames",
-    my_achievement: "/achievement",
+    my_achievement: "/achievements",
     popular_game: "/game/popular-game",
+    get_anonymous_info: (uid) => `/users/anonymous/${uid}`,
   },
   post: {
     forgot_password: "/users/forgot-password",
