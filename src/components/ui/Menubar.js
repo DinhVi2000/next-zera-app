@@ -31,7 +31,7 @@ import { apiURL } from "@/utils/$apiUrl";
 
 const DURATION = 500;
 const Menubar = () => {
-  const { userInfo } = useAuthContext();
+  const { userInfo, getActivities } = useAuthContext();
   const menubar_ref = useRef(null);
   const bg_ref = useRef(null);
 
@@ -90,6 +90,10 @@ const Menubar = () => {
         notifyErrorMessage(toast, e);
       });
   }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    getActivities();
+  }, []);
 
   return (
     <Fragment>
@@ -178,16 +182,14 @@ const PopularGameGrid = memo(function Component({ list }) {
 });
 
 const RecentlyGameGrid = memo(function Component() {
-  const { userInfo } = useAuthContext();
-
-  const { recentlyPlayed } = userInfo ?? {};
+  const { activitiesInfo } = useAuthContext();
 
   return (
     <div className="text-white  transition-all">
       <p className="text-2xl font-bold mb-4">Recently played</p>
       <div className="flex flex-wrap gap-4">
         {/* list */}
-        {recentlyPlayed?.map((e, i) => (
+        {activitiesInfo?.recentlyPlayed?.map((e, i) => (
           <GameItem
             key={i}
             size={1}
@@ -201,7 +203,7 @@ const RecentlyGameGrid = memo(function Component() {
         ))}
 
         {/* loading */}
-        {!recentlyPlayed &&
+        {!activitiesInfo?.recentlyPlayed &&
           Array(6)
             .fill(0)
             .map((e, i) => (

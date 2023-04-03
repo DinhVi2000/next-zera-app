@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { IconZoomIn, IconZoomOut } from "@/resources/icons";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea } from "@/utils/helper";
 import { useSelector } from "react-redux";

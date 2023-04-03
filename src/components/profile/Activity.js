@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from "react";
+import React, { useEffect } from "react";
 import ListGameActivities from "./ListGameActivities";
 import GameItem from "../game/GameItem";
 import Link from "next/link";
@@ -7,7 +7,11 @@ import { staticPaths } from "@/utils/$path";
 import { useAuthContext } from "@/context/auth-context";
 
 function Activities({ setInfoList, setIsOpenTab }) {
-  const { userInfo } = useAuthContext();
+  const { activitiesInfo, getActivities } = useAuthContext();
+
+  useEffect(() => {
+    getActivities();
+  }, []);
 
   return (
     <div className="h-full min-h-[1072px] w-[60%] max-[1176px]:w-full max-[1176px]:mt-5 bg-[#00000080] rounded-[20px] flex flex-col items-center pb-[100px]">
@@ -15,16 +19,16 @@ function Activities({ setInfoList, setIsOpenTab }) {
         Activities
       </h2>
 
-      {userInfo?.mostPlayed ? (
+      {activitiesInfo?.mostPlayed ? (
         <>
           <h3 className="text-[28px] font-bold">Most played</h3>
           <div className="w-[314px] h-[204px] mt-3 mb-5 max-[400px]:w-[90%]">
             <GameItem
-              id={userInfo?.mostPlayed?.game_detail?.id}
-              thumbnail={userInfo?.mostPlayed?.game_detail?.thumbnail}
-              title={userInfo?.mostPlayed?.game_detail?.title}
-              slug={userInfo?.mostPlayed?.game_detail?.slug}
-              superslug={userInfo?.mostPlayed?.game_detail?.superslug}
+              id={activitiesInfo?.mostPlayed?.game_detail?.id}
+              thumbnail={activitiesInfo?.mostPlayed?.game_detail?.thumbnail}
+              title={activitiesInfo?.mostPlayed?.game_detail?.title}
+              slug={activitiesInfo?.mostPlayed?.game_detail?.slug}
+              superslug={activitiesInfo?.mostPlayed?.game_detail?.superslug}
             ></GameItem>
           </div>
         </>
@@ -43,25 +47,25 @@ function Activities({ setInfoList, setIsOpenTab }) {
       )}
 
       <ListGameActivities
-        listGame={userInfo?.recentlyPlayed}
+        listGame={activitiesInfo?.recentlyPlayed}
         payload={"RECENT_GAMES"}
         setInfoList={setInfoList}
         setIsOpenTab={setIsOpenTab}
       />
       <ListGameActivities
-        listGame={userInfo?.loved}
+        listGame={activitiesInfo?.lovedGame}
         payload={"LOVED_GAMES"}
         setInfoList={setInfoList}
         setIsOpenTab={setIsOpenTab}
       />
       <ListGameActivities
-        listGame={userInfo?.playlist}
+        listGame={activitiesInfo?.playlist}
         payload={"PLAYLIST"}
         setInfoList={setInfoList}
         setIsOpenTab={setIsOpenTab}
       />
       <ListGameActivities
-        listGame={userInfo?.purchaseHistory}
+        listGame={activitiesInfo?.purchaseHistory}
         payload={"PURCHASE_HISTORY"}
         setInfoList={setInfoList}
         setIsOpenTab={setIsOpenTab}

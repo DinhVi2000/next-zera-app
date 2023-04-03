@@ -14,7 +14,7 @@ import { useToast } from "@chakra-ui/react";
 function Playlist({ setIsOpenTab, infoList }) {
   const toast = useToast();
 
-  const { userInfo } = useAuthContext();
+  const { activitiesInfo } = useAuthContext();
   const { payload } = infoList;
   const [playlist, setPlaylist] = useState([]);
   const [currentInfo, setCurrentInfo] = useState();
@@ -39,11 +39,11 @@ function Playlist({ setIsOpenTab, infoList }) {
 
   const getPlaylist = async () => {
     try {
-      if (userInfo?.playlist) {
+      if (activitiesInfo?.playlist) {
         if (status === STATUS.SUCCESS) {
           setPlaylist([]);
           Promise.all(
-            userInfo?.playlist?.map((e) => {
+            activitiesInfo?.playlist?.map((e) => {
               getAllGamePlaylist(e?.id).then((data) => {
                 setPlaylist((prev) => {
                   return [...prev, { data, info: e }];
@@ -54,7 +54,7 @@ function Playlist({ setIsOpenTab, infoList }) {
           setStatus(STATUS.NOT_START);
         } else {
           Promise.all(
-            userInfo?.playlist?.map((e) => {
+            activitiesInfo?.playlist?.map((e) => {
               getAllGamePlaylist(e?.id).then((data) => {
                 setPlaylist((prev) => {
                   return [...prev, { data, info: e }];
@@ -71,7 +71,7 @@ function Playlist({ setIsOpenTab, infoList }) {
 
   useEffect(() => {
     getPlaylist();
-  }, [userInfo?.playlist]);
+  }, [activitiesInfo?.playlist]);
 
   return (
     <div className="bg-[#00000080] rounded-[20px]">

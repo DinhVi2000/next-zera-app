@@ -14,6 +14,7 @@ import {
   getGameRecentlyPlayed,
   getMostPlayed,
   getAllPlaylist,
+  getLovedGames,
 } from "@/services/game.service";
 
 import { notifyErrorMessage } from "@/utils/helper";
@@ -60,6 +61,10 @@ const userInfoFunctions = [
     key: "mostPlayed",
     callback: getMostPlayed,
   },
+  {
+    key: "lovedGame",
+    callback: getLovedGames,
+  },
 ];
 
 export const AuthContextProvider = ({ children }) => {
@@ -68,6 +73,7 @@ export const AuthContextProvider = ({ children }) => {
   const { get } = useApi();
 
   const [userInfo, setUserInfo] = useState();
+  const [activitiesInfo, setActivitiesInfo] = useState();
   const [anonymousInfo, setAnonymousInfo] = useState();
   const [token, setToken] = useState();
   const [usernameAuth, setUsernameAuth] = useState();
@@ -93,24 +99,29 @@ export const AuthContextProvider = ({ children }) => {
       });
   };
 
+  const getActivities = () => {
+    try {
+      userInfoFunctions.map(({ key, callback }) =>
+        callback()
+          .then((data) =>
+            setActivitiesInfo((prev) => {
+              if (!prev) prev = {};
+              prev[key] = data;
+              return { ...prev };
+            })
+          )
+          .catch((e) => {
+            throw e;
+          })
+      );
+    } catch (e) {
+      notifyErrorMessage(toast, e);
+    }
+  };
+
   const verifyAccessToken = async () => {
     try {
-      Promise.all([
-        handleSetUserInfo(),
-        ...userInfoFunctions.map(({ key, callback }) =>
-          callback()
-            .then((data) =>
-              setUserInfo((prev) => {
-                if (!prev) prev = {};
-                prev[key] = data;
-                return { ...prev };
-              })
-            )
-            .catch((e) => {
-              throw e;
-            })
-        ),
-      ]);
+      handleSetUserInfo();
     } catch (error) {
       notifyErrorMessage(toast, error);
       clearAuthenticatorData();
@@ -242,6 +253,9 @@ export const AuthContextProvider = ({ children }) => {
       token,
       verifyStatus,
       handleSetUserInfo,
+      setActivitiesInfo,
+      activitiesInfo,
+      getActivities,
     }),
     [
       anonymousInfo,

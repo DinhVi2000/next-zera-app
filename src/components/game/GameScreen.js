@@ -1,12 +1,15 @@
+import { useAuthContext } from "@/context/auth-context";
 import { useSocketContext } from "@/context/socket-context";
 import { IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
-import { SOCKET_EVENT, STATUS_PLAY_GAME } from "@/utils/constant";
+import { SOCKET_EVENT } from "@/utils/constant";
 import { getArea } from "@/utils/helper";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
 import GameScreenBar from "./GameScreenBar";
 
 const GameScreen = ({ thumbnail, play_url, title }) => {
+  const { getActivities } = useAuthContext();
+
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
   const back_tab_mb_ref = useRef();
@@ -14,7 +17,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const { socketCLI, isCountdown, setIsCountdown } = useSocketContext();
+  const { socketCLI, setIsCountdown } = useSocketContext();
 
   // handle zoom out
   const handleToggleZoomOutGameScreen = () => {
@@ -54,7 +57,9 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     });
   }, []);
 
-  //handle stop/play game
+  useEffect(() => {
+    getActivities();
+  }, []);
 
   return (
     <div
