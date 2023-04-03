@@ -77,9 +77,9 @@ function InfoUser() {
             </div>
           </div>
         </Tooltip>
-        <div className="pl-[42px] max-[1210px]:pl-0 max-[860px]:pl-3 flex items-end rounded-[20px] mt-[-100px] max-[650px]:flex-col max-[650px]:items-center">
+        <div className="flex items-end rounded-[20px] mt-[-100px] max-[650px]:flex-col max-[650px]:items-center">
           <div
-            className="group w-[204px] rounded-[20px] cursor-pointer relative z-10 mr-4 max-[881px]:mr-1"
+            className="group w-[204px] rounded-[20px] cursor-pointer relative z-10 max-[881px]:mr-1 ml-4"
             onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
           >
             <ImageLoading
@@ -96,36 +96,40 @@ function InfoUser() {
           </div>
 
           <div
-            className={`flex justify-between max-[650px]:flex-col max-[650px]:flex-center flex-1 max-[650px]:flex-[0] w-[80%] relative max-[1221px]:top-3 max-[990px]:top-5 ${
+            className={`flex justify-between max-[650px]:flex-col max-[650px]:flex-center flex-1 max-[650px]:flex-[0] w-[77%] max-[1211px]:w-[70%] max-[1211px]:w-[60%] max-[651px]:w-full relative ${
               showMore && quote?.length > 0
-                ? "max-[1178px]:top-10 max-[790px]:top-10 max-[650px]:top-0 "
-                : "max-[790px]:top-1"
+                ? "max-[1178px]:top-5 max-[990px]:top-10 max-[790px]:top-10 max-[650px]:top-0 "
+                : "max-[790px]:top-1 max-[990px]:top-0"
             }`}
           >
-            <div className="relative">
+            <div className="relative max-[1545px]:w-[60%] max-[651px]:w-full max-[1545px]:w-[55%] pl-4 max-[830px]:pl-2">
               <div className="w-auto max-[650px]:text-center max-[650px]:w-auto">
-                <p className="font-semibold text-[28px]">{username}</p>
+                <Tooltip label={username}>
+                  <p className="font-semibold text-[28px] whitespace-nowrap text-ellipsis overflow-hidden">
+                    {username}
+                  </p>
+                </Tooltip>
               </div>
-              <div className="relative w-auto group cursor-pointer top-0 max-[650px]:text-center ">
+              <div className="relative w-full group cursor-pointer top-0 max-[650px]:text-center ">
                 <p
                   onClick={() => handleOpenEdit(SHOP_TAB.AVATAR)}
                   className={`font-medium max-[650px]:w-[100%] max-[650px]:px-10 ${
                     showMore
-                      ? "max-[650px]:h-fit text-[unset] whitespace-normal w-[700px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[250px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
-                      : "max-[650px]:h-[30px] overflow-hidden text-ellipsis whitespace-nowrap w-[500px] max-[1550px]:w-[500px] max-[1220px]:w-[400px] max-[1177px]:w-[280px] max-[990px]:w-[250px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
+                      ? "max-[650px]:h-fit text-[unset] whitespace-normal w-[700px] max-[1550px]:w-full max-[1220px]:w-[380px] max-[1177px]:w-[280px] max-[990px]:w-[250px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
+                      : "max-[650px]:h-[30px] overflow-hidden text-ellipsis whitespace-nowrap w-full max-[1220px]:w-[380px] max-[1177px]:w-[280px] max-[990px]:w-[250px] max-[790px]:w-[250px] max-[662px]:w-[100px] max-[650px]:w-full"
                   }`}
                 >
                   {quote}
                   <IconEdit
                     viewBox="0 0 42 42"
-                    className="absolute top-[-2%] right-[-25px] group-hover:block hidden"
+                    className="absolute top-[-2%] max-[1545px]:right-[-30px] right-[70px] min-[1300px]:group-hover:block hidden"
                   />
                 </p>
                 {quote?.length > 55 && (
                   <span
                     className={`inline-block text-[#fc3c9c] font-semibold text-left w-fit mx-auto ${
                       showMore
-                        ? "absolute top-11 max-[1220px]:top-16 max-[1178px]:top-[90px] max-[990px]:top-[65px] max-[790px]:top-[90px] max-[650px]:static"
+                        ? "absolute top-11 max-[1220px]:top-16 max-[1178px]:top-[90px] max-[990px]:top-[90px] max-[650px]:static"
                         : ""
                     }`}
                     onClick={() => setShowMore((value) => !value)}

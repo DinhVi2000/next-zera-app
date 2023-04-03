@@ -1,5 +1,7 @@
+import { useModalContext } from "@/context/modal-context";
 import { IconLogo, IconSearch, IconX } from "@/resources/icons";
-import { STATUS } from "@/utils/constant";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
+import Link from "next/link";
 import React, { Fragment, memo } from "react";
 
 const SearchBar = ({
@@ -8,11 +10,18 @@ const SearchBar = ({
   onChangeInput,
   searchStatus,
 }) => {
+  const { openModal } = useModalContext();
+
   return (
     <div className="pr-8 relative w-full max-w-[650px] mr-10 z-50">
       <div className="bg-white w-full flex h-16 rounded-2xl overflow-hidden">
-        <button className="px-4 border-r-2 transition-all hover:bg-[#f0f5fc] ">
-          <IconLogo className="w-7 h-full" />
+        <button
+          className="px-4 border-r-2 transition-all hover:bg-[#f0f5fc]"
+          onClick={() => openModal(MODAL_NAME.NONE)}
+        >
+          <Link href={"/"}>
+            <IconLogo className="w-7 h-full" />
+          </Link>
         </button>
         {/* input */}
         <label htmlFor="search-input" className="flex w-full justify-between">

@@ -310,7 +310,7 @@ const UserInfo = () => {
               className="object-cover w-[94px] h-[94px] rounded-[20px]"
             />
             <Tooltip label={username} aria-label="A tooltip">
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis flex-1">
+              <span className="whitespace-nowrap overflow-hidden text-ellipsis flex-1 w-[90%]">
                 {username}
               </span>
             </Tooltip>

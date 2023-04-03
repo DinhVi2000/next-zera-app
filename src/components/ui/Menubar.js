@@ -30,8 +30,8 @@ import { useSelector } from "react-redux";
 import { apiURL } from "@/utils/$apiUrl";
 
 const DURATION = 500;
-
 const Menubar = () => {
+  const { userInfo } = useAuthContext();
   const menubar_ref = useRef(null);
   const bg_ref = useRef(null);
 
@@ -107,7 +107,6 @@ const Menubar = () => {
             searchStatus={searchStatus}
             setSearchStatus={setSearchStatus}
           />
-
           {/* content */}
           {searchValue.trim() && <SearchResult results={gamesResult} />}
           {!searchValue.trim() && (
@@ -119,7 +118,7 @@ const Menubar = () => {
               />
               <section className="transition-all">
                 <PopularGameGrid list={popularGames} />
-                <RecentlyGameGrid />
+                {userInfo && <RecentlyGameGrid />}
               </section>
             </section>
           )}

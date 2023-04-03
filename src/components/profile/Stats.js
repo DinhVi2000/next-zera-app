@@ -4,7 +4,11 @@ import { useAuthContext } from "@/context/auth-context";
 import { Tooltip, useToast } from "@chakra-ui/react";
 import { IconCopy, IconPlus } from "@/resources/icons";
 import { statsUser } from "@/services/user.service";
-import { getBetweenTwoDate, notifyErrorMessage } from "@/utils/helper";
+import {
+  getBetweenTwoDate,
+  notifyErrorMessage,
+  notifySuccessMessage,
+} from "@/utils/helper";
 import Link from "next/link";
 
 function Stats() {
@@ -27,6 +31,7 @@ function Stats() {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`${userInfo?.ref_link}`);
+    notifySuccessMessage(toast, "Copy successful");
   };
 
   return (
@@ -59,17 +64,14 @@ function Stats() {
           Joined {getBetweenTwoDate(stats?.joined)}
         </p>
       </div>
-      <div
-        className="rounded-b-[20px] bg-[#8B5CF6] py-[18px] px-4 flex items-center justify-center cursor-pointer"
-        onClick={handleCopy}
-      >
+      <div className="rounded-b-[20px] bg-[#8B5CF6] py-[18px] px-4 flex items-center justify-center cursor-pointer">
         <Tooltip label="Copy" placement="bottom">
-          <div className="flex items-center">
+          <div className="flex-center" onClick={handleCopy}>
             Referral link:{" "}
-            <span className="text-[#FBCFE8] ml-2 flex items-center">
+            <p className="text-[#FBCFE8] ml-2 whitespace-nowrap overflow-hidden text-ellipsis w-[20%]">
               {userInfo?.username}
-              <IconCopy viewBox="0 0 30 30" className="ml-2" />
-            </span>
+            </p>
+            <IconCopy viewBox="0 0 30 30" className="ml-2" />
           </div>
         </Tooltip>
       </div>

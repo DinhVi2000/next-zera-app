@@ -5,7 +5,7 @@ import { IconHeart } from "@/resources/icons";
 import { useAuthContext } from "@/context/auth-context";
 import { useSelector } from "react-redux";
 
-import { addGameLove } from "@/services/game.service";
+import { addGameLove, getLovedGames } from "@/services/game.service";
 
 import { Tooltip, useToast } from "@chakra-ui/react";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
@@ -20,7 +20,24 @@ function AddLove() {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const [isLoved, setIsLoved] = useState();
-  const [status, setStatus] = useState(STATUS.SUCCESS);
+  const [status, setStatus] = useState(STATUS.NOT_START);
+
+  const getLoved = async () => {
+    try {
+      setStatus(STATUS.IN_PROGRESS);
+      const data = await getLovedGames();
+      if (data?.success) {
+        setStatus(STATUS.SUCCESS);
+        setIsLoved(!!data?.data?.find((e) => e?.id === info?.id));
+      }
+    } catch (e) {
+      notifyErrorMessage(toast, e);
+    }
+  };
+
+  useEffect(() => {
+    getLoved();
+  }, []);
 
   const handleLoveGame = async () => {
     try {
@@ -50,24 +67,18 @@ function AddLove() {
     }
   };
 
-  useEffect(() => {
-    if (userInfo?.loved && info?.id) {
-      setIsLoved(!!userInfo?.loved?.find((e) => e?.id === info?.id));
-    }
-  }, [info]);
-
   return (
     <Tooltip label="Love Game" placement="bottom">
       <div className="flex-center w-10">
-        {status === STATUS.SUCCESS ? (
+        {status !== STATUS.SUCCESS ? (
+          <ButtonLoading isLoading disabled={status === STATUS.NOT_START} />
+        ) : (
           <IconHeart
             className={`cursor-pointer transition-all duration-150 w-8 h-8 active:scale-90 ${
               isLoved ? "text-[#fd384f]" : "text-[#929292]"
             }`}
             onClick={handleLoveGame}
           />
-        ) : (
-          <ButtonLoading isLoading disabled={status === STATUS.NOT_START} />
         )}
       </div>
     </Tooltip>
