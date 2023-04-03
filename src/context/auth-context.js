@@ -12,7 +12,6 @@ import { loginWithEmail } from "@/services/auth.service";
 import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
 import {
   getGameRecentlyPlayed,
-  getLovedGames,
   getMostPlayed,
   getAllPlaylist,
 } from "@/services/game.service";
@@ -48,10 +47,6 @@ const userInfoFunctions = [
   {
     key: "recentlyPlayed",
     callback: getGameRecentlyPlayed,
-  },
-  {
-    key: "loved",
-    callback: getLovedGames,
   },
   {
     key: "playlist",

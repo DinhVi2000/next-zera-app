@@ -249,7 +249,7 @@ const getLovedGames = async () => {
       throw new Error(data?.message);
     }
 
-    return data?.data;
+    return data;
   } catch (e) {
     throw e;
   }
