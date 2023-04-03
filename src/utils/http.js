@@ -61,7 +61,6 @@ class Http {
         ) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("username");
-          window.location.href = "/login";
         }
         return this.handleError(error?.response?.data?.error || error);
       }

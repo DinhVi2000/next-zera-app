@@ -23,10 +23,14 @@ function AddLove() {
   const [status, setStatus] = useState(STATUS.NOT_START);
 
   useEffect(() => {
-    setStatus(STATUS.IN_PROGRESS);
-    if (activitiesInfo) {
-      setIsLoved(activitiesInfo?.lovedGame?.find((e) => e?.id === info?.id));
+    if (!userInfo) {
       setStatus(STATUS.SUCCESS);
+    } else {
+      setStatus(STATUS.IN_PROGRESS);
+      if (activitiesInfo) {
+        setIsLoved(activitiesInfo?.lovedGame?.find((e) => e?.id === info?.id));
+        setStatus(STATUS.SUCCESS);
+      }
     }
   }, [activitiesInfo]);
 
