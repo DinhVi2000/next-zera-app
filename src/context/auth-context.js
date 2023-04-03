@@ -26,6 +26,8 @@ import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
 
 import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
+import { useApi } from "@/hooks/useApi";
+import { apiURL } from "@/utils/$apiUrl";
 
 const AuthContext = createContext(null);
 
@@ -63,6 +65,7 @@ const userInfoFunctions = [
 export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const toast = useToast();
+  const { get } = useApi();
 
   const [userInfo, setUserInfo] = useState();
   const [anonymousInfo, setAnonymousInfo] = useState();
@@ -148,6 +151,7 @@ export const AuthContextProvider = ({ children }) => {
 
     setToken("");
     setUsernameAuth("");
+    setAnonymousInfo();
     setUserInfo();
   };
 
@@ -157,6 +161,11 @@ export const AuthContextProvider = ({ children }) => {
         const { user } = data ?? {};
         const { uid } = user ?? {};
         uid && setAnonymousInfo((prev) => ({ ...prev, ...user }));
+
+        return get(apiURL.get.get_anonymous_info(uid));
+      })
+      .then((data) => {
+        setAnonymousInfo((prev) => ({ ...prev, ...data }));
       })
       .catch((e) => notifyErrorMessage(toast, e));
   };
@@ -180,7 +189,7 @@ export const AuthContextProvider = ({ children }) => {
     const accessToken = localStorage.getItem("accessToken");
     const username = localStorage.getItem("username");
 
-    if (!accessToken || !username) loginWithAnonymously();
+    if ((!accessToken || !username) && !isAuthnrPath) loginWithAnonymously();
 
     setToken(accessToken || "");
     setUsernameAuth(username || "");

@@ -86,8 +86,9 @@ const SOCKET_EVENT = {
   USER_JOIN_ROOM: "joinRoom",
   USER_LEAVE_ROOM: "leaveRoom",
   PLAY_GAME: "playGame",
-
   ANONYMOUS_LOGIN: "loginAnonymous",
+  USER_DUPLICATE_LOGIN: "duplicateLogin",
+
   USER_EMIT_REWARD: "emitReward",
   USER_LOGIN: "userLogin",
   USER_LOGOUT: "userLogout",

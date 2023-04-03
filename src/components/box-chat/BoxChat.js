@@ -4,25 +4,14 @@ import React, { useRef, useState, memo, useEffect } from "react";
 import moment from "moment";
 import Image from "next/image";
 
-import ava from "@/../public/images/ava1.png";
 import { IconSendMes } from "@/resources/icons";
 import { useAuthContext } from "@/context/auth-context";
 import { getArea } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
-import { getMessages } from "@/services/game.service";
 import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
-import {
-  MAX_LIMIT_MESSAGE,
-  MESSAGE_MAX_LENGTH,
-  MODAL_NAME,
-  SOCKET_EVENT,
-  STATUS,
-  STATUS_PLAY_GAME,
-} from "@/utils/constant";
+import { MODAL_NAME, SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
-import { useToast } from "@chakra-ui/react";
-import { notifyErrorMessage } from "@/utils/helper";
 import { staticPaths } from "@/utils/$path";
 import { useSocketContext } from "@/context/socket-context";
 import { useApi } from "@/hooks/useApi";
@@ -30,18 +19,17 @@ import { apiURL } from "@/utils/$apiUrl";
 
 function BoxChat({ area }) {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
-  const dispatch = useDispatch();
   const { get } = useApi();
 
   const [messages, setMessages] = useState([]);
-  const [limitChat, setLimitChat] = useState({
-    lastTime: moment().startOf("minute").minutes(),
-    limitMessage: 0,
-  });
-  const roomCurrent = info?.id || 0;
+  // const [limitChat, setLimitChat] = useState({
+  //   lastTime: moment().startOf("minute").minutes(),
+  //   limitMessage: 0,
+  // });
+
   const inputRef = useRef();
-  const refScroll = useRef();
-  const refBoxChat = useRef();
+  const boxChatWrapperRef = useRef();
+  const boxChatRef = useRef();
 
   const { userInfo, token, verifyStatus } = useAuthContext();
   const { openModal } = useModalContext();
@@ -61,7 +49,6 @@ function BoxChat({ area }) {
 
   useEffect(() => {
     if (!socketCLI || verifyStatus !== STATUS.SUCCESS || !info) return;
-
     socketCLI.emit(SOCKET_EVENT.USER_JOIN_ROOM, { room_id: info.id, token });
   }, [socketCLI, verifyStatus, info]);
 
@@ -76,17 +63,25 @@ function BoxChat({ area }) {
   useEffect(() => {
     if (sendMessageStatus === STATUS.SUCCESS && newMessage) {
       setMessages((prev) => [...prev, newMessage]);
-      document.getElementById("bottom_box_chat").scrollIntoView({
+      boxChatRef.current.scrollTo({
+        bottom: 0,
+        left: 0,
         behavior: "smooth",
       });
       inputRef.current.value = "";
+
+      // scroll to Bottom
+      if (boxChatWrapperRef.current) {
+        boxChatWrapperRef.current.scrollTo({
+          top: boxChatRef.current.offsetHeight,
+          behavior: "smooth",
+        });
+      }
     }
   }, [sendMessageStatus, newMessage]);
 
   useEffect(() => {
-    if (systemMessage) {
-      setMessages((prev) => [...prev, systemMessage]);
-    }
+    if (systemMessage) setMessages((prev) => [...prev, systemMessage]);
   }, [systemMessage]);
 
   return (
@@ -139,16 +134,14 @@ function BoxChat({ area }) {
           <div className="text-[10px] h-[245px] pl-[10px] pr-[3px]">
             <div
               className="overflow-y-auto h-full flex flex-col"
-              id="bottom_box_chat"
+              ref={boxChatWrapperRef}
             >
-              {/* Event */}
-              <div className="all-mess" ref={refBoxChat}>
-                {messages &&
-                  messages?.map((msg, i) => {
-                    return <MessageItem key={i} msg={msg} />;
-                  })}
+              {/* event */}
+              <div className="all-mess" ref={boxChatRef}>
+                {messages?.map((msg, i) => (
+                  <MessageItem key={i} msg={msg} />
+                ))}
               </div>
-              <div className=""></div>
             </div>
           </div>
         </>

@@ -14,7 +14,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const { socketCLI } = useSocketContext();
+  const { socketCLI, isCountdown, setIsCountdown } = useSocketContext();
 
   // handle zoom out
   const handleToggleZoomOutGameScreen = () => {
@@ -44,6 +44,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     if (!socketCLI) return;
     socketCLI.emit(SOCKET_EVENT.PLAY_GAME);
     setIsPlaying(true);
+    setIsCountdown(true);
   };
 
   // handle zoom out
