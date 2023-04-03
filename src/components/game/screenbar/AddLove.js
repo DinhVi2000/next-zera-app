@@ -5,7 +5,7 @@ import { IconHeart } from "@/resources/icons";
 import { useAuthContext } from "@/context/auth-context";
 import { useSelector } from "react-redux";
 
-import { addGameLove, getLovedGames } from "@/services/game.service";
+import { addGameLove } from "@/services/game.service";
 
 import { Tooltip, useToast } from "@chakra-ui/react";
 import { notifyErrorMessage, notifySuccessMessage } from "@/utils/helper";
@@ -16,28 +16,19 @@ import { useModalContext } from "@/context/modal-context";
 function AddLove() {
   const toast = useToast();
   const { openModal } = useModalContext();
-  const { userInfo } = useAuthContext();
+  const { userInfo, activitiesInfo } = useAuthContext();
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const [isLoved, setIsLoved] = useState();
   const [status, setStatus] = useState(STATUS.NOT_START);
 
-  const getLoved = async () => {
-    try {
-      setStatus(STATUS.IN_PROGRESS);
-      const data = await getLovedGames();
-      if (data?.success) {
-        setStatus(STATUS.SUCCESS);
-        setIsLoved(!!data?.data?.find((e) => e?.id === info?.id));
-      }
-    } catch (e) {
-      notifyErrorMessage(toast, e);
-    }
-  };
-
   useEffect(() => {
-    getLoved();
-  }, []);
+    setStatus(STATUS.IN_PROGRESS);
+    if (activitiesInfo) {
+      setIsLoved(activitiesInfo?.lovedGame?.find((e) => e?.id === info?.id));
+      setStatus(STATUS.SUCCESS);
+    }
+  }, [activitiesInfo]);
 
   const handleLoveGame = async () => {
     try {

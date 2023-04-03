@@ -21,7 +21,7 @@ import ButtonLoading from "../loading/ButtonLoading";
 
 const ModalBuy = () => {
   const toast = useToast();
-  const { userInfo, usernameAuth, setUserInfo } = useAuthContext();
+  const { userInfo, usernameAuth, setActivitiesInfo } = useAuthContext();
   const { zera } = userInfo || {};
   const { openModal, payload, setStatus } = useModalContext();
   const setSocketStatus = null;
@@ -55,12 +55,12 @@ const ModalBuy = () => {
       if (res.success) {
         Promise.all([
           getUserInfo(usernameAuth).then((res) => {
-            setUserInfo((prev) => {
+            setActivitiesInfo((prev) => {
               return { ...prev, ...res?.data };
             });
           }),
           getPurchaseHistory().then((data) =>
-            setUserInfo((prev) => {
+            setActivitiesInfo((prev) => {
               return { ...prev, purchaseHistory: data };
             })
           ),

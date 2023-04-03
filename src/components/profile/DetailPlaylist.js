@@ -24,7 +24,7 @@ import { useAuthContext } from "@/context/auth-context";
 
 function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
   const toast = useToast();
-  const { setUserInfo } = useAuthContext();
+  const { setActivitiesInfo } = useAuthContext();
 
   const { openModal, setPayload } = useModalContext();
   const [showMenu, setShowMenu] = useState(false);
@@ -53,7 +53,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
       const data = await deleteGamePlaylist(id);
       if (data.success) {
         getAllPlaylist().then((data) =>
-          setUserInfo((prev) => {
+          setActivitiesInfo((prev) => {
             return { ...prev, playlist: data };
           })
         );

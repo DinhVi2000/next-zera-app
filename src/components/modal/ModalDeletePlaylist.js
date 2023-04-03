@@ -13,7 +13,7 @@ import { useAuthContext } from "@/context/auth-context";
 import { deletePlaylist, getAllPlaylist } from "@/services/game.service";
 
 const ModalDeletePlaylist = () => {
-  const { setUserInfo } = useAuthContext();
+  const { setActivitiesInfo } = useAuthContext();
 
   const toast = useToast();
   const { openModal, payload } = useModalContext();
@@ -43,7 +43,7 @@ const ModalDeletePlaylist = () => {
       const data = await deletePlaylist(payload?.currentInfo?.id);
       if (data?.success) {
         getAllPlaylist().then((data) =>
-          setUserInfo((prev) => {
+          setActivitiesInfo((prev) => {
             return { ...prev, playlist: data };
           })
         ),

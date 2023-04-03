@@ -16,7 +16,6 @@ const user = createSlice({
       games_played: null,
       playstreak: null,
     },
-    recentlyPlayedGames: null,
   },
   reducers: {
     setInfo: (state, action) => {
@@ -27,9 +26,6 @@ const user = createSlice({
     },
     setHallOfFame: (state, action) => {
       state.hallOfFame = { ...state.hallOfFame, ...action.payload };
-    },
-    setRecentlyPlayedGames: (state, action) => {
-      state.recentlyPlayedGames = action.payload;
     },
   },
 });
