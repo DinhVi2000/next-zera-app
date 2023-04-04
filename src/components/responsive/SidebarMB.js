@@ -155,12 +155,14 @@ const SidebarMB = ({ className, childClassName }) => {
       </div>
 
       <div className="relative">
-        <SideBar
-          className="invisible rounded-2xl max-[991px]:block fixed-imp overflow-hidden top-4 backdrop-blur-[10px] opacity-0 transition-all"
-          shopClassName="hidden"
-          id="sidebar"
-          ref={sidebarRef}
-        />
+        {isMatchTabletMobile && (
+          <SideBar
+            className="invisible rounded-2xl max-[991px]:block fixed-imp overflow-hidden top-4 backdrop-blur-[10px] opacity-0 transition-all"
+            shopClassName="hidden"
+            id="sidebar"
+            ref={sidebarRef}
+          />
+        )}
       </div>
     </div>
   );

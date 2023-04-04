@@ -1,17 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useRef } from "react";
+
 import { useModalContext } from "@/context/modal-context";
+
 import { MODAL_NAME } from "@/utils/constant";
 import { sleep } from "@/utils/helper";
+
 import BoxModal from "./BoxModal";
+
 import { IconClose } from "@/resources/icons";
-import { useAuthContext } from "@/context/auth-context";
 
 const ModalUsersOnline = () => {
   const { openModal } = useModalContext();
+
   const modalTimeRef = useRef(null);
+
   const DURATION = 0;
-  const { userInfo } = useAuthContext();
+
   const handleCloseModal = useCallback(() => {
     modalTimeRef.current.classList?.remove("animation-open-modal");
     document.body.style.overflow = "auto";

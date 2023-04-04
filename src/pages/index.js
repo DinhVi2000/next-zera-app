@@ -15,7 +15,10 @@ import { useAuthContext } from "@/context/auth-context";
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 
+import { useRouter } from "next/router";
+
 export default function Home() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { call } = useApi();
 
@@ -42,6 +45,11 @@ export default function Home() {
       openModal(MODAL_NAME.DAILY_BONUS);
     }
   }, [userInfo]);
+
+  useEffect(() => {
+    if (!router?.query?.isDuplicate) return;
+    openModal(MODAL_NAME.RESET_LOGIN);
+  }, [router]);
 
   return (
     <>
