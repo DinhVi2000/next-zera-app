@@ -102,9 +102,12 @@ const RankingItem = memo(function Component({ place, user, quantity }) {
                     py-[15px] px-20 max-[551px]:px-3"
       >
         <span>{place}</span>
-        <span className="absolute left-1/2 -translate-x-1/2 hover:underline-offset-1 hover:underline hover:text-pink-500">
-          {username}
-        </span>
+        <Tooltip label={username}>
+          <span className="absolute left-1/2 -translate-x-1/2 hover:underline-offset-1 hover:underline hover:text-pink-500 text-center text-ellipsis whitespace-nowrap overflow-hidden w-[150px]">
+            {username}
+          </span>
+        </Tooltip>
+
         <Tooltip label={quantity > 999 && quantity} placement="top">
           <span>{abbreviateNumber(quantity)}</span>
         </Tooltip>

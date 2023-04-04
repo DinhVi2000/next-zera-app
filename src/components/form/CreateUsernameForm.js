@@ -74,7 +74,7 @@ const CreateUsernameForm = () => {
       regex: [hasLeastOneLowercase],
     },
     {
-      label: "o Accepts numbers, letters, and underscores",
+      label: "o Accepts numbers, lowercase letters, and underscores",
       regex: [preventSpace],
     },
     {
