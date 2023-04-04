@@ -302,7 +302,6 @@ const deletePlaylist = async (id) => {
 const getAllGamePlaylist = async (id) => {
   try {
     const { data } = await http.get(`/game/playlist/${id}/item`);
-    console.log("data :", data);
 
     if (!data.success) {
       throw new Error(data?.message);

@@ -18,6 +18,9 @@ import { DEFAULT_AVATAR_SRC, QUANTITY_BY_TAB } from "@/utils/constant";
 import { sleep } from "@/utils/helper";
 
 import ImageLoading from "@/components/loading/ImageLoading";
+import { Tooltip } from "@chakra-ui/react";
+import Link from "next/link";
+import { dynamicPaths } from "@/utils/$path";
 
 const MEDAL_BASE_PLACES = {
   1: (
@@ -94,16 +97,24 @@ const Rank = ({ className = "", data, places, tab, ...props }) => {
     >
       <div className="inline-block mb-5">
         {/* avatar */}
-        <ImageLoading
-          src={delayData?.user?.avatar?.url || DEFAULT_AVATAR_SRC}
-          alt={delayData?.user?.avatar?.name}
-          className="w-[94px] h-[94px] object-cover inline-block rounded-[10px]"
-        />
+        <Link
+          href={dynamicPaths.achievements_by_username(
+            delayData?.user?.username
+          )}
+        >
+          <ImageLoading
+            src={delayData?.user?.avatar?.url || DEFAULT_AVATAR_SRC}
+            alt={delayData?.user?.avatar?.name}
+            className="w-[94px] h-[94px] object-cover block rounded-[10px] mx-auto"
+          />
+        </Link>
 
         {/* username */}
-        <p className="text-base text-white text-center font-medium mt-2.5">
-          {delayData?.user?.username}
-        </p>
+        <Tooltip label={delayData?.user?.username}>
+          <p className="text-base text-white text-center font-medium mt-2.5 text-ellipsis whitespace-nowrap overflow-hidden w-[150px]">
+            {delayData?.user?.username}
+          </p>
+        </Tooltip>
       </div>
 
       <div className="relative">

@@ -160,7 +160,7 @@ const Shop = () => {
                 ))}
 
               <div
-                className={`absolute z-50 right-0 top-[-13px] max-[990.9px]:top-[70px] max-[990.9px]:right-[30px] ${
+                className={`absolute z-30 right-0 top-[-13px] max-[990.9px]:top-[70px] max-[990.9px]:right-[30px] ${
                   tab === SHOP_TAB.PLAYTIMES
                     ? "max-[550px]:top-[67px]"
                     : "max-[550px]:top-[130px]"

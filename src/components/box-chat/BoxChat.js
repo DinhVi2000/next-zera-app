@@ -12,7 +12,7 @@ import ImageLoading from "../loading/ImageLoading";
 import Link from "next/link";
 import { MODAL_NAME, SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
-import { staticPaths } from "@/utils/$path";
+import { dynamicPaths, staticPaths } from "@/utils/$path";
 import { useSocketContext } from "@/context/socket-context";
 import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
@@ -192,30 +192,35 @@ const MessageItem = ({ msg }) => {
           }`}
         >
           {msg.is_message && (
-            <div
-              className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${
-                Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : ""
-              }`}
+            <Link
+              href={dynamicPaths.achievements_by_username(msg?.user?.username)}
             >
-              {msg?.user?.avatar ? (
-                <ImageLoading
-                  alt=""
-                  src={msg?.user?.avatar}
-                  className="w-8 h-8 rounded-full"
-                />
-              ) : (
-                <Image
-                  src="/avatar-1.svg"
-                  alt="Image default"
-                  width="16"
-                  height="16"
-                  className="w-8 h-8 rounded-full"
-                />
-              )}
-              <div className="w-fit max-w-[150px] break-words text-sm">
-                {msg?.user?.username}
+              <div
+                className={`flex items-center text-[#ffffff80] mb-[2px] gap-1 ${
+                  Number(userInfo?.id) === msg.user_id ? "flex-row-reverse" : ""
+                }`}
+              >
+                {msg?.user?.avatar ? (
+                  <ImageLoading
+                    alt=""
+                    src={msg?.user?.avatar}
+                    className="w-8 h-8 rounded-full"
+                  />
+                ) : (
+                  <Image
+                    src="/avatar-1.svg"
+                    alt="Image default"
+                    width="16"
+                    height="16"
+                    className="w-8 h-8 rounded-full"
+                  />
+                )}
+
+                <div className="w-fit max-w-[150px] break-words text-sm">
+                  {msg?.user?.username}
+                </div>
               </div>
-            </div>
+            </Link>
           )}
           <div
             className={`rounded-md max-w-[150px] w-fit items-end ${

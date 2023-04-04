@@ -31,7 +31,7 @@ function Stats() {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`${userInfo?.ref_link}`);
-    notifySuccessMessage(toast, "Copy successful");
+    notifySuccessMessage(toast, "Copy Successfully");
   };
 
   return (

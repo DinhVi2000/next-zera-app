@@ -142,7 +142,7 @@ function DetailPlaylist({ currentInfo, setIsDetail, setStatus, status }) {
       <div>
         {loading ? (
           <div className="p-5">
-            <div className="grid grid-cols-10 gap-x-5">
+            <div className="flex flex-wrap gap-5">
               {Array(6)
                 .fill(0)
                 ?.map((e, i) => (
