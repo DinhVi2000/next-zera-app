@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 import Menubar from "@/components/ui/Menubar";
 import ModalEditProfile from "@/components/modal/ModalEditProfile";
@@ -15,8 +15,6 @@ import ModalDeletePlaylist from "@/components/modal/ModalDeletePlaylist";
 import ModalResetLogin from "@/components/modal/ModalResetLogin";
 
 import { MODAL_NAME, STATUS } from "@/utils/constant";
-
-import { useAuthContext } from "./auth-context";
 
 const ModalContext = createContext(null);
 
@@ -51,10 +49,6 @@ export const ModalContextProvider = ({ children }) => {
   const [payload, setPayload] = useState();
   const [modal, setModal] = useState(MODAL_NAME.NONE);
   const [status, setStatus] = useState(STATUS.NOT_START);
-  const { usernameAuth, logout } = useAuthContext();
-
-  // TODO: Only let the effect call fn once when mound, the rest only setState when status === success
-  // vd: const [status, setStatus] = useState(STATUS.INIT);
 
   const closeModal = () => {
     setModal(MODAL_NAME.NONE);

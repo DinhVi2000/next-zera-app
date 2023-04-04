@@ -9,7 +9,11 @@ import {
   useState,
 } from "react";
 import { loginWithEmail } from "@/services/auth.service";
-import { getPurchaseHistory, getUserInfo } from "@/services/user.service";
+import {
+  getPurchaseHistory,
+  getUserInfo,
+  getUserIp,
+} from "@/services/user.service";
 import {
   getGameRecentlyPlayed,
   getMostPlayed,
@@ -29,6 +33,7 @@ import { signInAnonymously } from "firebase/auth";
 import { auth } from "@/configs/firebaseConfig";
 import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
+import Script from "next/script";
 
 const AuthContext = createContext(null);
 
@@ -167,11 +172,14 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const loginWithAnonymously = async () => {
-    signInAnonymously(auth)
+    // signInAnonymously(auth)
+    getUserIp()
       .then((data) => {
-        const { user } = data ?? {};
-        const { uid } = user ?? {};
-        uid && setAnonymousInfo((prev) => ({ ...prev, ...user }));
+        // const { user } = data ?? {};
+        // const { uid } = user ?? {};
+
+        const uid = data?.ipAddress;
+        uid && setAnonymousInfo((prev) => ({ ...prev, uid }));
 
         return get(apiURL.get.get_anonymous_info(uid));
       })
@@ -277,6 +285,7 @@ export const AuthContextProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ authProvider }}>
+      <Script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" />
       {!isAuthenticationPage && children}
     </AuthContext.Provider>
   );

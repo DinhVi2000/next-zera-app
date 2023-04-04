@@ -10,7 +10,12 @@ import {
   useState,
 } from "react";
 
-import { SOCKET_EVENT, STATUS, STATUS_PLAY_GAME } from "@/utils/constant";
+import {
+  MODAL_NAME,
+  SOCKET_EVENT,
+  STATUS,
+  STATUS_PLAY_GAME,
+} from "@/utils/constant";
 
 // import { socket } from "@/configs/socket";
 
@@ -18,6 +23,8 @@ import { config } from "@/envs";
 import { io } from "socket.io-client";
 import { useAuthContext } from "./auth-context";
 import { getTimeRemaining } from "@/utils/common";
+import { useRouter } from "next/router";
+import { staticPaths } from "@/utils/$path";
 
 const DEFAULT_TIME = {
   days: "00",
@@ -67,6 +74,8 @@ export const SocketContextProvider = ({ children }) => {
   const timeInterval = useRef();
   const timeDes = useRef(0);
 
+  const router = useRouter();
+
   const resetState = () => {
     setIsLogged(false);
     setIsCountdown(false);
@@ -91,27 +100,33 @@ export const SocketContextProvider = ({ children }) => {
     }
   }, [connect]);
 
+  // on events of user logged
   useEffect(() => {
-    if (!socketCLI) return;
-
-    socketCLI.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {});
+    if (!socketCLI || verifyStatus !== STATUS.SUCCESS) return;
 
     socketCLI.on(SOCKET_EVENT.LISTEN_MESSAGE, (data) => {
       if (!data) return;
-
       if (data.is_message) {
         setSendMessageStatus(STATUS.SUCCESS);
         setNewMessage(data);
       } else {
         setSystemMessage(data);
+        // bonus zera for current user
+        if (data?.user?.id === userInfo?.id && data?.zera) {
+          setUserInfo((prev) => ({
+            ...prev,
+            zera: (+prev?.zera || 0) + (+data?.zera || 0),
+          }));
+        }
       }
     });
 
-    // socketCLI.on(SOCKET_EVENT.USER_DUPLICATE_LOGIN, ({is_duplicate_login})=>{
-    // })
+    socketCLI.on(SOCKET_EVENT.USER_DUPLICATE_LOGIN, () => {
+      router.push({ pathname: staticPaths.home, query: { isDuplicate: true } });
+    });
 
     // socketCLI.on(SOCKET_EVENT.ANONYMOUS_LOGIN, () => {});
-  }, [socketCLI]);
+  }, [socketCLI, verifyStatus]);
 
   // anonymous login
   useEffect(() => {
@@ -122,13 +137,14 @@ export const SocketContextProvider = ({ children }) => {
     setIsLogged(true);
   }, [socketCLI, anonymousInfo]);
 
-  // countdown
+  // set remaining time
   useEffect(() => {
     setRemainingTime(() =>
       getTimeRemaining(userInfo?.playtime || anonymousInfo?.playtime)
     );
   }, [anonymousInfo?.playtime, userInfo?.playtime]);
 
+  // set user || anonymous playtime
   useEffect(() => {
     if (!isCountdown || countdownStatus === STATUS.IN_PROGRESS) return;
 
