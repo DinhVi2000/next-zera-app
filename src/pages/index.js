@@ -14,6 +14,7 @@ import SEO from "@/components/other/SEO";
 import { useAuthContext } from "@/context/auth-context";
 import { MODAL_NAME, STATUS } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
+import ListArticleCategory from "@/components/ui/ListArticleCategory";
 
 import { useRouter } from "next/router";
 
@@ -64,6 +65,7 @@ export default function Home() {
         <div className="w-responsive">
           <GameGrid games={games} />
           <GameCategoryGrid categories={categories} />
+          <ListArticleCategory />
         </div>
       </MainLayout>
     </>
