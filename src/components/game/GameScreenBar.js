@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { IconZoomIn, IconZoomOut } from "@/resources/icons";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "@/components/loading/ImageLoading";
 import { getArea } from "@/utils/helper";
 import { useSelector } from "react-redux";
@@ -13,6 +14,7 @@ import { MODAL_NAME } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 import { useAuthContext } from "@/context/auth-context";
 import { getTimeRemaining } from "@/utils/common";
+import { useSocketContext } from "@/context/socket-context";
 
 const GameScreenBar = ({
   area,
@@ -26,9 +28,14 @@ const GameScreenBar = ({
 }) => {
   const { openModal } = useModalContext();
   const { userInfo } = useAuthContext();
+  const { isCountdown } = useSocketContext();
+
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
 
   const [remainingTime, setRemainingTime] = useState(getTimeRemaining(0));
+
+  const timeInterval = useRef();
+  const timeIncrease = useRef(0);
 
   const handleOpenReport = () => {
     if (!userInfo) {
@@ -36,6 +43,20 @@ const GameScreenBar = ({
       return;
     }
   };
+
+  useEffect(() => {
+    if (!isCountdown) return;
+
+    timeInterval.current = setInterval(() => {
+      if (userInfo?.playtime - timeIncrease.current === 0) {
+        return clearInterval(timeInterval.current);
+      }
+
+      timeIncrease.current += 1;
+      const time = getTimeRemaining(timeIncrease.current);
+      setRemainingTime(time);
+    }, 1000);
+  }, [isCountdown]);
 
   return (
     <div

@@ -25,7 +25,6 @@ const ModalBuy = () => {
     useAuthContext();
   const { zera } = userInfo || {};
   const { openModal, payload, setStatus } = useModalContext();
-  const setSocketStatus = null;
   const modal_ref = useRef(null);
   const DURATION = 200;
   const [loading, setLoading] = useState(STATUS.NOT_START);
@@ -72,6 +71,7 @@ const ModalBuy = () => {
       }
     } catch (e) {
       setLoading(STATUS.NOT_START);
+      setStatus(STATUS.FAIL);
       notifyErrorMessage(toast, e);
     }
   };

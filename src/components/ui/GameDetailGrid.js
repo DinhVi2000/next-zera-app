@@ -14,10 +14,8 @@ import GameScreen from "@/components/game/GameScreen";
 import SidebarMB from "@/components/responsive/SidebarMB";
 import ImageLoading from "@/components/loading/ImageLoading";
 
-import { getArea, getRandom } from "@/utils/helper";
-
-import { GAMES_IMAGES } from "@/utils/constant";
-import { useMediaQuery } from "@chakra-ui/react";
+import { getArea } from "@/utils/helper";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const GameDetailGrid = () => {
   const { info, gamesRelate } =
@@ -25,13 +23,17 @@ const GameDetailGrid = () => {
 
   const { title, thumbnail, play_url } = info ?? {};
 
+  const isMatchMobile = useMediaQuery("(max-width: 550px)");
+
   return (
     <div>
       <div className="game-detail-grid">
         {/* Tablet Mobile  */}
         <SidebarMB className={"tbl-flex"} />
         <GameTitle area="gt" thumbnail={thumbnail} title={title}></GameTitle>
-        <GameScreenBar area="gsb" className="rounded-2xl mb-flex" />
+        {isMatchMobile && (
+          <GameScreenBar area="gsb" className="rounded-2xl mb-flex" />
+        )}
 
         {/* PC  */}
         <ShareToEarn area="ste" />

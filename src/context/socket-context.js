@@ -10,14 +10,7 @@ import {
   useState,
 } from "react";
 
-import {
-  MODAL_NAME,
-  SOCKET_EVENT,
-  STATUS,
-  STATUS_PLAY_GAME,
-} from "@/utils/constant";
-
-// import { socket } from "@/configs/socket";
+import { SOCKET_EVENT, STATUS } from "@/utils/constant";
 
 import { config } from "@/envs";
 import { io } from "socket.io-client";
@@ -52,11 +45,11 @@ export const useSocketContext = () => {
 export const SocketContextProvider = ({ children }) => {
   const [socketCLI, setSocketCLI] = useState();
 
-  const [connect, setConnect] = useState(false);
   const [sendMessageStatus, setSendMessageStatus] = useState(STATUS.NOT_START);
   const [newMessage, setNewMessage] = useState();
   const [systemMessage, setSystemMessage] = useState();
 
+  const [connect, setConnect] = useState(false);
   const [isCountdown, setIsCountdown] = useState(false);
   const [countdownStatus, setCountdownStatus] = useState(STATUS.INIT);
   const [isLogged, setIsLogged] = useState(false);
@@ -89,11 +82,6 @@ export const SocketContextProvider = ({ children }) => {
       setSocketCLI(socket);
     }
 
-    // return () => {
-    //   socketCLI.emit(SOCKET_EVENT.USER_LEAVE_ROOM, {
-    //   });
-    // };
-
     if (!connect && socketCLI) {
       socketCLI.disconnect();
       resetState();
@@ -124,8 +112,6 @@ export const SocketContextProvider = ({ children }) => {
     socketCLI.on(SOCKET_EVENT.USER_DUPLICATE_LOGIN, () => {
       router.push({ pathname: staticPaths.home, query: { isDuplicate: true } });
     });
-
-    // socketCLI.on(SOCKET_EVENT.ANONYMOUS_LOGIN, () => {});
   }, [socketCLI, verifyStatus]);
 
   // anonymous login
@@ -183,6 +169,8 @@ export const SocketContextProvider = ({ children }) => {
       setIsCountdown,
       remainingTime,
       setRemainingTime,
+      countdownStatus,
+      setCountdownStatus,
       timeInterval,
       timeDes,
     }),
@@ -199,6 +187,8 @@ export const SocketContextProvider = ({ children }) => {
       setIsCountdown,
       remainingTime,
       setRemainingTime,
+      countdownStatus,
+      setCountdownStatus,
       timeInterval,
       timeDes,
     ]
