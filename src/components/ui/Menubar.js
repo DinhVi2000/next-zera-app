@@ -186,33 +186,37 @@ const RecentlyGameGrid = memo(function Component() {
 
   return (
     <div className="text-white  transition-all">
-      <p className="text-2xl font-bold mb-4">Recently played</p>
-      <div className="flex flex-wrap gap-4">
-        {/* list */}
-        {activitiesInfo?.recentlyPlayed?.map((e, i) => (
-          <GameItem
-            key={i}
-            size={1}
-            isRecently
-            thumbnail={e?.thumbnail}
-            title={e?.title}
-            className="w-[94px] h-[94px]"
-            slug={e?.slug}
-            superslug={e?.superslug}
-          />
-        ))}
-
-        {/* loading */}
-        {!activitiesInfo?.recentlyPlayed &&
-          Array(6)
-            .fill(0)
-            .map((e, i) => (
-              <div
+      {activitiesInfo?.recentlyPlayed?.length > 0 && (
+        <>
+          <p className="text-2xl font-bold mb-4">Recently played</p>
+          <div className="flex flex-wrap gap-4">
+            {/* list */}
+            {activitiesInfo?.recentlyPlayed?.map((e, i) => (
+              <GameItem
                 key={i}
-                className="w-[94px] h-[94px] skeleton-shine rounded-2xl"
-              ></div>
+                size={1}
+                isRecently
+                thumbnail={e?.thumbnail}
+                title={e?.title}
+                className="w-[94px] h-[94px]"
+                slug={e?.slug}
+                superslug={e?.superslug}
+              />
             ))}
-      </div>
+
+            {/* loading */}
+            {!activitiesInfo?.recentlyPlayed &&
+              Array(6)
+                .fill(0)
+                .map((e, i) => (
+                  <div
+                    key={i}
+                    className="w-[94px] h-[94px] skeleton-shine rounded-2xl"
+                  ></div>
+                ))}
+          </div>
+        </>
+      )}
     </div>
   );
 });

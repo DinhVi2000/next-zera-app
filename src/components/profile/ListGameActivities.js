@@ -27,7 +27,7 @@ function ListGameActivities({ payload, listGame, setInfoList, setIsOpenTab }) {
               setIsOpenTab(true);
             }}
           >
-            View all <IconArrowRight className="ml-[5px] mb-[2px]" />
+            View all <IconArrowRight className="ml-[5px] mb-[2px] w-3 h-3" />
           </p>
         </div>
         <div>
@@ -132,16 +132,6 @@ function ListGameActivities({ payload, listGame, setInfoList, setIsOpenTab }) {
                           <Tooltip label={e?.name}>
                             <div className="text-xl w-[50%] text-ellipsis overflow-hidden whitespace-nowrap text-center">
                               {e?.name}
-                              {/* <p
-                              className="flex-center font-medium cursor-pointer text-sm"
-                              onClick={() => {
-                                setInfoList({ payload });
-                                setIsOpenTab(true);
-                              }}
-                            >
-                              View allcc{" "}
-                              <IconArrowRight className="ml-[5px] mb-[2px]" />
-                            </p> */}
                             </div>
                           </Tooltip>
                         </div>
