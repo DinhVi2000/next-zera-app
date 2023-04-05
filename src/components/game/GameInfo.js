@@ -19,7 +19,7 @@ const GameInfo = ({ area, ...props }) => {
     slug,
     trailer_url,
     title,
-    game_detail_tags,
+    game_tags,
   } = info ?? {};
 
   return (
@@ -60,16 +60,13 @@ const GameInfo = ({ area, ...props }) => {
 
           <ScrollContainer>
             <div className="flex whitespace-nowrap gap-2 w-full mb-2">
-              {game_detail_tags?.map((e, i) => (
+              {game_tags?.map((e, i) => (
                 <Link
-                  href={dynamicPaths.game_by_tag(
-                    e?.game_tag?.superslug?.value,
-                    e?.game_tag?.slug
-                  )}
+                  href={dynamicPaths.game_by_tag(e?.superslug?.value, e?.slug)}
                   key={i}
                 >
                   <div className="bg-white flex items-center text-black text-sm rounded-[20px] px-4 h-6">
-                    {e?.game_tag?.label}
+                    {e?.label}
                   </div>
                 </Link>
               ))}

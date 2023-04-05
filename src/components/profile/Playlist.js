@@ -114,7 +114,7 @@ function Playlist({ setIsOpenTab, infoList }) {
                             onClick={() => setCurrentInfo(e?.info)}
                           >
                             View all{" "}
-                            <IconArrowRight className="ml-[5px] mb-[2px]" />
+                            <IconArrowRight className="ml-[5px] mb-[2px] w-3 h-3" />
                           </p>
                         </div>
 

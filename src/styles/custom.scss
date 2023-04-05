@@ -533,15 +533,15 @@
   display: -webkit-box;
 }
 
-.absolute-imp{
+.absolute-imp {
   position: absolute !important;
 }
 
-.fixed-imp{
+.fixed-imp {
   position: fixed !important;
 }
 
-.z-60{
+.z-60 {
   z-index: 60;
 }
 
@@ -550,4 +550,11 @@
   background-repeat: no-repeat;
   background-position: 100% 100%;
   background-size: 70% 70%;
+}
+
+.line-clamp {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
 }

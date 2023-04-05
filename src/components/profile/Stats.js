@@ -68,7 +68,11 @@ function Stats() {
         <Tooltip label="Copy" placement="bottom">
           <div className="flex-center" onClick={handleCopy}>
             Referral link:{" "}
-            <p className="text-[#FBCFE8] ml-2 whitespace-nowrap overflow-hidden text-ellipsis w-[20%]">
+            <p
+              className={`text-[#FBCFE8] ml-2 whitespace-nowrap overflow-hidden text-ellipsis  ${
+                userInfo?.username?.length > 7 ? "w-[35%]" : "w-auto"
+              }`}
+            >
               {userInfo?.username}
             </p>
             <IconCopy viewBox="0 0 30 30" className="ml-2" />
