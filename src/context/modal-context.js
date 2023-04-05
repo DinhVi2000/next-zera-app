@@ -3,7 +3,6 @@ import { createContext, useContext, useMemo, useState } from "react";
 
 import Menubar from "@/components/ui/Menubar";
 import ModalEditProfile from "@/components/modal/ModalEditProfile";
-import ModalPurchaseHistory from "@/components/modal/ModalPurchaseHistory";
 import ModalDailyBonus from "@/components/modal/ModalDailyBonus";
 import ModalBuy from "@/components/modal/ModalBuy";
 import ModalConfirm from "@/components/modal/ModalConfirm";
@@ -21,7 +20,6 @@ const ModalContext = createContext(null);
 const Modal = {
   MENUBAR: <Menubar />,
   EDIT_PROFILE: <ModalEditProfile />,
-  VIEW_PURCHASE_HISTORY: <ModalPurchaseHistory />,
   DAILY_BONUS: <ModalDailyBonus />,
   BUY: <ModalBuy />,
   PLAYLIST: <ModalPlaylist />,
