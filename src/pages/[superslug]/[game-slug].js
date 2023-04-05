@@ -18,6 +18,9 @@ import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import SEO from "@/components/other/SEO";
 import { getAllAdvertisements } from "@/services/advertisements.service";
 import { useSocketContext } from "@/context/socket-context";
+import { useAuthContext } from "@/context/auth-context";
+import { MODAL_NAME, STATUS } from "@/utils/constant";
+import { useModalContext } from "@/context/modal-context";
 
 const HALL_OF_FAME_LIMIT = 10;
 
@@ -34,11 +37,19 @@ const GameDetail = () => {
   const { categories } =
     useSelector(({ game: { gameIndex } }) => gameIndex) ?? {};
 
-  const { setConnect } = useSocketContext();
+  const { setConnect, countdownStatus } = useSocketContext();
+  const { userInfo } = useAuthContext();
+  const { openModal } = useModalContext();
+
+  // open modal buy time when playtime out
+  useEffect(() => {
+    if (countdownStatus === STATUS.IN_PROGRESS && +userInfo?.playtime <= 0) {
+      openModal(MODAL_NAME.BUYTIME);
+    }
+  }, [userInfo?.playtime, countdownStatus]);
 
   useEffect(() => {
     setConnect(true);
-
     return () => setConnect(false);
   }, []);
 

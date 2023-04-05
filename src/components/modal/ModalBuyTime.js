@@ -18,14 +18,17 @@ import { useToast } from "@chakra-ui/react";
 import { buyShopItem, getItemTime } from "@/services/shop.service";
 import { useRouter } from "next/router";
 import ImageLoading from "../loading/ImageLoading";
+import { staticPaths } from "@/utils/$path";
 const ModalBuyTime = () => {
   const router = useRouter();
   const toast = useToast();
 
   const [status, setStatus] = useState(STATUS.NOT_START);
   const [timeItems, setTimeItems] = useState([]);
+
   const { setUserInfo, usernameAuth } = useAuthContext();
   const { openModal } = useModalContext();
+
   const modalTimeRef = useRef(null);
 
   const DURATION = 150;
@@ -34,7 +37,6 @@ const ModalBuyTime = () => {
     document.body.style.overflow = "auto";
     document.body.style.height = "auto";
     sleep(DURATION).then(() => openModal(MODAL_NAME.NONE));
-    router.push("/");
   };
 
   useEffect(() => {
@@ -76,10 +78,7 @@ const ModalBuyTime = () => {
   useEffect(() => {
     if (status === STATUS.SUCCESS) {
       handleCloseModal();
-      notifySuccessMessage(
-        toast,
-        "Congratulations! You have received bonus today"
-      );
+      notifySuccessMessage(toast, "You have successfully purchase playtime");
     }
   }, [status]);
 
@@ -89,15 +88,20 @@ const ModalBuyTime = () => {
         ref={modalTimeRef}
         className="opacity-5 scale-90 md:w-fit md:h-fit daily-bonus md:px-4 px-1 py-8 transition-all w-[340px]"
       >
-        <div className="flex">
-          <h4 className="mx-auto">Buy Play Time</h4>
+        <div className="relative mb-5">
+          <h4 className="mx-auto left-1/2 -translate-x-1/2 absolute">
+            Buy Play Time
+          </h4>
           <IconClose
-            className="cursor-pointer text-pink-400 w-5"
-            onClick={handleCloseModal}
+            className="cursor-pointer text-pink-400 w-5 absolute right-3 top-[-12px]"
+            onClick={() => {
+              handleCloseModal();
+              router.push(staticPaths.home);
+            }}
           />
         </div>
-        <div className="overflow-y-auto max-h-[436px] md:max-h-[500px] md:m-4 mt-5">
-          <div className="grid md:grid-cols-3 md:gap-4 grid-cols-2 gap-2 md:mx-2 md:w-[600px] w-[310px] ml-[6px]">
+        <div className="overflow-y-auto overflow-x-hidden max-h-[436px] md:max-h-[500px] md:m-4 mt-5">
+          <div className="grid md:grid-cols-3 md:gap-4 grid-cols-2 gap-2 md:mx-2 md:w-[600px] w-[310px] ml-[6px] pb-3">
             {timeItems?.rows &&
               timeItems.rows.map((e, i) => (
                 <div
@@ -134,7 +138,7 @@ const ModalBuyTime = () => {
                 .fill(0)
                 .map((e, i) => (
                   <div
-                    className="w-[160px] h-[160px] skeleton-shine rounded-[20px]"
+                    className="w-[190px] h-[306px] skeleton-shine rounded-[20px]"
                     key={i}
                   ></div>
                 ))}

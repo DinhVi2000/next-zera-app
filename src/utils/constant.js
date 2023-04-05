@@ -144,6 +144,12 @@ const QUANTITY_BY_TAB = {
   playstreak: (e) => e?.streak,
 };
 
+const MESSAGE_TYPE = {
+  SYSTEM_MESSAGE: "SYSTEM_MESSAGE",
+  MY_MESSAGE: "MY_MESSAGE",
+  USER_MESSAGE: "USER_MESSAGE",
+};
+
 export {
   MAX_SECOND_LIMIT_CHAT,
   MAX_LIMIT_MESSAGE,
@@ -169,4 +175,5 @@ export {
   STATUS_PLAY_GAME,
   QUANTITY_BY_TAB,
   USER_STATUS,
+  MESSAGE_TYPE,
 };
