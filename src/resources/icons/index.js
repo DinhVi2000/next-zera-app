@@ -62,6 +62,10 @@ export { default as IconGoldMedal } from "./gold-medal.svg";
 export { default as IconSilverMedal } from "./silver-medal.svg";
 export { default as IconBronzeMedal } from "./bronze-medal.svg";
 export { default as IconSortDown } from "./sort-down.svg";
+export { default as IconTtlNews } from "./ttl-news.svg";
+export { default as IconNews } from "./news.svg";
+export { default as IconGames } from "./games.svg";
+export { default as IconReadMore } from "./icon-read-more.svg";
 
 export {
   IconArrUp,

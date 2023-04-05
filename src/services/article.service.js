@@ -9,16 +9,25 @@ const article = createSlice({
   initialState: {
     info: null,
     categories: null,
+    articleNewest: null,
+    articleRandom: null,
   },
   reducers: {
     setArticleCategories: (state, action) => {
       state.categories = action.payload;
     },
+    setArticleNewest: (state, action) => {
+      state.articleNewest = action.payload;
+    },
+    setArticleRandom: (state, action) => {
+      state.articleRandom = action.payload;
+    },
   },
 });
 
 const { actions, reducer } = article;
-export const { setArticleCategories } = actions;
+export const { setArticleCategories, setArticleNewest, setArticleRandom } =
+  actions;
 
 const getAllArticleCategory = async (dispatch) => {
   try {
@@ -89,7 +98,39 @@ const getArticlesByTagSlug = async (slug) => {
   }
 };
 
+const getArticlesNewest = async (dispatch) => {
+  try {
+    const { data } = await http.get(`/article/newest`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+    dispatch(setArticleNewest(data?.data?.rows));
+
+    return data?.data?.rows;
+  } catch (e) {
+    throw e;
+  }
+};
+
+const getArticlesRandom = async (dispatch) => {
+  try {
+    const { data } = await http.get(`/article/random`);
+
+    if (!data.success) {
+      throw new Error(data?.message);
+    }
+
+    dispatch(setArticleRandom(data?.data));
+    return data?.data;
+  } catch (e) {
+    throw e;
+  }
+};
+
 export {
+  getArticlesRandom,
+  getArticlesNewest,
   getArticlesByTagSlug,
   getAllArticleCategory,
   getAllArticleTag,

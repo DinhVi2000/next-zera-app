@@ -558,3 +558,23 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+.slider-wrapper,
+.slider,
+.carousel,
+.carousel-slider {
+  width: 100% !important;
+  height: 100% !important;
+}
+.dot {
+  height: 3px !important;
+  width: 30px !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+.carousel:last-child {
+  display: none;
+}
+
+.background-carousel {
+  background: linear-gradient(180deg, #00000000, #000000e3);
+}

@@ -21,8 +21,10 @@ import {
   IconCoin22,
   IconConsole,
   IconCup,
+  IconGames,
   IconLogOut,
   IconMenu,
+  IconNews,
   IconProfile,
   IconSearchViolet300,
   IconTags,
@@ -78,6 +80,7 @@ const ALL_MENU_NODE = [
 
 const SideBar = forwardRef(
   ({ className = "tbl-hidden mb-hidden", shopClassName, ...props }, ref) => {
+    const router = useRouter();
     const { get } = useApi();
 
     const { gameIndex } = useSelector(({ game }) => game) ?? {};
@@ -129,10 +132,19 @@ const SideBar = forwardRef(
               />
             </Link>
 
-            <div className="flex gap-2.5 justify-between items-center cursor-pointer px-5">
+            <div className="flex  justify-between items-center cursor-pointer">
               <div onClick={handleToggleContent}>
                 <IconMenu className="w-[42px] text-violet-300"></IconMenu>
               </div>
+              {router?.asPath?.includes("/news") ? (
+                <Link href={"/"}>
+                  <IconGames />
+                </Link>
+              ) : (
+                <Link href={"/news"}>
+                  <IconNews />
+                </Link>
+              )}
               <div
                 onClick={() => {
                   openModal(MODAL_NAME.MENUBAR);
