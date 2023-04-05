@@ -13,7 +13,7 @@ import {
 } from "@/services/user.service";
 
 function InfoUser() {
-  const { openModal, setPayload } = useModalContext();
+  const { openModal, setPayload, status } = useModalContext();
 
   const { userInfo, verifyStatus } = useAuthContext();
   const { username, quote, avatar, cover } = userInfo || {};
@@ -50,7 +50,7 @@ function InfoUser() {
     if (categories) {
       Promise.all(categories.map((e) => getItem(e.id, e?.name)));
     }
-  }, [categories]);
+  }, [categories, status]);
 
   return (
     <>

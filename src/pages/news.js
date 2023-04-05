@@ -383,8 +383,12 @@ const MainContent = () => {
       </div>
       <div className="grid grid-cols-1 min-[551px]:grid-cols-2 min-[881px]:grid-cols-3 min-[1541px]:grid-cols-5 min-[1870px]:grid-cols-6 grid-rows-1 gap-4 mt-5">
         {items?.map((e, i) => (
-          <Link key={i} href={`/article/${e?.slug}`} className="block h-full">
-            <div className="border border-[#BE185D] bg-black rounded-md text-white p-2 col-span-1 row-span-1 ">
+          <Link
+            key={i}
+            href={`/article/${e?.slug}`}
+            className="block h-full col-span-1 row-span-1"
+          >
+            <div className="border border-[#BE185D] bg-black rounded-md text-white p-2 h-full">
               <ImageLoading
                 alt=""
                 src={e?.featured_image}
