@@ -8,8 +8,6 @@ import ImageLoading from "../loading/ImageLoading";
 import GameScreenBar from "./GameScreenBar";
 
 const GameScreen = ({ thumbnail, play_url, title }) => {
-  const { getActivities } = useAuthContext();
-
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
   const back_tab_mb_ref = useRef();
@@ -17,7 +15,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const { socketCLI, setIsCountdown } = useSocketContext();
+  const { socketCLI, setIsCountdown, clearTimerInterval } = useSocketContext();
 
   // handle zoom out
   const handleToggleZoomOutGameScreen = () => {
@@ -57,10 +55,6 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     });
   }, []);
 
-  useEffect(() => {
-    getActivities();
-  }, []);
-
   return (
     <div
       style={{
@@ -92,7 +86,10 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
       {/* back tab  */}
       <div
         className="mb-flex hidden-imp items-center justify-center gap-2 bg-violet-200 rounded-r-2xl fixed top-6 w-[62px] h-[40px]"
-        onClick={handleToggleZoomOutGameScreen}
+        onClick={() => {
+          handleToggleZoomOutGameScreen();
+          clearTimerInterval();
+        }}
         ref={back_tab_mb_ref}
       >
         <div className="text-violet-600">

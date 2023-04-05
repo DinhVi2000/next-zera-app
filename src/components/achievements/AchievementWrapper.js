@@ -113,7 +113,7 @@ const AchievementWrapper = () => {
             {pathname !== staticPaths.my_hall_of_fame && (
               <div className="w-full max-w-[204px] h-full  max-[991px]:mx-auto">
                 <ImageLoading
-                  src={avatar || DEFAULT_AVATAR_SRC}
+                  src={avatar?.url || DEFAULT_AVATAR_SRC}
                   alt="avatar"
                   className="w-[204px] h-[204px] object-cover rounded-[20px]"
                 />

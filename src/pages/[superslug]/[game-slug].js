@@ -46,7 +46,7 @@ const GameDetail = () => {
     setIsCountdown,
     timeDecrease,
   } = useSocketContext();
-  const { userInfo } = useAuthContext();
+  const { userInfo, getActivities } = useAuthContext();
   const { openModal } = useModalContext();
 
   // open modal buy time when playtime out
@@ -88,6 +88,7 @@ const GameDetail = () => {
         )
       ),
       call(getAllAdvertisements(dispatch)),
+      getActivities(),
     ]);
   }, [query]);
 

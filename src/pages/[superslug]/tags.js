@@ -15,6 +15,7 @@ import { dynamicPaths, staticPaths } from "@/utils/$path";
 import { hasNoValueUndefined } from "@/utils/helper";
 import Breadcrumb from "@/components/ui/Breadcrumb";
 import TagLoading from "@/components/loading/TagLoading";
+import SidebarMB from "@/components/responsive/SidebarMB";
 
 const CategoryTags = () => {
   const router = useRouter();
@@ -38,7 +39,13 @@ const CategoryTags = () => {
       <SEO title="Game tags" />
       <HandleNotFoundPage isValidPage={isValidPage}>
         <MainLayout>
-          <GameTagsWrapper superslug={query.superslug} tags={tags} />
+          <div>
+            <SidebarMB
+              className={"tbl-flex mb-4"}
+              childClassName={"static-important"}
+            />
+            <GameTagsWrapper superslug={query.superslug} tags={tags} />
+          </div>
         </MainLayout>
       </HandleNotFoundPage>
     </>

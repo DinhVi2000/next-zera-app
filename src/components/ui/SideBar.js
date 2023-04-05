@@ -182,6 +182,8 @@ const SideBar = forwardRef(
               </Link>
             ))}
 
+            <p className="w-[90%] mx-auto bg-[#ffcde980] pt-[1px]"></p>
+
             <Link href={staticPaths.my_hall_of_fame}>
               <div className="flex gap-x-2 items-center font-bold cursor-pointer">
                 <div className="w-12">
@@ -192,8 +194,6 @@ const SideBar = forwardRef(
                 </span>
               </div>
             </Link>
-
-            <p className="w-[90%] mx-auto bg-[#ffcde980] pt-[1px]"></p>
 
             {/* menu items all */}
             {ALL_MENU_NODE.map(({ icon, title, href }, i) => (
@@ -243,7 +243,7 @@ const SideBar = forwardRef(
             ) && <UserInfoLoading />}
 
             {/* countdown */}
-            {isMatchPC && <Timer />}
+            <Timer />
           </div>
         </div>
 

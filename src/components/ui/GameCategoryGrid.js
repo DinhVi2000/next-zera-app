@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { memo } from "react";
+import React, { Fragment, memo } from "react";
 
 import GameCategory from "@/components/game/GameCategory";
 
@@ -12,7 +12,7 @@ const GameCategoryGrid = ({ categories, className }) => {
   const dispatch = useDispatch();
 
   return (
-    <>
+    <Fragment>
       <div
         className={`grid-category mt-4 ${className}`}
         onClick={() => dispatch(setCategoryDetail(null))}
@@ -34,7 +34,7 @@ const GameCategoryGrid = ({ categories, className }) => {
           ></GameCategory>
         ))}
       </div>
-    </>
+    </Fragment>
   );
 };
 

@@ -34,10 +34,6 @@ function BoxChat({ area }) {
 
   const [messages, setMessages] = useState([]);
   const [usersInRoom, setUsersInRoom] = useState();
-  // const [limitChat, setLimitChat] = useState({
-  //   lastTime: moment().startOf("minute").minutes(),
-  //   limitMessage: 0,
-  // });
   const [messageSentCount, setSentMessageCount] = useState(0);
 
   const timeSendFirstMessage = useRef();
@@ -234,8 +230,11 @@ const messageType = (msg, userInfo) => {
 
 const MessageItem = ({ msg, prevMsg }) => {
   const { userInfo } = useAuthContext();
-
-  const isOfOnePerson = msg?.is_message && msg?.user_id === prevMsg?.user_id;
+  const isOfOnePerson = !prevMsg?.is_message
+    ? false
+    : msg?.user_id === prevMsg?.user_id
+    ? true
+    : false;
 
   const MESSAGE_NODE = {
     SYSTEM_MESSAGE: (
@@ -247,7 +246,7 @@ const MessageItem = ({ msg, prevMsg }) => {
     ),
     MY_MESSAGE: (
       <div className="flex justify-end mb-1">
-        <div className="text-sm bg-pink-500 rounded-xl py-1 px-2">
+        <div className="text-sm bg-pink-500 rounded-xl py-1 px-2 break-all">
           {msg?.message}
         </div>
       </div>
@@ -270,7 +269,7 @@ const MessageItem = ({ msg, prevMsg }) => {
         )}
         {/* message */}
         <div className="flex justify-start mb-1">
-          <div className="text-sm bg-violet-500 rounded-xl py-1 px-2">
+          <div className="text-sm bg-violet-500 rounded-xl py-1 px-2 break-all">
             {msg?.message}
           </div>
         </div>

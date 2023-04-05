@@ -105,7 +105,7 @@ const Advertisements = memo(function AdvertisementsComponent() {
               key={i}
               area={`ads${i + 1}`}
               ip={e?.ip}
-              className={matches[0] && i !== 0 ? "hidden" : ""}
+              className={matches && i !== 0 ? "hidden" : ""}
             />
           ))}
     </>

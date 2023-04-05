@@ -112,9 +112,13 @@ const updateUser = async (params) => {
   }
 };
 
-const updateUsername = async (formData) => {
+const updateUsername = async (formData, token) => {
   try {
-    const { data } = await http.put("/users/username", formData);
+    const { data } = await http.put("/users/username", formData, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
     if (!data.success) {
       throw new Error(data?.message);
     }

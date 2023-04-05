@@ -48,7 +48,7 @@ const CreateUsernameForm = () => {
     try {
       setIsLoading(true);
 
-      const response = await updateUsername(formData);
+      const response = await updateUsername(formData, tokenTemp);
       if (!response.success) throw new Error(response?.message);
 
       const { username } = formData ?? {};
