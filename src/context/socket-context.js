@@ -65,7 +65,7 @@ export const SocketContextProvider = ({ children }) => {
   const [remainingTime, setRemainingTime] = useState(DEFAULT_TIME);
 
   const timeInterval = useRef();
-  const timeDes = useRef(0);
+  const timeDecrease = useRef(0);
 
   const router = useRouter();
 
@@ -73,7 +73,11 @@ export const SocketContextProvider = ({ children }) => {
     setIsLogged(false);
     setIsCountdown(false);
     setCountdownStatus(STATUS.INIT);
-    timeDes.current = 0;
+    timeDecrease.current = 0;
+  };
+
+  const clearTimerInterval = () => {
+    clearInterval(timeInterval.current);
   };
 
   useEffect(() => {
@@ -137,12 +141,12 @@ export const SocketContextProvider = ({ children }) => {
     setCountdownStatus(STATUS.IN_PROGRESS);
 
     timeInterval.current = setInterval(() => {
-      timeDes.current += 1;
+      timeDecrease.current += 1;
       const checkTimeRemaining =
         (+(userInfo?.playtime || anonymousInfo?.playtime) || 0) -
-        timeDes.current;
+        timeDecrease.current;
       const checkTime = checkTimeRemaining > 0 ? checkTimeRemaining : 0;
-      if (checkTimeRemaining <= 0) clearInterval(timeInterval.current);
+      if (checkTimeRemaining <= 0) return clearInterval(timeInterval.current);
       const time = getTimeRemaining(checkTime);
 
       setRemainingTime(time);
@@ -172,7 +176,8 @@ export const SocketContextProvider = ({ children }) => {
       countdownStatus,
       setCountdownStatus,
       timeInterval,
-      timeDes,
+      timeDecrease,
+      clearTimerInterval,
     }),
     [
       socketCLI,
@@ -190,7 +195,8 @@ export const SocketContextProvider = ({ children }) => {
       countdownStatus,
       setCountdownStatus,
       timeInterval,
-      timeDes,
+      timeDecrease,
+      clearTimerInterval,
     ]
   );
 

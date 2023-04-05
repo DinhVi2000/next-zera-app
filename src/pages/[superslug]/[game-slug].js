@@ -11,7 +11,7 @@ import {
   getMessages,
 } from "@/services/game.service";
 import { useRouter } from "next/router";
-import { isValidPath } from "@/utils/helper";
+import { isEmpty, isValidPath } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { useApi } from "@/hooks/useApi";
 import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
@@ -19,7 +19,7 @@ import SEO from "@/components/other/SEO";
 import { getAllAdvertisements } from "@/services/advertisements.service";
 import { useSocketContext } from "@/context/socket-context";
 import { useAuthContext } from "@/context/auth-context";
-import { MODAL_NAME, STATUS } from "@/utils/constant";
+import { MODAL_NAME, SOCKET_EVENT, STATUS } from "@/utils/constant";
 import { useModalContext } from "@/context/modal-context";
 
 const HALL_OF_FAME_LIMIT = 10;
@@ -37,7 +37,15 @@ const GameDetail = () => {
   const { categories } =
     useSelector(({ game: { gameIndex } }) => gameIndex) ?? {};
 
-  const { setConnect, countdownStatus } = useSocketContext();
+  const {
+    socketCLI,
+    setConnect,
+    countdownStatus,
+    setCountdownStatus,
+    isCountdown,
+    setIsCountdown,
+    timeDecrease,
+  } = useSocketContext();
   const { userInfo } = useAuthContext();
   const { openModal } = useModalContext();
 
@@ -56,11 +64,9 @@ const GameDetail = () => {
   useEffect(() => {
     setIsValidPage();
     if (!isValidPath(query, setIsValidPage)) return;
-    getGameDetailBySlug(dispatch, router.query["game-slug"])
+    getGameDetailBySlug(dispatch, query["game-slug"])
       .then((data) => {
-        setIsValidPage(
-          !!data && data?.superslug?.value === router.query["superslug"]
-        );
+        setIsValidPage(!!data && data?.superslug?.value === query["superslug"]);
 
         const { seo_title, seo_description } = data ?? {};
         setSeo({ seo_title, seo_description });
@@ -77,13 +83,24 @@ const GameDetail = () => {
       call(
         getHallOfFameByGameSlug(
           dispatch,
-          router.query["game-slug"],
+          query["game-slug"],
           HALL_OF_FAME_LIMIT
         )
       ),
       call(getAllAdvertisements(dispatch)),
     ]);
-  }, [router.query]);
+  }, [query]);
+
+  // handle reset state when router change
+  useEffect(() => {
+    if (!socketCLI || isEmpty(query) || !isCountdown) return;
+
+    setCountdownStatus(STATUS.INIT);
+    setIsCountdown(false);
+    timeDecrease.current = 0;
+
+    socketCLI.emit(SOCKET_EVENT.STOP_PLAY);
+  }, [query, socketCLI]);
 
   const title = {
     true:

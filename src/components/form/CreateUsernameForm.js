@@ -21,7 +21,7 @@ import {
 } from "@/utils/regex";
 
 const CreateUsernameForm = () => {
-  const { setUsernameAuth } = useAuthContext();
+  const { setUsernameAuth, tokenTemp, setToken } = useAuthContext();
 
   const toast = useToast();
   const router = useRouter();
@@ -60,6 +60,9 @@ const CreateUsernameForm = () => {
           ? username
           : `${PREFIX_USERNAME}${username}`
       );
+
+      setToken(tokenTemp);
+      localStorage.setItem("accessToken", tokenTemp);
 
       router.push("/");
     } catch (error) {

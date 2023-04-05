@@ -85,6 +85,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const [isAuthenticationPage, setIsAuthenticationPage] = useState(true);
   const [verifyStatus, setVerifyStatus] = useState(STATUS.NOT_START);
+  const [tokenTemp, setTokenTemp] = useState();
 
   const prevRoute = useRef();
   const currentRoute = useRef();
@@ -139,13 +140,14 @@ export const AuthContextProvider = ({ children }) => {
         data: { token, username },
       } = await loginWithEmail(formData);
 
-      localStorage.setItem("accessToken", token);
-      setToken(token);
-
       if (!username) {
+        setTokenTemp(token);
         router.push("/create-username");
         return;
       }
+
+      localStorage.setItem("accessToken", token);
+      setToken(token);
 
       localStorage.setItem("username", username);
       setUsernameAuth(username);
@@ -264,6 +266,8 @@ export const AuthContextProvider = ({ children }) => {
       setActivitiesInfo,
       activitiesInfo,
       getActivities,
+      tokenTemp,
+      setTokenTemp,
     }),
     [
       anonymousInfo,
@@ -280,6 +284,8 @@ export const AuthContextProvider = ({ children }) => {
       token,
       verifyStatus,
       handleSetUserInfo,
+      tokenTemp,
+      setTokenTemp,
     ]
   );
 

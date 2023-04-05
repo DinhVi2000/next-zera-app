@@ -22,6 +22,8 @@ export default function Home() {
   const dispatch = useDispatch();
   const { call } = useApi();
 
+  const { pathname, query } = router;
+
   const { openModal } = useModalContext();
   const { userInfo, verifyStatus } = useAuthContext();
 
@@ -47,9 +49,12 @@ export default function Home() {
   }, [userInfo]);
 
   useEffect(() => {
-    if (!router?.query?.isDuplicate) return;
+    if (!query?.isDuplicate) return;
     openModal(MODAL_NAME.RESET_LOGIN);
-  }, [router]);
+    router.replace({ pathname, query: "isDuplicate" }, undefined, {
+      shallow: true,
+    });
+  }, [query]);
 
   return (
     <>
