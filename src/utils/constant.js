@@ -88,6 +88,7 @@ const SOCKET_EVENT = {
   PLAY_GAME: "playGame",
   ANONYMOUS_LOGIN: "loginAnonymous",
   USER_DUPLICATE_LOGIN: "duplicateLogin",
+  STOP_PLAY: "stopPlay",
 
   USER_EMIT_REWARD: "emitReward",
   USER_LOGIN: "userLogin",
@@ -150,6 +151,14 @@ const MESSAGE_TYPE = {
   USER_MESSAGE: "USER_MESSAGE",
 };
 
+const PLAY_STATUS = {
+  INIT: "INIT",
+  IN_PROGRESS: "IN_PROGRESS",
+  STOP: "STOP",
+  SUCCESS: "SUCCESS",
+  FAIL: "FAIL",
+};
+
 export {
   MAX_SECOND_LIMIT_CHAT,
   MAX_LIMIT_MESSAGE,
@@ -176,4 +185,5 @@ export {
   QUANTITY_BY_TAB,
   USER_STATUS,
   MESSAGE_TYPE,
+  PLAY_STATUS,
 };
