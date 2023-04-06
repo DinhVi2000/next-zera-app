@@ -6,7 +6,7 @@ import Link from "next/link";
 import { IconRecently } from "@/resources/icons";
 
 import ImageLoading from "@/components/loading/ImageLoading";
-import { getArea, inRange } from "@/utils/helper";
+import { AreaOf, getArea, inRange } from "@/utils/helper";
 import { dynamicPaths } from "@/utils/$path";
 
 const MAX_WITDH = 314;
@@ -20,9 +20,10 @@ const GameItem = ({
   className,
   slug,
   superslug,
+  grid_index,
   ...props
 }) => {
-  const gridArea = inRange(index, 0, 16) && area ? getArea(area) : "auto";
+  const gridArea = getArea(AreaOf(grid_index));
 
   const game_item_ref = useRef();
 

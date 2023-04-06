@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 
 import { useModalContext } from "@/context/modal-context";
 
-import { MODAL_NAME } from "@/utils/constant";
+import { DEFAULT_AVATAR_SRC, MODAL_NAME } from "@/utils/constant";
 import { sleep } from "@/utils/helper";
 
 import BoxModal from "./BoxModal";
@@ -50,18 +50,20 @@ const ModalUsersOnline = () => {
     <BoxModal className="fixed h-[100vh] w-full z-[60] text-white bg-[#00000073] flex-center">
       <div
         ref={modalRef}
-        className={`relative duration-${DURATION} transition-all opacity-5 scale-90 w-[200px] h-[250px] border border-pink-400 rounded-lg bg-[#1E1E1E] overflow-y-auto`}
+        className={`relative duration-${DURATION} transition-all opacity-5 scale-90 w-[392px] h-[250px] border-[5px] border-pink-400 bg-user-online-modal rounded-[20px] max-h-[450px]`}
       >
-        <header className="flex justify-between p-3 border-[#313131] border-b-[1px] sticky top-0 w-full bg-[#1E1E1E]">
-          <h2 className="text-pink-500 font-bold">All gamers</h2>
+        <header className="flex justify-between p-3 sticky top-0 w-full ">
+          <div className="text-white text-xl font-bold bg-title-modal py-[9px] text-center rounded-[14px]  left-1/2 -translate-x-1/2 translate-y-[-36px] absolute w-[238px]">
+            All online gamers
+          </div>
 
-          <button onClick={handleCloseModal}>
-            <IconClose className="w-3 h-3" />
-          </button>
+          {/* <button onClick={handleCloseModal}>
+            <IconClose className="w-3 h-3 right-5 top-5 absolute" />
+          </button> */}
         </header>
-        <section>
-          <div className="p-3 flex flex-col gap-3">
-            {Object.values(payload?.users || {}).map((e, i) => (
+        <section className=" px-[30px]">
+          <div className="py-3 flex flex-col gap-3">
+            {payload?.users?.map((e, i) => (
               <div
                 className="flex gap-2 items-center cursor-pointer"
                 key={i}
@@ -69,10 +71,10 @@ const ModalUsersOnline = () => {
               >
                 <ImageLoading
                   alt={""}
-                  className="w-6 h-6 rounded-full"
-                  src={""}
+                  className="w-[30px] h-[30px] rounded-full"
+                  src={e?.avatar || DEFAULT_AVATAR_SRC}
                 ></ImageLoading>
-                <p className="text-sm">{e?.username}</p>
+                <p className="text-base ">{e?.username}</p>
               </div>
             ))}
           </div>

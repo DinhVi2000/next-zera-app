@@ -27,6 +27,7 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { EmojiText } from "./EmojiText";
 
 const MAX_MESSAGE_SEND = 5;
+const MAX_LENGTH = 100;
 const TIME_LIMIT = 60;
 
 function BoxChat({ area }) {
@@ -36,10 +37,8 @@ function BoxChat({ area }) {
   const toast = useToast();
 
   const [messages, setMessages] = useState([]);
-  const [usersInRoom, setUsersInRoom] = useState();
   const [inputStr, setInputStr] = useState("");
   const [openEmoji, setOpenEmoji] = useState(false);
-
   const [messageSentCount, setSentMessageCount] = useState(0);
 
   const timeSendFirstMessage = useRef();
@@ -49,7 +48,7 @@ function BoxChat({ area }) {
   const emojiRef = useRef();
 
   const { userInfo, token, verifyStatus } = useAuthContext();
-  const { openModal, setPayload } = useModalContext();
+  const { openModal, setPayload, payload } = useModalContext();
   const {
     socketCLI,
     sendMessageStatus,
@@ -76,6 +75,12 @@ function BoxChat({ area }) {
     }
 
     setInputStr("");
+    if (inputRef.current?.value?.length > 100) {
+      return notifyErrorMessage(toast, {
+        message: "No longer than 100 characters",
+      });
+    }
+
     if (messageSentCount === MAX_MESSAGE_SEND) {
       const timeRange = (moment.now() - timeSendFirstMessage.current) / 1000;
 
@@ -146,7 +151,6 @@ function BoxChat({ area }) {
   useEffect(() => {
     socketCLI.on(SOCKET_EVENT.LIST_USERS_JOIN_ROOM, (data) => {
       setPayload(data);
-      setUsersInRoom(Object.values(data?.users || {}));
     });
   }, []);
 
@@ -187,13 +191,13 @@ function BoxChat({ area }) {
             onClick={() => openModal(MODAL_NAME.USERS_ONLINE_GAME)}
           >
             <div className="flex">
-              {usersInRoom?.length > 0 &&
-                usersInRoom?.slice(0, 5).map((user, i) => {
+              {payload?.users?.length > 0 &&
+                payload?.users?.slice(0, 5).map((user, i) => {
                   return (
                     <ImageLoading
                       key={i}
                       alt="user"
-                      src={user?.avatar?.url ?? DEFAULT_AVATAR_SRC}
+                      src={user?.avatar ?? DEFAULT_AVATAR_SRC}
                       className={`first:m-0 w-8 h-8 mr-[-10px] rounded-full ${
                         i !== 0 && "translate-x-[-10px]"
                       }`}
@@ -201,11 +205,11 @@ function BoxChat({ area }) {
                   );
                 })}
             </div>
-            {usersInRoom?.count > 5 && (
-              <p className="text-[12px]">+ {usersInRoom?.count - 5} more</p>
+            {payload?.users?.count > 5 && (
+              <p className="text-[12px]">+ {payload?.users?.count - 5} more</p>
             )}
           </header>
-          <section className="text-[10px] h-[233px] pl-[10px] pr-[3px]">
+          <section className="text-[10px] h-[233px] pl-[10px] pr-[3px] py-2">
             <div
               className="overflow-y-auto overflow-x-hidden h-full flex flex-col"
               ref={boxChatRef}

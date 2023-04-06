@@ -209,6 +209,16 @@ const insertAt = (array, index, ...elementsArray) => {
   array.splice(index, 0, ...elementsArray);
 };
 
+const AreaOf = (gridIndex) => {
+  const area = gridIndex?.includes("2x2")
+    ? gridIndex?.replace("2x2", "lg")
+    : gridIndex?.includes("3x3")
+    ? gridIndex?.replace("3x3", "xl")
+    : "";
+
+  return area || "auto";
+};
+
 export {
   animateValue,
   articleCategoryUrl,
@@ -230,4 +240,5 @@ export {
   isValidPath,
   insertAt,
   toggleScroll,
+  AreaOf,
 };

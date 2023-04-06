@@ -58,6 +58,15 @@ const GameDetail = () => {
     });
   }, [socketCLI]);
 
+  // on events for anonymous
+  useEffect(() => {
+    if (!socketCLI) return;
+
+    socketCLI.on(SOCKET_EVENT.OUT_OF_TIME, () => {
+      openModal(MODAL_NAME.BUYTIME);
+    });
+  }, [socketCLI]);
+
   useEffect(() => {
     setConnect(true);
     return () => setConnect(false);
