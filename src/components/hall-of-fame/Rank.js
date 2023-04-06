@@ -43,32 +43,44 @@ const Rank = ({ className = "", data, places, tab, ...props }) => {
   const ITEM_BASE_TAB = {
     zera: (
       <Fragment>
-        <IconCoin className="w-[30px] h-[30px]" />
-        <span className="text-[28px] font-bold">
-          {QUANTITY_BY_TAB.zera(delayData)}
-        </span>
+        {QUANTITY_BY_TAB.zera(delayData) && (
+          <Fragment>
+            <IconCoin className="w-[30px] h-[30px]" />
+            <span className="text-[28px] font-bold">
+              {QUANTITY_BY_TAB.zera(delayData)}
+            </span>
+          </Fragment>
+        )}
       </Fragment>
     ),
     games_played: (
       <Fragment>
-        <IconGamePad className="w-[35px] h-7" />
-        <span className="text-[28px] font-bold">
-          {" "}
-          {QUANTITY_BY_TAB.games_played(delayData)}
-        </span>
+        {QUANTITY_BY_TAB.games_played(delayData) && (
+          <Fragment>
+            <IconGamePad className="w-[35px] h-7" />
+            <span className="text-[28px] font-bold">
+              {" "}
+              {QUANTITY_BY_TAB.games_played(delayData)}
+            </span>
+          </Fragment>
+        )}
       </Fragment>
     ),
     playstreak: (
-      <div className="flex flex-col items-center gap-1">
-        <div className="flex justify-between items-center w-full pt-4 relative">
-          <IconLeftWing className="w-6 h-14" />
-          <span className="text-gradient-hof text-[32px] font-bold mt-2">
-            {QUANTITY_BY_TAB.playstreak(delayData)}
-          </span>
-          <IconRightWing className="w-6 h-14" />
-        </div>
-        <p className="text-sm font-medium">playstreak</p>
-      </div>
+      <Fragment>
+        {QUANTITY_BY_TAB.playstreak(delayData) && (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex justify-between items-center w-full pt-4 relative">
+              <IconLeftWing className="w-6 h-14" />
+              <span className="text-gradient-hof text-[32px] font-bold mt-2">
+                {QUANTITY_BY_TAB.playstreak(delayData)}
+              </span>
+              <IconRightWing className="w-6 h-14" />
+            </div>
+            <p className="text-sm font-medium">playstreak</p>
+          </div>
+        )}
+      </Fragment>
     ),
   };
 

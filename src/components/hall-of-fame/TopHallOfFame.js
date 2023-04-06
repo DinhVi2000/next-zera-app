@@ -44,7 +44,7 @@ const Item = ({ item }) => {
       <div className="bg-blur-600 p-2.5 rounded-[10px] flex justify-between cursor-pointer h-[84px] max-h-[84px] overflow-hidden">
         <div className="flex w-full">
           <ImageLoading
-            src={avatar || DEFAULT_AVATAR_SRC}
+            src={avatar?.url || DEFAULT_AVATAR_SRC}
             alt=""
             className="min-w-[62px] w-[62px] h-[62px] rounded-full object-cover"
           />

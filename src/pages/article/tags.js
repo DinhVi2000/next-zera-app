@@ -9,6 +9,7 @@ import { useApi } from "@/hooks/useApi";
 import SEO from "@/components/other/SEO";
 import ArticleTagsWrapper from "@/components/wrapper/ArticleTagsWrapper";
 import { apiURL } from "@/utils/$apiUrl";
+import SidebarMB from "@/components/responsive/SidebarMB";
 
 const ArticleTags = () => {
   const { get } = useApi();
@@ -25,7 +26,13 @@ const ArticleTags = () => {
     <Fragment>
       <SEO title="Game tags" />
       <MainLayout>
-        <ArticleTagsWrapper tags={tags} />
+        <div>
+          <SidebarMB
+            className={"tbl-flex mb-4"}
+            childClassName={"static-important"}
+          />
+          <ArticleTagsWrapper tags={tags} />
+        </div>
       </MainLayout>
     </Fragment>
   );

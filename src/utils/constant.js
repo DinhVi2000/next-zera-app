@@ -139,7 +139,7 @@ const USER_STATUS = {
 };
 
 const QUANTITY_BY_TAB = {
-  zera: (e) => parseFloat(e?.total_earned_zera),
+  zera: (e) => parseFloat(e?.total_earned_zera) || "",
   games_played: (e) => e?.total_games_played,
   playstreak: (e) => e?.streak,
 };

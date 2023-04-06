@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { dynamicPaths } from "@/utils/$path";
+import { dynamicPaths, staticPaths } from "@/utils/$path";
 import { formatDate, gameDetailUrl, getArea } from "@/utils/helper";
 import Link from "next/link";
 import React, { memo } from "react";
 import ScrollContainer from "react-indiana-drag-scroll";
 import { useSelector } from "react-redux";
+import Breadcrumb from "../ui/Breadcrumb";
 
 const GameInfo = ({ area, ...props }) => {
   const { info } = useSelector(({ game: { gameDetail } }) => gameDetail) ?? {};
@@ -22,6 +23,24 @@ const GameInfo = ({ area, ...props }) => {
     game_tags,
   } = info ?? {};
 
+  const breadcrumbsData = [
+    {
+      label: "Home",
+      url: staticPaths.home,
+    },
+    {
+      label: game_category?.label,
+      url: dynamicPaths.category_by_slug(
+        game_category?.superslug?.value,
+        game_category?.slug
+      ),
+    },
+    {
+      label: title,
+      url: dynamicPaths.game_by_slug(superslug?.value, slug),
+    },
+  ];
+
   return (
     <div
       style={{ gridArea: getArea(area) }}
@@ -37,19 +56,7 @@ const GameInfo = ({ area, ...props }) => {
       ) : (
         <>
           {/* breadcrumb */}
-          <div className="text-sm font-semibold  mb-5">
-            <span>{superslug?.label} </span> /
-            <Link
-              href={dynamicPaths.category_by_slug(
-                game_category?.superslug?.value,
-                game_category?.slug
-              )}
-            >
-              {" "}
-              {game_category?.label}
-            </Link>{" "}
-            /<Link href={gameDetailUrl(superslug?.value, slug)}> {title}</Link>
-          </div>
+          <Breadcrumb list={breadcrumbsData} className="mb-5" />
 
           <h2 className="text-[28px] font-semibold leading-[30px]">{title}</h2>
           {created_at && (

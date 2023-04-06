@@ -39,15 +39,11 @@ const CategoryDetail = () => {
   const params = { page: 1, limit: 50 };
 
   useEffect(() => {
-    if (isValidPath(query, setIsValidPage))
+    if (isValidPath(query, setIsValidPage)) {
       get(apiURL.get.games_by_tag(query["tag-slug"]), null, setGameDetailByTag)
         .then((data) => {
-          const { allGameByTags, gameTag } = data ?? {};
-          setIsValidPage(
-            data &&
-              allGameByTags[0]?.game_detail?.superslug.value ===
-                query["superslug"]
-          );
+          const { gameTag } = data ?? {};
+          setIsValidPage(!!data);
           setSeo({
             title: gameTag.label,
             description: gameTag.description,
@@ -56,6 +52,7 @@ const CategoryDetail = () => {
         .catch(() => {
           setIsValidPage(false);
         });
+    }
 
     Promise.all([
       call(getAllGame(dispatch, params)),

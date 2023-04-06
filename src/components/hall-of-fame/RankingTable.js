@@ -12,10 +12,11 @@ import { IconSortDown } from "@/resources/icons";
 
 import { setHallOfFame } from "@/services/user.service";
 
-import { abbreviateNumber, sleep } from "@/utils/helper";
+import { abbreviateNumber } from "@/utils/helper";
 import { Tooltip } from "@chakra-ui/react";
 import Link from "next/link";
 import { dynamicPaths } from "@/utils/$path";
+import Empty from "../empty/Empty";
 
 const ITEM_PER_PAGE = 10;
 
@@ -78,6 +79,8 @@ const RankingTable = ({ className, tab: { value, label }, ...props }) => {
               quantity={QUANTITY_BY_TAB[value](e)}
             />
           ))}
+
+          {currentItems?.length === 0 && <Empty className={"h-[400px]"} />}
         </div>
         {/* pagination */}
         <Pagination

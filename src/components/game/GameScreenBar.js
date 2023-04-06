@@ -44,12 +44,16 @@ const GameScreenBar = ({
     }
   };
 
+  const clearTimerInterval = () => {
+    clearTimerInterval(timeInterval.current);
+  };
+
   useEffect(() => {
     if (!isCountdown) return;
 
     timeInterval.current = setInterval(() => {
       if (userInfo?.playtime - timeIncrease.current === 0) {
-        return clearInterval(timeInterval.current);
+        return clearTimerInterval();
       }
 
       timeIncrease.current += 1;

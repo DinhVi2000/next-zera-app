@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
 
@@ -9,6 +9,7 @@ import { useApi } from "@/hooks/useApi";
 import SEO from "@/components/other/SEO";
 import { getAllCategories } from "@/services/game.service";
 import GameCategoryGrid from "@/components/ui/GameCategoryGrid";
+import SidebarMB from "@/components/responsive/SidebarMB";
 
 const Categories = () => {
   const dispatch = useDispatch();
@@ -23,13 +24,18 @@ const Categories = () => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <SEO title="Game categories" />
-
       <MainLayout>
-        <GameCategoryGrid categories={categories} />
+        <div>
+          <SidebarMB
+            className={"tbl-flex"}
+            childClassName={"static-important"}
+          />
+          <GameCategoryGrid categories={categories} />
+        </div>
       </MainLayout>
-    </>
+    </Fragment>
   );
 };
 
