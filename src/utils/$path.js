@@ -10,6 +10,8 @@ export const staticPaths = {
   all_article_tags: "/article/tags",
   achievements: "/achievements",
   my_hall_of_fame: "/game/hall-of-fame",
+  maintenance: "/maintenance",
+  not_found: "/404",
 };
 
 export const dynamicPaths = {
