@@ -38,20 +38,14 @@
   .game-grid {
     --gridTemplateColumns: 15;
     grid-template-areas:
-      "ip0 ip0 ip0 . . . . . . . . ip7 ip7 ip8 ip8"
-      "ip0 ip0 ip0 ip4 ip4 ip5 ip5 ip2 ip2 ip2 . ip7 ip7 ip8 ip8"
-      "ip0 ip0 ip0 ip4 ip4 ip5 ip5 ip2 ip2 ip2 ip6 ip6 ip3 ip3 ip3"
-      "ip10 ip10 ip11 ip11 ip1 ip1 ip1 ip2 ip2 ip2 ip6 ip6 ip3 ip3 ip3"
-      "ip10 ip10 ip11 ip11 ip1 ip1 ip1 ip12 ip12 ip13 ip13 . ip3 ip3 ip3"
-      " ip15 ip16 ip16 . ip1 ip1 ip1 ip12 ip12 ip13 ip13 ip17 ip17 ip18 ip18"
-      " . ip16 ip16 . ip20 ip20 ip21 ip21 ip22 ip22 . ip17 ip17 ip18 ip18"
-      " . . . . ip20 ip20 ip21 ip21 ip22 ip22 . . . . ."
-      " . ip9 . ip14 . . . . . . . . . . ."
-      " . . . . . . . . ip23 ip23 ip23 . . . ."
-      " . . . . ip26 ip26 . . ip23 ip23 ip23 . . . ."
-      " ip25 ip25 . . ip26 ip26 . . ip23 ip23 ip23 . . . ."
-      " ip25 ip25 . . . . . . . . . . . ip27 ip27"
-      " . . . . . . . . . . . . . ip27 ip27";
+      "xl_1 xl_1 xl_1 . . . . . . . . lg_3 lg_3 lg_4 lg_4"
+      "xl_1 xl_1 xl_1 lg_1 lg_1 lg_2 lg_2 xl_2 xl_2 xl_2 . lg_3 lg_3 lg_4 lg_4"
+      "xl_1 xl_1 xl_1 lg_1 lg_1 lg_2 lg_2 xl_2 xl_2 xl_2 lg_7 lg_7 xl_4 xl_4 xl_4"
+      "lg_5 lg_5 lg_6 lg_6 xl_3 xl_3 xl_3 xl_2 xl_2 xl_2 lg_7 lg_7 xl_4 xl_4 xl_4"
+      "lg_5 lg_5 lg_6 lg_6 xl_3 xl_3 xl_3 lg_9 lg_9 lg_10 lg_10 . xl_4 xl_4 xl_4"
+      " . lg_8 lg_8 . xl_3 xl_3 xl_3 lg_9 lg_9 lg_10 lg_10 . . . ."
+      " . lg_8 lg_8 . . . . . . . . . . . ."
+      " . . . . . . . . . . . . . . .";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(8, 94px);
   }
@@ -115,21 +109,21 @@
   .game-grid {
     --gridTemplateColumns: 12;
     grid-template-areas:
-      " ip0 ip0 ip0 ip2 ip2 . . . . . ip4 ip4"
-      " ip0 ip0 ip0 ip2 ip2 . ip3 ip3 ip3 . ip4 ip4"
-      " ip0 ip0 ip0 .   .   . ip3 ip3 ip3 . ip5 ip5"
-      " . . . ip1 ip1 ip1 ip3 ip3 ip3 . ip5 ip5"
-      " . ip7 ip7 ip1 ip1 ip1 ip8 ip8 ip9 ip9 . ."
-      " . ip7 ip7 ip1 ip1 ip1 ip8 ip8 ip9 ip9 . ."
-      " . . . . . . . . . . . ."
-      " . . ip6 ip6 . . ip11 ip11 ip11 . . ."
-      " . . ip6 ip6 . . ip11 ip11 ip11 . . ."
+      " xl_1 xl_1 xl_1 . . . . . . . lg_1 lg_1"
+      " xl_1 xl_1 xl_1 xl_2 xl_2 xl_2 xl_3 xl_3 xl_3 . lg_1 lg_1"
+      " xl_1 xl_1 xl_1 xl_2 xl_2 xl_2 xl_3 xl_3 xl_3 . lg_2 lg_2"
+      " .    .    .    xl_2 xl_2 xl_2 xl_3 xl_3 xl_3 . lg_2 lg_2"
+      " . lg_3 lg_3 xl_4 xl_4 xl_4 lg_4 lg_4 lg_5 lg_5 . ."
+      " . lg_3 lg_3 xl_4 xl_4 xl_4 lg_4 lg_4 lg_5 lg_5 . ."
+      " . . . xl_4 xl_4 xl_4 . . . . . ."
+      " . . lg_6 lg_6 . . ip11 ip11 ip11 . . ."
+      " . . lg_6 lg_6 . . ip11 ip11 ip11 . . ."
       " . . . . . . ip11 ip11 ip11 . . ."
-      " ip13 ip13 . ip10 ip10 . . . . . . ."
-      " ip13 ip13 . ip10 ip10 . ip12 ip12 . . . ."
-      " . . . . ip14 ip14 ip12 ip12 . ip15 ip15 ip15"
-      " ip16 ip16 . . ip14 ip14 . . . ip15 ip15 ip15"
-      " ip16 ip16 . . . . . . . ip15 ip15 ip15";
+      " lg_7 lg_7 . lg_8 lg_8 . . . . . . ."
+      " lg_7 lg_7 . lg_8 lg_8 . lg_9 lg_9 . . . ."
+      " . . . . ip14 ip14 lg_9 lg_9 . ip15 ip15 ip15"
+      " lg_10 lg_10 . . ip14 ip14 . . . ip15 ip15 ip15"
+      " lg_10 lg_10 . . . . . . . ip15 ip15 ip15";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(15, 94px);
   }
@@ -198,22 +192,21 @@
   .game-grid {
     --gridTemplateColumns: 10;
     grid-template-areas:
-      "ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
-      " ip0 ip0 ip0 ip2 ip2 ip3 ip3 ip4 ip4 ."
-      " ip0 ip0 ip0 ip1 ip1 ip1 . ip5 ip5 ."
-      " . . . ip1 ip1 ip1 . ip5 ip5 ."
-      " ip6 ip7 ip7 ip1 ip1 ip1 . ip8 ip8 ."
-      " . ip7 ip7 . . . . ip8 ip8 ."
-      " . . . . . . . . . ."
-      " . . . . . ip9 ip9 . . ."
-      " . . . . . ip9 ip9 . . ."
-      " ip11 ip11 . . . ip15 ip15 . . ."
-      " ip11 ip11 . . . ip15 ip15 . . ."
-      " . . . . ip12 ip12 . . . ."
-      " . . . . ip12 ip12 . . . ."
-      " ip13 ip13 . ip16 ip16 . . . . ."
-      " ip13 ip13 . ip16 ip16 . . ip14 ip14 ."
-      " . ip10 . . . . . ip14 ip14 .";
+      " xl_1 xl_1 xl_1 . lg_1 lg_1 .lg_2 lg_2 ."
+      " xl_1 xl_1 xl_1 . lg_1 lg_1 . lg_2 lg_2 ."
+      " xl_1 xl_1 xl_1 xl_2 xl_2 xl_2 . lg_3 lg_3 ."
+      " . . . xl_2 xl_2 xl_2 . lg_3 lg_3 ."
+      " . lg_4 lg_4 xl_2 xl_2 xl_2 . lg_5 lg_5 ."
+      " . lg_4 lg_4 lg_6 lg_6 . . lg_5 lg_5 ."
+      " lg_7 lg_7 . lg_6 lg_6 . . xl_3 xl_3 xl_3"
+      " lg_7 lg_7 . . . lg_8 lg_8 xl_3 xl_3 xl_3"
+      " xl_4 xl_4 xl_4 . . lg_8 lg_8 xl_3 xl_3 xl_3"
+      " xl_4 xl_4 xl_4 . . . . . . ."
+      " xl_4 xl_4 xl_4 . . . . . . ."
+      " . . . . lg_9 lg_9 . . . ."
+      " . . . . lg_9 lg_9 . . . ."
+      " lg_10 lg_10 . . . . . . . ."
+      " lg_10 lg_10 . . . . . . . .";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(17, 94px);
   }
@@ -280,25 +273,25 @@
   .game-grid {
     --gridTemplateColumns: 9;
     grid-template-areas:
-      " ip0 ip0 ip0 ip4 ip4 ip2 ip2 ip3 ip3"
-      " ip0 ip0 ip0 ip4 ip4 ip2 ip2 ip3 ip3"
-      " ip0 ip0 ip0 ip1 ip1 ip1 .   ip5 ip5"
-      " .   .   .   ip1 ip1 ip1 .   ip5 ip5"
-      " ip6 ip7 ip7 ip1 ip1 ip1 .   ip8 ip8"
-      " . ip7 ip7 .   .   .   .   ip8 ip8"
-      " .   .   .   .   .   .   .   .   ."
-      " .   .   ip10   .   ip9 ip9 ip9 .   ."
-      " .   .   .   .   ip9 ip9 ip9 .   ."
-      " ip11 ip11 . .   ip9 ip9 ip9 .   ."
+      " xl_1 xl_1 xl_1 lg_1 lg_1 lg_2 lg_2 lg_3 lg_3"
+      " xl_1 xl_1 xl_1 lg_1 lg_1 lg_2 lg_2 lg_3 lg_3"
+      " xl_1 xl_1 xl_1 xl_2 xl_2 xl_2 .   lg_4 lg_4"
+      " .   .   .   xl_2 xl_2 xl_2 .   lg_4 lg_4"
+      " . lg_5 lg_5 xl_2 xl_2 xl_2 .   lg_6 lg_6"
+      " . lg_5 lg_5 .   .   .   .   lg_6 lg_6"
+      " lg_7 lg_7 lg_8 lg_8 .   .   .   .   ."
+      " lg_7 lg_7 lg_8 lg_8 xl_3 xl_3 xl_3 .   ."
+      " .   .   .   .   xl_3 xl_3 xl_3 .   ."
+      " ip11 ip11 . .   xl_3 xl_3 xl_3 .   ."
       " ip11 ip11 . .   .   .   .   .   ."
       " .    .    . .   .   .   .   .   ."
-      " . ip12 ip12 ip12 .  .   .   .   ."
-      " . ip12 ip12 ip12 . ip13 ip13 . ."
-      " . ip12 ip12 ip12 . ip13 ip13 . ."
+      " . xl_4 xl_4 xl_4 .  .   .   .   ."
+      " . xl_4 xl_4 xl_4 . lg_9 lg_9 . ."
+      " . xl_4 xl_4 xl_4 . lg_9 lg_9 . ."
       " . . . . . . . . ."
-      " . . . . . . . ip15 ip15"
-      " ip14 ip16 ip16 . . . . ip15 ip15"
-      " . ip16 ip16 . . . . . .";
+      " . . . . . . . . ."
+      " ip14 lg_10 lg_10 . . . . . ."
+      " . lg_10 lg_10 . . . . . .";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(20, 94px);
   }
@@ -355,30 +348,24 @@
   .game-grid {
     --gridTemplateColumns: 7;
     grid-template-areas:
-      "ip0 ip0 ip0 ip2 ip2 ip3 ip3"
-      "ip0 ip0 ip0 ip2 ip2 ip3 ip3"
-      "ip0 ip0 ip0 ip1 ip1 ip1 ."
-      ". ip5 ip5 ip1 ip1 ip1 ."
-      " ip4 ip5 ip5 ip1 ip1 ip1 ."
-      " . ip7 ip7 . ip8 ip8 ."
-      " ip6 ip7 ip7 . ip8 ip8 ."
-      " . . . . . . ."
-      " ip9 ip9 ip9 . ip12 ip12 ."
-      " ip9 ip9 ip9 . ip12 ip12 ."
-      " ip9 ip9 ip9 . . . ."
-      " . . . . . . ."
-      " . . . . ip10 ip10 ip10"
-      " . . . . ip10 ip10 ip10"
-      " ip14 ip14 . . ip10 ip10 ip10"
-      " ip14 ip14 . . . . ."
-      " . . . . . . ."
-      " . . ip11 ip11 ip11 . ."
-      " . . ip11 ip11 ip11 . ."
-      " ip15 . ip11 ip11 ip11 . ."
-      " ip15 ip16 ip16 . . . ."
-      " . ip16 ip16 . . . ."
-      " . ip13 . . . ip17 ip17"
-      " . . . . . ip17 ip17";
+    ". lg_1 lg_1 . xl_1 xl_1 xl_1"
+    ". lg_1 lg_1 . xl_1 xl_1 xl_1"
+    "lg_2 lg_2 . . xl_1 xl_1 xl_1"
+    "lg_2 lg_2 . . . . ."
+    ". . . xl_2 xl_2 xl_2 ."
+    "xl_3 xl_3 xl_3 xl_2 xl_2 xl_2 ."
+    "xl_3 xl_3 xl_3 xl_2 xl_2 xl_2 ."
+    "xl_3 xl_3 xl_3 lg_3 lg_3 . ."
+    ". . . lg_3 lg_3 . ."
+    ". lg_4 lg_4 . . lg_5 lg_5"
+    ". lg_4 lg_4 . . lg_5 lg_5"
+    "xl_4 xl_4 xl_4 . . . . "
+    "xl_4 xl_4 xl_4 . . lg_6 lg_6"
+    "xl_4 xl_4 xl_4 . . lg_6 lg_6"
+    ".    lg_7 lg_7 lg_8 lg_8 . . "
+    ".    lg_7 lg_7 lg_8 lg_8 . . "
+    ". . lg_9 lg_9 lg_10 lg_10  ."
+    ". . lg_9 lg_9 lg_10 lg_10  .";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(10, 94px);
   }
@@ -449,18 +436,24 @@
   .game-grid {
     --gridTemplateColumns: 7;
     grid-template-areas:
-      ". ip0 ip0 . . ."
-      ". ip0 ip0 . ip1 ip1"
-      "ip2 ip2 . . ip1 ip1"
-      "ip2 ip2 . ip3 ip3 ip3"
-      "ip4 ip4 ip4 ip3 ip3 ip3"
-      "ip4 ip4 ip4 ip3 ip3 ip3"
-      "ip4 ip4 ip4 ip5 ip5 ip5"
-      ". . . ip5 ip5 ip5"
-      ". ip6 ip6 ip5 ip5 ip5"
-      ". ip6 ip6 . . ."
-      "ip7 ip8 ip8 ip9 ip10 ip11"
-      "ip12 ip13 ip14 ip15 ip16 ip17";
+      ". lg_1 lg_1 . xl_1 xl_1 xl_1"
+      ". lg_1 lg_1 . xl_1 xl_1 xl_1"
+      "lg_2 lg_2 . . xl_1 xl_1 xl_1"
+      "lg_2 lg_2 . . . . ."
+      ". . . xl_2 xl_2 xl_2 ."
+      "xl_3 xl_3 xl_3 xl_2 xl_2 xl_2 ."
+      "xl_3 xl_3 xl_3 xl_2 xl_2 xl_2 ."
+      "xl_3 xl_3 xl_3 lg_3 lg_3 . ."
+      ". . . lg_3 lg_3 . ."
+      ". lg_4 lg_4 . . lg_5 lg_5"
+      ". lg_4 lg_4 . . lg_5 lg_5"
+      "xl_4 xl_4 xl_4 . . . . "
+      "xl_4 xl_4 xl_4 . . lg_6 lg_6"
+      "xl_4 xl_4 xl_4 . . lg_6 lg_6"
+      ".    lg_7 lg_7 lg_8 lg_8 . . "
+      ".    lg_7 lg_7 lg_8 lg_8 . . "
+      ". . lg_9 lg_9 lg_10 lg_10  ."
+      ". . lg_9 lg_9 lg_10 lg_10  .";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(10, 94px);
   }
@@ -527,18 +520,26 @@
   .game-grid {
     --gridTemplateColumns: 6;
     grid-template-areas:
-      ". ip0 ip0 . . ."
-      ". ip0 ip0 . ip1 ip1"
-      "ip2 ip2 . . ip1 ip1"
-      "ip2 ip2 . ip3 ip3 ip3"
-      "ip4 ip4 ip4 ip3 ip3 ip3"
-      "ip4 ip4 ip4 ip3 ip3 ip3"
-      "ip4 ip4 ip4 ip5 ip5 ip5"
-      ". . . ip5 ip5 ip5"
-      ". ip6 ip6 ip5 ip5 ip5"
-      ". ip6 ip6 . . ."
-      "ip7 ip8 ip17 ip9 ip10 ip11"
-      "ip12 ip13 ip14 ip15 ip16 .";
+      ". lg_1 lg_1 . . ."
+      ". lg_1 lg_1 . lg_4 lg_4"
+      "lg_2 lg_2 . . lg_4 lg_4"
+      "lg_2 lg_2 . xl_3 xl_3 xl_3"
+      "xl_1 xl_1 xl_1 xl_3 xl_3 xl_3"
+      "xl_1 xl_1 xl_1 xl_3 xl_3 xl_3"
+      "xl_1 xl_1 xl_1 xl_2 xl_2 xl_2"
+      ". . . xl_2 xl_2 xl_2"
+      ".    lg_3 lg_3 xl_2 xl_2 xl_2"
+      ".    lg_3 lg_3 lg_6 lg_6 ."
+      ". lg_5 lg_5 lg_6 lg_6 ."
+      ". lg_5 lg_5 .    lg_7 lg_7"
+      "lg_8 lg_8 . . lg_7 lg_7"
+      "lg_8 lg_8 . . . ."
+      ". lg_9 lg_9 lg_10 lg_10 ."
+      ". lg_9 lg_9 lg_10 lg_10 ."
+      ". . . . . ."
+      ". xl_4 xl_4 xl_4 . . "
+      ". xl_4 xl_4 xl_4 . . "
+      ". xl_4 xl_4 xl_4 . . ";
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(10, 94px);
   }
@@ -611,19 +612,31 @@
   .game-grid {
     --gridTemplateColumns: 5;
     grid-template-areas:
-      ". . ip7 ip7 ip0"
-      "ip1 ip1 ip7 ip7 ."
-      "ip1 ip1 . . ."
-      "ip2 ip2 ip2 . ."
-      "ip2 ip2 ip2 ip3 ip3"
-      "ip2 ip2 ip2 ip3 ip3"
-      ". . ip4 ip4 ."
-      ". . ip4 ip4 ."
-      "ip5 ip5 ip6 ip6 ip6"
-      "ip5 ip5 ip6 ip6 ip6"
-      ". . ip6 ip6 ip6"
-      "ip8 ip9 ip10 ip11 ip12"
-      "ip13 ip14 ip15 ip16 ip17";
+      ". . lg_1 lg_1 ."
+      "lg_2 lg_2 lg_1 lg_1 ."
+      "lg_2 lg_2 . . ."
+      "xl_1 xl_1 xl_1 . ."
+      "xl_1 xl_1 xl_1 . ."
+      "xl_1 xl_1 xl_1 . ."
+      ". . xl_2 xl_2 xl_2"
+      ". . xl_2 xl_2 xl_2"
+      ". . xl_2 xl_2 xl_2"
+      "xl_3 xl_3 xl_3 . ."
+      "xl_3 xl_3 xl_3 . ."
+      "xl_3 xl_3 xl_3 . ."
+      "lg_3 lg_3 . lg_4 lg_4 "
+      "lg_3 lg_3 . lg_4 lg_4 "
+      ". . xl_4 xl_4 xl_4"
+      ". . xl_4 xl_4 xl_4"
+      ". . xl_4 xl_4 xl_4"
+      "lg_5 lg_5 . lg_6 lg_6"
+      "lg_5 lg_5 . lg_6 lg_6"
+      ". lg_7 lg_7 . ."
+      ". lg_7 lg_7 lg_8 lg_8"
+      ". . . lg_8 lg_8"
+      "lg_9 lg_9 lg_10 lg_10 ."
+      "lg_9 lg_9 lg_10 lg_10 ."
+      ;
     grid-template-columns: repeat(var(--gridTemplateColumns), 94px);
     grid-template-rows: repeat(10, 94px);
   }
@@ -690,17 +703,18 @@
 @media (min-width: 111px) and (max-width: 550.9px) {
   .game-grid {
     grid-template-areas:
-      "ipm ip0 ip0 "
-      "ip1 ip0 ip0 "
-      "ip2 ip3 ip4 "
-      "ip5 ip5 ip6 "
-      "ip5 ip5 ip7 "
-      "ip8 ip9 ip10 "
-      "ip11 ip12 ip12"
-      "ip13 ip12 ip12"
-      "ip14 ip15 ip16"
-      "ip17 ip17 ip18"
-      "ip17 ip17 .";
+      "ipm xl_1 xl_1 "
+      "lg_1   xl_1 xl_1 "
+      "lg_2 lg_3 lg_4"
+      "xl_2 xl_2 lg_5"
+      "xl_2 xl_2 lg_6"
+      "lg_7 lg_8 lg_9"
+      "lg_10 xl_3 xl_3"
+      ". xl_3 xl_3"
+      ". . ."
+      "xl_4 xl_4 ."
+      "xl_4 xl_4 ."
+      ". . .";
     grid-template-columns: repeat(3, 94px);
     grid-template-rows: repeat(10, 94px);
   }

@@ -69,7 +69,7 @@ export const SocketContextProvider = ({ children }) => {
 
   const router = useRouter();
 
-  const resetState = () => {
+  const clearState = () => {
     setIsLogged(false);
     setIsCountdown(false);
     setCountdownStatus(STATUS.INIT);
@@ -88,7 +88,7 @@ export const SocketContextProvider = ({ children }) => {
 
     if (!connect && socketCLI) {
       socketCLI.disconnect();
-      resetState();
+      clearState();
     }
   }, [connect]);
 

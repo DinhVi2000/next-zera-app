@@ -26,6 +26,7 @@ const GameGrid = ({ games }) => {
           key={e?.id}
           id={e?.id}
           area={`ip${i}`}
+          grid_index={e?.grid_index}
           index={i}
           thumbnail={e?.thumbnail}
           title={e?.title}
@@ -42,6 +43,12 @@ const GameGrid = ({ games }) => {
 export default memo(GameGrid);
 
 const LoadingGrid = memo(function Component({ list }) {
+  const areaByIndex = (i) => {
+    if (inRange(i, 0, 3)) return "xl_" + (i + 1);
+    if (inRange(i, 5, 14)) return "lg_" + (i - 4);
+    return "auto";
+  };
+
   return (
     <Fragment>
       {!list &&
@@ -52,7 +59,7 @@ const LoadingGrid = memo(function Component({ list }) {
               key={i}
               className="w-full h-full rounded-2xl skeleton-shine"
               style={{
-                gridArea: inRange(i, 0, 16) ? getArea(`ip${i}`) : "auto",
+                gridArea: getArea(areaByIndex(i)),
               }}
             ></div>
           ))}

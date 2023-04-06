@@ -88,6 +88,7 @@ const SOCKET_EVENT = {
   ANONYMOUS_LOGIN: "loginAnonymous",
   USER_DUPLICATE_LOGIN: "duplicateLogin",
   STOP_PLAY: "stopPlay",
+  OUT_OF_TIME: "outOfTime",
 
   USER_EMIT_REWARD: "emitReward",
   USER_LOGIN: "userLogin",
