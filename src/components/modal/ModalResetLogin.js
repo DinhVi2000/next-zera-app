@@ -45,23 +45,15 @@ const ModalResetLogin = () => {
       >
         <div className="flex justify-center items-center my-8 mx-8">
           <h3 className="text-[28px] font-bold text-center max-[597px]:text-[22px]">
-            <span className="text-[#EC4899]"> Your account </span>has been
-            logged in on another device!
+            Can not play the game on multiple devices
           </h3>
         </div>
         <div className="flex-center max-[597px]:flex-col-reverse">
           <button
-            onClick={handleBackToHome}
-            className="mx-auto text-base max-[597px]:text-sm font-semibold flex-center hover:text-[#4d4448] group"
-          >
-            <IconArrowLeft className="text-white group-hover:text-[#EC4899] w-3 h-3" />
-            Back to Homepage
-          </button>
-          <button
             onClick={handleCloseModal}
-            className="mx-auto text-[20px] max-[597px]:text-base max-[597px]:mb-4 font-semibold flex-center p-3 rounded-3xl bg-[#DB2777] border-[3px] border-[#DB2777] hover:bg-[#00000000]"
+            className="mx-auto px-6 py-2 text-[20px] max-[597px]:text-base max-[597px]:mb-4 font-semibold flex-center rounded-3xl bg-[#DB2777] border-[3px] border-[#DB2777] hover:bg-[#00000000]"
           >
-            Please login again!
+            OK
           </button>
         </div>
       </div>

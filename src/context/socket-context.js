@@ -18,6 +18,7 @@ import { useAuthContext } from "./auth-context";
 import { getTimeRemaining } from "@/utils/common";
 import { useRouter } from "next/router";
 import { staticPaths } from "@/utils/$path";
+import { sleep } from "@/utils/helper";
 
 const DEFAULT_TIME = {
   days: "00",
@@ -134,6 +135,11 @@ export const SocketContextProvider = ({ children }) => {
     );
   }, [anonymousInfo?.playtime, userInfo?.playtime]);
 
+  // cheat
+  // useEffect(() => {
+  //   sleep(1000).then(() => setUserInfo((prev) => ({ ...prev, playtime: 3 })));
+  // }, []);
+
   // set user || anonymous playtime
   useEffect(() => {
     if (!isCountdown || countdownStatus === STATUS.IN_PROGRESS) return;
@@ -146,7 +152,7 @@ export const SocketContextProvider = ({ children }) => {
         (+(userInfo?.playtime || anonymousInfo?.playtime) || 0) -
         timeDecrease.current;
       const checkTime = checkTimeRemaining > 0 ? checkTimeRemaining : 0;
-      if (checkTimeRemaining <= 0) return clearInterval(timeInterval.current);
+      if (checkTimeRemaining < 0) return clearInterval(timeInterval.current);
       const time = getTimeRemaining(checkTime);
 
       setRemainingTime(time);

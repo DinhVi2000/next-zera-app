@@ -29,8 +29,6 @@ import { useRouter } from "next/router";
 
 import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
 
-import { signInAnonymously } from "firebase/auth";
-import { auth } from "@/configs/firebaseConfig";
 import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
 import Script from "next/script";
