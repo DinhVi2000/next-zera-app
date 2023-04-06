@@ -22,6 +22,8 @@ import HandleNotFoundPage from "@/components/other/HandleNotFoundPage";
 import { useToast } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import SidebarMB from "@/components/responsive/SidebarMB";
+import Pagination from "@/components/pagination/Pagination";
+import { usePagination } from "@/hooks/usePagination";
 
 function News() {
   const [isValidPage, setIsValidPage] = useState();
@@ -331,6 +333,8 @@ const MainContent = () => {
     }
   }, [tags]);
 
+  const { currentItems, handlePageClick } = usePagination(9, items);
+
   return (
     <>
       <div className="flex items-center mt-12 max-[881px]:flex-col">
@@ -381,8 +385,9 @@ const MainContent = () => {
           </form>
         </div>
       </div>
+
       <div className="grid grid-cols-1 min-[551px]:grid-cols-2 min-[881px]:grid-cols-3 min-[1541px]:grid-cols-5 min-[1870px]:grid-cols-6 grid-rows-1 gap-4 mt-5">
-        {items?.map((e, i) => (
+        {currentItems?.map((e, i) => (
           <Link
             key={i}
             href={`/article/${e?.slug}`}
@@ -429,6 +434,11 @@ const MainContent = () => {
           </Link>
         ))}
       </div>
+      <Pagination
+        onPageChange={handlePageClick}
+        itemsPerPage={9}
+        items={items}
+      />
     </>
   );
 };
