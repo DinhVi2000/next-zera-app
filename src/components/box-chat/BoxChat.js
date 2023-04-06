@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useState, memo, useEffect, Fragment } from "react";
 
-import { IconSendMes } from "@/resources/icons";
+import { IconEmoji, IconSendMes } from "@/resources/icons";
 import { useAuthContext } from "@/context/auth-context";
 import { getArea, notifyErrorMessage } from "@/utils/helper";
 import { useSelector } from "react-redux";
@@ -22,6 +22,9 @@ import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
 import moment from "moment";
 import { useToast } from "@chakra-ui/react";
+import EmojiPicker from "emoji-picker-react";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
+import { EmojiText } from "./EmojiText";
 
 const MAX_MESSAGE_SEND = 5;
 const TIME_LIMIT = 60;
@@ -34,12 +37,16 @@ function BoxChat({ area }) {
 
   const [messages, setMessages] = useState([]);
   const [usersInRoom, setUsersInRoom] = useState();
+  const [inputStr, setInputStr] = useState("");
+  const [openEmoji, setOpenEmoji] = useState(false);
+
   const [messageSentCount, setSentMessageCount] = useState(0);
 
   const timeSendFirstMessage = useRef();
   const inputRef = useRef();
   const boxChatRef = useRef();
   const messagesRef = useRef();
+  const emojiRef = useRef();
 
   const { userInfo, token, verifyStatus } = useAuthContext();
   const { openModal, setPayload } = useModalContext();
@@ -54,8 +61,22 @@ function BoxChat({ area }) {
   const handleSendMessage = (e) => {
     e.preventDefault();
 
+    var msg = "";
+    var words = inputRef.current.value;
+    words = words.split(" ");
+
+    for (const i in words) {
+      for (const j in EmojiText) {
+        if (j == words[i]) {
+          words[i] = EmojiText[j];
+        }
+      }
+
+      var messageStr = (msg += words[i] + " ");
+    }
+
+    setInputStr("");
     if (messageSentCount === MAX_MESSAGE_SEND) {
-      // s
       const timeRange = (moment.now() - timeSendFirstMessage.current) / 1000;
 
       if (timeRange < TIME_LIMIT) {
@@ -71,7 +92,7 @@ function BoxChat({ area }) {
     }
 
     if (!inputRef.current.value.trim()) return;
-    socketCLI.emit(SOCKET_EVENT.SEND_MESSAGE, { msg: inputRef.current.value });
+    socketCLI.emit(SOCKET_EVENT.SEND_MESSAGE, { msg: messageStr });
     setSendMessageStatus(STATUS.IN_PROGRESS);
   };
 
@@ -132,6 +153,12 @@ function BoxChat({ area }) {
   useEffect(() => {
     if (messageSentCount === 1) timeSendFirstMessage.current = moment.now();
   }, [messageSentCount]);
+
+  const onEmojiClick = (e) => {
+    setInputStr((preInput) => preInput + e.emoji);
+  };
+
+  useOnClickOutside(emojiRef, () => setOpenEmoji(false));
 
   return (
     <div
@@ -199,21 +226,29 @@ function BoxChat({ area }) {
       )}
 
       <form onSubmit={(e) => handleSendMessage(e)}>
-        <div className="flex items-center justify-between px-[20px] rounded-[10px] h-[37px] bg-[#52495e]">
+        <div className="flex items-center justify-between px-[20px] rounded-[10px] h-[37px] bg-[#52495e] relative">
           <input
             ref={inputRef}
             disabled={!userInfo}
             placeholder="Say something..."
             className="bg-transparent text-base w-[90%] border-b-[1px] border-b-[#00000033] focus:border-b-white"
+            value={inputStr}
+            onChange={(e) => setInputStr(e.target.value)}
           />
-          <div className="relative group">
-            <button type="submit" disabled={!userInfo}>
-              <IconSendMes className="cursor-pointer" />
-              <div className="hidden group-hover:block absolute bottom-[-10px] right-[-15px] bg-zinc-800 text-[7px] p-[2px] rounded-[2px]">
-                Send
-              </div>
-            </button>
+
+          <div onClick={() => setOpenEmoji((value) => !value)}>
+            <IconEmoji className="w-4 h-4 cursor-pointer mx-3" />
           </div>
+
+          {openEmoji && (
+            <div ref={emojiRef}>
+              <EmojiPicker onEmojiClick={onEmojiClick} />
+            </div>
+          )}
+
+          <button type="submit" disabled={!userInfo}>
+            <IconSendMes className="w-4 h-4 cursor-pointer" />
+          </button>
         </div>
       </form>
     </div>
