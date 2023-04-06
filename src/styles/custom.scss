@@ -578,3 +578,12 @@
 .background-carousel {
   background: linear-gradient(180deg, #00000000, #000000e3);
 }
+
+.EmojiPickerReact.epr-main {
+  position: absolute !important;
+  z-index: 10;
+  width: 314px !important;
+  height: 400px !important;
+  top: 40px;
+  left: 0;
+}
