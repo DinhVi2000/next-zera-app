@@ -10,8 +10,10 @@ import {
   notifySuccessMessage,
 } from "@/utils/helper";
 import Link from "next/link";
+import { config } from "@/envs";
 
 function Stats() {
+  const domain = config.DOMAIN_URL;
   const { userInfo } = useAuthContext();
   const [stats, setStats] = useState([]);
   const toast = useToast();
@@ -30,7 +32,9 @@ function Stats() {
   }, []);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${userInfo?.ref_link}`);
+    navigator.clipboard.writeText(
+      `${domain}register?src=${userInfo?.username}`
+    );
     notifySuccessMessage(toast, "Copy Successfully");
   };
 

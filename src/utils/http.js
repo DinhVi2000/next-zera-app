@@ -55,6 +55,12 @@ class Http {
       (response) => response,
       (error) => {
         if (
+          error?.response?.data?.error?.code ===
+          HTTP_ERROR_CODE.UNDER_MAINTENANCE
+        ) {
+          window.location.replace("/maintenance");
+        }
+        if (
           HTTP_ERROR_CODE.UN_AUTHORIZATION.includes(
             error?.response?.data?.error?.code
           )

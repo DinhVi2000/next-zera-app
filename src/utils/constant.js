@@ -51,6 +51,8 @@ const PUBLIC_PAGE_URL = {
   REGISTER: staticPaths.register,
   FORGOT_PASSWPORD: staticPaths.forgot_password,
   RESET_PASSWPORD: staticPaths.reset_password,
+  MAINTENANCE: staticPaths.maintenance,
+  404: staticPaths.not_found,
 };
 
 const PRIVATE_PAGE_URL = {
@@ -112,6 +114,7 @@ const MESSAGE_MAX_LENGTH = 150;
 
 const HTTP_ERROR_CODE = {
   UN_AUTHORIZATION: [401],
+  UNDER_MAINTENANCE: 503,
 };
 
 const PREFIX_USERNAME = "@";

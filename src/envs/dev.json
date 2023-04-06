@@ -1,5 +1,6 @@
 {
   "API_URL": "https://user-api.test.rivennft.io/api/v1",
+  "DOMAIN_URL": "https://user-web.test.rivennft.io/",
   "FIREBASE": {
     "apiKey": "AIzaSyDBvwBi8JlkNn5l91oRjTe8q8xevcTQoN0",
     "authDomain": "singlesignon-auth.firebaseapp.com",
