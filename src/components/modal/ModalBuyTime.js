@@ -89,9 +89,9 @@ const ModalBuyTime = () => {
         className="opacity-5 scale-90 md:w-fit md:h-fit daily-bonus md:px-4 px-1 py-8 transition-all w-[340px]"
       >
         <div className="relative mb-5">
-          <h4 className="mx-auto left-1/2 -translate-x-1/2 absolute">
+          <div className="bg-pink-700 w-[250px] h-[55px] mt-[-55px] text-center shadow-tt text-[30px] font-semibold rounded-[14px] mx-auto left-1/2 -translate-x-1/2 absolute">
             Buy Play Time
-          </h4>
+          </div>
           <IconClose
             className="cursor-pointer text-pink-400 w-5 absolute right-3 top-[-12px]"
             onClick={() => {
@@ -110,7 +110,7 @@ const ModalBuyTime = () => {
                 >
                   {/* value */}
                   <div className="bg-pink-400 text-base px-5 py-2.5 text-center flex justify-center flex-col">
-                    <p> +{e.name}</p>
+                    <p> {e.name}</p>
                     <p className="flex justify-center items-center">
                       {" "}
                       <strong className="mr-1">{e.price} </strong>{" "}

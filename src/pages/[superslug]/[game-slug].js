@@ -46,15 +46,17 @@ const GameDetail = () => {
     setIsCountdown,
     timeDecrease,
   } = useSocketContext();
-  const { userInfo, getActivities } = useAuthContext();
+  const { getActivities } = useAuthContext();
   const { openModal } = useModalContext();
 
-  // open modal buy time when playtime out
+  // on events for anonymous
   useEffect(() => {
-    if (countdownStatus === STATUS.IN_PROGRESS && +userInfo?.playtime <= 0) {
+    if (!socketCLI) return;
+
+    socketCLI.on(SOCKET_EVENT.OUT_OF_TIME, () => {
       openModal(MODAL_NAME.BUYTIME);
-    }
-  }, [userInfo?.playtime, countdownStatus]);
+    });
+  }, [socketCLI]);
 
   useEffect(() => {
     setConnect(true);

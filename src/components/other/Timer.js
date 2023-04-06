@@ -8,51 +8,6 @@ import { useSocketContext } from "@/context/socket-context";
 const Timer = () => {
   const { remainingTime, timeInterval } = useSocketContext();
 
-  // useEffect(() => {
-  //   if (isCountDown?.status === STATUS_PLAY_GAME.NONE) return;
-  //   if (Number(totalTimePlay) === 0) {
-  //     openModal(MODAL_NAME.BUYTIME);
-  //     return;
-  //   }
-  //   switch (isCountDown.status) {
-  //     case STATUS_PLAY_GAME.PLAY:
-  //       timeIntervalId.current = setInterval(() => {
-  //         timeDes.current++;
-  //         const checkTimeRemaining = Number(totalTimePlay) - timeDes.current;
-  //         const checkTime = checkTimeRemaining > 0 ? checkTimeRemaining : 0;
-  //         const time = getTimeRemaining(checkTime);
-  //         if (checkTimeRemaining <= 0) {
-  //           openModal(MODAL_NAME.BUYTIME);
-  //           clearInterval(timeIntervalId.current);
-  //         }
-  //         setRemainingTime(time);
-  //         setIncrementTime(timeDes.current);
-  //       }, 1000);
-  //       break;
-  //     case STATUS_PLAY_GAME.STOP:
-  //       clearInterval(timeIntervalId.current);
-  //       if (!userData) break;
-  //       setUserData((prev) => {
-  //         const timeDown = timeDes.current;
-  //         timeDes.current = 0;
-  //         return { ...prev, playtime: prev.playtime - timeDown };
-  //       });
-  //       break;
-  //     default:
-  //       break;
-  //   }
-
-  //   return () => {
-  //     clearInterval(timeIntervalId.current);
-  //     if (!userData) return;
-  //     setUserData((prev) => {
-  //       const timeDown = timeDes.current;
-  //       timeDes.current = 0;
-  //       return { ...prev, playtime: prev.playtime - timeDown };
-  //     });
-  //   };
-  // }, [isCountDown]);
-
   useEffect(() => {
     return () => {
       clearInterval(timeInterval.current);
