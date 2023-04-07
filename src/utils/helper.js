@@ -1,10 +1,12 @@
 import moment from "moment/moment";
+import { ERROR_CODE } from "./constant";
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
 const notifyErrorMessage = (toast, error) => {
+  if (error?.message === ERROR_CODE.MAINTENANCE) return;
   toast({
     title: "ERROR",
     variant: "left-accent",

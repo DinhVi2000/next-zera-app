@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { config } from "../envs";
-import { HTTP_ERROR_CODE } from "./constant";
+import { ERROR_PAGES, HTTP_ERROR_CODE } from "./constant";
 
 // const StatusCode = {
 //   Unauthorized: 401,
@@ -56,9 +56,10 @@ class Http {
       (error) => {
         if (
           error?.response?.data?.error?.code ===
-          HTTP_ERROR_CODE.UNDER_MAINTENANCE
+            HTTP_ERROR_CODE.UNDER_MAINTENANCE &&
+          window.location.pathname !== ERROR_PAGES.MAINTENANCE
         ) {
-          window.location.replace("/maintenance");
+          window.location.replace(ERROR_PAGES.MAINTENANCE);
         }
         if (
           HTTP_ERROR_CODE.UN_AUTHORIZATION.includes(

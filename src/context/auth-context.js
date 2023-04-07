@@ -27,7 +27,12 @@ import { useToast } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
 
-import { PRIVATE_PAGE_URL, PUBLIC_PAGE_URL, STATUS } from "@/utils/constant";
+import {
+  ERROR_PAGES,
+  PRIVATE_PAGE_URL,
+  PUBLIC_PAGE_URL,
+  STATUS,
+} from "@/utils/constant";
 
 import { useApi } from "@/hooks/useApi";
 import { apiURL } from "@/utils/$apiUrl";
@@ -199,6 +204,11 @@ export const AuthContextProvider = ({ children }) => {
     [pathname]
   );
 
+  const isNotFoundPath = useMemo(
+    () => Object.values(ERROR_PAGES).includes(pathname),
+    [pathname]
+  );
+
   const isPrivatePath = useMemo(
     () => Object.values(PRIVATE_PAGE_URL).includes(pathname),
     [pathname]
@@ -222,7 +232,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (token && usernameAuth && !isAuthnrPath) {
+    if (token && usernameAuth && !isAuthnrPath && !isNotFoundPath) {
       setIsAuthenticationPage(false);
       verifyAccessToken();
     }

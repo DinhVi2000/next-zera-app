@@ -283,7 +283,6 @@ const UserInfoLoading = memo(function Component() {
           <ImageLoading alt="" className="w-[94px] h-[94px] rounded-[20px]" />
           <span className="my-2 flex-center skeleton-shine h-[10px] w-[94px] rounded-[10px]"></span>
         </div>
-        <UserMenu />
       </div>
     </div>
   );
@@ -295,10 +294,10 @@ const UserInfo = () => {
 
   const ref = useRef();
   const menu_ref = useRef();
+  const avatar_ref = useRef();
 
   useOnClickOutside(menu_ref, (e) => {
-    const touch = document.getElementById("touch");
-    if (touch?.contains(e.target)) return;
+    if (avatar_ref?.current?.contains(e.target)) return;
 
     menu_ref.current.classList.remove("opacity-100");
     menu_ref.current.classList.add("invisible");
@@ -312,7 +311,7 @@ const UserInfo = () => {
   return (
     <div className="h-[130px] transition-all duration-500" ref={ref}>
       {/* avatar */}
-      <div className="group relative" onClick={toggleMenu} id="touch">
+      <div className="group relative" onClick={toggleMenu} ref={avatar_ref}>
         <div className="cursor-pointer">
           <div className="flex-center flex-col border-t-[2px] border-t-[#C4B5FD] pt-2">
             <ImageLoading

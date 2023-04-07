@@ -51,8 +51,6 @@ const PUBLIC_PAGE_URL = {
   REGISTER: staticPaths.register,
   FORGOT_PASSWPORD: staticPaths.forgot_password,
   RESET_PASSWPORD: staticPaths.reset_password,
-  MAINTENANCE: staticPaths.maintenance,
-  404: staticPaths.not_found,
 };
 
 const PRIVATE_PAGE_URL = {
@@ -118,6 +116,15 @@ const HTTP_ERROR_CODE = {
   UNDER_MAINTENANCE: 503,
 };
 
+const ERROR_CODE = {
+  MAINTENANCE: "Server is under maintenance",
+};
+
+const ERROR_PAGES = {
+  MAINTENANCE: staticPaths.maintenance,
+  NOT_FOUND: staticPaths.not_found,
+};
+
 const PREFIX_USERNAME = "@";
 const HALL_OF_FAME_TAB = [
   { label: "ZERA", value: "zera" },
@@ -163,6 +170,8 @@ const PLAY_STATUS = {
 };
 
 export {
+  ERROR_PAGES,
+  ERROR_CODE,
   MAX_SECOND_LIMIT_CHAT,
   MAX_LIMIT_MESSAGE,
   ADS_IMAGES,
