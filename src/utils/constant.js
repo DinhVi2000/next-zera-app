@@ -91,15 +91,15 @@ const SOCKET_EVENT = {
   USER_DUPLICATE_LOGIN: "duplicateLogin",
   STOP_PLAY: "stopPlay",
   OUT_OF_TIME: "outOfTime",
-
-  USER_EMIT_REWARD: "emitReward",
-  USER_LOGIN: "userLogin",
-  USER_LOGOUT: "userLogout",
-  LOGGED_IN_USER: "loggedInUser",
-  STOP_GAME: "stopGame",
   SEND_MESSAGE: "chatMessage",
-  SOCKET_ERROR: "error",
-  TIME_GAME: "timeGame",
+
+  // USER_EMIT_REWARD: "emitReward",
+  // USER_LOGIN: "userLogin",
+  // USER_LOGOUT: "userLogout",
+  // LOGGED_IN_USER: "loggedInUser",
+  // STOP_GAME: "stopGame",
+  // SOCKET_ERROR: "error",
+  // TIME_GAME: "timeGame",
 };
 
 const PLAYTIME_CATEGORY = "Playtimes";

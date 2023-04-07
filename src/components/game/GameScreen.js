@@ -33,7 +33,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
   const { openModal } = useModalContext();
 
   // handle zoom out
-  const handleToggleZoomOutGameScreen = () => {
+  const handleZoomOut = () => {
     setIsFullScreen(false);
     const gameScreenClassList = game_screen_ref.current?.classList;
 
@@ -41,19 +41,26 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
       gameScreenClassList.remove("full-screen");
       gameScreenClassList.add("max-[550px]:rounded-2xl");
     }
-    bg_mb_ref.current.classList.remove("hidden-imp");
-    back_tab_mb_ref.current.classList.toggle("hidden-imp");
+    bg_mb_ref.current?.classList.remove("hidden-imp");
+    back_tab_mb_ref.current?.classList.toggle("hidden-imp");
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
   };
 
   // handle zoom in
-  const handleToggleZoomInGameScreen = () => {
+  const handleZoomIn = () => {
     setIsFullScreen(true);
 
-    bg_mb_ref.current.classList.toggle("hidden-imp");
-    back_tab_mb_ref.current.classList.toggle("hidden-imp");
+    bg_mb_ref.current?.classList.toggle("hidden-imp");
+    back_tab_mb_ref.current?.classList.toggle("hidden-imp");
     game_screen_ref.current?.classList?.remove("max-[550px]:rounded-2xl");
     game_screen_ref.current?.classList?.add("full-screen");
-    // document.requestFullscreen();
+
+    if (!document.fullscreenElement) {
+      game_screen_ref.current?.requestFullscreen();
+    }
   };
 
   const handlePlayGame = () => {
@@ -65,7 +72,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
 
   const handleStopPlayGame = () => {
     if (!socketCLI) return;
-    socketCLI.emit(SOCKET_EVENT.STOP_GAME);
+    socketCLI.emit(SOCKET_EVENT.STOP_PLAY);
     clearInterval(timeInterval.current);
     setIsPlaying(false);
     setIsCountdown(false);
@@ -73,17 +80,19 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     timeDecrease.current = 0;
   };
 
-  // handle zoom out
+  // event listener
   useEffect(() => {
     window.addEventListener("keyup", (e) => {
-      if (e?.keyCode === 27) handleToggleZoomOutGameScreen();
+      if (e?.keyCode === 27) {
+        handleZoomOut();
+      }
     });
   }, []);
 
   // open modal buy time when playtime out
   useEffect(() => {
     if (countdownStatus === STATUS.IN_PROGRESS && +userInfo?.playtime <= 0) {
-      if (isFullScreen) handleToggleZoomOutGameScreen();
+      if (isFullScreen) handleZoomOut();
       openModal(MODAL_NAME.BUYTIME);
     }
   }, [userInfo?.playtime, countdownStatus]);
@@ -107,22 +116,22 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
         allowFullScreen={true}
         src={play_url}
       ></iframe>
+
       <GameScreenBar
         className={"mb-hidden"}
         title={title}
         thumbnail={thumbnail}
         isFullScreen={isFullScreen}
-        onZoomInGameScreen={handleToggleZoomInGameScreen}
-        onZoomOutGameScreen={handleToggleZoomOutGameScreen}
+        onZoomInGameScreen={handleZoomIn}
+        onZoomOutGameScreen={handleZoomOut}
       />
 
       {/* show this when full screen */}
-
       {/* back tab  */}
       <div
         className="mb-flex hidden-imp items-center justify-center gap-2 bg-violet-200 rounded-r-2xl fixed top-6 w-[62px] h-[40px]"
         onClick={() => {
-          handleToggleZoomOutGameScreen();
+          handleZoomOut();
           handleStopPlayGame();
           clearTimerInterval();
         }}
@@ -136,6 +145,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
           <IconLogo className="w-6 h-5" />
         </div>
       </div>
+
       {/* bg before play */}
       {!isMatchMobile && !isPlaying && (
         <div className="w-full h-full bg-blur-800 absolute top-0 flex-center">
@@ -159,7 +169,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
         <div
           className="bg-white flex-center w-16 h-16 rounded-full absolute-center z-10"
           onClick={() => {
-            handleToggleZoomInGameScreen();
+            handleZoomIn();
             handlePlayGame();
           }}
         >
