@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo_lg from "../../public/images/logo_lg.png";
 import rocket from "../../public/images/rocket-under.png";
 import Image from "next/image";
-import { IconLogo } from "@/resources/icons";
+import { IconLogo, IconReadMore } from "@/resources/icons";
 import Link from "next/link";
+import { useAuthContext } from "@/context/auth-context";
 
 function Maintenance() {
+  const { clearAuthenticatorData } = useAuthContext();
+
+  useEffect(() => {
+    clearAuthenticatorData();
+  }, []);
+
   return (
     <div className="w-full h-full relative text-white">
       <Link href={"/"}>
@@ -30,6 +37,14 @@ function Maintenance() {
             We are improving our website.
           </p>
           <p className="text-xl font-extralight">We’ll be back shortly.</p>
+          <p className="text-xl font-extralight">
+            Please try again in a few minutes!
+          </p>
+          <Link href={"/login"}>
+            <button className="flex-center text-base rounded-[10px] bg-linear-violet-300 p-3 mt-3 hover:scale-105 transition-all">
+              <IconReadMore className="scale-x-[-1]" /> Back to Login
+            </button>
+          </Link>
         </div>
         <Image
           src={rocket}
