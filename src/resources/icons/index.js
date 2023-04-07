@@ -67,6 +67,7 @@ export { default as IconNews } from "./news.svg";
 export { default as IconGames } from "./games.svg";
 export { default as IconReadMore } from "./icon-read-more.svg";
 export { default as IconEmoji } from "./emoji.svg";
+export { default as IconClock } from "./clock.svg";
 
 export {
   IconArrUp,

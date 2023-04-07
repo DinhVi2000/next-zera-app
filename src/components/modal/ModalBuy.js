@@ -123,7 +123,9 @@ const ModalBuy = () => {
                 <IconCoin22 className="ml-1" />
               </div>
             </div>
-            <p className="text-red-600 ">*Your balance is not enough</p>
+            {zera < payload?.item?.price && (
+              <p className="text-red-600 ">*Your balance is not enough</p>
+            )}
             <button
               onClick={handleBuy}
               className={`px-[25px] py-[5px] rounded-[30px] border border-[#F5F3FF] font-medium bg-[#350F1E] transition-all ml-4 flex-center
