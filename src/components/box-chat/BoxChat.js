@@ -46,6 +46,7 @@ function BoxChat({ area }) {
   const boxChatRef = useRef();
   const messagesRef = useRef();
   const emojiRef = useRef();
+  const emojiButtonRef = useRef();
 
   const { userInfo, token, verifyStatus } = useAuthContext();
   const { openModal, setPayload, payload } = useModalContext();
@@ -162,7 +163,12 @@ function BoxChat({ area }) {
     setInputStr((preInput) => preInput + e.emoji);
   };
 
-  useOnClickOutside(emojiRef, () => setOpenEmoji(false));
+  const handleClickOutside = (e) => {
+    if (emojiButtonRef?.current?.contains(e?.target)) return;
+    setOpenEmoji(false);
+  };
+
+  useOnClickOutside(emojiRef, (e) => handleClickOutside(e));
 
   return (
     <div
@@ -240,7 +246,10 @@ function BoxChat({ area }) {
             onChange={(e) => setInputStr(e.target.value)}
           />
 
-          <div onClick={() => setOpenEmoji((value) => !value)}>
+          <div
+            onClick={() => setOpenEmoji((value) => !value)}
+            ref={emojiButtonRef}
+          >
             <IconEmoji className="w-4 h-4 cursor-pointer mx-3" />
           </div>
 
