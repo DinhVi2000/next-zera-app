@@ -246,13 +246,14 @@ function BoxChat({ area }) {
             onChange={(e) => setInputStr(e.target.value)}
           />
 
-          <button
-            disabled={!userInfo}
-            onClick={() => setOpenEmoji((value) => !value)}
+          <div
+            onClick={() =>
+              !userInfo ? setOpenEmoji(false) : setOpenEmoji((value) => !value)
+            }
             ref={emojiButtonRef}
           >
             <IconEmoji className="w-4 h-4 cursor-pointer mx-3" />
-          </button>
+          </div>
 
           {openEmoji && (
             <div ref={emojiRef}>
