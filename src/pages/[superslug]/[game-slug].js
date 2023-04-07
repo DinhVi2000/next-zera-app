@@ -40,7 +40,6 @@ const GameDetail = () => {
   const {
     socketCLI,
     setConnect,
-    countdownStatus,
     setCountdownStatus,
     isCountdown,
     setIsCountdown,
@@ -52,10 +51,7 @@ const GameDetail = () => {
   // on events for anonymous
   useEffect(() => {
     if (!socketCLI) return;
-
-    socketCLI.on(SOCKET_EVENT.OUT_OF_TIME, () => {
-      openModal(MODAL_NAME.BUYTIME);
-    });
+    socketCLI.on(SOCKET_EVENT.OUT_OF_TIME, () => openModal(MODAL_NAME.BUYTIME));
   }, [socketCLI]);
 
   // on events for anonymous

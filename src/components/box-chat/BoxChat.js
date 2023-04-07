@@ -27,7 +27,7 @@ import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { EmojiText } from "./EmojiText";
 
 const MAX_MESSAGE_SEND = 5;
-const MAX_LENGTH = 100;
+const MAX_LENGTH = 50;
 const TIME_LIMIT = 60;
 
 function BoxChat({ area }) {
@@ -75,10 +75,9 @@ function BoxChat({ area }) {
       var messageStr = (msg += words[i] + " ");
     }
 
-    setInputStr("");
-    if (inputRef.current?.value?.length > 100) {
+    if (inputRef.current?.value?.length > MAX_LENGTH) {
       return notifyErrorMessage(toast, {
-        message: "No longer than 100 characters",
+        message: `No longer than ${MAX_LENGTH} characters`,
       });
     }
 
@@ -97,6 +96,7 @@ function BoxChat({ area }) {
       timeSendFirstMessage.current = null;
     }
 
+    setInputStr("");
     if (!inputRef.current.value.trim()) return;
     socketCLI.emit(SOCKET_EVENT.SEND_MESSAGE, { msg: messageStr });
     setSendMessageStatus(STATUS.IN_PROGRESS);
