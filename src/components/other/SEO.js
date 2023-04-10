@@ -21,6 +21,18 @@ const SEO = ({ title, description }) => {
         content="../../../public/images/thumbnail.png"
       ></meta>
       <link rel="icon" href="/favicon.ico" />
+
+      <meta
+        name="twitter:title"
+        content={title || "Online Games on Zera"}
+        key="tw-title"
+      />
+      <meta name="twitter:description" content={description} key="tw-desc" />
+      <meta
+        name="twitter:image"
+        content="../../../public/images/thumbnail.png"
+        key="tw-image"
+      />
     </Head>
   );
 };
