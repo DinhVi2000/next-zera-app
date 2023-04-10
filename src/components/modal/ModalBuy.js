@@ -11,7 +11,7 @@ import {
 } from "@/utils/helper";
 import BoxModal from "./BoxModal";
 
-import { IconClose, IconCoin22 } from "@/resources/icons";
+import { IconClock, IconClose, IconCoin22 } from "@/resources/icons";
 
 import { useToast } from "@chakra-ui/react";
 import { buyShopItem } from "@/services/shop.service";
@@ -99,13 +99,22 @@ const ModalBuy = () => {
         </div>
         <div className="flex flex-col items-center ">
           <div className="gradient-radius">
-            <img
-              alt=""
-              src={payload?.item?.url}
-              className={`w-[204px] h-[204px] object-cover rounded-[20px] ${
-                payload?.tab === "Cover Pages" ? "w-[441px]" : ""
-              }`}
-            />
+            {payload?.tab === "Playtimes" ? (
+              <div className="w-[204px] h-[204px] object-cover block mx-auto rounded-[20px] max-[990px]:w-full relative bg-[#340216]">
+                <IconClock className="absolute-center" />
+                <p className="text-2xl font-bold absolute top-[140px] left-12">
+                  {payload?.item?.name?.replace(" minutes", "m")}
+                </p>
+              </div>
+            ) : (
+              <img
+                alt=""
+                src={payload?.item?.url}
+                className={`w-[204px] h-[204px] object-cover rounded-[20px] ${
+                  payload?.tab === "Cover Pages" ? "w-[441px]" : ""
+                }`}
+              />
+            )}
           </div>
           <p className="font-bold text-base mt-3 mb-2">{payload?.item?.name}</p>
           <div className="flex-center flex-col ">
