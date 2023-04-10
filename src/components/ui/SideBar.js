@@ -52,7 +52,6 @@ import { abbreviateNumber, categoryUrl } from "@/utils/helper";
 import { dynamicPaths, staticPaths } from "@/utils/$path";
 import { apiURL } from "@/utils/$apiUrl";
 
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useApi } from "@/hooks/useApi";
 
 const ALL_MENU_NODE = [
@@ -79,7 +78,15 @@ const ALL_MENU_NODE = [
 ];
 
 const SideBar = forwardRef(
-  ({ className = "tbl-hidden mb-hidden", shopClassName, ...props }, ref) => {
+  (
+    {
+      className = "tbl-hidden mb-hidden",
+      shopClassName,
+      onClose = () => {},
+      ...props
+    },
+    ref
+  ) => {
     const router = useRouter();
     const { get } = useApi();
 
@@ -91,8 +98,6 @@ const SideBar = forwardRef(
     const { userInfo, verifyStatus } = useAuthContext();
 
     const { zera } = userInfo ?? {};
-
-    const isMatchPC = useMediaQuery("(min-width: 990px)");
 
     const handleToggleContent = () => {
       content_ref.current.classList.toggle("h-[242px]");
@@ -148,6 +153,7 @@ const SideBar = forwardRef(
               <div
                 onClick={() => {
                   openModal(MODAL_NAME.MENUBAR);
+                  onClose();
                 }}
               >
                 <IconSearchViolet300></IconSearchViolet300>
@@ -226,6 +232,7 @@ const SideBar = forwardRef(
                     className="bg-pink-800 text-[16px] py-[2px] px-5 rounded-[20px] shadow-sm shadow-[#b3597d] w-fit mx-auto block"
                     onClick={() => {
                       openModal(MODAL_NAME.CONFIRM);
+                      onClose();
                     }}
                   >
                     Shop

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 
 import { QUANTITY_BY_TAB } from "@/utils/constant";
 
@@ -12,7 +12,7 @@ import { IconSortDown } from "@/resources/icons";
 
 import { setHallOfFame } from "@/services/user.service";
 
-import { abbreviateNumber } from "@/utils/helper";
+import { abbreviateNumber, sleep } from "@/utils/helper";
 import { Tooltip } from "@chakra-ui/react";
 import Link from "next/link";
 import { dynamicPaths } from "@/utils/$path";
@@ -26,6 +26,7 @@ const RankingTable = ({ className, tab: { value, label }, ...props }) => {
   const { hallOfFame } = useSelector(({ user }) => user) ?? {};
 
   const [isReverse, setIsReverse] = useState(false);
+  const [isOpen, setisOpen] = useState(true);
 
   const listSlice = useMemo(
     () => hallOfFame[value]?.slice(3, hallOfFame[value]?.length),
@@ -44,6 +45,13 @@ const RankingTable = ({ className, tab: { value, label }, ...props }) => {
     itemsReverse[value] = hallOfFame[value].slice().reverse();
     dispatch(setHallOfFame({ ...hallOfFame, ...itemsReverse }));
   };
+
+  // reload
+  useEffect(() => {
+    if (!value) return;
+    setisOpen(false);
+    sleep(1).then(() => setisOpen(true));
+  }, [value]);
 
   return (
     <div className={`${className} w-full max-w-[1000px] mx-auto`} {...props}>
@@ -83,11 +91,13 @@ const RankingTable = ({ className, tab: { value, label }, ...props }) => {
           {currentItems?.length === 0 && <Empty className={"h-[400px]"} />}
         </div>
         {/* pagination */}
-        <Pagination
-          items={hallOfFame[value]}
-          itemsPerPage={ITEM_PER_PAGE}
-          onPageChange={handlePageClick}
-        />
+        {isOpen && (
+          <Pagination
+            items={hallOfFame[value]}
+            itemsPerPage={ITEM_PER_PAGE}
+            onPageChange={handlePageClick}
+          />
+        )}
       </section>
     </div>
   );

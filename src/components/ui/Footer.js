@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 
 import {
   IconDiscord,
+  IconFacebook,
   IconReddit,
   IconTelegram,
   IconTwitter,
@@ -21,7 +22,7 @@ const Footer = () => {
   const [contacts, setContacts] = useState([]);
 
   const icon = [
-    { name: "Facebook", icon: <IconReddit /> },
+    { name: "Facebook", icon: <IconFacebook /> },
     { name: "Twitter", icon: <IconTwitter /> },
     { name: "Telegram", icon: <IconTelegram /> },
     { name: "Discord", icon: <IconDiscord /> },
