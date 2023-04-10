@@ -109,6 +109,11 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const getActivities = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const username = localStorage.getItem("username");
+
+    const isLogged = accessToken && username;
+    if (!isLogged) return;
     try {
       userInfoFunctions.map(({ key, callback }) =>
         callback()
@@ -232,9 +237,11 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (token && usernameAuth && !isAuthnrPath && !isNotFoundPath) {
-      setIsAuthenticationPage(false);
-      verifyAccessToken();
+    if (!isAuthnrPath && !isNotFoundPath) {
+      if (token && usernameAuth) {
+        setIsAuthenticationPage(false);
+        verifyAccessToken();
+      }
     }
   }, [token, usernameAuth, pathname]);
 

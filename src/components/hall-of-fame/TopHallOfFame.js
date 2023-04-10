@@ -54,7 +54,7 @@ const Item = ({ item }) => {
               {username}
             </h2>
             <p
-              className="text-xs font-medium overflow-wrap-anywhere whitespace-normal overflow-hidden text-ellipsis
+              className="text-xs font-medium web-line-clamp-2 web-box-orient-vertical web-box overflow-wrap-anywhere whitespace-normal overflow-hidden text-ellipsis
                          max-w-[210px] max-[1210px]:max-w-[100px]"
             >
               {quote}

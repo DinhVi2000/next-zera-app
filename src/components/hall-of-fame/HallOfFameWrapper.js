@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { Fragment, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import { HALL_OF_FAME_TAB } from "@/utils/constant";
 

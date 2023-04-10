@@ -65,6 +65,12 @@ const SidebarMB = ({ className, childClassName }) => {
     sidebarRef.current?.classList.remove("invisible");
   };
 
+  const closeSidebar = () => {
+    sidebarRef.current?.classList.remove("opacity-100");
+    sidebarRef.current?.classList.remove("z-50");
+    sidebarRef.current?.classList.add("invisible");
+  };
+
   const { avatar, username, zera } = userInfo ?? {};
 
   return (
@@ -161,6 +167,7 @@ const SidebarMB = ({ className, childClassName }) => {
             shopClassName="hidden"
             id="sidebar"
             ref={sidebarRef}
+            onClose={closeSidebar}
           />
         )}
       </div>

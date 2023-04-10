@@ -67,7 +67,7 @@ function BoxChat({ area }) {
 
     for (const i in words) {
       for (const j in EmojiText) {
-        if (j == words[i]) {
+        if (j === words[i]) {
           words[i] = EmojiText[j];
         }
       }
@@ -120,7 +120,14 @@ function BoxChat({ area }) {
   useEffect(() => {
     if (sendMessageStatus === STATUS.SUCCESS && newMessage) {
       setMessages((prev) => [...prev, newMessage]);
-      setSentMessageCount((prev) => prev + 1);
+
+      if (
+        newMessage?.is_message &&
+        Number(userInfo?.id) === newMessage.user_id
+      ) {
+        setSentMessageCount((prev) => prev + 1);
+      }
+
       inputRef.current.value = "";
 
       // scroll to bottom
@@ -251,11 +258,12 @@ function BoxChat({ area }) {
               !userInfo ? setOpenEmoji(false) : setOpenEmoji((value) => !value)
             }
             ref={emojiButtonRef}
+            type="button"
           >
             <IconEmoji className="w-4 h-4 cursor-pointer mx-3" />
           </div>
 
-          {openEmoji && (
+          {openEmoji && userInfo && (
             <div ref={emojiRef}>
               <EmojiPicker onEmojiClick={onEmojiClick} />
             </div>

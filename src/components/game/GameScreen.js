@@ -3,15 +3,17 @@ import { useAuthContext } from "@/context/auth-context";
 import { useSocketContext } from "@/context/socket-context";
 import { IconBackXs, IconLogo, IconPlay } from "@/resources/icons";
 import { MODAL_NAME, SOCKET_EVENT, STATUS } from "@/utils/constant";
-import { getArea } from "@/utils/helper";
+import { getArea, notifyErrorMessage } from "@/utils/helper";
 import React, { useEffect, useRef, useState } from "react";
 import ImageLoading from "../loading/ImageLoading";
 import GameScreenBar from "./GameScreenBar";
 import { useModalContext } from "@/context/modal-context";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useToast } from "@chakra-ui/react";
 
 const GameScreen = ({ thumbnail, play_url, title }) => {
   const isMatchMobile = useMediaQuery("(max-width: 550px)");
+  const toast = useToast();
 
   const game_screen_ref = useRef();
   const bg_mb_ref = useRef();
@@ -29,7 +31,7 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
     timeDecrease,
     timeInterval,
   } = useSocketContext();
-  const { userInfo } = useAuthContext();
+  const { userInfo, anonymousInfo } = useAuthContext();
   const { openModal } = useModalContext();
 
   // handle zoom out
@@ -65,6 +67,13 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
 
   const handlePlayGame = () => {
     if (!socketCLI) return;
+
+    if (userInfo ? userInfo?.playtime <= 0 : anonymousInfo?.playtime <= 0) {
+      return notifyErrorMessage(toast, {
+        message: "Please buy more time to continue playing the game",
+      });
+    }
+
     socketCLI.emit(SOCKET_EVENT.PLAY_GAME);
     setIsPlaying(true);
     setIsCountdown(true);
@@ -149,13 +158,22 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
       {/* bg before play */}
       {!isMatchMobile && !isPlaying && (
         <div className="w-full h-full bg-blur-800 absolute top-0 flex-center">
-          <button
+          {/* <button
             className="text-base text-white rounded-[20px] bg-linear-violet-300 py-3 px-10 w-[220px]
                         transition-all hover:scale-105"
             onClick={handlePlayGame}
           >
             Play
-          </button>
+          </button> */}
+          <div
+            className="bg-white flex-center w-16 h-16 rounded-full  z-10
+                        hover:scale-105 transition-all"
+            onClick={() => {
+              handlePlayGame();
+            }}
+          >
+            <IconPlay className="w-4 ml-1" />
+          </div>
         </div>
       )}
       {/* bg mb */}
