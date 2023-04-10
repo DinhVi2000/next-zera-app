@@ -105,7 +105,6 @@ const GameScreen = ({ thumbnail, play_url, title }) => {
       openModal(MODAL_NAME.BUYTIME);
     }
   }, [userInfo?.playtime, countdownStatus]);
-  openModal(MODAL_NAME.BUYTIME);
 
   return (
     <div
