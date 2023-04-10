@@ -7,11 +7,9 @@ import { IconTtlNews } from "@/resources/icons";
 import {
   getAllArticleCategory,
   getArticlesByCategorySlug,
-  getArticlesByTagSlug,
   getArticlesNewest,
   getArticlesRandom,
 } from "@/services/article.service";
-import { apiURL } from "@/utils/$apiUrl";
 import { dynamicPaths } from "@/utils/$path";
 import { formatDate, notifyErrorMessage } from "@/utils/helper";
 import Link from "next/link";
@@ -324,7 +322,6 @@ const MainContent = () => {
     if (tags) {
       setIsSelected(tags[0]?.id);
       setSlug(tags[0]?.slug);
-      getArticlesByTagSlug(slug);
     }
   }, [tags]);
 
