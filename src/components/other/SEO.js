@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import ImgThumbNail from "../../../public/images/thumbnail.png";
 
 const SEO = ({ title, description }) => {
   return (
@@ -11,6 +12,8 @@ const SEO = ({ title, description }) => {
         content="width=device-width, initial-scale=1, user-scalable=no"
       />
 
+      <meta name="image" content={ImgThumbNail}></meta>
+      <meta name="og:image" content={ImgThumbNail}></meta>
       <meta name="description" content={description} />
       <meta property="og:locale" content="en_US" />
       <meta property="og:title" content={title} />
