@@ -12,7 +12,7 @@ import {
   sleep,
 } from "@/utils/helper";
 import BoxModal from "./BoxModal";
-import { IconClose, IconCoin22 } from "@/resources/icons";
+import { IconClock, IconClose, IconCoin22 } from "@/resources/icons";
 import { getUserInfo } from "@/services/user.service";
 import { useToast } from "@chakra-ui/react";
 import { buyShopItem, getItemTime } from "@/services/shop.service";
@@ -119,10 +119,15 @@ const ModalBuyTime = () => {
                   </div>
 
                   {/* image */}
-                  <ImageLoading className="object-cover" src={e.url} alt="" />
+                  <div className="w-[204px] h-[200px] object-cover block mx-auto max-[990px]:w-full relative bg-[#340216]">
+                    <IconClock className="absolute-center" />
+                    <p className="text-2xl font-bold absolute top-[140px] left-12">
+                      {e?.name?.replace(" minutes", "m")}
+                    </p>
+                  </div>
 
                   {/* select bg */}
-                  <div className=" w-full h-full absolute-center rounded-[20px]">
+                  <div className="w-full h-full absolute-center rounded-[20px] group-hover:bg-[#00000046]">
                     <div
                       className="py-2 px-4 bg-pink-400 rounded-full absolute top-0 left-1/2 -translate-x-1/2 shadow-custom-one group-hover:top-1/2 group-hover:opacity-100 transition-all opacity-0 duration-300 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
                       onClick={() => handleBuyTime(e.id)}
