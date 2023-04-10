@@ -6,10 +6,12 @@
     "start": "HTTPS=true next start",
     "dev": "next dev",
     "build": "next build",
+    "lint": "next lint",
+    "eslint": "eslint --fix ./src && eslint ./src",
     "build:dev": "NEXT_PUBLIC_APP_ENV=dev next build",
     "start:dev": "NEXT_PUBLIC_APP_ENV=dev npm start",
-    "lint": "next lint",
-    "eslint": "eslint --fix ./src && eslint ./src"
+    "build:stg": "NEXT_PUBLIC_APP_ENV=stg next build",
+    "start:stg": "NEXT_PUBLIC_APP_ENV=stg npm start"
   },
   "dependencies": {
     "@chakra-ui/react": "~2.5.0",
