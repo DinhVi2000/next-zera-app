@@ -78,7 +78,7 @@ const getArticlesByCategorySlug = async (slug) => {
       throw new Error(data?.message);
     }
 
-    return data.data;
+    return data?.data?.articles;
   } catch (e) {
     throw e;
   }

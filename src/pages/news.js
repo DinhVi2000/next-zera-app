@@ -6,6 +6,7 @@ import MainLayout from "@/layouts/MainLayout";
 import { IconTtlNews } from "@/resources/icons";
 import {
   getAllArticleCategory,
+  getArticlesByCategorySlug,
   getArticlesByTagSlug,
   getArticlesNewest,
   getArticlesRandom,
@@ -290,9 +291,9 @@ const Popular = () => {
 };
 
 const MainContent = () => {
+  const { categories } = useSelector(({ article }) => article) ?? {};
   const toast = useToast();
-  const { get } = useApi();
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(categories);
   const [slug, setSlug] = useState();
   const [items, setItems] = useState([]);
   const [isSelected, setIsSelected] = useState();
@@ -304,16 +305,10 @@ const MainContent = () => {
     return () => subscription.unsubscribe();
   }, [handleSubmit, watch]);
 
-  useEffect(() => {
-    get(apiURL.get.all_article_tag).then((data) => {
-      setTags(data);
-    });
-  }, []);
-
   const handleArticleByTag = async () => {
     try {
-      const data = await getArticlesByTagSlug(slug);
-      setItems(data?.allArticleByTags);
+      const data = await getArticlesByCategorySlug(slug);
+      setItems(data?.rows);
     } catch (e) {
       notifyErrorMessage(toast, e);
     }
