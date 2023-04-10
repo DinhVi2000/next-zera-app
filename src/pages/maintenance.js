@@ -11,6 +11,7 @@ function Maintenance() {
 
   useEffect(() => {
     clearAuthenticatorData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
