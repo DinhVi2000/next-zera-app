@@ -6,6 +6,7 @@ const SEO = ({ title, description }) => {
     <Head>
       <title>{title || "Online Games on Zera"}</title>
       <meta name="title" content={title || "Online Games on Zera"}></meta>
+      <meta name="og:description" content={description} />
       <meta name="description" content={description} />
       <meta
         name="viewport"
@@ -13,6 +14,10 @@ const SEO = ({ title, description }) => {
       />
       <meta
         property="og:image"
+        content="../../../public/images/thumbnail.png"
+      ></meta>
+      <meta
+        property="image"
         content="../../../public/images/thumbnail.png"
       ></meta>
       <link rel="icon" href="/favicon.ico" />
